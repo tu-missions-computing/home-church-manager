@@ -7,8 +7,8 @@ create table user (
   foreign key (id) REFERENCES attendance (user_id)
 );
 
-drop table if exists meetings;
-create table meetings (
+drop table if exists meeting;
+create table meeting (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   date TEXT,
   foreign key (id) REFERENCES attendance (date_id)
@@ -16,9 +16,9 @@ create table meetings (
 );
 drop table if exists attendance;
 CREATE TABLE attendance (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER AUTOINCREMENT,
   user_id INTEGER,
   meeting_id INTEGER,
-  attendance BOOLEAN
-
+  attendance BOOLEAN,
+  PRIMARY KEY(id, user_id, meeting_id)
 );
