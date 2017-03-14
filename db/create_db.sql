@@ -16,9 +16,8 @@ create table meeting (
 );
 drop table if exists attendance;
 CREATE TABLE attendance (
-  id INTEGER AUTOINCREMENT,
   user_id INTEGER,
   meeting_id INTEGER,
   attendance BOOLEAN,
-  PRIMARY KEY(id, user_id, meeting_id)
+  PRIMARY KEY(user_id, meeting_id)
 );
