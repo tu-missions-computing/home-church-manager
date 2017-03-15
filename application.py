@@ -11,7 +11,6 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 class AttendanceForm(FlaskForm):
     user_id = StringField('User Id', validators=[Length(min=1, max=40)])
     attendance = StringField('Attendance', validators=[Length(min=1, max=5)])
-     = StringField('Year', validators=[Length(min=4, max=4)])
 
 @app.before_request
 def before():
