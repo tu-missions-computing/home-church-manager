@@ -29,19 +29,16 @@ def close_db_connection():
     if db is not None:
         db.close()
 
-# creates a page containing the details of all trips
-# def create_trip_report():
-#     query = '''
-#     SELECT student.first_name, student.last_name,
-#     student.year, trip.destination, trip.trip_year, trip.semester
-#     FROM student INNER JOIN student_trip ON student.id = student_trip.student_id
-#     INNER JOIN trip ON student_trip.trip_id = trip.id
-#     '''
-#     return g.db.execute(query).fetchall()
-
 def get_users():
     query = '''
         SELECT user.first_name, user.last_name, user.email
+        FROM user
+        '''
+    return g.db.execute(query).fetchall()
+
+def get_user_count():
+    query = '''
+        SELECT count(id)
         FROM user
         '''
     return g.db.execute(query).fetchall()
@@ -53,7 +50,7 @@ def get_dates():
 def add_attendance(user_id, meeting_id, attendance):
     query = '''
         INSERT INTO attendance (user_id, meeting_id, attendance)
-        VALUES ( :destination, :meeting_id, :semester );
+        VALUES ( :user_id, :meeting_id, :attendance );
         '''
     cursor = g.db.execute(query, {'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
     g.db.commit()

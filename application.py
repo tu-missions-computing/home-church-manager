@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FloatField
+from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField
 from wtforms.validators import Length
 import db
 
@@ -9,9 +9,10 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
 
 class AttendanceForm(FlaskForm):
-    user_id = StringField('User Id', validators=[Length(min=1, max=40)])
-    meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
-    attendance = StringField('Attendance', validators=[Length(min=1, max=5)])
+    # user_id = StringField('User Id', validators=[Length(min=1, max=40)])
+    # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
+    radio = RadioField('Attendance', choices=["y","n"])
+    submit = SubmitField('Submit')
 
 @app.before_request
 def before():
@@ -27,19 +28,24 @@ def after(exception):
 def index():
     return render_template('base.html')
 
+@app.route('/users')
+def trip_report():
+    return render_template('users.html', report = db.get_users())
+
 
 @app.route('/attendance', methods=['GET', 'POST'])
 def addAttendance():
     error = ""
     form = AttendanceForm(request.form)
+    users = db.get_users()
 
-    if request.method == 'POST':
-        form.validate_on_submit()
+    if form.validate_on_submit():
+        for i in range(1, db.get_user_count()):
+            attendance = form.radio+i
+        return redirect(url_for('thank_you'))
 
-        if form.validate_on_submit():
-            return redirect(url_for('thank_you'))
+    return render_template('attendance.html', form=form, users=users)
 
-    return render_template('attendance.html', form=form, message=error)
 
 
 @app.route('/thank-you')
