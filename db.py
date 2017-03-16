@@ -31,7 +31,7 @@ def close_db_connection():
 
 def get_users():
     query = '''
-        SELECT user.first_name, user.last_name, user.email
+        SELECT user.first_name, user.last_name
         FROM user
         '''
     return g.db.execute(query).fetchall()

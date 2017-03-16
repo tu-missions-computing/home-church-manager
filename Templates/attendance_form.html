@@ -1,39 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Attendance Report{% endblock %}
+{% block title %}Mark Attendance{% endblock %}
 
 {% block content %}
 
-<h1>Attendance report</h1>
+<h1>Mark Group Attendance</h1>
 <table>
     <thead>
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Attendance</th>
-
     </tr>
-    </thead>
-    <tbody>
-    {% for user in users %}
     <tr>
-
-        <td>{{ user.first_name }}</td>
-        <td>{{ user.last_name }}</td>
+        <td>John</td>
+        <td>Doe</td>
         <td>
             <form action="">
                 <input type="radio" value="radio1"> Yes<br>
                 <input type="radio" value="radio2"> No<br>
             </form>
         </td>
-
     </tr>
-    {% else %}
-    <tr>
-        <td colspan="4">No Info</td>
-    </tr>
-    {% endfor %}
-    </tbody>
+    </thead>
 </table>
+<p><input type=submit value="Submit"></p>
 
 {% endblock %}
