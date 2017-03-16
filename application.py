@@ -10,6 +10,7 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
 class AttendanceForm(FlaskForm):
     user_id = StringField('User Id', validators=[Length(min=1, max=40)])
+    meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
     attendance = StringField('Attendance', validators=[Length(min=1, max=5)])
 
 @app.before_request
@@ -38,7 +39,7 @@ def addAttendance():
         if form.validate_on_submit():
             return redirect(url_for('thank_you'))
 
-    return render_template('add-attendance.html', form=form, message=error)
+    return render_template('attendance.html', form=form, message=error)
 
 
 @app.route('/thank-you')

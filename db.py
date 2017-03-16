@@ -3,7 +3,7 @@ import os
 from flask import g
 
 # from application import app
-DATABASE = ''
+DATABASE = 'MyDatabase.sqlite'
 
 # Connect to the database.
 def connect_db(db_path):
@@ -30,21 +30,32 @@ def close_db_connection():
         db.close()
 
 # creates a page containing the details of all trips
-def create_trip_report():
+# def create_trip_report():
+#     query = '''
+#     SELECT student.first_name, student.last_name,
+#     student.year, trip.destination, trip.trip_year, trip.semester
+#     FROM student INNER JOIN student_trip ON student.id = student_trip.student_id
+#     INNER JOIN trip ON student_trip.trip_id = trip.id
+#     '''
+#     return g.db.execute(query).fetchall()
+
+def get_users():
     query = '''
-    SELECT student.first_name, student.last_name,
-    student.year, trip.destination, trip.trip_year, trip.semester
-    FROM student INNER JOIN student_trip ON student.id = student_trip.student_id
-    INNER JOIN trip ON student_trip.trip_id = trip.id
-    '''
+        SELECT user.first_name, user.last_name, user.email
+        FROM user
+        '''
     return g.db.execute(query).fetchall()
 
-def add_attendance(user_id, attendance):
+def get_dates():
+    query='''
+        SELECT
+    '''
+def add_attendance(user_id, meeting_id, attendance):
     query = '''
-        INSERT INTO trip (user_id, attendance, trip_year)
-        VALUES ( :destination, :semester, :trip_year );
+        INSERT INTO attendance (user_id, meeting_id, attendance)
+        VALUES ( :destination, :meeting_id, :semester );
         '''
-    cursor = g.db.execute(query, {'User Id': user_id, 'Attendance': attendance})
-    g.db.commit();
+    cursor = g.db.execute(query, {'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
+    g.db.commit()
     return cursor.rowcount
     # return g.db.execute(query).fetchall()
