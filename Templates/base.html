@@ -8,6 +8,16 @@
     {% if message %}
         <p>Note: {{ message }}</p>
     {% endif %}
+    {% with messages = get_flashed_messages() %}
+    {%  if messages %}
+        <h2><div style="color:blueviolet">
+            {% for message in get_flashed_messages() %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        </h2>
+    {% endif %}
+{% endwith %}
     {% block content %}
     {% endblock %}
 </body>

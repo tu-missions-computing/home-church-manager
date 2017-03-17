@@ -58,4 +58,18 @@ def add_attendance(user_id, meeting_id, attendance):
     cursor = g.db.execute(query, {'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
     g.db.commit()
     return cursor.rowcount
-    # return g.db.execute(query).fetchall()
+    # return
+    #g.db.execute(query).fetchall()
+
+def create_user(first_name, last_name, email):
+    query = '''
+    INSERT INTO user(first_name, last_name, email)
+    VALUES(:first_name, :last_name, :email)
+    '''
+    cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email':email})
+    g.db.commit()
+    return cursor.rowcount
+
+def get_all_users():
+    cursor = g.db.execute('select * from user')
+    return cursor.fetchall()

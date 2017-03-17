@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FloatField
+from wtforms import StringField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
 import db
 
@@ -40,6 +41,33 @@ def addAttendance():
             return redirect(url_for('thank_you'))
 
     return render_template('attendance.html', form=form, message=error)
+
+
+class CreateUserForm(FlaskForm):
+    first_name = StringField('First Name')
+    last_name = StringField('Last Name')
+    email = StringField('Email')
+    submit = SubmitField('Create User')
+
+
+@app.route('/create_user', methods=['GET', 'POST'])
+def create_user():
+    user = CreateUserForm()
+
+    if user.validate_on_submit():
+        first_name = user.first_name.data
+        last_name = user.last_name.data
+        email = user.email.data
+        rowcount = db.create_user(first_name, last_name, email)
+        if rowcount == 1:
+            flash("User {} created!".format(user.first_name.data))
+            return redirect(url_for('all_users'))
+
+    return render_template('create_user.html', form = user)
+
+@app.route('/all_users')
+def all_users():
+    return render_template('all_users.html', users = db.get_all_users())
 
 
 @app.route('/thank-you')
