@@ -9,8 +9,28 @@ create table user (
   birthday TEXT,
   baptism_status BOOLEAN,
   join_date TEXT,
-  foreign key (id) REFERENCES attendance (user_id)
+  foreign key (id) REFERENCES attendance (user_id),
+  foreign key (id) REFERENCES homegroup_user (user_id)
 );
+
+
+drop table if exists homegroup;
+create table homegroup (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  location TEXT,
+  description TEXT,
+  foreign key (id) REFERENCES homegroup_user (homegroup_id)
+);
+
+drop table if exists homegroup_user;
+create table homegroup_user (
+  homegroup_id,
+  user_id,
+  PRIMARY KEY (homegroup_id, user_id)
+);
+
+
 
 drop table if exists meeting;
 create table meeting (
