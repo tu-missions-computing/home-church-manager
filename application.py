@@ -50,7 +50,7 @@ class CreateUserForm(FlaskForm):
     submit = SubmitField('Create User')
 
 
-@app.route('/create_user', methods=['GET', 'POST'])
+@app.route('/user/create', methods=['GET', 'POST'])
 def create_user():
     user = CreateUserForm()
 
@@ -65,7 +65,7 @@ def create_user():
 
     return render_template('create_user.html', form = user)
 
-@app.route('/all_users')
+@app.route('/user/all')
 def all_users():
     return render_template('all_users.html', users = db.get_all_users())
 
