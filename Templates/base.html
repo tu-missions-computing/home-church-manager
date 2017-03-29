@@ -90,7 +90,7 @@
     {% endif %}
     {% with messages = get_flashed_messages() %}
     {%  if messages %}
-        <h2><div style="color:blueviolet">
+        <h2><div class="form-group">
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
