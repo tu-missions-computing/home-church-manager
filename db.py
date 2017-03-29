@@ -67,6 +67,20 @@ def create_user(first_name, last_name, email, phone_number, gender, birthday, ba
     g.db.commit()
     return cursor.rowcount
 
+def add_user_to_homegroup(homegroup_id, user_id):
+    query = '''
+    INSERT INTO homegroup_user values(:homegroup_id, :user_id)
+    '''
+    cursor = g.db.execute(query, {'homegroup_id' : homegroup_id, 'user_id': user_id})
+    g.db.commit()
+    return cursor.rowcount
+
+
+
+def num_of_users():
+    cursor = g.db.execute('select COUNT(id) from user')
+    return cursor.fetchone()
+
 def get_all_users():
     cursor = g.db.execute('select * from user')
     return cursor.fetchall()
@@ -75,18 +89,19 @@ def get_all_users():
 def find_user(user_id):
     return g.db.execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
 
-def edit_user(user_id, first_name, last_name, email):
+def edit_user(user_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''
-    UPDATE user SET first_name = :first, last_name = :last, email = :email
+    UPDATE user SET first_name = :first, last_name = :last, email = :email, phone_number = :phone, gender = :gender, birthday = :bday, baptism_status = :baptism, join_date = :join
     WHERE id = :user_id
     '''
-    cursor = g.db.execute(query, {'user_id': user_id, 'first': first_name, 'last': last_name, 'email': email})
+    cursor = g.db.execute(query, {'user_id': user_id, 'first': first_name, 'last': last_name, 'email': email, 'phone': phone_number, 'gender': gender, 'bday': birthday, 'baptism': baptism_status, 'join': join_date })
     g.db.commit()
     return cursor.rowcount
 
 
 def find_homegroup(homegroup_id):
     return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
+
 
 
 def edit_homegroup(homegroup_id, name, location, description):
