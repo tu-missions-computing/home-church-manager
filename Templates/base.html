@@ -38,15 +38,25 @@
 
         }
 
+        .Site {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        }
+
+        .Site-content {
+            flex: 1;
+        }
+
     </style>
 </head>
-<body>
+<body class="Site">
   <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <main class="Site-content">
     <header>
         <ul class="navbar navbar-inverse">
             <a class="navbar-brand" href="#">Verbo Velocity</a>
@@ -72,6 +82,7 @@
 {% endwith %}
     {% block content %}
     {% endblock %}
+    </main>
     <footer>
         <ul class="nav nav-tabs nav-justified">
           <li role="presentation"><a class="active" href="#faq">FAQ</a></li>
