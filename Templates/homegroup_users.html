@@ -1,0 +1,27 @@
+{%  extends "base.html" %}
+
+{% block title %} User Report {% endblock %}
+{% block content %}
+
+<h1>Homegroup Users</h1>
+<table>
+    <thead>
+    <tr>
+        <th> First Name</th>
+        <th> Last Name</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <tbody>
+    {% for user in homegroup %}
+    <tr>
+        <td> {{ user.first_name }}</td>
+        <td> {{ user.last_name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

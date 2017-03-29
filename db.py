@@ -5,15 +5,17 @@ from flask import g
 # from application import app
 DATABASE = 'MyDatabase.sqlite'
 
+
 # Connect to the database.
 def connect_db(db_path):
     if db_path is None:
-      db_path = os.path.join(os.getcwd(), DATABASE)
+        db_path = os.path.join(os.getcwd(), DATABASE)
     if not os.path.isfile(db_path):
         raise RuntimeError("Can't find database file '{}'".format(db_path))
     connection = sqlite3.connect(db_path)
     connection.row_factory = sqlite3.Row
     return connection
+
 
 def open_db_connection(db_path=None):
     """Open a connection to the database.
@@ -29,12 +31,14 @@ def close_db_connection():
     if db is not None:
         db.close()
 
+
 def get_users():
     query = '''
         SELECT user.first_name, user.last_name
         FROM user
         '''
     return g.db.execute(query).fetchall()
+
 
 def get_user_count():
     query = '''
@@ -43,10 +47,13 @@ def get_user_count():
         '''
     return g.db.execute(query).fetchall()
 
+
 def get_dates():
-    query='''
+    query = '''
         SELECT
     '''
+
+
 def add_attendance(user_id, meeting_id, attendance):
     query = '''
         INSERT INTO attendance (user_id, meeting_id, attendance)
@@ -56,17 +63,26 @@ def add_attendance(user_id, meeting_id, attendance):
     g.db.commit()
     return cursor.rowcount
     # return
-    #g.db.execute(query).fetchall()
+    # g.db.execute(query).fetchall()
+
 
 def create_user(first_name, last_name, email):
     query = '''
     INSERT INTO user(first_name, last_name, email)
     VALUES(:first_name, :last_name, :email)
     '''
-    cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email':email})
+    cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email})
     g.db.commit()
     return cursor.rowcount
+
 
 def get_all_users():
     cursor = g.db.execute('select * from user')
     return cursor.fetchall()
+
+
+def get_homegroup_users(homegroupid):
+    return g.db.execute('''SELECT * FROM user
+    JOIN homegroup_user ON user.id = homegroup_user.user_id
+    JOIN homegroup ON homegroup_user.homegroup_id = homegroup.id
+    WHERE homegroup.id = ?''', (homegroupid,)).fetchall()
