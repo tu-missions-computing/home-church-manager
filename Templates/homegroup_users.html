@@ -7,7 +7,7 @@
 <a href="#" class="btn btn-primary welcome">
     Contact
 </a>
-<a href="/member/create" class="btn btn-primary welcome">
+<a href="{{url_for('create_new_user_for_homegroup', homegroup_id = currentHomegroup.id)}}" class="btn btn-primary welcome">
     Add Member
 </a>
 <a href="#" class="btn btn-primary welcome">
