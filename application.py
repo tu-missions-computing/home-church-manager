@@ -30,7 +30,7 @@ def after(exception):
 def index():
     return render_template('base.html')
 
-@app.route('/users')
+@app.route('/members')
 def trip_report():
     return render_template('users.html', report = db.get_users())
 
@@ -62,7 +62,7 @@ class CreateUserForm(FlaskForm):
     submit = SubmitField('Save User')
 
 
-@app.route('/user/create', methods=['GET', 'POST'])
+@app.route('/member/create', methods=['GET', 'POST'])
 def create_user():
     user = CreateUserForm()
 
@@ -83,11 +83,11 @@ def create_user():
 
     return render_template('create_user.html', form = user)
 
-@app.route('/user/all')
+@app.route('/member/all')
 def all_users():
     return render_template('all_users.html', users = db.get_all_users())
 
-@app.route('/homegroup/users/<homegroupid>')
+@app.route('/homegroup/members/<homegroupid>')
 def get_homegroup_users(homegroupid):
     return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroupid))
 
