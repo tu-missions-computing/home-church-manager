@@ -58,12 +58,12 @@ def add_attendance(user_id, meeting_id, attendance):
     # return
     #g.db.execute(query).fetchall()
 
-def create_user(first_name, last_name, email):
+def create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''
-    INSERT INTO user(first_name, last_name, email)
-    VALUES(:first_name, :last_name, :email)
+    INSERT INTO user(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
+    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date)
     '''
-    cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email':email})
+    cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email':email, 'phone_number':phone_number, 'gender':gender, 'birthday':birthday, 'baptism_status':baptism_status, 'join_date':join_date})
     g.db.commit()
     return cursor.rowcount
 
