@@ -59,6 +59,12 @@
             flex: 1;
         }
 
+        main {
+             margin: auto;
+            width: 50%;
+        }
+
+
     </style>
 </head>
 <body class="Site">
@@ -67,7 +73,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <main class="Site-content">
+
     <header>
         <ul class="navbar navbar-inverse">
             <a class="navbar-brand" href="#">Verbo Velocity</a>
@@ -82,6 +88,7 @@
         </ul>
     </header>
 
+   <main class="Site-content">
     {% if message %}
         <p>Note: {{ message }}</p>
     {% endif %}
