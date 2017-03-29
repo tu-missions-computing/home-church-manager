@@ -115,7 +115,7 @@ def edit_homegroup(homegroup_id):
         rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.description.data, hg_form.location.data)
         if (rowcount == 1):
             flash("Home Group updated!")
-            return redirect(url_for('index'))
+            return redirect(url_for('homegroup', homegroup_id = homegroup_id))
 
     return render_template('edit_homegroup.html', form = hg_form)
 
