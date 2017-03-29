@@ -67,21 +67,6 @@ def create_user(first_name, last_name, email):
     g.db.commit()
     return cursor.rowcount
 
-
-# Look up a single user
-def find_user(user_id):
-    return g.db.execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
-
-#edit a user
-def edit_user(user_id, first_name, last_name, email):
-    query = '''
-    UPDATE user SET first_name = :first, last_name = :last, email= :email
-    WHERE id = :user_id
-    '''
-    cursor = g.db.execute(query, {'user_id': user_id,'first': first_name, 'last': last_name, 'email': email})
-    g.db.commit()
-    return cursor.rowcount
-
 def get_all_users():
     cursor = g.db.execute('select * from user')
     return cursor.fetchall()

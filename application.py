@@ -76,6 +76,9 @@ def create_user():
 def all_users():
     return render_template('all_users.html', users = db.get_all_users())
 
+@app.route('/homegroup/users/<homegroupid>')
+def get_homegroup_users(homegroupid):
+    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroupid))
 
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
