@@ -54,7 +54,7 @@ class CreateUserForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email')
-    submit = SubmitField('Create User')
+    submit = SubmitField('Save User')
 
 
 @app.route('/user/create', methods=['GET', 'POST'])
@@ -75,6 +75,21 @@ def create_user():
 @app.route('/user/all')
 def all_users():
     return render_template('all_users.html', users = db.get_all_users())
+
+
+@app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    row = db.find_user(user_id)
+    user_form = CreateUserForm( first_name = row['first_name'],
+                                last_name = row['last_name'],
+                                email = row['email'])
+    if user_form.validate_on_submit():
+        rowcount = db.edit_user(user_id, user_form.first_name.data, user_form.last_name.data, user_form.email.data)
+        if (rowcount == 1):
+            flash("user updated!")
+            return redirect(url_for('index'))
+
+    return render_template('edit_user.html', form = user_form)
 
 
 @app.route('/thank-you')
