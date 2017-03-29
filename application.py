@@ -95,6 +95,34 @@ def edit_user(user_id):
     return render_template('edit_user.html', form = user_form)
 
 
+
+
+class CreateHomeGroupForm(FlaskForm):
+    name = StringField('Name')
+    location = StringField('Location')
+    description = StringField('Description')
+    submit = SubmitField('Save Home Group')
+
+
+
+@app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
+def edit_homegroup(homegroup_id):
+    row = db.find_homegroup(homegroup_id)
+    hg_form = CreateHomeGroupForm( name = row['name'],
+                                description = row['description'],
+                                location = row['location'])
+    if hg_form.validate_on_submit():
+        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.description.data, hg_form.location.data)
+        if (rowcount == 1):
+            flash("Home Group updated!")
+            return redirect(url_for('index'))
+
+    return render_template('edit_homegroup.html', form = hg_form)
+
+
+
+
+
 @app.route('/thank-you')
 def thank_you():
     return render_template('thank-you.html')

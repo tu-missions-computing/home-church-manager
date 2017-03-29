@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Home Group Information{% endblock %}
+
+{% block content %}
+    <h1> Edit Home Group</h1>
+    <form method = "POST">
+        {{ form.csrf_token }}
+        <p> {{form.name.label}} {{form.name()}}</p>
+        <p> {{form.description.label}} {{form.description()}}</p>
+        <p> {{form.location.label}} {{form.location()}}</p>
+        <p> {{ form.submit()}}</p>
+    </form>
+
+
+{% endblock %}
