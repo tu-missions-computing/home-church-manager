@@ -127,6 +127,11 @@ def edit_homegroup(homegroup_id):
 def thank_you():
     return render_template('thank-you.html')
 
+@app.route('/homegroup/<id>')
+def homegroup(id):
+    homegroup = db.find_homegroup(id)
+    return render_template('homegroup.html', currentHomegroup=homegroup)
+
 # Make this the last line in the file!
 if __name__ == '__main__':
     app.run(debug=True)

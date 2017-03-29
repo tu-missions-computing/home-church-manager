@@ -14,7 +14,7 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #333;
+            background-color: #2E8B57;
         }
 
         li {
@@ -36,6 +36,17 @@
         footer {
             padding-top: 5%;
 
+        }
+        .post-content {
+            top:0;
+            left:0;
+            position: absolute;
+        }
+        .welcome {
+            float:right;
+        }
+        .white{
+            color: white;
         }
 
         .Site {
@@ -60,13 +71,17 @@
     <header>
         <ul class="navbar navbar-inverse">
             <a class="navbar-brand" href="#">Verbo Velocity</a>
-          <li role="presentation"><a href="/users">Home</a></li>
-          <li role="presentation" ><a href="/attendance">Users</a></li>
-          <li role="presentation"><a href="/user/create">Add User</a></li>
-          <li role="presentation"><a href="#contact">Search</a></li>
-          <li role="presentation"><a href="#about">Send</a></li>
+            <li role="presentation"><a href="/homegroup">Home</a></li>
+            <li role="presentation" ><a href="/attendance">Users</a></li>
+            <li role="presentation"><a href="/user/create">Add User</a></li>
+            <li role="presentation"><a href="/users">Search</a></li>
+            <li role="presentation"><a href="#about">Send</a></li>
+            <li role="presentation" class="welcome"><a href="/users">Logout</a></li>
+            <li role="presentation" class="welcome"><a href="#about">Settings</a></li>
+            <li role="presentation" class="welcome white"><h4 class="welcome">Welcome, Homegroup Leader</h4></li>
         </ul>
     </header>
+
     {% if message %}
         <p>Note: {{ message }}</p>
     {% endif %}
