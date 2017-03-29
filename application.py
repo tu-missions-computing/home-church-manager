@@ -56,11 +56,36 @@ class CreateUserForm(FlaskForm):
     email = StringField('Email')
     phone_number = IntegerField('Phone Number (No dashes)')
     gender = SelectField('Gender', choices=[('male','Male'),('female','Female')])
-    birthday = DateField('Birthday', format='%m-%d-%Y')
+    birthday = StringField('Birthday')
     baptism_status = SelectField('Baptized?', choices=[('yes','Yes'),('no','No')])
     # format = '%m-%d-%Y'
     join_date = StringField('Date Joined')
     submit = SubmitField('Save User')
+
+
+@app.route('/homegroup/create_user/<homegroup_id>', methods=['GET', 'POST'])
+def create_new_user_for_homegroup(homegroup_id):
+    user = CreateUserForm()
+    if request.method == "POST":
+        first_name = user.first_name.data
+        last_name = user.last_name.data
+        email = user.email.data
+        phone_number = user.phone_number.data
+        gender = user.gender.data
+        birthday = user.birthday.data
+        baptism_status = user.baptism_status.data
+        join_date = user.join_date.data
+        rowcount = db.create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
+                                  join_date)
+        if rowcount == 1:
+
+            row = db.recent_user()
+            user_id = row['id']
+            db.add_user_to_homegroup(homegroup_id, user_id)
+            flash("User {} created!".format(user.first_name.data))
+            return redirect(url_for('get_homegroup_users', homegroupid = homegroup_id))
+
+    return render_template('create_user.html', form=user, homegroup_id = homegroup_id)
 
 
 @app.route('/member/create', methods=['GET', 'POST'])
@@ -90,7 +115,8 @@ def all_users():
 
 @app.route('/homegroup/members/<homegroupid>')
 def get_homegroup_users(homegroupid):
-    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroupid))
+    current_homegroup = db.find_homegroup(homegroupid)
+    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroupid), currentHomegroup = current_homegroup)
 
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):

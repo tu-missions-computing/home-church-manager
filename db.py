@@ -71,14 +71,14 @@ def add_user_to_homegroup(homegroup_id, user_id):
     query = '''
     INSERT INTO homegroup_user values(:homegroup_id, :user_id)
     '''
-    cursor = g.db.execute(query, {'homegroup_id' : homegroup_id, 'user_id': user_id})
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'user_id': user_id})
     g.db.commit()
     return cursor.rowcount
 
 
 
-def num_of_users():
-    cursor = g.db.execute('select COUNT(id) from user')
+def recent_user():
+    cursor = g.db.execute('select id from user order by id desc LIMIT 1')
     return cursor.fetchone()
 
 def get_all_users():
