@@ -83,3 +83,25 @@ def edit_user(user_id, first_name, last_name, email):
     cursor = g.db.execute(query, {'user_id': user_id, 'first': first_name, 'last': last_name, 'email': email})
     g.db.commit()
     return cursor.rowcount
+
+
+def find_homegroup(homegroup_id):
+    return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
+
+
+def edit_homegroup(homegroup_id, name, location, description):
+    query = '''
+    UPDATE homegroup SET name = :name, location = :location, description = :description
+    WHERE id = :homegroup_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'name': name, 'location': location, 'description': description})
+    g.db.commit()
+    return cursor.rowcount
+
+
+
+def get_homegroup_users(homegroupid):
+    return g.db.execute('''SELECT * FROM user
+    JOIN homegroup_user ON user.id = homegroup_user.user_id
+    JOIN homegroup ON homegroup_user.homegroup_id = homegroup.id
+    WHERE homegroup.id = ?''', (homegroupid,)).fetchall()
