@@ -6,10 +6,10 @@
     <h1> Edit Home Group</h1>
     <form method = "POST">
         {{ form.csrf_token }}
-        <p> {{form.name.label}} {{form.name()}}</p>
-        <p> {{form.description.label}} {{form.description()}}</p>
-        <p> {{form.location.label}} {{form.location()}}</p>
-        <p> {{ form.submit()}}</p>
+        <p> {{form.name.label}} {{form.name(class_='form-control')}}</p>
+        <p> {{form.description.label}} {{form.description(class_='form-control')}}</p>
+        <p> {{form.location.label}} {{form.location(class_='form-control')}}</p>
+        <p> {{ form.submit(class_='btn btn-default')}}</p>
     </form>
 
 

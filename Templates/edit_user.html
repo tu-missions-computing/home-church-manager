@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Edit Member{% endblock %}
 
 {% block content %}
-    <h1> Edit User</h1>
+    <h1> Edit Member</h1>
     <form method = "POST">
         {{ form.csrf_token }}
 
@@ -17,7 +17,7 @@
         <p> {{form.birthday.label}} {{form.birthday()}}</p>
         <p> {{form.baptism_status.label}} {{form.baptism_status()}}</p>
         <p> {{form.join_date.label}} {{form.join_date()}}</p>
-        <p> {{ form.submit()}}</p>
+        <p> {{form.submit(class_='btn btn-default')}}</p>
     </form>
 
 
