@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField
+from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, DateField
 from wtforms import StringField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
@@ -54,6 +54,11 @@ class CreateUserForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email')
+    phone_number = IntegerField('Phone Number (No dashes)')
+    gender = SelectField('Gender', choices=[('male','Male'),('female','Female')])
+    birthday = DateField('Birthday', format='%m-%d-%Y')
+    baptism_status = SelectField('Baptized?', choices=[('yes','Yes'),('no','No')])
+    join_date = DateField('Date Joined', format='%m-%d-%Y')
     submit = SubmitField('Save User')
 
 
@@ -65,7 +70,13 @@ def create_user():
         first_name = user.first_name.data
         last_name = user.last_name.data
         email = user.email.data
-        rowcount = db.create_user(first_name, last_name, email)
+        phone_number = user.phone_number.data
+        gender = user.gender.data
+        birthday = user.birthday.data
+        baptism_status = user.baptism_status.data
+        join_date = user.join_date.data
+
+        rowcount = db.create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if rowcount == 1:
             flash("User {} created!".format(user.first_name.data))
             return redirect(url_for('all_users'))
