@@ -6,10 +6,10 @@
     <h1> Edit Member</h1>
     <form method = "POST">
         {{ form.csrf_token }}
-        <p> {{form.first_name.label}} {{form.first_name()}}</p>
-        <p> {{form.last_name.label}} {{form.last_name()}}</p>
-        <p> {{form.email.label}} {{form.email()}}</p>
-        <p> {{ form.submit()}}</p>
+        <p> {{form.first_name.label}} {{form.first_name(class_='form-control')}}</p>
+        <p> {{form.last_name.label}} {{form.last_name(class_='form-control')}}</p>
+        <p> {{form.email.label}} {{form.email(class_='form-control')}}</p>
+        <p> {{ form.submit(class_='btn btn-default')}}</p>
     </form>
 
 
