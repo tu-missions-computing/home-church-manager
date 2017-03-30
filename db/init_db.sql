@@ -4,8 +4,8 @@ INSERT INTO user(email, first_name, last_name,  phone_number, gender, birthday, 
 
 INSERT INTO homegroup(name, location, description) values ('Home Group A', 'Location A', 'Description A');
 
-INSERT INTO homegroup_user values (1,1);
-INSERT INTO homegroup_user values (1,2);
+INSERT INTO homegroup_user values (1,1,1);
+INSERT INTO homegroup_user values (1,2,1);
 
 
 INSERT INTO meeting(date) values ('March 1, 2017');
