@@ -68,6 +68,8 @@ def create_user(first_name, last_name, email, phone_number, gender, birthday, ba
     return cursor.rowcount
 
 def add_user_to_homegroup(homegroup_id, user_id):
+    homegroup_id = int(homegroup_id)
+    user_id = int(user_id)
     query = '''
     INSERT INTO homegroup_user values(:homegroup_id, :user_id, 1)
     '''
@@ -129,11 +131,11 @@ def remove_user(homegroup_id, user_id):
 
 
 
-def get_homegroup_users(homegroupid):
+def get_homegroup_users(homegroup_id):
     return g.db.execute('''SELECT * FROM user
     JOIN homegroup_user ON user.id = homegroup_user.user_id
     JOIN homegroup ON homegroup_user.homegroup_id = homegroup.id
-    WHERE is_active and homegroup.id = ?''', (homegroupid,)).fetchall()
+    WHERE is_active and homegroup.id = ?''', (homegroup_id,)).fetchall()
 
 
 
