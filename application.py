@@ -172,6 +172,15 @@ def edit_homegroup(homegroup_id):
 
 
 
+@app.route('/homegroup/user/delete/<homegroup_id>/<user_id>', methods = ['GET', 'POST'])
+def remove_user(homegroup_id, user_id):
+    rowcount = db.remove_user(homegroup_id, user_id)
+    if rowcount == 1:
+         flash("User removed!")
+    return redirect(url_for('get_homegroup_users', homegroupid = homegroup_id))
+
+
+
 
 
 @app.route('/thank-you')

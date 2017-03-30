@@ -69,7 +69,7 @@ def create_user(first_name, last_name, email, phone_number, gender, birthday, ba
 
 def add_user_to_homegroup(homegroup_id, user_id):
     query = '''
-    INSERT INTO homegroup_user values(:homegroup_id, :user_id)
+    INSERT INTO homegroup_user values(:homegroup_id, :user_id, 1)
     '''
     cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'user_id': user_id})
     g.db.commit()
@@ -99,6 +99,8 @@ def edit_user(user_id, first_name, last_name, email, phone_number, gender, birth
     return cursor.rowcount
 
 
+
+
 def find_homegroup(homegroup_id):
     return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
 
@@ -114,9 +116,24 @@ def edit_homegroup(homegroup_id, name, location, description):
     return cursor.rowcount
 
 
+def remove_user(homegroup_id, user_id):
+    user_id = int(user_id)
+    homegroup_id = int(homegroup_id)
+    query = '''
+    UPDATE homegroup_user SET is_active = 0
+    WHERE homegroup_id = :homegroup_id AND user_id = :user_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'user_id': user_id})
+    g.db.commit()
+    return cursor.rowcount
+
+
 
 def get_homegroup_users(homegroupid):
     return g.db.execute('''SELECT * FROM user
     JOIN homegroup_user ON user.id = homegroup_user.user_id
     JOIN homegroup ON homegroup_user.homegroup_id = homegroup.id
-    WHERE homegroup.id = ?''', (homegroupid,)).fetchall()
+    WHERE is_active and homegroup.id = ?''', (homegroupid,)).fetchall()
+
+
+

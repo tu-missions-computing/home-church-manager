@@ -27,6 +27,7 @@ drop table if exists homegroup_user;
 create table homegroup_user (
   homegroup_id,
   user_id,
+  is_active BOOLEAN,
   PRIMARY KEY (homegroup_id, user_id)
 );
 
