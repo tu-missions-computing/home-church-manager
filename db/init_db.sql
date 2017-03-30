@@ -7,6 +7,10 @@ INSERT INTO homegroup(name, location, description) values ('Home Group A', 'Loca
 INSERT INTO homegroup_user values (1,1,1);
 INSERT INTO homegroup_user values (1,2,1);
 
+INSERT INTO attendance VALUES (1,1,1,1);
+INSERT INTO attendance VALUES (1,2,1,1);
+INSERT INTO attendance VALUES (1,1,2,1);
+INSERT INTO attendance VALUES (1,2,2,1);
 
 INSERT INTO meeting(date) values ('March 1, 2017');
 INSERT INTO meeting(date) values ('March 7, 2017');

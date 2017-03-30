@@ -37,13 +37,16 @@ drop table if exists meeting;
 create table meeting (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   date TEXT,
-  foreign key (id) REFERENCES attendance (date_id)
+  time TEXT,
+  foreign key (id) REFERENCES attendance (meeting_id)
 
 );
 drop table if exists attendance;
 CREATE TABLE attendance (
+  homegroup_id INTEGER,
   user_id INTEGER,
   meeting_id INTEGER,
   attendance BOOLEAN,
-  PRIMARY KEY(user_id, meeting_id)
+  PRIMARY KEY(homegroup_id, user_id, meeting_id)
 );
+
