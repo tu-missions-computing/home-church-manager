@@ -115,7 +115,10 @@ def edit_homegroup(homegroup_id, name, location, description):
     g.db.commit()
     return cursor.rowcount
 
+
 def remove_user(homegroup_id, user_id):
+    user_id = int(user_id)
+    homegroup_id = int(homegroup_id)
     query = '''
     UPDATE homegroup_user SET is_active = 0
     WHERE homegroup_id = :homegroup_id AND user_id = :user_id
