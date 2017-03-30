@@ -83,7 +83,7 @@ def create_new_user_for_homegroup(homegroup_id):
             user_id = row['id']
             db.add_user_to_homegroup(homegroup_id, user_id)
             flash("User {} created!".format(user.first_name.data))
-            return redirect(url_for('get_homegroup_users', homegroupid = homegroup_id))
+            return redirect(url_for('get_homegroup_users', homegroup_id = homegroup_id))
 
     return render_template('create_user.html', form=user, homegroup_id = homegroup_id)
 
@@ -113,10 +113,10 @@ def create_user():
 def all_users():
     return render_template('all_users.html', users = db.get_all_users())
 
-@app.route('/homegroup/members/<homegroupid>')
-def get_homegroup_users(homegroupid):
-    current_homegroup = db.find_homegroup(homegroupid)
-    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroupid), currentHomegroup = current_homegroup)
+@app.route('/homegroup/members/<homegroup_id>')
+def get_homegroup_users(homegroup_id):
+    current_homegroup = db.find_homegroup(homegroup_id)
+    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroup_id), currentHomegroup = current_homegroup)
 
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
@@ -177,7 +177,7 @@ def remove_user(homegroup_id, user_id):
     rowcount = db.remove_user(homegroup_id, user_id)
     if rowcount == 1:
          flash("User removed!")
-    return redirect(url_for('get_homegroup_users', homegroupid = homegroup_id))
+    return redirect(url_for('get_homegroup_users', homegroup_id = homegroup_id))
 
 
 
@@ -188,8 +188,8 @@ def thank_you():
     return render_template('thank-you.html')
 
 @app.route('/homegroup/<id>')
-def homegroup(id):
-    homegroup = db.find_homegroup(id)
+def homegroup(homegroup_id):
+    homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
 
 # Make this the last line in the file!
