@@ -92,6 +92,8 @@ def find_user(user_id):
     return g.db.execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
 
 def edit_user(user_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
+    user_id = int(user_id)
+    print(user_id)
     query = '''
     UPDATE user SET first_name = :first, last_name = :last, email = :email, phone_number = :phone, gender = :gender, birthday = :bday, baptism_status = :baptism, join_date = :join
     WHERE id = :user_id
