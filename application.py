@@ -129,7 +129,7 @@ def edit_user(user_id):
                                 birthday = row['birthday'],
                                 baptism_status = row['baptism_status'],
                                 join_date = row['join_date'])
-    if user_form.validate_on_submit():
+    if request.method == "POST":
         first_name = user_form.first_name.data
         last_name = user_form.last_name.data
         email = user_form.email.data
@@ -187,7 +187,7 @@ def remove_user(homegroup_id, user_id):
 def thank_you():
     return render_template('thank-you.html')
 
-@app.route('/homegroup/<id>')
+@app.route('/homegroup/<homegroup_id>')
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
