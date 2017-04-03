@@ -7,6 +7,7 @@
 
 {% if showusers != 'Y': %}
 <h1>Attendance report</h1>
+    <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> <span class="glyphicon glyphicon-time"> </span> View Attendance History</button><br><br></a>
 <form method = "POST">
 <label>Date</label> <input type="date" name="AttendanceDate" /> <label>Time</label><input type="time" name = "AttendanceTime"><br>
 <input type="submit" class="btn btn-info welcome" value="Generate Attendance Report">
@@ -15,7 +16,7 @@
 {% if showusers == 'Y': %}
 <h1>Attendance Report </h1>
 <h3>Date: {{date}} Time: {{time}}
-<a href="{{url_for('attendance', homegroup_id = currentHomegroup )}}"><button class = "btn btn-info welcome"><span class="glyphicon glyphicon-plus"> </span> New Attendance Report</button></a></h3>
+<a href="{{url_for('attendance', homegroup_id = currentHomegroup )}}"><button class = "btn btn-success welcome"><span class="glyphicon glyphicon-plus"> </span> New Attendance Report</button></a></h3>
 <br>
 <table class="table table-striped table-bordered table-hover">
 
