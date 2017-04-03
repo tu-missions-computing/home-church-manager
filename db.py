@@ -47,14 +47,24 @@ def get_dates():
     query='''
         SELECT
     '''
-def add_attendance(user_id, meeting_id, attendance):
+def add_attendance(homegroup_id, user_id, meeting_id, attendance):
     query = '''
-        INSERT INTO attendance (user_id, meeting_id, attendance)
-        VALUES ( :user_id, :meeting_id, :attendance );
+        INSERT INTO attendance (homegroup_id, user_id, meeting_id, attendance)
+        VALUES ( :homegroup_id, :user_id, :meeting_id, :attendance );
         '''
-    cursor = g.db.execute(query, {'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
+    cursor = g.db.execute(query, {'Homegroup Id': homegroup_id, 'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
     g.db.commit()
     return cursor.rowcount
+
+def add_date(date, time):
+    query = '''
+    INSERT INTO meeting (date, time) VALUES (:adate, :atime)
+    '''
+    cursor = g.db.execute(query, {'adate': date, 'atime': time})
+    g.db.commit()
+    return cursor.lastrowid
+
+
     # return
     #g.db.execute(query).fetchall()
 

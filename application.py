@@ -35,18 +35,26 @@ def trip_report():
     return render_template('users.html', report = db.get_users())
 
 
-@app.route('/attendance', methods=['GET', 'POST'])
-def addAttendance():
+@app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])
+def attendance(homegroup_id):
     error = ""
-    form = AttendanceForm(request.form)
-    users = db.get_users()
+    attendance_form = AttendanceForm()
+    users = db.get_homegroup_users(homegroup_id)
+    show_users = 'N'
+    if (request.method == "POST"):
+        date = request.form['AttendanceDate']
+        time = request.form['AttendanceTime']
+        db.add_date(date, time)
 
-    if form.validate_on_submit():
-        for i in range(1, db.get_user_count()):
-            attendance = form.radio+i
-        return redirect(url_for('thank_you'))
+    return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, users=users, showusers = show_users)
 
-    return render_template('attendance.html', form=form, users=users)
+@app.route('/homegroup/attendance/add/<homegroup_id>/<user_id>/<attendance>/<date>')
+def addAttendance(homegroup_id, user_id, attendance, date ):
+    meeting_id = db.add_date(date)
+    db.add_attendance(homegroup_id, user_id, attendance, meeting_id)
+    return redirect(url_for('attendance', homegroup_id))
+
+
 
 
 
