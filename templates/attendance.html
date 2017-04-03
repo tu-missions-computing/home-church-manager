@@ -5,8 +5,17 @@
 {% block content %}
 
 <h1>Attendance report</h1>
-<input type="date" />
+  {% if showusers != 'Y': %}
+<form method = "POST">
+<label>Date</label> <input type="date" name="AttendanceDate" /> <label>Time</label><input type="time" name = "AttendanceTime"><br>
+<input type="submit" class="btn btn-info welcome" value="Generate Attendance Report">
+</form>
+    {% endif %}
+{% if showusers == 'Y': %}
+
 <table class="table table-striped table-bordered table-hover">
+
+
     <thead>
     <tr>
         <th>First Name</th>
@@ -22,14 +31,8 @@
         <td>{{ user.first_name }}</td>
         <td>{{ user.last_name }}</td>
         <td>
-            <form action="">
-                <div class="radio">
-              <label><input type="radio" name="optradio">Yes</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" name="optradio">No</label>
-            </div>
-            </form>
+            <a href="{{url_for('addAttendance', homegroup_id = currentHomegroup, user_id = user.id, attendance = 1, date = request.form['AttendanceDate']) }}"><button> Yes</button></a>
+            <button value="N">No</button>
         </td>
 
     </tr>
@@ -38,8 +41,9 @@
         <td colspan="4">No Info</td>
     </tr>
     {% endfor %}
+    {% endif %}
     </tbody>
 </table>
-<input type="submit" class="btn btn-info welcome" value="Submit">
+
 
 {% endblock %}

@@ -7,7 +7,7 @@
     <a href="{{url_for('get_homegroup_users', homegroup_id = currentHomegroup.id)}}" class="btn btn-primary">
         Members
     </a>
-    <a href="/attendance" class="btn btn-primary">
+    <a href="{{ url_for('attendance', homegroup_id = currentHomegroup.id)}}" class="btn btn-primary">
         Attendance
     </a>
     <a href="{{ url_for('edit_homegroup', homegroup_id = currentHomegroup.id) }}" class="btn btn-primary">
