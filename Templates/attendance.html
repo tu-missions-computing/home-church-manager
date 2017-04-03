@@ -4,15 +4,19 @@
 
 {% block content %}
 
+
+{% if showusers != 'Y': %}
 <h1>Attendance report</h1>
-  {% if showusers != 'Y': %}
 <form method = "POST">
 <label>Date</label> <input type="date" name="AttendanceDate" /> <label>Time</label><input type="time" name = "AttendanceTime"><br>
 <input type="submit" class="btn btn-info welcome" value="Generate Attendance Report">
 </form>
-    {% endif %}
+{% endif %}
 {% if showusers == 'Y': %}
-
+<h1>Attendance Report </h1>
+<h3>Date: {{date}} Time: {{time}}
+<a href="{{url_for('attendance', homegroup_id = currentHomegroup )}}"><button class = "btn btn-info welcome"><span class="glyphicon glyphicon-plus"> </span> New Attendance Report</button></a></h3>
+<br>
 <table class="table table-striped table-bordered table-hover">
 
 
@@ -31,8 +35,12 @@
         <td>{{ user.first_name }}</td>
         <td>{{ user.last_name }}</td>
         <td>
-            <a href="{{url_for('addAttendance', homegroup_id = currentHomegroup, user_id = user.id, attendance = 1, date = request.form['AttendanceDate']) }}"><button> Yes</button></a>
-            <button value="N">No</button>
+            {% if user.attendance == 0: %}
+            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, user_id = user.id, meeting_id = meeting_id, attendance = 1)}}"><button class="btn btn-secondary" > &nbsp; &nbsp;  </button></a>
+            {% else: %}
+            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, user_id = user.id, meeting_id = meeting_id, attendance = 0)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span></button></a>
+            {% endif %}
+
         </td>
 
     </tr>
