@@ -42,20 +42,31 @@ def attendance(homegroup_id):
     users = db.get_homegroup_users(homegroup_id)
     show_users = 'N'
     if (request.method == "POST"):
+
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
-        db.add_date(date, time)
+        show_users = 'Y'
+        meeting_id = db.add_date(date, time)['id']
+        db.generate_attendance_report(homegroup_id, meeting_id)
+        users = db.get_attendance(homegroup_id, meeting_id)
+        return render_template('attendance.html', meeting_id = meeting_id, currentHomegroup=homegroup_id, form=attendance_form, users=users,showusers=show_users, date = date, time=time)
 
     return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, users=users, showusers = show_users)
 
-@app.route('/homegroup/attendance/add/<homegroup_id>/<user_id>/<attendance>/<date>')
-def addAttendance(homegroup_id, user_id, attendance, date ):
-    meeting_id = db.add_date(date)
-    db.add_attendance(homegroup_id, user_id, attendance, meeting_id)
-    return redirect(url_for('attendance', homegroup_id))
+@app.route('/homegroup/attendance/add/<homegroup_id>/<user_id>/<meeting_id>/<attendance>')
+def updateAttendance(homegroup_id, user_id, attendance, meeting_id ):
+    attendance_form = AttendanceForm()
+    db.update_attendance(homegroup_id, user_id, meeting_id, attendance)
+    users = db.get_attendance(homegroup_id, meeting_id)
+    show_users = 'Y'
+    date = db.find_date(meeting_id)['date']
+    time = db.find_date(meeting_id)['time']
+    return render_template('attendance.html', currentHomegroup = homegroup_id, form = attendance_form, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
 
 
-
+@app.route('/attendance/dates/<homegroup_id>', methods=['GET'])
+def get_attendance_dates(homegroup_id):
+    return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
 
 class CreateUserForm(FlaskForm):

@@ -43,16 +43,44 @@ def get_user_count():
         '''
     return g.db.execute(query).fetchall()
 
-def get_dates():
-    query='''
-        SELECT
-    '''
-def add_attendance(homegroup_id, user_id, meeting_id, attendance):
-    query = '''
-        INSERT INTO attendance (homegroup_id, user_id, meeting_id, attendance)
-        VALUES ( :homegroup_id, :user_id, :meeting_id, :attendance );
+def get_attendance_dates(homegroup_id):
+    homegroup_id = int(homegroup_id)
+
+    return g.db.execute('''
+        SELECT meeting.date, meeting.time
+        from meeting JOIN attendance on meeting.id = attendance.meeting_id
+        WHERE homegroup_id = ?
+        ''', (homegroup_id,)).fetchall()
+
+def generate_attendance_report(homegroup_id, meeting_id):
+    meeting_id = int(meeting_id)
+    users = get_homegroup_users(homegroup_id)
+    for user in users:
+        query = '''INSERT INTO attendance (homegroup_id, user_id, meeting_id, attendance)
+        VALUES (:homegroup_id, :user_id, :meeting_id, :attendance)
         '''
-    cursor = g.db.execute(query, {'Homegroup Id': homegroup_id, 'User Id': user_id, 'Attendance': attendance, 'Meeting Id': meeting_id})
+        cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'user_id': user['id'], 'meeting_id': meeting_id, 'attendance':0})
+    g.db.commit()
+    return cursor.rowcount
+
+
+def get_attendance(homegroup_id, meeting_id):
+    meeting_id = int(meeting_id)
+    query = '''SELECT * from attendance join user on attendance.user_id = user.id
+                WHERE homegroup_id = :homegroup_id and meeting_id = :meeting_id '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'meeting_id': meeting_id})
+    return cursor.fetchall()
+
+def find_date(meeting_id):
+    meeting_id = int(meeting_id)
+    return g.db.execute('SELECT * from meeting WHERE id =?', (meeting_id,)).fetchone()
+
+def update_attendance(homegroup_id, user_id, meeting_id, attendance):
+    query = '''
+        UPDATE attendance SET attendance = :attendance
+        WHERE homegroup_id = :homegroup_id and user_id = :user_id and meeting_id = :meeting_id
+        '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'user_id': user_id, 'attendance': attendance, 'meeting_id': meeting_id})
     g.db.commit()
     return cursor.rowcount
 
@@ -62,7 +90,9 @@ def add_date(date, time):
     '''
     cursor = g.db.execute(query, {'adate': date, 'atime': time})
     g.db.commit()
-    return cursor.lastrowid
+    query = '''SELECT id from meeting order by id desc limit 1'''
+    cursor = g.db.execute(query)
+    return cursor.fetchone()
 
 
     # return
