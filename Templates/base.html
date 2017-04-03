@@ -7,6 +7,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <script type="text/javascript" src="javascript.js"></script>
 
     <style>
         ul {
@@ -96,8 +97,30 @@
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c99', endColorstr='#007299',GradientType=0 ); /* IE6-9 */
         }
 
-        .btn-lg.round {
-            border-radius: 24px;
+        .singleLineChildren {
+          /* prevents the contents from wrapping to a new line: */
+          white-space: nowrap;
+          /* prevents the overflow being seen/scrolled-to;
+             adjust to taste: */
+          overflow: hidden;
+          /* to emphasize/speed-up the effect: */
+          width: 100%;
+
+        }
+
+        /* Searching through table */
+        .results tr[visible='false'],
+        .no-result{
+          display:none;
+        }
+
+        .results tr[visible='true']{
+          display:table-row;
+        }
+
+        .counter{
+          padding:8px;
+          color:#ccc;
         }
 
 
