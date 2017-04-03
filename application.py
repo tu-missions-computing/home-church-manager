@@ -141,7 +141,7 @@ def edit_user(user_id):
         rowcount = db.edit_user(user_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if (rowcount == 1):
             flash("user updated!")
-            return redirect(url_for('index'))
+            return redirect(url_for('get_homegroup_users', homegroup_id = 1))
 
     return render_template('edit_user.html', form = user_form)
 
