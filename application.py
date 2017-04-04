@@ -28,8 +28,7 @@ def after(exception):
 
 @app.route('/')
 def index():
-    return render_template('base.html')
-
+    return redirect(url_for("homegroup", homegroup_id=1))
 @app.route('/members')
 def trip_report():
     return render_template('users.html', report = db.get_users())
