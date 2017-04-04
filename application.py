@@ -73,7 +73,8 @@ def edit_attendance(homegroup_id, meeting_id):
     return render_template('attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
 
 
-@app.route('homegroup/attendance/dates/<homegroup_id>', methods=['GET'])
+
+@app.route('/homegroup/attendance/dates/<homegroup_id>', methods=['GET'])
 def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
