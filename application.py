@@ -73,12 +73,9 @@ class CreateUserForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email')
-    phone_number = IntegerField('Phone Number (No dashes)')
+    phone_number = IntegerField('Phone Number')
     gender = SelectField('Gender', choices=[('male','Male'),('female','Female')])
-    birthday = StringField('Birthday')
     baptism_status = SelectField('Baptized?', choices=[('yes','Yes'),('no','No')])
-    # format = '%m-%d-%Y'
-    join_date = StringField('Date Joined')
     submit = SubmitField('Save User')
 
 
@@ -91,9 +88,9 @@ def create_new_user_for_homegroup(homegroup_id):
         email = user.email.data
         phone_number = user.phone_number.data
         gender = user.gender.data
-        birthday = user.birthday.data
+        birthday = request.form['Birthday']
         baptism_status = user.baptism_status.data
-        join_date = user.join_date.data
+        join_date = request.form['JoinDate']
         rowcount = db.create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
                                   join_date)
         if rowcount == 1:
@@ -145,24 +142,24 @@ def edit_user(user_id):
                                 email = row['email'],
                                 phone_number = row['phone_number'],
                                 gender = row['gender'],
-                                birthday = row['birthday'],
-                                baptism_status = row['baptism_status'],
-                                join_date = row['join_date'])
+                                baptism_status = row['baptism_status'])
+    birthday_form = row['birthday']
+    join_date_form = row['join_date']
     if request.method == "POST":
         first_name = user_form.first_name.data
         last_name = user_form.last_name.data
         email = user_form.email.data
         phone_number = user_form.phone_number.data
         gender = user_form.gender.data
-        birthday = user_form.birthday.data
+        birthday = request.form['Birthday']
         baptism_status = user_form.baptism_status.data
-        join_date = user_form.join_date.data
+        join_date = request.form['JoinDate']
         rowcount = db.edit_user(user_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if (rowcount == 1):
             flash("user updated!")
             return redirect(url_for('get_homegroup_users', homegroup_id = 1))
 
-    return render_template('edit_user.html', form = user_form)
+    return render_template('edit_user.html', form = user_form, bDay = birthday_form, joinDay = join_date_form)
 
 
 
