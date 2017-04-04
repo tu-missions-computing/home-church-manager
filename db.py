@@ -47,7 +47,7 @@ def get_attendance_dates(homegroup_id):
     homegroup_id = int(homegroup_id)
 
     return g.db.execute('''
-        SELECT meeting.date, meeting.time
+        SELECT meeting.date, meeting.time, attendance.meeting_id
         from meeting JOIN attendance on meeting.id = attendance.meeting_id
         WHERE homegroup_id = ?
         ''', (homegroup_id,)).fetchall()

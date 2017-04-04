@@ -64,7 +64,16 @@ def updateAttendance(homegroup_id, user_id, attendance, meeting_id ):
     return render_template('attendance.html', currentHomegroup = homegroup_id, form = attendance_form, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
 
 
-@app.route('/attendance/dates/<homegroup_id>', methods=['GET'])
+@app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>')
+def edit_attendance(homegroup_id, meeting_id):
+    users = db.get_attendance(homegroup_id, meeting_id)
+    show_users = 'Y'
+    date = db.find_date(meeting_id)['date']
+    time = db.find_date(meeting_id)['time']
+    return render_template('attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
+
+
+@app.route('homegroup/attendance/dates/<homegroup_id>', methods=['GET'])
 def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
