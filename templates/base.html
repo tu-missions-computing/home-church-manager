@@ -101,17 +101,21 @@
     <nav>
         <ul class="navbar navbar-inverse">
             <a class="navbar-brand" href="{{ url_for('index') }}">Verbo Velocity</a>
+            {% if session %}
+            {% if session['email'] %}
             {% if session['role'] == 'homegroup_leader' %}
             <li role="presentation" ><a href="{{ url_for('get_homegroup_members', homegroup_id = session['homegroup_id']) }}">Members</a></li>
             <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = session['homegroup_id']) }}">Attendance</a></li>
             {% endif %}
-            {%  if session: %}
             <li role="presentation" class="welcome"><a href="/logout">Log Out</a></li>
-            {% endif %}
             {% if session['role'] == 'homegroup_leader' %}
             <li role="presentation" class="welcome"><a href="{{ url_for('edit_homegroup', homegroup_id = session['homegroup_id']) }}">Settings</a></li>
             <li role="presentation" class="welcome white"><h4><span class="glyphicon glyphicon-user"></span> Welcome, {{ session['name'] }}</h4></li>
             {% endif %}
+            {% endif %}
+
+            {% endif %}
+
         </ul>
     </nav>
 
