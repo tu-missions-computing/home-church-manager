@@ -14,7 +14,5 @@ INSERT INTO attendance VALUES (1,2,2,1);
 
 INSERT INTO meeting(date) values ('March 1, 2017');
 INSERT INTO meeting(date) values ('March 7, 2017');
-INSERT INTO meeting(date) values ('March 10, 2017');
-INSERT INTO meeting(date) values ('March 13, 2017');
-INSERT INTO meeting(date) values ('March 20, 2017');
+
 
