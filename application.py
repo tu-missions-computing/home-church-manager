@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, session, render_template, request, flash, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, DateField
-from wtforms import StringField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
 import db
@@ -28,8 +28,47 @@ def after(exception):
 
 @app.route('/')
 def index():
-    return redirect(url_for("homegroup", homegroup_id=1))
+    user = session
+    if not user:
+        return redirect(url_for('login'))
+    else:
+        role = session['role']
+        if role == 'homegroup_leader':
+            return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
+    return redirect(url_for('login'))
 
+
+class LoginForm(FlaskForm):
+    email = StringField('E-mail Address', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+
+    if login_form.validate_on_submit():
+        role = db.check_valid_user(login_form.email.data, login_form.password.data)
+        if not role:
+            flash ('Invalid username or password')
+        else:
+            session['email'] = login_form.email.data
+            session['role'] = role
+            session['name'] = db.find_member_info(session['email'])['first_name']
+            if role == 'homegroup_leader':
+                session['homegroup_id'] = db.find_user_homegroup(session['email'])
+            flash('Logged in successfully as {}'.format(session['email']))
+            return redirect(url_for('index'))
+
+    return render_template('login.html', form = login_form)
+
+@app.route('/logout')
+def logout():
+    email = session.pop('email', None)
+    session.clear()
+    flash('Logged out')
+    return redirect(url_for('login'))
 
 
 @app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])

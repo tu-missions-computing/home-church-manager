@@ -36,12 +36,33 @@ def get_members():
         '''
     return g.db.execute(query).fetchall()
 
+
 def get_member_count():
     query = '''
         SELECT count(id)
         FROM member
         '''
     return g.db.execute(query).fetchall()
+
+
+def check_valid_user(email, password):
+    query = ''' SELECT * from user JOIN role on user.role_id = role.id
+    WHERE email = :email and password = :password
+    '''
+    cursor = g.db.execute(query, {'email': email, 'password': password})
+    role = cursor.fetchone()['role']
+    return role
+
+def find_user_homegroup(email):
+    query = '''SELECT * from homegroup_leader JOIN user on homegroup_leader.user_id = user.id
+    WHERE email = :email
+    '''
+    cursor = g.db.execute(query, {'email': email})
+    homegroup_id = cursor.fetchone()['homegroup_id']
+    return homegroup_id
+
+def find_member_info(email):
+    return g.db.execute('SELECT * from member WHERE email =?', (email,)).fetchone()
 
 def get_attendance_dates(homegroup_id):
     homegroup_id = int(homegroup_id)
