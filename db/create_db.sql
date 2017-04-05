@@ -1,3 +1,5 @@
+
+
 drop table if exists member;
 create table member (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,8 +12,26 @@ create table member (
   baptism_status BOOLEAN,
   join_date TEXT,
   foreign key (id) REFERENCES attendance (member_id),
-  foreign key (id) REFERENCES homegroup_member (member_id)
+  foreign key (id) REFERENCES homegroup_member (member_id),
+  foreign key (email) REFERENCES user(email)
 );
+
+drop table if exists user;
+create table user (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT UNIQUE,
+  password TEXT,
+  role_id TEXT,
+  foreign key (id) REFERENCES homegroup_leader (user_id)
+);
+drop table if exists role;
+create table role (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role TEXT,
+  FOREIGN KEY (id) references user(role_id)
+);
+
+
 
 
 drop table if exists homegroup;
@@ -20,8 +40,17 @@ create table homegroup (
   name TEXT,
   location TEXT,
   description TEXT,
-  foreign key (id) REFERENCES homegroup_member (homegroup_id)
+  foreign key (id) REFERENCES homegroup_member (homegroup_id),
+  foreign key (id) REFERENCES homegroup_leader (homegroup_id)
 );
+
+drop table if exists homegroup_leader;
+create table homegroup_leader (
+  user_id,
+  homegroup_id,
+  PRIMARY KEY (user_id, homegroup_id)
+)
+
 
 drop table if exists homegroup_member;
 create table homegroup_member (
