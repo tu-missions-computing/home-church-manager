@@ -5,7 +5,7 @@
 {% block content %}
 
 
-{% if showusers != 'Y': %}
+{% if showmembers != 'Y': %}
 <h1>Attendance report</h1>
     <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> <span class="glyphicon glyphicon-time"> </span> View Attendance History</button><br><br></a>
 <form method = "POST">
@@ -13,7 +13,7 @@
 <input type="submit" class="btn btn-info welcome" value="Generate Attendance Report">
 </form>
 {% endif %}
-{% if showusers == 'Y': %}
+{% if showmembers == 'Y': %}
 <h1>Attendance Report </h1>
 <h3>Date: {{date}} Time: {{time}}
     <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> <span class="glyphicon glyphicon-time"> </span> View Attendance History</button><br><br></a>
@@ -31,16 +31,16 @@
     </tr>
     </thead>
     <tbody>
-    {% for user in users %}
+    {% for member in members %}
     <tr>
 
-        <td>{{ user.first_name }}</td>
-        <td>{{ user.last_name }}</td>
+        <td>{{ member.first_name }}</td>
+        <td>{{ member.last_name }}</td>
         <td>
-            {% if user.attendance == 0: %}
-            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, user_id = user.id, meeting_id = meeting_id, attendance = 1)}}"><button class="btn btn-secondary" > &nbsp; &nbsp;  </button></a>
+            {% if member.attendance == 0: %}
+            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, member_id = member.id, meeting_id = meeting_id, attendance = 1)}}"><button class="btn btn-secondary" > &nbsp; &nbsp;  </button></a>
             {% else: %}
-            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, user_id = user.id, meeting_id = meeting_id, attendance = 0)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span></button></a>
+            <a href="{{url_for('updateAttendance', homegroup_id = currentHomegroup, member_id = member.id, meeting_id = meeting_id, attendance = 0)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span></button></a>
             {% endif %}
 
         </td>

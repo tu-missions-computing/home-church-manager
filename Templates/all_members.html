@@ -17,11 +17,11 @@
 
 
     <tbody>
-    {% for user in users %}
+    {% for member in members %}
         <tr>
-        <td> {{ user.first_name }}</td>
-        <td> {{ user.last_name }}</td>
-        <td> {{ user.email}}</td>
+        <td> {{ member.first_name }}</td>
+        <td> {{ member.last_name }}</td>
+        <td> {{ member.email}}</td>
 
         </tr>
     {%  endfor %}
