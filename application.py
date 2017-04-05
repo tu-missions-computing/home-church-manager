@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
 
 class AttendanceForm(FlaskForm):
-    # user_id = StringField('User Id', validators=[Length(min=1, max=40)])
+    # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
     radio = RadioField('Attendance', choices=["y","n"])
     submit = SubmitField('Submit')
@@ -29,47 +29,45 @@ def after(exception):
 @app.route('/')
 def index():
     return redirect(url_for("homegroup", homegroup_id=1))
-@app.route('/members')
-def trip_report():
-    return render_template('users.html', report = db.get_users())
+
 
 
 @app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])
 def attendance(homegroup_id):
     error = ""
     attendance_form = AttendanceForm()
-    users = db.get_homegroup_users(homegroup_id)
-    show_users = 'N'
+    members = db.get_homegroup_members(homegroup_id)
+    show_members = 'N'
     if (request.method == "POST"):
 
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
-        show_users = 'Y'
+        show_members = 'Y'
         meeting_id = db.add_date(date, time)['id']
         db.generate_attendance_report(homegroup_id, meeting_id)
-        users = db.get_attendance(homegroup_id, meeting_id)
-        return render_template('attendance.html', meeting_id = meeting_id, currentHomegroup=homegroup_id, form=attendance_form, users=users,showusers=show_users, date = date, time=time)
+        members = db.get_attendance(homegroup_id, meeting_id)
+        return render_template('attendance.html', meeting_id = meeting_id, currentHomegroup=homegroup_id, form=attendance_form, members=members,showmembers=show_members, date = date, time=time)
 
-    return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, users=users, showusers = show_users)
+    return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, members=members, showmembers = show_members)
 
-@app.route('/homegroup/attendance/add/<homegroup_id>/<user_id>/<meeting_id>/<attendance>')
-def updateAttendance(homegroup_id, user_id, attendance, meeting_id ):
+@app.route('/homegroup/attendance/add/<homegroup_id>/<member_id>/<meeting_id>/<attendance>')
+def updateAttendance(homegroup_id, member_id, attendance, meeting_id ):
     attendance_form = AttendanceForm()
-    db.update_attendance(homegroup_id, user_id, meeting_id, attendance)
-    users = db.get_attendance(homegroup_id, meeting_id)
-    show_users = 'Y'
+    db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
+    members = db.get_attendance(homegroup_id, meeting_id)
+    show_members = 'Y'
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
-    return render_template('attendance.html', currentHomegroup = homegroup_id, form = attendance_form, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
+    return render_template('attendance.html', currentHomegroup = homegroup_id, form = attendance_form, meeting_id = meeting_id, members = members, showmembers = show_members, date = date, time = time)
 
 
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>')
 def edit_attendance(homegroup_id, meeting_id):
-    users = db.get_attendance(homegroup_id, meeting_id)
-    show_users = 'Y'
+    members = db.get_attendance(homegroup_id, meeting_id)
+    show_members = 'Y'
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
-    return render_template('attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, users = users, showusers = show_users, date = date, time = time)
+    return render_template('attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, members = members, showmembers = show_members, date = date, time = time)
 
 
 
@@ -78,75 +76,75 @@ def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
 
-class CreateUserForm(FlaskForm):
+class CreatememberForm(FlaskForm):
     first_name = StringField('First Name')
     last_name = StringField('Last Name')
     email = StringField('Email')
     phone_number = IntegerField('Phone Number')
     gender = SelectField('Gender', choices=[('male','Male'),('female','Female')])
     baptism_status = SelectField('Baptized?', choices=[('yes','Yes'),('no','No')])
-    submit = SubmitField('Save User')
+    submit = SubmitField('Save member')
 
 
-@app.route('/homegroup/create_user/<homegroup_id>', methods=['GET', 'POST'])
-def create_new_user_for_homegroup(homegroup_id):
-    user = CreateUserForm()
+@app.route('/homegroup/create_member/<homegroup_id>', methods=['GET', 'POST'])
+def create_new_member_for_homegroup(homegroup_id):
+    member = CreatememberForm()
     if request.method == "POST":
-        first_name = user.first_name.data
-        last_name = user.last_name.data
-        email = user.email.data
-        phone_number = user.phone_number.data
-        gender = user.gender.data
+        first_name = member.first_name.data
+        last_name = member.last_name.data
+        email = member.email.data
+        phone_number = member.phone_number.data
+        gender = member.gender.data
         birthday = request.form['Birthday']
-        baptism_status = user.baptism_status.data
+        baptism_status = member.baptism_status.data
         join_date = request.form['JoinDate']
-        rowcount = db.create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
                                   join_date)
         if rowcount == 1:
 
-            row = db.recent_user()
-            user_id = row['id']
-            db.add_user_to_homegroup(homegroup_id, user_id)
-            flash("User {} created!".format(user.first_name.data))
-            return redirect(url_for('get_homegroup_users', homegroup_id = homegroup_id))
+            row = db.recent_member()
+            member_id = row['id']
+            db.add_member_to_homegroup(homegroup_id, member_id)
+            flash("member {} created!".format(member.first_name.data))
+            return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
-    return render_template('create_user.html', form=user, homegroup_id = homegroup_id)
+    return render_template('create_member.html', form=member, homegroup_id = homegroup_id)
 
 
 @app.route('/member/create', methods=['GET', 'POST'])
-def create_user():
-    user = CreateUserForm()
+def create_member():
+    member = CreatememberForm()
 
-    if user.validate_on_submit():
-        first_name = user.first_name.data
-        last_name = user.last_name.data
-        email = user.email.data
-        phone_number = user.phone_number.data
-        gender = user.gender.data
-        birthday = user.birthday.data
-        baptism_status = user.baptism_status.data
-        join_date = user.join_date.data
-        rowcount = db.create_user(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
+    if member.validate_on_submit():
+        first_name = member.first_name.data
+        last_name = member.last_name.data
+        email = member.email.data
+        phone_number = member.phone_number.data
+        gender = member.gender.data
+        birthday = member.birthday.data
+        baptism_status = member.baptism_status.data
+        join_date = member.join_date.data
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
 
         if rowcount == 1:
-            flash("User {} created!".format(user.first_name.data))
-            return redirect(url_for('all_users'))
+            flash("member {} created!".format(member.first_name.data))
+            return redirect(url_for('all_members'))
 
-    return render_template('create_user.html', form = user)
+    return render_template('create_member.html', form = member)
 
 @app.route('/member/all')
-def all_users():
-    return render_template('all_users.html', users = db.get_all_users())
+def all_members():
+    return render_template('all_members.html', members = db.get_all_members())
 
 @app.route('/homegroup/members/<homegroup_id>')
-def get_homegroup_users(homegroup_id):
+def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
-    return render_template('homegroup_users.html', homegroup = db.get_homegroup_users(homegroup_id), currentHomegroup = current_homegroup)
+    return render_template('homegroup_members.html', homegroup = db.get_homegroup_members(homegroup_id), currentHomegroup = current_homegroup)
 
-@app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
-def edit_user(user_id):
-    row = db.find_user(user_id)
-    user_form = CreateUserForm( first_name = row['first_name'],
+@app.route('/member/edit/<member_id>', methods=['GET', 'POST'])
+def edit_member(member_id):
+    row = db.find_member(member_id)
+    member_form = CreatememberForm( first_name = row['first_name'],
                                 last_name = row['last_name'],
                                 email = row['email'],
                                 phone_number = row['phone_number'],
@@ -155,20 +153,20 @@ def edit_user(user_id):
     birthday_form = row['birthday']
     join_date_form = row['join_date']
     if request.method == "POST":
-        first_name = user_form.first_name.data
-        last_name = user_form.last_name.data
-        email = user_form.email.data
-        phone_number = user_form.phone_number.data
-        gender = user_form.gender.data
+        first_name = member_form.first_name.data
+        last_name = member_form.last_name.data
+        email = member_form.email.data
+        phone_number = member_form.phone_number.data
+        gender = member_form.gender.data
         birthday = request.form['Birthday']
-        baptism_status = user_form.baptism_status.data
+        baptism_status = member_form.baptism_status.data
         join_date = request.form['JoinDate']
-        rowcount = db.edit_user(user_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
+        rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if (rowcount == 1):
-            flash("user updated!")
-            return redirect(url_for('get_homegroup_users', homegroup_id = 1))
+            flash("member updated!")
+            return redirect(url_for('get_homegroup_members', homegroup_id = 1))
 
-    return render_template('edit_user.html', form = user_form, bDay = birthday_form, joinDay = join_date_form)
+    return render_template('edit_member.html', form = member_form, bDay = birthday_form, joinDay = join_date_form)
 
 
 
@@ -197,12 +195,12 @@ def edit_homegroup(homegroup_id):
 
 
 
-@app.route('/homegroup/user/delete/<homegroup_id>/<user_id>', methods = ['GET', 'POST'])
-def remove_user(homegroup_id, user_id):
-    rowcount = db.remove_user(homegroup_id, user_id)
+@app.route('/homegroup/member/delete/<homegroup_id>/<member_id>', methods = ['GET', 'POST'])
+def remove_member(homegroup_id, member_id):
+    rowcount = db.remove_member(homegroup_id, member_id)
     if rowcount == 1:
-         flash("User removed!")
-    return redirect(url_for('get_homegroup_users', homegroup_id = homegroup_id))
+         flash("member removed!")
+    return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
 
