@@ -125,31 +125,39 @@
     </style>
 </head>
 <body class="Site">
-    <header>
+    <nav>
         <ul class="navbar navbar-inverse">
-            <a class="navbar-brand" href="/homegroup/1">Verbo Velocity</a>
-            <li role="presentation" ><a href="/homegroup/members/1">Members</a></li>
-            <li role="presentation" ><a href="/homegroup/attendance/1">Attendance</a></li>
-            <li role="presentation" class="welcome"><a href="/members">Logout</a></li>
-            <li role="presentation" class="welcome"><a href="/homegroup/edit/1">Settings</a></li>
-            <li role="presentation" class="welcome white"><h4 class="welcome">Welcome, Homegroup Leader</h4></li>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Verbo Velocity</a>
+            {% if session['role'] == 'homegroup_leader' %}
+            <li role="presentation" ><a href="{{ url_for('get_homegroup_members', homegroup_id = session['homegroup_id']) }}">Members</a></li>
+            <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = session['homegroup_id']) }}">Attendance</a></li>
+            {% endif %}
+            {%  if session: %}
+            <li role="presentation" class="welcome"><a href="/logout">Log Out</a></li>
+            {% endif %}
+            {% if session['role'] == 'homegroup_leader' %}
+            <li role="presentation" class="welcome"><a href="{{ url_for('edit_homegroup', homegroup_id = session['homegroup_id']) }}">Settings</a></li>
+            <li role="presentation" class="welcome white"><h4><span class="glyphicon glyphicon-user"></span> Welcome, {{ session['name'] }}</h4></li>
+            {% endif %}
         </ul>
-    </header>
+    </nav>
 
    <main class="Site-content">
     {% if message %}
         <p>Note: {{ message }}</p>
     {% endif %}
+
     {% with messages = get_flashed_messages() %}
     {%  if messages %}
-        <h2><div class="form-group">
+        <div class="alert alert-info">
+        <h4>
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
-        </div>
-        </h2>
+        </h4>
     {% endif %}
 {% endwith %}
+   </div>
     {% block content %}
     {% endblock %}
     </main>
