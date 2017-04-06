@@ -124,7 +124,7 @@ class CreatememberForm(FlaskForm):
     phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter your phone number")])
     gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('yes', 'Yes'), ('no', 'No')])
-    submit = SubmitField('Save User')
+    submit = SubmitField('Save Member')
 
 
 @app.route('/homegroup/create_member/<homegroup_id>', methods=['GET', 'POST'])
