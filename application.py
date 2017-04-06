@@ -4,6 +4,7 @@ from wtforms import StringField, SelectField, FloatField, RadioField, SubmitFiel
 from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
+
 import db
 
 app = Flask(__name__)
@@ -79,7 +80,6 @@ def attendance(homegroup_id):
     members = db.get_homegroup_members(homegroup_id)
     show_members = 'N'
     if (request.method == "POST"):
-
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
         show_members = 'Y'
