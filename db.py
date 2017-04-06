@@ -50,8 +50,13 @@ def check_valid_user(email, password):
     WHERE email = :email and password = :password
     '''
     cursor = g.db.execute(query, {'email': email, 'password': password})
-    role = cursor.fetchone()['role']
-    return role
+    values = cursor.fetchone()
+    if values is None:
+        return False
+    else:
+        role = values['role']
+        return role
+    return False
 
 def find_user_homegroup(email):
     query = '''SELECT * from homegroup_leader JOIN user on homegroup_leader.user_id = user.id

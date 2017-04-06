@@ -31,10 +31,9 @@ def index():
     if 'email' not in session.keys():
         return redirect(url_for('login'))
     else:
-        if session.keys():
-            role = session['role']
-            if role == 'homegroup_leader':
-                return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
+        role = session['role']
+        if role == 'homegroup_leader':
+            return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
     return redirect(url_for('login'))
 
 
@@ -49,11 +48,12 @@ def login():
     login_form = LoginForm()
 
     if login_form.validate_on_submit():
-        session.clear()
+
         role = db.check_valid_user(login_form.email.data, login_form.password.data)
         if not role:
             flash ('Invalid username or password')
         else:
+            session.clear()
             session['email'] = login_form.email.data
             session['role'] = role
             session['name'] = db.find_member_info(session['email'])['first_name']
