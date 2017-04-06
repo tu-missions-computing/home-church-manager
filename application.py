@@ -4,6 +4,7 @@ from wtforms import StringField, SelectField, FloatField, RadioField, SubmitFiel
 from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
+from wtforms import validators
 import db
 
 app = Flask(__name__)
@@ -117,19 +118,19 @@ def get_attendance_dates(homegroup_id):
 
 
 class CreatememberForm(FlaskForm):
-    first_name = StringField('First Name')
-    last_name = StringField('Last Name')
-    email = StringField('Email')
-    phone_number = IntegerField('Phone Number')
-    gender = SelectField('Gender', choices=[('male','Male'),('female','Female')])
-    baptism_status = SelectField('Baptized?', choices=[('yes','Yes'),('no','No')])
-    submit = SubmitField('Save member')
+    first_name = StringField('First Name', [validators.Length(min=2, max=30, message="First name is a required field")])
+    last_name = StringField('Last Name', [validators.Length(min=2, max=30, message="Last name is a required field")])
+    email = StringField('Email', [validators.Email("Please enter valid email")])
+    phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter your phone number")])
+    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female')])
+    baptism_status = SelectField('Baptized?', choices=[('yes', 'Yes'), ('no', 'No')])
+    submit = SubmitField('Save User')
 
 
 @app.route('/homegroup/create_member/<homegroup_id>', methods=['GET', 'POST'])
 def create_new_member_for_homegroup(homegroup_id):
     member = CreatememberForm()
-    if request.method == "POST":
+    if request.method == "POST" and member.validate():
         first_name = member.first_name.data
         last_name = member.last_name.data
         email = member.email.data
@@ -145,7 +146,7 @@ def create_new_member_for_homegroup(homegroup_id):
             row = db.recent_member()
             member_id = row['id']
             db.add_member_to_homegroup(homegroup_id, member_id)
-            flash("member {} created!".format(member.first_name.data))
+            flash("Member {} Created!".format(member.first_name.data, member.last_name.data))
             return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
     return render_template('create_member.html', form=member, homegroup_id = homegroup_id)
@@ -167,7 +168,7 @@ def create_member():
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
 
         if rowcount == 1:
-            flash("member {} created!".format(member.first_name.data))
+            flash("Member {} Created!".format(member.first_name.data))
             return redirect(url_for('all_members'))
 
     return render_template('create_member.html', form = member)
@@ -203,7 +204,7 @@ def edit_member(member_id):
         join_date = request.form['JoinDate']
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if (rowcount == 1):
-            flash("member updated!")
+            flash("Member {} Updated!".format(member_form.first_name.data))
             return redirect(url_for('get_homegroup_members', homegroup_id = 1))
 
     return render_template('edit_member.html', form = member_form, bDay = birthday_form, joinDay = join_date_form)
@@ -239,7 +240,7 @@ def edit_homegroup(homegroup_id):
 def remove_member(homegroup_id, member_id):
     rowcount = db.remove_member(homegroup_id, member_id)
     if rowcount == 1:
-         flash("member removed!")
+        flash("Member Removed!")
     return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
