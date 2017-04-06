@@ -28,13 +28,13 @@ def after(exception):
 
 @app.route('/')
 def index():
-    user = session
-    if not user:
+    if 'email' not in session.keys():
         return redirect(url_for('login'))
     else:
-        role = session['role']
-        if role == 'homegroup_leader':
-            return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
+        if session.keys():
+            role = session['role']
+            if role == 'homegroup_leader':
+                return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
     return redirect(url_for('login'))
 
 
@@ -49,6 +49,7 @@ def login():
     login_form = LoginForm()
 
     if login_form.validate_on_submit():
+        session.clear()
         role = db.check_valid_user(login_form.email.data, login_form.password.data)
         if not role:
             flash ('Invalid username or password')
@@ -228,7 +229,7 @@ def edit_homegroup(homegroup_id):
         rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.description.data, hg_form.location.data)
         if (rowcount == 1):
             flash("Home Group updated!")
-            return redirect(url_for('homegroup', id = homegroup_id))
+            return redirect(url_for('homegroup', homegroup_id = homegroup_id))
 
     return render_template('edit_homegroup.html', form = hg_form)
 
