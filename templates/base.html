@@ -105,6 +105,26 @@
         }
 
 
+        /* FOR ADDING ICONS TO INPUT BOXES, SEARCH BOXES, ETC */
+        /* enable absolute positioning */
+        .inner-addon {
+            position: relative;
+        }
+
+        /* style icon */
+        .inner-addon .glyphicon {
+          position: absolute;
+          padding: 10px;
+          pointer-events: none;
+        }
+
+        /* align icon */
+        .left-addon .glyphicon  { left:  0px;}
+        .right-addon .glyphicon { right: 0px;}
+
+        /* add padding  */
+        .left-addon input  { padding-left:  30px; }
+        .right-addon input { padding-right: 30px; }
     </style>
 </head>
 <body class="Site">
@@ -137,14 +157,17 @@
     {% with messages = get_flashed_messages() %}
     {%  if messages %}
         <div class="alert alert-info">
-        <h4>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+              </button>
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
-        </h4>
+
     {% endif %}
 {% endwith %}
    </div>
+
     {% block content %}
     {% endblock %}
     </main>
