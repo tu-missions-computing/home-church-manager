@@ -73,9 +73,12 @@
                 <td colspan="4">No Info</td>
             </tr>
             {% endfor %}
+             <a href="{{url_for('attendance', homegroup_id = currentHomegroup)}}">
+        <button type="button"  class="btn btn-info pull-right"><span class="glyphicon glyphicon-chevron-left"></span>Back</button></a>
             {% endif %}
             </tbody>
         </table>
-    </div>
+
+</div>
 
 {% endblock %}
