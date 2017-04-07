@@ -12,8 +12,8 @@ INSERT INTO attendance VALUES (1,2,1,1);
 INSERT INTO attendance VALUES (1,1,2,1);
 INSERT INTO attendance VALUES (1,2,2,1);
 
-INSERT INTO meeting(date, time) values ('March 1, 2017', '12:00');
-INSERT INTO meeting(date, time) values ('March 7, 2017', '16:00');
+INSERT INTO meeting(date, time) values ('03-07-2017', '12:00');
+INSERT INTO meeting(date, time) values ('03-13-2017', '16:00');
 
 INSERT INTO role(role) values ('member');
 INSERT INTO role(role) values ('homegroup_leader');
