@@ -8,6 +8,7 @@
 {% if showmembers != 'Y': %}
 <div class="container-fluid">
     <h1>Attendance Report</h1>
+    <hr>
     <div class="row">
         <div class="col form-group pull-left">
             <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> <span class="glyphicon glyphicon-time"> </span> View Attendance History</button><br><br></a>
@@ -75,7 +76,6 @@
             {% endif %}
             </tbody>
         </table>
-    <button type="button"  class="btn btn-info pull-right"><span class="glyphicon glyphicon-chevron-left"></span>Back</button>
     </div>
 
 {% endblock %}
