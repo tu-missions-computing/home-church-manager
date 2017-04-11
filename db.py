@@ -206,7 +206,7 @@ def remove_member(homegroup_id, member_id):
     g.db.commit()
     return cursor.rowcount
 
-def disable_member(member_id):
+def deactivate_member(member_id):
     member_id = int(member_id)
     query='''
     UPDATE member SET is_active = 0
