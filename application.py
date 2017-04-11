@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
 
+
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
@@ -36,6 +37,12 @@ def index():
         if role == 'homegroup_leader':
             return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
     return redirect(url_for('login'))
+
+@app.route('/map')
+def map():
+    homegroups = db.get_all_homegroups()
+
+    return render_template('map.html', homegroups = homegroups)
 
 
 class LoginForm(FlaskForm):

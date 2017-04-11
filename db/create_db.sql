@@ -40,6 +40,9 @@ create table homegroup (
   name TEXT,
   location TEXT,
   description TEXT,
+  latitude REAL,
+  longitude REAL,
+
   foreign key (id) REFERENCES homegroup_member (homegroup_id),
   foreign key (id) REFERENCES homegroup_leader (homegroup_id)
 );
