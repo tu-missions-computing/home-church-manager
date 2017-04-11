@@ -32,14 +32,6 @@ def close_db_connection():
         db.close()
 
 
-def get_members():
-    query = '''
-        SELECT member.first_name, member.last_name
-        FROM member
-        '''
-    return g.db.execute(query).fetchall()
-
-
 def get_member_count():
     query = '''
         SELECT count(id)

@@ -88,6 +88,10 @@
             padding: 0.5em;
             font-size: 16px;
         }
+        .add-padding {
+            padding-top: 15px
+        }
+
         /* FOR ADDING ICONS TO INPUT BOXES, SEARCH BOXES, ETC */
         /* enable absolute positioning */
         .inner-addon {
@@ -115,6 +119,7 @@
             {% if session['email'] %}
             {% if session['role'] == 'homegroup_leader' %}
             <li role="presentation" ><a href="{{ url_for('get_homegroup_members', homegroup_id = session['homegroup_id']) }}">Members</a></li>
+            <li role="presentation" ><a href="{{ url_for('all_members') }}">All Members</a></li>
             <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = session['homegroup_id']) }}">Attendance</a></li>
             {% endif %}
             <li role="presentation" class="welcome"><a href="/logout">Log Out</a></li>
