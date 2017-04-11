@@ -220,3 +220,8 @@ def get_homegroup_members(homegroup_id):
     JOIN homegroup_member ON member.id = homegroup_member.member_id
     JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
     WHERE is_active and homegroup.id = ?''', (homegroup_id,)).fetchall()
+
+
+def get_all_homegroups():
+    cursor = g.db.execute('select * from homegroup')
+    return cursor.fetchall()

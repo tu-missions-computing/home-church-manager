@@ -1,0 +1,34 @@
+{%  extends "base.html" %}
+
+{% block title %} All HomeGroups {% endblock %}
+{% block content %}
+
+<h1>All Homegroups</h1>
+    <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th> Name</th>
+        <th> Location</th>
+        <th> Description</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <tbody>
+    {% for a_homegroup in homegroup_list %}
+        <tr>
+        <td> {{ a_homegroup.Name }}</td>
+        <td> {{ a_homegroup.Location }}</td>
+        <td> {{ a_homegroup.Description}}</td>
+
+        </tr>
+    {%  endfor %}
+    </tbody>
+    </table>
+
+
+
+
+{% endblock %}
