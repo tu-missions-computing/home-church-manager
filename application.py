@@ -80,35 +80,25 @@ def attendance(homegroup_id):
     members = db.get_homegroup_members(homegroup_id)
     show_members = 'N'
     if (request.method == "POST"):
-
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
-        show_members = 'Y'
         meeting_id = db.add_date(date, time)['id']
         db.generate_attendance_report(homegroup_id, meeting_id)
-        members = db.get_attendance(homegroup_id, meeting_id)
-        return render_template('attendance.html', meeting_id = meeting_id, currentHomegroup=homegroup_id, form=attendance_form, members=members,showmembers=show_members, date = date, time=time)
-
+        return redirect(url_for('edit_attendance', homegroup_id = homegroup_id,  meeting_id = meeting_id))
     return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, members=members, showmembers = show_members)
 
 @app.route('/homegroup/attendance/add/<homegroup_id>/<member_id>/<meeting_id>/<attendance>')
 def updateAttendance(homegroup_id, member_id, attendance, meeting_id ):
-    attendance_form = AttendanceForm()
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
-    members = db.get_attendance(homegroup_id, meeting_id)
-    show_members = 'Y'
-    date = db.find_date(meeting_id)['date']
-    time = db.find_date(meeting_id)['time']
-    return render_template('attendance.html', currentHomegroup = homegroup_id, form = attendance_form, meeting_id = meeting_id, members = members, showmembers = show_members, date = date, time = time)
+    return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
 
 
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>')
 def edit_attendance(homegroup_id, meeting_id):
     members = db.get_attendance(homegroup_id, meeting_id)
-    show_members = 'Y'
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
-    return render_template('attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, members = members, showmembers = show_members, date = date, time = time)
+    return render_template('edit_attendance.html', currentHomegroup = homegroup_id, meeting_id = meeting_id, members = members, date = date, time = time)
 
 
 

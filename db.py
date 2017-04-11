@@ -32,14 +32,6 @@ def close_db_connection():
         db.close()
 
 
-def get_members():
-    query = '''
-        SELECT member.first_name, member.last_name
-        FROM member
-        '''
-    return g.db.execute(query).fetchall()
-
-
 def get_member_count():
     query = '''
         SELECT count(id)
@@ -214,6 +206,12 @@ def remove_member(homegroup_id, member_id):
     g.db.commit()
     return cursor.rowcount
 
+def deactivate_member(member_id):
+    member_id = int(member_id)
+    query='''
+    UPDATE member SET is_active = 0
+    WHERE id = :member_id
+    '''
 
 def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
