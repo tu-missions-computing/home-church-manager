@@ -240,7 +240,9 @@ def remove_member(homegroup_id, member_id):
         flash("Member Removed!")
     return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
-
+@app.route('/homegroup/all')
+def get_homegroups():
+    return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
 
 
 
@@ -252,6 +254,7 @@ def thank_you():
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
+
 
 # Make this the last line in the file!
 if __name__ == '__main__':

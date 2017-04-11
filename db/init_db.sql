@@ -1,6 +1,6 @@
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date ) values ('john@example.com', 'John', 'Smith', '555-555-5555', 'M', 'March 2, 1980', 1, 'August 1, 2016');
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date ) values ('nysha@example.com', 'Nysha', 'Chen', '111-222-3333', 'F', 'May 2, 1990', 1, 'August 1, 2016');
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date ) values ('christine@example.com', 'Christine', 'Urban', '555-135-3245', 'F', 'May 13, 1993', 1, 'August 1, 2016');
+INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('john@example.com', 'John', 'Smith', '555-555-5555', 'M', 'March 2, 1980', 1, 'August 1, 2016', 1 );
+INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('nysha@example.com', 'Nysha', 'Chen', '111-222-3333', 'F', 'May 2, 1990', 1, 'August 1, 2016', 1 );
+INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('christine@example.com', 'Christine', 'Urban', '555-135-3245', 'F', 'May 13, 1993', 1, 'August 1, 2016', 0 );
 
 INSERT INTO homegroup(name, location, description, latitude, longitude) values ('TWEET', '236 W. Reade Ave \n Upland, IN 46989', 'Taylor Women Engaged in Engineering and Technology',40.4756, -85.4944);
 
