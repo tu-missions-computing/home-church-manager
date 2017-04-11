@@ -11,6 +11,7 @@ create table member (
   birthday TEXT,
   baptism_status BOOLEAN,
   join_date TEXT,
+  is_active BOOLEAN,
   foreign key (id) REFERENCES attendance (member_id),
   foreign key (id) REFERENCES homegroup_member (member_id),
   foreign key (email) REFERENCES user(email)
