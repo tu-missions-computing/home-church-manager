@@ -233,7 +233,14 @@ def remove_member(homegroup_id, member_id):
         flash("Member Removed!")
     return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
-
+@app.route('/member/delete/<member_id>', methods = ['GET', 'POST'])
+def deactivate_member(member_id):
+    rowcount = db.deactivate_member(member_id)
+    print(db.find_member(member_id)[9])
+    # if the member is not active
+    if db.find_member(member_id)[9] == 0:
+        flash("Member Deactivated!")
+    return redirect(url_for('all_members'))
 
 
 

@@ -212,6 +212,9 @@ def deactivate_member(member_id):
     UPDATE member SET is_active = 0
     WHERE id = :member_id
     '''
+    cursor = g.db.execute(query, {'member_id': member_id})
+    g.db.commit()
+    return cursor.rowcount
 
 def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
