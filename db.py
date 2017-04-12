@@ -182,6 +182,15 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 def find_homegroup(homegroup_id):
     return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
 
+def create_homegroup(name, location, description):
+    query = '''
+        INSERT INTO homegroup(name, location, description)
+        VALUES(:name, :location, :description)
+        '''
+    cursor = g.db.execute(query, {'name': name, 'location': location, 'description': description})
+    g.db.commit()
+    return cursor.rowcount
+
 
 def edit_homegroup(homegroup_id, name, location, description):
     query = '''
@@ -211,12 +220,15 @@ def deactivate_member(member_id):
     UPDATE member SET is_active = 0
     WHERE id = :member_id
     '''
+    cursor = g.db.execute(query, {'member_id': member_id})
+    g.db.commit()
+    return cursor.rowcount
 
 def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
     JOIN homegroup_member ON member.id = homegroup_member.member_id
     JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-    WHERE is_active and homegroup.id = ?''', (homegroup_id,)).fetchall()
+    WHERE homegroup.id = ?''', (homegroup_id,)).fetchall()
 
 
 def get_all_homegroups():
