@@ -45,6 +45,11 @@ def map():
     return render_template('map.html', homegroups = homegroups)
 
 
+@app.route('/homegroup/select_location')
+def select_location():
+    return render_template('select_location.html')
+
+
 class LoginForm(FlaskForm):
     email = StringField('E-mail Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -211,8 +216,10 @@ def edit_member(member_id):
 
 class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name')
-    location = StringField('Location')
+    location = StringField('Address')
     description = StringField('Description')
+    latitude = StringField('Latitude')
+    longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
 
 
@@ -224,7 +231,9 @@ def create_homegroup():
         name = new_homegroup.name.data
         location = new_homegroup.location.data
         description = new_homegroup.description.data
-        rowcount = db.create_homegroup(name, location, description)
+        latitude = new_homegroup.latitude.data
+        longitude = new_homegroup.longitude.data
+        rowcount = db.create_homegroup(name, location, description, latitude, longitude)
 
         if rowcount == 1:
             flash("Homegroup {} Created!".format(new_homegroup.name.data))

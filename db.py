@@ -182,12 +182,12 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 def find_homegroup(homegroup_id):
     return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
 
-def create_homegroup(name, location, description):
+def create_homegroup(name, location, description, latitude, longitude):
     query = '''
-        INSERT INTO homegroup(name, location, description)
-        VALUES(:name, :location, :description)
+        INSERT INTO homegroup(name, location, description, latitude, longitude)
+        VALUES(:name, :location, :description, :latitude, :longitude)
         '''
-    cursor = g.db.execute(query, {'name': name, 'location': location, 'description': description})
+    cursor = g.db.execute(query, {'name': name, 'location': location, 'description': description, 'latitude': latitude, 'longitude':longitude})
     g.db.commit()
     return cursor.rowcount
 
