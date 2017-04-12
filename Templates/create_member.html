@@ -40,7 +40,7 @@
         <p> {{form.gender.label}} {{form.gender(class_='form-control')}}</p>
         <p> <label>Birthday</label> <input type="date" name="Birthday" /></p>
         <p> {{form.baptism_status.label}} {{form.baptism_status(class_='form-control')}}</p>
-        <p> <label>Join Date</label> <input type="date" name="JoinDate" /></p>
+        <p> <label>Join Date</label> <input type="date" name="JoinDate" required/></p>
         <p> {{ form.submit(class_='btn btn-default')}}</p>
         </div>
     </form>

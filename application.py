@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
 
+
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
@@ -36,6 +37,12 @@ def index():
         if role == 'homegroup_leader':
             return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
     return redirect(url_for('login'))
+
+@app.route('/map')
+def map():
+    homegroups = db.get_all_homegroups()
+
+    return render_template('map.html', homegroups = homegroups)
 
 
 class LoginForm(FlaskForm):
@@ -111,7 +118,7 @@ class CreatememberForm(FlaskForm):
     first_name = StringField('First Name', [validators.Length(min=2, max=30, message="First name is a required field")])
     last_name = StringField('Last Name', [validators.Length(min=2, max=30, message="Last name is a required field")])
     email = StringField('Email', [validators.Email("Please enter valid email")])
-    phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter your phone number")])
+    phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('yes', 'Yes'), ('no', 'No')])
     submit = SubmitField('Save Member')
@@ -209,6 +216,22 @@ class CreateHomeGroupForm(FlaskForm):
     submit = SubmitField('Save Home Group')
 
 
+@app.route('/homegroup/create', methods=['GET','POST'])
+def create_homegroup():
+    new_homegroup = CreateHomeGroupForm()
+
+    if request.method == "POST" and new_homegroup.validate():
+        name = new_homegroup.name.data
+        location = new_homegroup.location.data
+        description = new_homegroup.description.data
+        rowcount = db.create_homegroup(name, location, description)
+
+        if rowcount == 1:
+            flash("Homegroup {} Created!".format(new_homegroup.name.data))
+            return redirect(url_for('get_homegroups'))
+
+    return render_template('create_homegroup.html', form=new_homegroup)
+
 
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
 def edit_homegroup(homegroup_id):
@@ -217,10 +240,10 @@ def edit_homegroup(homegroup_id):
                                 description = row['description'],
                                 location = row['location'])
     if hg_form.validate_on_submit():
-        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.description.data, hg_form.location.data)
+        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.location.data, hg_form.description.data)
         if (rowcount == 1):
             flash("Home Group updated!")
-            return redirect(url_for('homegroup', homegroup_id = homegroup_id))
+            return redirect(url_for('get_homegroups'))
 
     return render_template('edit_homegroup.html', form = hg_form)
 
@@ -252,6 +275,7 @@ def thank_you():
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
+
 
 # Make this the last line in the file!
 if __name__ == '__main__':

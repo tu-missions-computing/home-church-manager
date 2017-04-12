@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Create New Home Group{% endblock %}
+
+{% block content %}
+    <h1> Create New Home Group</h1>
+    <form method = "POST">
+        <div class="form-group">
+        {{ form.csrf_token }}
+        <p> {{form.name.label}} {{form.name(class_='form-control')}}</p>
+        <p> {{form.location.label}} {{form.location(class_='form-control')}}</p>
+        <p> {{form.description.label}} {{form.description(class_='form-control')}}</p>
+        <p> {{ form.submit(class_='btn btn-default')}}</p>
+        </div>
+    </form>
+
+{% endblock %}
