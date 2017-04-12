@@ -7,9 +7,9 @@ from wtforms.validators import Length
 from wtforms import validators
 import db
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
-
 
 
 class AttendanceForm(FlaskForm):
@@ -213,7 +213,6 @@ def edit_member(member_id):
 
 
 
-
 class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name')
     location = StringField('Address')
@@ -221,7 +220,6 @@ class CreateHomeGroupForm(FlaskForm):
     latitude = StringField('Latitude')
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
-
 
 @app.route('/homegroup/create', methods=['GET','POST'])
 def create_homegroup():
@@ -274,11 +272,9 @@ def deactivate_member(member_id):
         flash("Member Deactivated!")
     return redirect(url_for('all_members'))
 
-
-
-@app.route('/thank-you')
-def thank_you():
-    return render_template('thank-you.html')
+@app.route('/homegroup/all')
+def get_homegroups():
+    return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
 
 @app.route('/homegroup/<homegroup_id>')
 def homegroup(homegroup_id):

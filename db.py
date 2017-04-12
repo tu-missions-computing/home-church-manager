@@ -157,7 +157,11 @@ def recent_member():
 
 
 def get_all_members():
-    cursor = g.db.execute('select * from member')
+    query = '''
+    SELECT * FROM member
+    WHERE is_active=1
+    '''
+    cursor = g.db.execute(query)
     return cursor.fetchall()
 
 
