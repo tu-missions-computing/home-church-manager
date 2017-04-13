@@ -53,7 +53,7 @@ create table homegroup_leader (
   user_id,
   homegroup_id,
   PRIMARY KEY (user_id, homegroup_id)
-)
+);
 
 
 drop table if exists homegroup_member;

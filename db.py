@@ -155,6 +155,9 @@ def recent_member():
     cursor = g.db.execute('select id from member order by id desc LIMIT 1')
     return cursor.fetchone()
 
+def recent_homegroup():
+    cursor = g.db.execute('select id from homegroup order by id desc LIMIT 1')
+    return cursor.fetchone()
 
 def get_all_members():
     query = '''
