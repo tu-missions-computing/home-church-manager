@@ -245,9 +245,11 @@ def edit_homegroup(homegroup_id):
     row = db.find_homegroup(homegroup_id)
     hg_form = CreateHomeGroupForm( name = row['name'],
                                 description = row['description'],
-                                location = row['location'])
+                                location = row['location'],
+                                latitude = row['latitude'],
+                                longitude = row['longitude'])
     if hg_form.validate_on_submit():
-        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.location.data, hg_form.description.data)
+        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.location.data, hg_form.description.data, hg_form.latitude.data, hg_form.longitude.data)
         if (rowcount == 1):
             flash("Home Group updated!")
             return redirect(url_for('get_homegroups'))

@@ -196,13 +196,13 @@ def create_homegroup(name, location, description, latitude, longitude):
     return cursor.rowcount
 
 
-def edit_homegroup(homegroup_id, name, location, description):
+def edit_homegroup(homegroup_id, name, location, description, latitude, longitude):
     query = '''
-    UPDATE homegroup SET name = :name, location = :location, description = :description
+    UPDATE homegroup SET name = :name, location = :location, description = :description, latitude = :latitude, longitude = :longitude
     WHERE id = :homegroup_id
     '''
     cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'name': name, 'location': location,
-                                  'description': description})
+                                  'description': description, 'latitude': latitude, 'longitude': longitude})
     g.db.commit()
     return cursor.rowcount
 
