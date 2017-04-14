@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+    <h1>Create User</h1>
+
+    <form method="POST">
+    {{ form.csrf_token }}
+
+        <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
+        <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p>
+        <p>{{ form.submit(class_='btn btn-default') }}</p>
+    </form>
+{% endblock %}

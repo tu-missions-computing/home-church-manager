@@ -22,7 +22,7 @@ create table user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT UNIQUE,
   password TEXT,
-  role_id TEXT,
+  role_id INTEGER,
   foreign key (id) REFERENCES homegroup_leader (user_id)
 );
 drop table if exists role;
