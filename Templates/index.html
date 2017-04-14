@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Group Location{% endblock %}
+
+{% block content %}
+    <script>
+    function resize_iframe(){
+        document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
+    }
+  window.onresize = function(){
+        resize_iframe();
+  }
+  window.onload = function(){
+    resize_iframe();
+  }
+</script>
+    <br>
+    <img height="137px" width="300px" src="../../static/Logo-Verbo.png">
+    <br><br>
+
+ <iframe id="mapIframe" class="embed-responsive-item" width="100%"src="../../map">
+
+     </iframe>
+
+{% endblock %}

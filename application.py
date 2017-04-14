@@ -1,11 +1,12 @@
 from flask import Flask, session, render_template, request, flash, redirect, url_for
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, DateField
 from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
 from wtforms.validators import Length
 from wtforms import validators
+from flask_bcrypt import Bcrypt
 
 
 
@@ -15,7 +16,7 @@ import db
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 
-
+bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
 login_mgr = LoginManager(app)
 
@@ -35,14 +36,34 @@ def after(exception):
     db.close_db_connection()
 
 
-########################## INDEX + MAP ##############################################
+
+
+
+def init_test_user():
+    if db.find_user('john@example.com') is None:
+        print('hi')
+        password = 'password'
+        pw_hash = bcrypt.generate_password_hash(password)
+        db.create_user('john@example.com', pw_hash, 2)
+
+
+########################## INDEX + MAP + Dashboard##############################################
 
 @app.route('/')
 def index():
-   User = load_user(session['username'])
-   print(User.role);
+
 # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
-   return redirect(url_for('login'))
+   return render_template('index.html')
+
+
+@app.route('/dashboard')
+def dashboard():
+    curr_user = load_user(session['username'])
+    role = curr_user.role
+    email = curr_user.email
+    if role == 'homegroup_leader':
+        homegroup_id = db.find_user_homegroup(email)
+    return redirect(url_for('homegroup', homegroup_id = homegroup_id))
 
 @app.route('/map')
 def map():
@@ -61,7 +82,8 @@ class UserForm(FlaskForm):
 def create_user():
     user_form = UserForm()
     if user_form.validate_on_submit():
-        pw_hash = user_form.password.data
+        password = user_form.password.data
+        pw_hash = bcrypt.generate_password_hash(password)
         db.create_user(user_form.email.data, pw_hash, 1)
         flash('User Created')
         return redirect(url_for('index'))
@@ -71,7 +93,15 @@ class User(object):
     """Class for the currently logged-in user (if there is one). Only stores the user's e-mail."""
     def __init__(self, email):
         self.email = email
-        self.role = db.find_user(self.email)['role']
+        if db.find_user(self.email) is not None:
+            self.role = db.find_user(self.email)['role']
+            self.name = db.find_member_info(self.email)['first_name']
+        else:
+            self.role = 'no role'
+            self.name = 'no name'
+        if (self.role == 'homegroup_leader'):
+            self.homegroup_id = db.find_user_homegroup(self.email)
+
         self.is_authenticated = True
         self.is_active = True
         self.is_anonymous = False
@@ -87,6 +117,7 @@ class User(object):
     def __repr__(self):
         return "<User '{}' {} {} {} {}>".format(self.email, self.role,  self.is_authenticated, self.is_active, self.is_anonymous)
 
+
 @login_mgr.user_loader
 def load_user(id):
     """Return the currently logged-in user when given the user's unique ID"""
@@ -96,7 +127,7 @@ def authenticate(email, password):
     """Check whether the arguments match a user from the "database" of valid users."""
     valid_users = db.get_all_users()
     for user in valid_users:
-        if email == user['email'] and password == user['password']:
+        if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
 
@@ -107,17 +138,18 @@ class LoginForm(FlaskForm):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    #temporary
+    init_test_user()
     login_form = LoginForm()
-
     if login_form.validate_on_submit():
         if authenticate(login_form.email.data, login_form.password.data):
             # Credentials authenticated.
             # Create the user object, let Flask-Login know, and redirect to the home page
-            user = User(login_form.email.data)
-            login_user(user)
-            session['username'] = login_form.email.data
+            current_user = User(login_form.email.data)
+            login_user(current_user)
+            session['username'] = current_user.email
             flash('Logged in successfully as {}'.format(login_form.email.data))
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
         else:
             # Authentication failed.
             flash('Invalid email address or password')
@@ -134,7 +166,10 @@ def logout():
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
 
-
+@app.route('/homegroup/<homegroup_id>')
+def homegroup(homegroup_id):
+    homegroup = db.find_homegroup(homegroup_id)
+    return render_template('homegroup.html', currentHomegroup=homegroup)
 
 @app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])
 def attendance(homegroup_id):
@@ -185,10 +220,7 @@ def edit_homegroup(homegroup_id):
 
     return render_template('edit_homegroup.html', form = hg_form)
 
-@app.route('/homegroup/<homegroup_id>')
-def homegroup(homegroup_id):
-    homegroup = db.find_homegroup(homegroup_id)
-    return render_template('homegroup.html', currentHomegroup=homegroup)
+
 
 @app.route('/homegroup/select_location')
 def select_location():

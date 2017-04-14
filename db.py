@@ -34,28 +34,8 @@ def close_db_connection():
 
 #################################### USER ########################################
 
-#checks if the user signed in with a valid email and password
-def check_valid_user(email, password):
-    query = ''' SELECT * from user JOIN role on user.role_id = role.id
-    WHERE email = :email and password = :password
-    '''
-    cursor = g.db.execute(query, {'email': email, 'password': password})
-    values = cursor.fetchone()
-    if values is None:
-        return False
-    else:
-        role = values['role']
-        return role
-    return False
 
-#finds a users associated homegroup (specifically for homegroup leaders)
-def find_user_homegroup(email):
-    query = '''SELECT * from homegroup_leader JOIN user on homegroup_leader.user_id = user.id
-    WHERE email = :email
-    '''
-    cursor = g.db.execute(query, {'email': email})
-    homegroup_id = cursor.fetchone()['homegroup_id']
-    return homegroup_id
+
 
 #creates a new user
 def create_user(email, password, role_id):
@@ -69,7 +49,7 @@ def create_user(email, password, role_id):
 
 #finds user based on an email
 def find_user(email):
-    return g.db.execute('SELECT * from user join role on role.id = user.id WHERE email =?', (email,)).fetchone()
+    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE email =?', (email,)).fetchone()
 
 
 #grabs all users in the db
@@ -81,6 +61,14 @@ def get_all_users():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
+#finds a users associated homegroup (specifically for homegroup leaders)
+def find_user_homegroup(email):
+    query = '''SELECT * from homegroup_leader JOIN user on homegroup_leader.user_id = user.id
+    WHERE email = :email
+    '''
+    cursor = g.db.execute(query, {'email': email})
+    homegroup_id = cursor.fetchone()['homegroup_id']
+    return homegroup_id
 
 #################################### MEMBER ########################################
 
