@@ -1,3 +1,5 @@
+from functools import wraps
+
 from flask import Flask, session, render_template, request, flash, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
@@ -38,33 +40,38 @@ def after(exception):
 
 
 
-
+#this initializes some test users -- we can no longer do this in the db because of the password hashing
 def init_test_user():
     if db.find_user('john@example.com') is None:
-        print('hi')
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password)
         db.create_user('john@example.com', pw_hash, 2)
+    if db.find_user('admin@example.com') is None:
+        password = 'password'
+        pw_hash = bcrypt.generate_password_hash(password)
+        db.create_user('admin@example.com', pw_hash, 3)
 
 
 ########################## INDEX + MAP + Dashboard##############################################
 
+#this takes the user to the index page which is a map of all the homegroups
 @app.route('/')
 def index():
-
 # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
    return render_template('index.html')
 
-
+#this displays the dashboard depending on user role
 @app.route('/dashboard')
 def dashboard():
-    curr_user = load_user(session['username'])
-    role = curr_user.role
-    email = curr_user.email
+    email = current_user.email
+    role = current_user.role
     if role == 'homegroup_leader':
         homegroup_id = db.find_user_homegroup(email)
-    return redirect(url_for('homegroup', homegroup_id = homegroup_id))
+        return redirect(url_for('homegroup', homegroup_id = homegroup_id))
+    if role =="admin":
+        return redirect(url_for('get_homegroups'))
 
+#displays the map of all the homegroups
 @app.route('/map')
 def map():
     homegroups = db.get_all_homegroups()
@@ -73,11 +80,28 @@ def map():
 
 
 ########################## USER + LOGIN ##############################################
+
+#this allows/disallows users from accessing pages based on their roles
+def requires_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if not hasattr(current_user, 'role'):
+                flash('User does not have sufficient privileges ')
+                return redirect(url_for('index'))
+            elif current_user.role not in roles:
+                flash( 'User does not have sufficient privileges ')
+                return redirect(url_for('index'))
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
+
 class UserForm(FlaskForm):
     email = StringField('E-mail Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Create User')
 
+#Creates a new user and hashes their password in the database
 @app.route('/user/create', methods=['GET', 'POST'])
 def create_user():
     user_form = UserForm()
@@ -123,6 +147,7 @@ def load_user(id):
     """Return the currently logged-in user when given the user's unique ID"""
     return User(id)
 
+#checks to see if the password entered matches the hash password
 def authenticate(email, password):
     """Check whether the arguments match a user from the "database" of valid users."""
     valid_users = db.get_all_users()
@@ -136,6 +161,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Log In')
 
+#logs the user in, creates a new session, and creates a current user which is of the class "User"
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     #temporary
@@ -157,6 +183,8 @@ def login():
 
     return render_template('login.html', form = login_form)
 
+
+#logs the user out and removes the session
 @app.route('/logout')
 def logout():
     logout_user()
@@ -164,14 +192,24 @@ def logout():
     flash('Logged out')
     return redirect(url_for('index'))
 
+
+
+
+
 ########################## HOME GROUP  (Home Group Leader)##############################################
 
+#this is the homegroup main page / dashboard
 @app.route('/homegroup/<homegroup_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
 
+#this is the default attendance page (allows you to select date/time then generate an attendance report)
 @app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('homegroup_leader')
 def attendance(homegroup_id):
     error = ""
     attendance_form = AttendanceForm()
@@ -185,13 +223,18 @@ def attendance(homegroup_id):
         return redirect(url_for('edit_attendance', homegroup_id = homegroup_id,  meeting_id = meeting_id))
     return render_template('attendance.html', currentHomegroup = homegroup_id, form=attendance_form, members=members, showmembers = show_members)
 
+#adds (or updates) a new entry of attendance into the db
 @app.route('/homegroup/attendance/add/<homegroup_id>/<member_id>/<meeting_id>/<attendance>')
+@login_required
+@requires_roles('homegroup_leader')
 def updateAttendance(homegroup_id, member_id, attendance, meeting_id ):
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
     return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
 
-
+#This allows you to edit homegroup attendance
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>')
+@login_required
+@requires_roles('homegroup_leader')
 def edit_attendance(homegroup_id, meeting_id):
     members = db.get_attendance(homegroup_id, meeting_id)
     date = db.find_date(meeting_id)['date']
@@ -200,11 +243,18 @@ def edit_attendance(homegroup_id, meeting_id):
 
 
 
+#returns all the attendance dates -- this is for the attendance reports page
 @app.route('/homegroup/attendance/dates/<homegroup_id>', methods=['GET'])
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
+
+#edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def edit_homegroup(homegroup_id):
     row = db.find_homegroup(homegroup_id)
     hg_form = CreateHomeGroupForm( name = row['name'],
@@ -221,7 +271,7 @@ def edit_homegroup(homegroup_id):
     return render_template('edit_homegroup.html', form = hg_form)
 
 
-
+#this is the iframe that is in the creating/editing homegroup -- allows you to type in address and finds location
 @app.route('/homegroup/select_location')
 def select_location():
     return render_template('select_location.html')
@@ -239,8 +289,10 @@ class CreateMemberForm(FlaskForm):
     baptism_status = SelectField('Baptized?', choices=[('yes', 'Yes'), ('no', 'No')])
     submit = SubmitField('Save Member')
 
-
+#creates a new member for a particular homegroup
 @app.route('/homegroup/create_member/<homegroup_id>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def create_new_member_for_homegroup(homegroup_id):
     member = CreateMemberForm()
     if request.method == "POST" and member.validate():
@@ -265,15 +317,19 @@ def create_new_member_for_homegroup(homegroup_id):
     return render_template('create_member.html', form=member, homegroup_id = homegroup_id)
 
 
-
-
-
+#views all members in a homegroup
 @app.route('/homegroup/members/<homegroup_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup_members.html', homegroup = db.get_homegroup_members(homegroup_id), currentHomegroup = current_homegroup)
 
+
+#edits member information
 @app.route('/member/edit/<member_id>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def edit_member(member_id):
     row = db.find_member(member_id)
     member_form = CreatememberForm( first_name = row['first_name'],
@@ -300,8 +356,10 @@ def edit_member(member_id):
 
     return render_template('edit_member.html', form = member_form, bDay = birthday_form, joinDay = join_date_form)
 
-
+#removes a member from a particular homegroup
 @app.route('/homegroup/member/delete/<homegroup_id>/<member_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('homegroup_leader', 'admin')
 def remove_member(homegroup_id, member_id):
     rowcount = db.remove_member(homegroup_id, member_id)
     if rowcount == 1:
@@ -320,7 +378,10 @@ class CreateHomeGroupForm(FlaskForm):
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
 
+#create homegroup
 @app.route('/homegroup/create', methods=['GET','POST'])
+@login_required
+@requires_roles('admin')
 def create_homegroup():
     new_homegroup = CreateHomeGroupForm()
 
@@ -338,17 +399,27 @@ def create_homegroup():
 
     return render_template('create_homegroup.html', form=new_homegroup)
 
+
+#shows all homegroups
 @app.route('/homegroup/all')
+@login_required
+@requires_roles('admin')
 def get_homegroups():
     return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
 
-#### Admin - Member ####
+#### Admin - Member ###########
+
+#shows all members
 @app.route('/member/all')
+@login_required
+@requires_roles('admin')
 def all_members():
     return render_template('all_members.html', members = db.get_all_members())
 
-
+#creates a member
 @app.route('/member/create', methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
 def create_member():
     member = CreateMemberForm()
 
@@ -370,8 +441,10 @@ def create_member():
     return render_template('create_member.html', form = member)
 
 
-
+#sets a member inactive in the system
 @app.route('/member/delete/<member_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('admin')
 def deactivate_member(member_id):
     rowcount = db.deactivate_member(member_id)
     print(db.find_member(member_id)[9])
