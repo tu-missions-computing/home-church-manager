@@ -28,7 +28,6 @@ INSERT INTO role(role) values ('admin');
 --
 -- INSERT INTO user(email, password, role_id) values ('john@example.com', 'password',  2);
 -- INSERT INTO user(email, password, role_id) values ('nysha@example.com', 'password',  1);
--- INSERT INTO user(email, password, role_id) values ('christine@example.com', 'password', 3);
---
+INSERT INTO user(email, password, role_id) values ('admin', 'default', 3);
 
-INSERT INTO homegroup_leader(user_id, homegroup_id) values(1, 1);
+INSERT INTO homegroup_leader(user_id, homegroup_id) values(2, 1);

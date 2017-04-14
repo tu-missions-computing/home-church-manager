@@ -9,6 +9,10 @@ from application import app
 
 
 
+
+
+
+
 class FlaskTestCase(unittest.TestCase):
     # This is a helper class that sets up the proper Flask execution context
     # so that the test cases that inherit it will work properly.
@@ -28,13 +32,39 @@ class FlaskTestCase(unittest.TestCase):
         self.app_context.pop()
 
 
+
+class LoginTestCase(FlaskTestCase):
+    def login(self, email, password):
+        return self.client.post('/login', data=dict(
+            email=email,
+            password=password
+        ), follow_redirects=True)
+
+    def logout(self):
+        return self.client.get('/logout', follow_redirects=True)
+
+    def test_login_logout(self):
+        rv = self.login('admin', 'default')
+        assert b'Log' in rv.data
+        rv = self.logout()
+        assert b'Log In' in rv.data
+        rv = self.login('adminx', 'default')
+        assert b'Log In' in rv.data
+
+
 class ApplicationTestCase(FlaskTestCase):
     """Test the basic behavior of page routing and display"""
+    def login(self, email, password):
+        return self.client.post('/login', data=dict(
+            email=email,
+            password=password
+        ), follow_redirects=True)
 
     def test_all_members_page(self):
         """Verify the all members page."""
+        rv = self.login('admin', 'default')
         resp = self.client.get(url_for('all_members'))
-        self.assertTrue(b'Member' in resp.data, "Did not find the word: Members")
+        self.assertTrue(b'First Name' in resp.data, "Did not find the phrase: First Name")
     def test_all_homegroups_page(self):
         """Verify the all homegroups page."""
         resp = self.client.get(url_for('get_homegroups'))
