@@ -437,9 +437,9 @@ def create_member():
         email = member.email.data
         phone_number = member.phone_number.data
         gender = member.gender.data
-        birthday = member.birthday.data
+        birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
-        join_date = member.join_date.data
+        join_date = request.form['JoinDate']
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
 
         if rowcount == 1:
