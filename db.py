@@ -167,7 +167,7 @@ def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
     JOIN homegroup_member ON member.id = homegroup_member.member_id
     JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-    WHERE homegroup.id = ?''', (homegroup_id,)).fetchall()
+    WHERE homegroup_member.is_active = 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
 
 
 
