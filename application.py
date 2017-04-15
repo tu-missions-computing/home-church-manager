@@ -22,11 +22,6 @@ bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
 login_mgr = LoginManager(app)
 
-class AttendanceForm(FlaskForm):
-    # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
-    # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
-    radio = RadioField('Attendance', choices=["y","n"])
-    submit = SubmitField('Submit')
 
 @app.before_request
 def before():
@@ -206,6 +201,14 @@ def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     return render_template('homegroup.html', currentHomegroup=homegroup)
 
+class AttendanceForm(FlaskForm):
+    # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
+    # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
+    radio = RadioField('Attendance', choices=["y","n"])
+    submit = SubmitField('Submit')
+
+
+
 #this is the default attendance page (allows you to select date/time then generate an attendance report)
 @app.route('/homegroup/attendance/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
@@ -266,7 +269,9 @@ def edit_homegroup(homegroup_id):
         rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.location.data, hg_form.description.data, hg_form.latitude.data, hg_form.longitude.data)
         if (rowcount == 1):
             flash("Home Group updated!")
-            return redirect(url_for('get_homegroups'))
+            if (current_user.role == 'admin'):
+                return redirect(url_for('get_homegroups'))
+            return redirect(url_for('homegroup', homegroup_id = homegroup_id))
 
     return render_template('edit_homegroup.html', form = hg_form)
 
