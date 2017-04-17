@@ -97,6 +97,15 @@ def get_all_members():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
+#finds all inactive members in the db
+def get_all_inactive_members():
+    query = '''
+    SELECT * FROM member
+    WHERE is_active=0
+    '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()
+
 #edits member info
 def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     member_id = int(member_id)

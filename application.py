@@ -10,9 +10,6 @@ from wtforms.validators import Length
 from wtforms import validators
 from flask_bcrypt import Bcrypt
 
-
-
-
 import db
 
 app = Flask(__name__)
@@ -422,7 +419,8 @@ def get_homegroups():
 @login_required
 @requires_roles('admin')
 def all_members():
-    return render_template('all_members.html', members = db.get_all_members())
+    return render_template('all_members.html', members = db.get_all_members(),
+                           inactiveMembers = db.get_all_inactive_members())
 
 #creates a member
 @app.route('/member/create', methods=['GET', 'POST'])
