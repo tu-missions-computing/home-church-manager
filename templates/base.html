@@ -7,6 +7,12 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
+
+	<link rel="stylesheet" href="/static/style.css"> <!-- Resource style for the popup confirmation box -->
+
+
     <style>
         ul {
             list-style-type: none;
@@ -51,18 +57,7 @@
              margin: auto;
             width: 50%;
         }
-        .form-group {
-            display:inline;
-        }
-        .btn-primary.gradient {
-        background: -moz-linear-gradient(top,  #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* IE10+ */
-        background: linear-gradient(to bottom,  #33a6cc 50%,#0099cc 50%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
-        }
+
         .singleLineChildren {
           /* prevents the contents from wrapping to a new line: */
           white-space: nowrap;
@@ -109,27 +104,47 @@
         /* add padding  */
         .left-addon input  { padding-left:  30px; }
         .right-addon input { padding-right: 30px; }
+
+
+}
     </style>
 </head>
 <body class="Site">
-    <nav>
-        <ul class="navbar navbar-inverse">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Verbo Velocity</a>
 
-            {% if current_user.role == 'homegroup_leader' %}
-            <li role="presentation" ><a href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a></li>
-                {% endif %}
-                {% if current_user.role == 'admin' %}
-                    <li role="presentation" ><a href="{{ url_for('get_homegroups') }}">All Home Groups</a></li>
-                <li role="presentation" ><a href="{{ url_for('all_members') }}">All Members</a></li>
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}">Verbo Velocity</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         {% if session %}
+            {% if session['email'] %}
+            {% if session['role'] == 'homegroup_leader' %}
+            <li role="presentation" ><a href="{{ url_for('get_homegroup_members', homegroup_id = session['homegroup_id']) }}">Members</a></li>
+            <li role="presentation" ><a href="{{ url_for('all_members') }}">All Members</a></li>
+            <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = session['homegroup_id']) }}">Attendance</a></li>
             {% endif %}
-            {% if current_user.role == 'homegroup_leader' %}
-                <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a></li>
+                </ul>
+      <form class="navbar-form navbar-left">
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+                {% if session['role'] == 'homegroup_leader' %}
+                       <li role="presentation" class="white"><h4><span class="glyphicon glyphicon-user"></span> Welcome, {{ session['name'] }}</h4></li>
+            <li role="presentation"><a href="{{ url_for('edit_homegroup', homegroup_id = session['homegroup_id']) }}">Settings</a></li>
+
             {% endif %}
-            {%  if current_user.name %}
-                <li role="presentation" class="welcome"><a href="/logout">Log Out</a></li>
-            {%  else %}
-                <li role="presentation" class="welcome"><a href="/login">Log In</a></li>
+            <li role="presentation"><a href="/logout">Log Out</a></li>
+
             {% endif %}
             {% if current_user.role == 'homegroup_leader' %}
             <li role="presentation" class="welcome"><a href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Settings</a></li>
@@ -138,8 +153,12 @@
             <li role="presentation" class="welcome white"><h4><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}</h4></li>
             {% endif %}
 
-        </ul>
-    </nav>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
 
    <main class="Site-content">
    <div id="google_translate_element"></div><script type="text/javascript">
@@ -184,5 +203,12 @@ function googleTranslateElementInit() {
 
     <!-- Uses jQuery, so load after jQuery -->
     <script type="text/javascript" src="/static/javascript.js"></script>
+
+
+
+<script src="/static/main.js"></script> <!-- Resource jQuery -->
+
+
+
 </body>
 </html>
