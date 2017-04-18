@@ -171,6 +171,17 @@ def deactivate_member(member_id):
     g.db.commit()
     return cursor.rowcount
 
+#this sets a member as active in the system
+def reactivate_member(member_id):
+    member_id = int(member_id)
+    query='''
+    UPDATE member SET is_active = 1
+    WHERE id = :member_id
+    '''
+    cursor = g.db.execute(query, {'member_id': member_id})
+    g.db.commit()
+    return cursor.rowcount
+
 #finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
@@ -275,4 +286,27 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
 #returns all homegroups
 def get_all_homegroups():
     cursor = g.db.execute('select * from homegroup')
+    return cursor.fetchall()
+
+
+#################################### Admin ########################################
+
+#finds all active admin in the db
+def get_all_admin():
+    query = '''
+        SELECT * FROM member
+        JOIN role ON member.id = role.id
+        WHERE role.role="admin" AND member.is_active=1
+        '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()
+
+#finds all inactive admin in the db
+def get_all_inactive_admin():
+    query = '''
+    SELECT * FROM member
+    JOIN role ON member.id = role.id
+    WHERE role.role="admin" AND is_active=0
+    '''
+    cursor = g.db.execute(query)
     return cursor.fetchall()

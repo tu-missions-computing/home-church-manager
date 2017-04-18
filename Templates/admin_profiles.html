@@ -1,10 +1,10 @@
 {%  extends "base.html" %}
 
-{% block title %} All Members {% endblock %}
+{% block title %} Admin Profiles {% endblock %}
 {% block content %}
 
 <div class="container-fluid">
-<h1>All Members</h1>
+<h1>Admin Profiles</h1>
     <div class="row">
         <div class="col form-group pull-right">
             <div class="inner-addon right-addon">
@@ -14,25 +14,16 @@
         </div>
         <div class="col form-group pull-right">
             Show Inactive Members
-{#        0 {{ showInactive }}#}
             {% if showInactive %}
-{#                1 {{ showInactive }}#}
-{#                {% set showInactive = True %}#}
-                <a class="checkboxy" onclick="{% set showInactive = False %}"  href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span> </button></a>
-{#                {% set showInactive = True %}#}
-{#                2 {{ showInactive }}#}
-{#                {% endif %}#}
+                <a class="checkboxy" onclick="{% set showInactive = False %}"  href="{{url_for('all_admin', admin = admin, inactiveAdmin = inactiveAdmin)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span> </button></a>
             {% else %}
-{#                3 {{ showInactive }}#}
-                <a class="checkboxy" onclick="{% set showInactive = True %}" href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary"> &nbsp; &nbsp;</button></a>
-{#                4 {{ showInactive }}#}
+                <a class="checkboxy" onclick="{% set showInactive = True %}" href="{{url_for('all_admin', admin = admin, inactiveAdmin = inactiveAdmin)}}"><button class="btn btn-secondary"> &nbsp; &nbsp;</button></a>
             {% endif %}
         </div>
-
         <div class="col form-group pull-left">
-            <a href="{{url_for('create_member')}}" class="btn btn-primary">
+            <a href="#" class="btn btn-primary">
                 <span class="glyphicon glyphicon-plus"></span>
-                Add Member
+                Add Admin
              </a>
         </div>
         <div class="col form-group pull-left">
@@ -57,35 +48,34 @@
     </tr>
     </thead>
     <tbody>
-    {% for member in members %}
+    {% for eachAdmin in admin %}
     <tr>
-        <td> {{ member.first_name }}</td>
-        <td> {{ member.last_name }}</td>
-        {% if showInactive==True %}
-            <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
-        {% endif %}
+        <td> {{ eachAdmin.first_name }}</td>
+        <td> {{ eachAdmin.last_name }}</td>
         <td>
-        <a href="{{url_for('edit_member', member_id = member.id)}}" class="btn btn-info btn-sm">
+        <a href="{{url_for('edit_member', member_id = eachAdmin.id)}}" class="btn btn-info btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
         </a>
-        <a href="{{url_for('deactivate_member', member_id = member.id)}}" class="btn btn-danger btn-sm">
+        <a href="{{url_for('deactivate_member', member_id = eachAdmin.id)}}" class="btn btn-danger btn-sm">
           <span class="glyphicon glyphicon-trash"></span> Remove
+        </a>
+        <a href="#" class="btn btn-danger btn-sm">
+          <span class="glyphicon glyphicon-down"></span> Demote
         </a>
         </td>
     </tr>
     {% endfor %}
-{#    {{ showInactive }}#}
     {% if showInactive==True %}
-        {%  for inactiveMember in inactiveMembers %}
+        {%  for inactiveAdmin in inactiveAdmin %}
             <tr>
-            <td> {{ inactiveMember.first_name }}</td>
-            <td> {{ inactiveMember.last_name }}</td>
+            <td> {{ inactiveAdmin.first_name }}</td>
+            <td> {{ inactiveAdmin.last_name }}</td>
             <td> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
             <td>
-            <a href="{{url_for('edit_member', member_id = inactiveMember.id)}}" class="btn btn-info btn-sm">
+            <a href="{{url_for('edit_member', member_id = inactiveAdmin.id)}}" class="btn btn-info btn-sm">
               <span class="glyphicon glyphicon-pencil"></span> Edit
             </a>
-            <a href="{{url_for('reactivate_member', member_id = inactiveMember.id)}}" class="btn btn-success btn-sm">
+            <a href="{{url_for('reactivate_member', member_id = inactiveAdmin.id)}}" class="btn btn-success btn-sm">
               <span class="glyphicon glyphicon-plus"></span> Reactivate
             </a>
             </td>
