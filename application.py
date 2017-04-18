@@ -420,7 +420,7 @@ def get_homegroups():
 @requires_roles('admin')
 def all_members():
     return render_template('all_members.html', members = db.get_all_members(),
-                           inactiveMembers = db.get_all_inactive_members())
+                           inactiveMembers = db.get_all_inactive_members(), showInactive = False)
 
 #creates a member
 @app.route('/member/create', methods=['GET', 'POST'])
@@ -459,8 +459,27 @@ def deactivate_member(member_id):
         flash("Member Deactivated!")
     return redirect(url_for('all_members'))
 
+#sets a member active in the system
+@app.route('/member/add/<member_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def reactivate_member(member_id):
+    rowcount = db.reactivate_member(member_id)
+    print(db.find_member(member_id)[9])
+    # if the member is not active
+    if db.find_member(member_id)[9] == 0:
+        flash("Member Reactivated!")
+    return redirect(url_for('all_members'))
 
+#### Admin - Admin ###########
 
+#shows all members
+@app.route('/admin/all')
+@login_required
+@requires_roles('admin')
+def all_admin():
+    return render_template('admin_profiles.html', admin = db.get_all_admin(),
+                           inactiveAdmin = db.get_all_inactive_admin(), showInactive = False)
 
 
 # Make this the last line in the file!
