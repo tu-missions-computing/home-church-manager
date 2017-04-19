@@ -343,7 +343,7 @@ def edit_member(member_id):
                                 baptism_status = row['baptism_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
-    if request.method == "POST":
+    if request.method == "POST" and member_form.validate():
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
         email = member_form.email.data
