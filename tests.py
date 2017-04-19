@@ -59,11 +59,10 @@ class LoginTestCase(FlaskTestCase):
 class ApplicationTestCase(FlaskTestCase):
     """Test the basic behavior of page routing and display"""
     def login(self, email, password):
-        with app.test_client() as c:
-            c.post('/login', follow_redirects=True, data = dict(
-                email=email,
-                password=password
-            ))
+        return self.client.post('/login', data=dict(
+            email=email,
+            password=password
+        ), follow_redirects=True)
 
     def test_all_members_page(self):
         """Verify the all members page."""
