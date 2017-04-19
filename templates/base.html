@@ -137,9 +137,9 @@
              <li role="presentation"><a class="active" href="#faq">FAQ</a></li>
           <li role="presentation"><a href="#contact">Contact</a></li>
              {%  if current_user.name %}
-                <li role="presentation" ><a href="/logout">Log Out</a></li>
+                 <li role="presentation" ><a href="/logout"><b>Log Out</b></a></li>
             {%  else %}
-                <li role="presentation" ><a href="/login">Log In</a></li>
+                 <li role="presentation" ><a href="/login"><b>Log In</b></a></li>
             {% endif %}
 
             </ul>
@@ -158,12 +158,17 @@
    <main class="Site-content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-   <div id="google_translate_element"></div><script type="text/javascript">
+                    <div class="col-lg-2" style="float:right;">
+                         <div id="google_translate_element"></div><script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
 </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                    </div>
+                    <div class="col-lg-8 col-lg-offset-2">
+
+
+
     {% if message %}
         <p>Note: {{ message }}</p>
     {% endif %}
