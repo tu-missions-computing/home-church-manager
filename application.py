@@ -61,7 +61,7 @@ def dashboard():
         homegroup_id = db.find_user_homegroup(email)
         return redirect(url_for('homegroup', homegroup_id = homegroup_id))
     if role =="admin":
-        return redirect(url_for('get_homegroups'))
+        return redirect(url_for('admin_home'))
 
 #displays the map of all the homegroups
 @app.route('/map')
