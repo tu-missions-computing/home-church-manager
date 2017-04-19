@@ -47,6 +47,14 @@ def create_user(email, password, role_id):
     g.db.commit()
     return cursor.rowcount
 
+#finds all roles
+def find_roles():
+    query='''
+    SELECT * FROM role
+    '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()
+
 #finds user based on an email
 def find_user(email):
     return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE email =?', (email,)).fetchone()
@@ -93,6 +101,7 @@ def get_all_members():
     query = '''
     SELECT * FROM member
     WHERE is_active=1
+    ORDER BY last_name asc
     '''
     cursor = g.db.execute(query)
     return cursor.fetchall()

@@ -91,19 +91,25 @@ def requires_roles(*roles):
 class UserForm(FlaskForm):
     email = StringField('E-mail Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    role = SelectField('Change Role', choices=[], coerce=int)
     submit = SubmitField('Create User')
 
 #Creates a new user and hashes their password in the database
-@app.route('/user/create/<user_id>', methods=['GET', 'POST'])
-def create_user(user_id):
-    member = db.find_member(user_id)
+@app.route('/user/create/<member_id>', methods=['GET', 'POST'])
+def create_user(member_id):
+    allRoles = db.find_roles()
+    roleList = []
+    for role in allRoles:
+        roleList.append((role["id"], role["role"]))
+    member = db.find_member(member_id)
     user_form = UserForm( email = member['email'])
+    user_form.role.choices = roleList
     if user_form.validate_on_submit():
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
-        db.create_user(user_form.email.data, pw_hash, 1)
+        db.create_user(user_form.email.data, pw_hash, user_form.role.data)
         flash('User Created')
-        return redirect(url_for('index'))
+        return redirect(url_for('all_members'))
     return render_template('create_user.html', form=user_form)
 
 class User(object):
