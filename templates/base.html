@@ -111,7 +111,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand">
-                    <a class="navbar-brand" href="{{ url_for('index') }}">Verbo Velocity</a>
+                    <a class="navbar-brand" href="{{ url_for('index') }}"><img src="/static/verbo-velocity.png" width="100%"></a>
                 </li>
             {% if current_user.name %}
             <li role="presentation" class="white"><h4><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}</h4></li>
