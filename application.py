@@ -94,9 +94,10 @@ class UserForm(FlaskForm):
     submit = SubmitField('Create User')
 
 #Creates a new user and hashes their password in the database
-@app.route('/user/create', methods=['GET', 'POST'])
-def create_user():
-    user_form = UserForm()
+@app.route('/user/create/<user_id>', methods=['GET', 'POST'])
+def create_user(user_id):
+    member = db.find_member(user_id)
+    user_form = UserForm( email = member['email'])
     if user_form.validate_on_submit():
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
@@ -342,7 +343,7 @@ def edit_member(member_id):
                                 baptism_status = row['baptism_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
-    if request.method == "POST":
+    if request.method == "POST" and member_form.validate():
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
         email = member_form.email.data
