@@ -77,6 +77,9 @@
           /* to emphasize/speed-up the effect: */
           width: 100%;
         }
+        .checkboxy {
+            padding-right: 8px;
+        }
         /* Searching through table */
         .results tr[visible='false'],
         .no-result{
@@ -130,7 +133,8 @@
                 {% endif %}
                 {% if current_user.role == 'admin' %}
                     <li role="presentation" ><a href="{{ url_for('get_homegroups') }}">All Home Groups</a></li>
-                <li role="presentation" ><a href="{{ url_for('all_members') }}">All Members</a></li>
+                    <li role="presentation" ><a href="{{ url_for('all_members') }}">All Members</a></li>
+                    <li role="presentation" ><a href="{{ url_for('all_admin') }}">All Admin</a></li>
             {% endif %}
             {% if current_user.role == 'homegroup_leader' %}
                 <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a></li>

@@ -383,6 +383,12 @@ class CreateHomeGroupForm(FlaskForm):
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
 
+#displays admin home page
+@app.route('/admin')
+def admin_home():
+    attendance_count = db.get_attendance_counts()
+    return render_template('admin_home.html', attendance_count=attendance_count)
+
 #create homegroup
 @app.route('/homegroup/create', methods=['GET','POST'])
 @login_required
@@ -480,6 +486,8 @@ def reactivate_member(member_id):
 def all_admin():
     return render_template('admin_profiles.html', admin = db.get_all_admin(),
                            inactiveAdmin = db.get_all_inactive_admin(), showInactive = False)
+
+
 
 
 # Make this the last line in the file!
