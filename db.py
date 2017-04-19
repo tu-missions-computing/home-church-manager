@@ -310,3 +310,14 @@ def get_all_inactive_admin():
     '''
     cursor = g.db.execute(query)
     return cursor.fetchall()
+
+def get_attendance_counts():
+    query = '''
+    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+    JOIN meeting ON attendance.meeting_id = meeting.id
+    JOIN member ON attendance.member_id = member.id
+    WHERE attendance = 1
+    GROUP BY date, time
+    '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()

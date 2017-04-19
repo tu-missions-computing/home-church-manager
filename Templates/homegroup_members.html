@@ -3,7 +3,6 @@
 {% block title %} Homegroup Members {% endblock %}
 {% block content %}
 
-
 <div class="container-fluid">
 <h1>Homegroup Members</h1>
     <div class="row">
@@ -27,6 +26,7 @@
         </div>
     </div>
 </div>
+
 <span class="counter pull-right"></span>
 <table class="table table-striped table-bordered table-hover results">
     <thead>
@@ -37,7 +37,6 @@
     </tr>
     </thead>
     <tbody>
-
     {% for member in homegroup %}
     <tr>
         <td> {{ member.first_name }}</td>
@@ -84,7 +83,4 @@
 </table>
 
 </div>
-
-
-
 {% endblock %}
