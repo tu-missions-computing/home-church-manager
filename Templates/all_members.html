@@ -4,7 +4,7 @@
 {% block content %}
 
 <script>
-    function hi(){
+    function switchInactive(){
         {% if showInactive == True %}
             {% set showInactive = False %}
         {% endif %}
@@ -25,18 +25,10 @@
         </div>
         <div class="col form-group pull-right">
             Show Inactive Members
-        0 {{ showInactive }}
             {% if showInactive == True %}
-{#                1 {{ showInactive }}#}
-{#                {% set showInactive = True %}#}
-                <a class="checkboxy" onclick="hi()"  href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span> </button></a>
-{#                {% set showInactive = True %}#}
-{#                2 {{ showInactive }}#}
-{#                {% endif %}#}
+                <a class="checkboxy" onclick="switchInactive()"  href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary" > <span class="glyphicon glyphicon-ok"></span> </button></a>
             {% else %}
-{#                3 {{ showInactive }}#}
-                <a class="checkboxy" onclick="hi()" href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary"> &nbsp; &nbsp;</button></a>
-{#                4 {{ showInactive }}#}
+                <a class="checkboxy" onclick="switchInactive()" href="{{url_for('all_members', members = members, inactiveMembers = inactiveMembers)}}"><button class="btn btn-secondary"> &nbsp; &nbsp;</button></a>
             {% endif %}
         </div>
 
@@ -88,7 +80,6 @@
         </td>
     </tr>
     {% endfor %}
-{#    {{ showInactive }}#}
     {% if showInactive==True %}
         {%  for inactiveMember in inactiveMembers %}
             <tr>

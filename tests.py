@@ -119,6 +119,37 @@ class DatabaseTestCase(FlaskTestCase):
         db.close_db_connection()
         super(DatabaseTestCase, self).tearDown()
 
+    #################################### USER ########################################
+
+
+    # Test adding a new user
+    def test_add_member(self):
+        """Make sure we can add a new user"""
+        row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, "9/12/16")
+        self.assertEqual(row_count, 1)
+        member_id = db.recent_member()['id']
+        test_hg = db.find_member(member_id)
+        self.assertIsNotNone(test_hg)
+
+        self.assertEqual(test_hg['first_name'], 'Ryley')
+        self.assertEqual(test_hg['last_name'], 'Hoekert')
+        self.assertEqual(test_hg['email'], 'ryley@email.com')
+        self.assertEqual(test_hg['phone_number'], '7192009832')
+        self.assertEqual(test_hg['gender'], 'Female')
+        self.assertEqual(test_hg['birthday'], 'Never')
+        self.assertEqual(test_hg['baptism_status'], 1)
+        self.assertEqual(test_hg['join_date'], '9/12/16')
+
+
+
+    #################################### MEMBER ########################################
+
+
+
+
+    #################################### HOME GROUP ########################################
+
+
     def test_add_homegroup(self):
         """Make sure we can add a new homegroup"""
         row_count = db.create_homegroup('Test HomeGroup', 'Test Location', 'Test Description', None, None)
@@ -142,6 +173,10 @@ class DatabaseTestCase(FlaskTestCase):
         self.assertEqual(test_hg['Name'], 'Test HomeGroup')
         self.assertEqual(test_hg['Location'], 'Test Location')
         self.assertEqual(test_hg['Description'], 'Test Description')
+
+
+    #################################### Admin ########################################
+
 
 # Do the right thing if this file is run standalone.
 if __name__ == '__main__':

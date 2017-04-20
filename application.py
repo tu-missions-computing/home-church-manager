@@ -204,7 +204,9 @@ def logout():
 @requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
-    return render_template('homegroup.html', currentHomegroup=homegroup)
+    attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    return render_template('homegroup.html', currentHomegroup=homegroup,
+                           attendance_count=attendance_count)
 
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
@@ -395,6 +397,7 @@ class CreateHomeGroupForm(FlaskForm):
 @app.route('/admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
+    print(attendance_count)
     return render_template('admin_home.html', attendance_count=attendance_count)
 
 #create homegroup
