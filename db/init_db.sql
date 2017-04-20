@@ -12,6 +12,7 @@ INSERT INTO homegroup(name, location, description, latitude, longitude) values (
 INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Chocolate Pudding', '124 W Michigan Avenue Lansing, MI 48933', 'A cult that brings chocolate pudding to their worship services. No vanilla pudding allowed - only chocolate.',42.7371, -84.5563);
 INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Indiana University Group','107 S. Indiana Ave Bloomington, IN 47405','Group of students from Indiana University',39.1766, -86.5130);
 INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Mexican Hot Chocolate','2539 East Vaughn Court Gilbert, AZ 85234 ','Group of students from Indiana University',33.3651, -111.7495);
+
 INSERT INTO homegroup_member values (1,4,1);
 INSERT INTO homegroup_member values (1,2,1);
 INSERT INTO homegroup_member values (1,5,1);

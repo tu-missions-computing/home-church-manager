@@ -27,6 +27,10 @@ class FlaskTestCase(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['CSRF_ENABLED'] = False
 
+        # app.config['CSRF_ENABLED'] = False
+        # Right key:
+        app.config['WTF_CSRF_ENABLED'] = False
+
         # Create an application context for testing.
         self.app_context = app.test_request_context()
         self.app_context.push()
@@ -48,42 +52,41 @@ class LoginTestCase(FlaskTestCase):
         return self.client.get('/logout', follow_redirects=True)
 
     def test_login_logout(self):
-        rv = self.login('admin', 'default')
-        assert b'Log' in rv.data
+        rv = self.login('admin@example.com', 'password')
+        assert b'Logged in' in rv.data
         rv = self.logout()
-        assert b'Log In' in rv.data
+        assert b'Logged out' in rv.data
         rv = self.login('adminx', 'default')
-        assert b'Log In' in rv.data
+        assert b'Invalid' in rv.data
 
 
-class ApplicationTestCase(FlaskTestCase):
+class AdminTestCase(FlaskTestCase):
     """Test the basic behavior of page routing and display"""
     def login(self, email, password):
         return self.client.post('/login', data=dict(
             email=email,
             password=password
         ), follow_redirects=True)
-
     def test_all_members_page(self):
         """Verify the all members page."""
         self.login('admin@example.com', 'password')
-        resp = self.client.get(url_for('dashboard'))
-        # print(resp.data)
-        self.assertTrue(b'All' in resp.data, "Did not find the phrase: First")
-    # def test_all_homegroups_page(self):
-    #     """Verify the all homegroups page."""
-    #     self.create_user('admin', 'default')
-    #     rv = self.login('admin', 'default')
-    #     resp = self.client.get(url_for('get_homegroups'))
-    #     self.assertTrue(b'Members'in resp.data, "Did not find the word: Members")
-    #     self.assertTrue(b'Edit' in resp.data, "Did not find the word: Edit")
-    #     self.assertTrue(b'All Home Groups' in resp.data, "Did not find the phrase: All Home Groups")
+        resp = self.client.get(url_for('all_members'))
+        self.assertTrue(b'First Name' in resp.data, "Did not find the phrase: First Name")
+    def test_admin_dashboard(self):
+        """Verify the all homegroups page."""
+        self.login('admin@example.com', 'password')
+        resp = self.client.get(url_for('admin_home'))
+        self.assertTrue(b'Attendance Count'in resp.data, "Did not find the phrase: Attendance Count")
 
+    def test_all_homegroups_page(self):
+        """Verify the all homegroups page."""
+        self.login('admin@example.com', 'password')
+        resp = self.client.get(url_for('get_homegroups'))
+        self.assertTrue(b'All Home Groups' in resp.data, "Did not find the phrase: All Home Groups")
 
 
 class DatabaseTestCase(FlaskTestCase):
     """Test database access and update functions."""
-
     # This method is invoked once before all the tests in this test case.
     @classmethod
     def setUpClass(cls):

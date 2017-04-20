@@ -166,6 +166,7 @@ def login():
     #temporary
     init_test_user()
     login_form = LoginForm()
+    print (request.form)
     if login_form.validate_on_submit():
         if authenticate(login_form.email.data, login_form.password.data):
             # Credentials authenticated.
