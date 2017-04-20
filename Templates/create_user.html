@@ -7,11 +7,26 @@
 
     <h1>Create User</h1>
 
-    <form method="POST">
-    {{ form.csrf_token }}
+    <form method = "POST" role="form" data-toggle="validator">
+        <div class="form-group">
+        {{ form.csrf_token }}
 
         <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
+        {% if form.email.errors %}
+            <div class="alert alert-warning">
+                Must Enter Valid Email
+             </div>
+        {% endif %}
+
+
         <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p>
+        {% if form.password.errors %}
+            <div class="alert alert-warning">
+                Must Enter Valid Password
+             </div>
+        {% endif %}
+
+
         <p>{{ form.role.label }}{{ form.role(class="form-control") }}</p>
 
         <p id = 'homegroups' style="visibility:hidden"> {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
