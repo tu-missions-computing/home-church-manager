@@ -28,9 +28,7 @@
         {% for attendance_record in attendance_count %}
         <tr>
             <th>{{ attendance_record.date }}</th>
-            <td>3</td>
-
-{#            <td>{{ attendance_record.countMembers}}</td>#}
+            <td>{{ attendance_record.countMembers}}</td>
         </tr>
         {% endfor %}
 
