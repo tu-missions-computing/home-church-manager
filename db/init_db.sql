@@ -22,6 +22,7 @@ INSERT INTO attendance VALUES (1,1,1,1);
 INSERT INTO attendance VALUES (1,2,1,1);
 INSERT INTO attendance VALUES (1,1,2,1);
 INSERT INTO attendance VALUES (1,2,2,1);
+INSERT INTO attendance VALUES (1,3,2,1);
 
 INSERT INTO meeting(date, time) values ('03-07-2017', '12:00');
 INSERT INTO meeting(date, time) values ('03-13-2017', '16:00');
