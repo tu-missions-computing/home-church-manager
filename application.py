@@ -92,6 +92,7 @@ class UserForm(FlaskForm):
     email = StringField('E-mail Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     role = SelectField('Change Role', choices=[], coerce=int)
+    homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
     submit = SubmitField('Create User')
 
 #Creates a new user and hashes their password in the database
@@ -104,10 +105,20 @@ def create_user(member_id):
     member = db.find_member(member_id)
     user_form = UserForm( email = member['email'])
     user_form.role.choices = roleList
+
+    homegroups = db.get_all_homegroups()
+    homegroup_list = []
+    for homegroup in homegroups:
+        homegroup_list.append((homegroup['id'], homegroup['name']))
+    user_form.homegroups.choices = homegroup_list
+
     if user_form.validate_on_submit():
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
         db.create_user(user_form.email.data, pw_hash, user_form.role.data)
+        homegroupId = user_form.homegroups.data
+        if (homegroup_id) is not None:
+            db.add_leader_to_homegroup(homegroup_id, member_id)
         flash('User Created')
         return redirect(url_for('all_members'))
     return render_template('create_user.html', form=user_form)

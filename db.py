@@ -141,6 +141,18 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
     g.db.commit()
     return cursor.rowcount
 
+#adds leader to a homegroup
+def add_leader_to_homegroup(member_id, homegroup_id):
+    homegroup_id = int(homegroup_id)
+    member_id = int(member_id)
+    query = '''
+    INSERT INTO homegroup_leader values(:member_id, :homgroup_id)
+    '''
+    cursor = g.db.execute(query, { 'member_id': member_id, 'homegroup_id': homegroup_id})
+    g.db.commit()
+    return cursor.rowcount
+
+
 #adds a member to a homegroup
 def add_member_to_homegroup(homegroup_id, member_id):
     homegroup_id = int(homegroup_id)

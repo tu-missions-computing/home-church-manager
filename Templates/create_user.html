@@ -3,6 +3,8 @@
 {% block title %}Create User{% endblock %}
 
 {% block content %}
+
+
     <h1>Create User</h1>
 
     <form method="POST">
@@ -11,6 +13,24 @@
         <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
         <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p>
         <p>{{ form.role.label }}{{ form.role(class="form-control") }}</p>
+
+        <p id = 'homegroups' style="visibility:hidden"> {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
+
+    </div>
+
         <p>{{ form.submit(class_='btn btn-default') }}</p>
     </form>
+
+
+     <script>
+    document.getElementById('role').onchange = function(){
+
+        var role_id = document.getElementById('role')
+        var role = role_id.options[role_id.selectedIndex].text;
+        if (role == 'homegroup_leader') {
+            document.getElementById('homegroups').style.visibility = 'visible';
+        }
+    }
+
+    </script>
 {% endblock %}
