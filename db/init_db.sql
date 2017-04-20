@@ -24,9 +24,16 @@ INSERT INTO attendance VALUES (1,2,1,1);
 INSERT INTO attendance VALUES (1,1,2,1);
 INSERT INTO attendance VALUES (1,2,2,1);
 INSERT INTO attendance VALUES (1,3,2,1);
+INSERT INTO attendance VALUES (1,1,3,1);
+INSERT INTO attendance VALUES (1,2,3,0);
+INSERT INTO attendance VALUES (1,1,4,1);
+INSERT INTO attendance VALUES (1,2,4,1);
+INSERT INTO attendance VALUES (1,3,4,1);
 
 INSERT INTO meeting(date, time) values ('03-07-2017', '12:00');
 INSERT INTO meeting(date, time) values ('03-13-2017', '16:00');
+INSERT INTO meeting(date, time) values ('03-09-2017', '12:00');
+INSERT INTO meeting(date, time) values ('03-23-2017', '16:00');
 
 INSERT INTO role(role) values ('member');
 INSERT INTO role(role) values ('homegroup_leader');
