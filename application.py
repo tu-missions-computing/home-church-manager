@@ -103,6 +103,7 @@ def create_user(member_id):
     for role in allRoles:
         roleList.append((role["id"], role["role"]))
     member = db.find_member(member_id)
+    email = member['email']
     user_form = UserForm( email = member['email'])
     user_form.role.choices = roleList
 
@@ -116,9 +117,13 @@ def create_user(member_id):
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
         db.create_user(user_form.email.data, pw_hash, user_form.role.data)
-        homegroupId = user_form.homegroups.data
-        if (homegroup_id) is not None:
-            db.add_leader_to_homegroup(homegroup_id, member_id)
+        if user_form.homegroups.data is not None:
+            homegroupId = user_form.homegroups.data
+            user_id =  db.find_user(email)['id']
+            db.add_leader_to_homegroup(user_id, homegroupId)
+
+
+
         flash('User Created')
         return redirect(url_for('all_members'))
     return render_template('create_user.html', form=user_form)
