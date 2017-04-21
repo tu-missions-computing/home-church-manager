@@ -366,7 +366,7 @@ def edit_member(member_id):
                                 phone_number = row['phone_number'],
                                 gender = row['gender'],
                                 baptism_status = row['baptism_status'])
-    birthday_form = row['birthday']
+    birthday_form= row['birthday']
     join_date_form = row['join_date']
     if request.method == "POST" and member_form.validate():
         first_name = member_form.first_name.data
@@ -380,10 +380,7 @@ def edit_member(member_id):
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
         if (rowcount == 1):
             flash("Member {} Updated!".format(member_form.first_name.data))
-            if (current_user.role == 'admin'):
-                return redirect(url_for('all_members'))
-            else:
-                return redirect(url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id))
+            return redirect(url_for('all_members'))
 
     return render_template('edit_member.html', form = member_form, bDay = birthday_form, joinDay = join_date_form)
 

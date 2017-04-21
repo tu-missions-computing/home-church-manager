@@ -137,12 +137,12 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 #creates a new member
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''
-    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date, is_active)
-    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date, :is_active)
+    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
+    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date)
     '''
     cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email,
                                   'phone_number': phone_number, 'gender': gender, 'birthday': birthday,
-                                  'baptism_status': baptism_status, 'join_date': join_date, 'is_active': 1})
+                                  'baptism_status': baptism_status, 'join_date': join_date})
     g.db.commit()
     return cursor.rowcount
 
