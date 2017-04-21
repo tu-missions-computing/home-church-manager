@@ -137,8 +137,8 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 #creates a new member
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''
-    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date)
-    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date)
+    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date, is_active)
+    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date, 1)
     '''
     cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email,
                                   'phone_number': phone_number, 'gender': gender, 'birthday': birthday,

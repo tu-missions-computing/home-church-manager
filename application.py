@@ -313,8 +313,8 @@ class CreateMemberForm(FlaskForm):
     last_name = StringField('Last Name', [validators.Length(min=2, max=30, message="Last name is a required field")])
     email = StringField('Email', [validators.Email("Please enter valid email")])
     phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
-    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female')])
-    baptism_status = SelectField('Baptized?', choices=[('yes', 'Yes'), ('no', 'No')])
+    gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
+    baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
     submit = SubmitField('Save Member')
 
 #creates a new member for a particular homegroup
