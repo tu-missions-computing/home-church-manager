@@ -77,7 +77,6 @@ class AdminTestCase(FlaskTestCase):
         self.login('admin@example.com', 'password')
         resp = self.client.get(url_for('admin_home'))
         self.assertTrue(b'Attendance Count'in resp.data, "Did not find the phrase: Attendance Count")
-
     def test_all_homegroups_page(self):
         """Verify the all homegroups page."""
         self.login('admin@example.com', 'password')
@@ -121,8 +120,35 @@ class DatabaseTestCase(FlaskTestCase):
 
     #################################### USER ########################################
 
-
     # Test adding a new user
+    # def test_add_user(self):
+    #     """Make sure we can add a new user"""
+    #     row_count = db.create_user("testing@test.com", "password", 1)
+    #     self.assertEqual(row_count, 1)
+    #     user = db.recent_user()
+    #     user_email=user.email
+    #     test_hg = db.find_user(user_email)
+    #     self.assertIsNotNone(test_hg)
+    #
+    #     self.assertEqual(test_hg['email'], 'testing@test.com')
+    #     self.assertEqual(test_hg['password'], 'password')
+    #     self.assertEqual(test_hg['role_id'], 1)
+    #
+    # def test_edit_user(self):
+    #     """Make sure we can edit a homegroup"""
+    #     row_count = db.create_user("testing@test.com", "password", 1)
+    #     user_id = db.recent_user()['id']
+    #     row_count = db.edit_user("testingggggg@test.com", "passwordssss", 1)
+    #     test_hg = db.find_member(user_id)
+    #     self.assertIsNotNone(test_hg)
+    #
+    #     self.assertEqual(test_hg['email'], 'testingggggg@test.com')
+    #     self.assertEqual(test_hg['password'], 'passwordssss')
+    #     self.assertEqual(test_hg['role_id'], 1)
+
+
+    #################################### MEMBER ########################################
+    # Test adding a new member
     def test_add_member(self):
         """Make sure we can add a new user"""
         row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, "9/12/16")
@@ -140,10 +166,22 @@ class DatabaseTestCase(FlaskTestCase):
         self.assertEqual(test_hg['baptism_status'], 1)
         self.assertEqual(test_hg['join_date'], '9/12/16')
 
+    def test_edit_member(self):
+        """Make sure we can edit a homegroup"""
+        row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, "2/3/09")
+        member_id = db.recent_member()['id']
+        row_count = db.edit_member(member_id,'First', 'Last', 'test@example.com', "2", "Male", "Easter", 1, "2/3/09")
+        test_hg = db.find_member(member_id)
+        self.assertIsNotNone(test_hg)
 
-
-    #################################### MEMBER ########################################
-
+        self.assertEqual(test_hg['first_name'], 'First')
+        self.assertEqual(test_hg['last_name'], 'Last')
+        self.assertEqual(test_hg['email'], 'test@example.com')
+        self.assertEqual(test_hg['phone_number'], '2')
+        self.assertEqual(test_hg['gender'], 'Male')
+        self.assertEqual(test_hg['birthday'], 'Easter')
+        self.assertEqual(test_hg['baptism_status'], 1)
+        self.assertEqual(test_hg['join_date'], '2/3/09')
 
 
 

@@ -78,6 +78,11 @@ def find_user_homegroup(email):
     homegroup_id = cursor.fetchone()['homegroup_id']
     return homegroup_id
 
+#finds the most recent user entered into the db
+def recent_user():
+    cursor = g.db.execute('select id from user order by id desc LIMIT 1')
+    return cursor.fetchone()
+
 #################################### MEMBER ########################################
 
 #returns a count of all members in the db
