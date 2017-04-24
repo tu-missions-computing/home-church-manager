@@ -309,9 +309,9 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     g.db.commit()
     return cursor.rowcount
 
-#returns all homegroups
+#returns all homegroups + leaders
 def get_all_homegroups():
-    cursor = g.db.execute('select * from homegroup')
+    cursor = g.db.execute('select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id  left outer join user on homegroup_leader.user_id = user.id left outer join member on user.email = member.email')
     return cursor.fetchall()
 
 
