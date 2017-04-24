@@ -138,11 +138,11 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''
     INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date, is_active)
-    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date, :is_active)
+    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date, 1)
     '''
     cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email,
                                   'phone_number': phone_number, 'gender': gender, 'birthday': birthday,
-                                  'baptism_status': baptism_status, 'join_date': join_date, 'is_active': 1})
+                                  'baptism_status': baptism_status, 'join_date': join_date})
     g.db.commit()
     return cursor.rowcount
 
@@ -309,9 +309,9 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     g.db.commit()
     return cursor.rowcount
 
-#returns all homegroups
+#returns all homegroups + leaders
 def get_all_homegroups():
-    cursor = g.db.execute('select * from homegroup')
+    cursor = g.db.execute('select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id  left outer join user on homegroup_leader.user_id = user.id left outer join member on user.email = member.email')
     return cursor.fetchall()
 
 
