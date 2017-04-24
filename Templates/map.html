@@ -36,6 +36,10 @@
                 tmp_locations.push("{{homegroup.name}}");
                 tmp_locations.push("{{homegroup.description}}");
                 tmp_locations.push("{{homegroup.location}}");
+                tmp_locations.push("{{ homegroup.first_name }}")
+                tmp_locations.push("{{ homegroup.last_name }}")
+                tmp_locations.push("{{ homegroup.phone_number }}")
+                tmp_locations.push("{{ homegroup.email }}")
                 locations.push(tmp_locations);
           {% endfor %}
 
@@ -61,7 +65,11 @@
             position: new google.maps.LatLng(locations[i][0], locations[i][1]),
             map: map
           });
-          var contentString = '<div id="locationContent">' + '<h2>' + locations[i][2] + '</h2><p><b>Description:</b> '+ locations[i][3]  + '<br> <b>Location:</b> ' + locations[i][4] + '</p> </div>';
+          var contentString = '<div id="locationContent">' + '<h2>' + locations[i][2] + '</h2><p><b>Description:</b> '+ locations[i][3]  + '<br> <b>Location:</b> ' + locations[i][4] ;
+          if (locations[i][5] != "None"){
+              contentString = contentString + ' <br><b>Homegroup Leader:</b> ' + locations[i][5] + " " + locations[i][6] + ' <br><b> Phone Number: </b> <a href="tel:' + locations[i][7] + '">' + locations[i][7] + '</a> <br> <b> Email: </b> ' + locations[i][8];
+          }
+          contentString = contentString + '</p></div>';
           createInfoWindow(marker, contentString);
         }
 

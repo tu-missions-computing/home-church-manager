@@ -67,7 +67,6 @@ def dashboard():
 @app.route('/map')
 def map():
     homegroups = db.get_all_homegroups()
-
     return render_template('map.html', homegroups = homegroups)
 
 
