@@ -504,6 +504,14 @@ def reactivate_member(member_id):
         flash("Member Reactivated!")
     return redirect(url_for('all_members'))
 
+#shows all members
+@app.route('/member/all/advanced_search')
+@login_required
+@requires_roles('admin')
+def advanced_search():
+    return render_template('advanced_search.html', members = db.get_all_members())
+
+
 #### Admin - Admin ###########
 
 #shows all members
