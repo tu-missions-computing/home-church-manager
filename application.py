@@ -441,6 +441,7 @@ def create_homegroup():
 def get_homegroups():
     return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
 
+#deactivates a homegroup
 @app.route('/member/delete/<homegroup_id>', methods = ['GET', 'POST'])
 @login_required
 @requires_roles('admin')
