@@ -311,8 +311,22 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
 
 #returns all homegroups
 def get_all_homegroups():
-    cursor = g.db.execute('select * from homegroup')
+    query = '''
+        SELECT * FROM homegroup
+        WHERE is_active=1
+        '''
+    cursor = g.db.execute(query)
     return cursor.fetchall()
+
+def deactivate_homegroup(homegroup_id):
+    homegroup_id = int(homegroup_id)
+    query='''
+    UPDATE homegroup SET is_active = 0
+    WHERE id = :homegroup_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id})
+    g.db.commit()
+    return cursor.rowcount
 
 
 #################################### Admin ########################################

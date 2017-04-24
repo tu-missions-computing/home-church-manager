@@ -442,6 +442,17 @@ def create_homegroup():
 def get_homegroups():
     return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
 
+@app.route('/member/delete/<homegroup_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def deactivate_homegroup(homegroup_id):
+    rowcount = db.deactivate_homegroup(homegroup_id)
+    print(db.find_homegroup(homegroup_id)[6])
+    # if the member is not active
+    if db.find_homegroup(homegroup_id)[6] == 0:
+        flash("Homegroup Deactivated!")
+    return redirect(url_for('get_homegroups'))
+
 #### Admin - Member ###########
 
 #shows all members
