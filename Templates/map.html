@@ -67,7 +67,7 @@
           });
           var contentString = '<div id="locationContent">' + '<h2>' + locations[i][2] + '</h2><p><b>Description:</b> '+ locations[i][3]  + '<br> <b>Location:</b> ' + locations[i][4] ;
           if (locations[i][5] != "None"){
-              contentString = contentString + ' <br><b>Homegroup Leader:</b> ' + locations[i][5] + " " + locations[i][6] + ' <br><b> Phone Number: </b> <a href="tel:' + locations[i][7] + '">' + locations[i][7] + '</a> <br> <b> Email: </b> ' + locations[i][8];
+              contentString = contentString + ' <br><b>Homegroup Leader:</b> ' + locations[i][5] + " " + locations[i][6] + ' <br><b> Phone Number: </b> <a href="tel:' + locations[i][7] + '">' + locations[i][7] + '</a> <br> <b> Email: </b><a href="mailto:' + locations[i][8] + '">' + locations[i][8] +'</a>';
           }
           contentString = contentString + '</p></div>';
           createInfoWindow(marker, contentString);
