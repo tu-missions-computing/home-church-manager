@@ -7,6 +7,11 @@
     function resize_iframe(){
         document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
     }
+
+    function map_zip(){
+        var iframe = document.getElementById('mapIframe');
+        iframe.src = iframe.src;
+    }
   window.onresize = function(){
         resize_iframe();
   }
@@ -17,9 +22,19 @@
     <br>
     <img height="137px" width="300px" src="../../static/Logo-Verbo.png">
     <br><br>
+    <div class = "container">
+    <div class = "row">
+        <div class = "col-md-4">
+        <input type="text"  id="zip" class = "form-control" placeholder = "Enter Zip Code or Address"></input>
+           </div>
+            <div class="col-md-2"><button class="btn btn-info" onclick="map_zip()"> Search </button></div><br><br>
 
- <iframe id="mapIframe" class="embed-responsive-item" width="100%"src="../../map">
+
+        </div>
+        <div class = "row">
+        <iframe id="mapIframe" class="embed-responsive-item" width="100%"src="../../map">
 
      </iframe>
-
+    </div>
+    </div>
 {% endblock %}
