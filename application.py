@@ -350,7 +350,7 @@ def create_new_member_for_homegroup(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
-    return render_template('homegroup_members.html', homegroup = db.get_homegroup_members(homegroup_id), currentHomegroup = current_homegroup)
+    return render_template('homegroup_members.html', homegroup = db.get_homegroup_members(homegroup_id), currentHomegroup = current_homegroup, homegroupEmails = db.get_homegroup_emails(homegroup_id))
 
 
 #edits member information

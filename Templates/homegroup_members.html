@@ -3,6 +3,15 @@
 {% block title %} Homegroup Members {% endblock %}
 {% block content %}
 
+<script>
+  function emailHomegroup() {
+      console.log("hi")
+      console.log({{ homegroupEmails }})
+    email = {{ homegroupEmails }};
+    window.location.href = "mailto:" + email ;
+  }
+</script>
+
 <div class="container-fluid">
 <h1>Homegroup Members</h1>
     <div class="row">
@@ -19,9 +28,9 @@
              </a>
         </div>
         <div class="col form-group pull-left">
-            <a href="#" class="btn btn-primary">
+            <a href="#" class="btn btn-primary" onclick="emailHomegroup()">
                 <span class="glyphicon glyphicon-envelope"></span>
-                Email
+                Email Group
             </a>
         </div>
     </div>
