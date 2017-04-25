@@ -404,6 +404,7 @@ def remove_member(homegroup_id, member_id):
     return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
+
 ########################## ADMIN FUNCTIONS ##############################################
 
 #### Admin - Home Group ####
