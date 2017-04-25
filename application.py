@@ -9,11 +9,22 @@ from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRe
 from wtforms.validators import Length
 from wtforms import validators
 from flask_bcrypt import Bcrypt
+from flask_mail import Mail, Message
+
+
 
 import db
 
+
 app = Flask(__name__)
+
+import mail_settings
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
+
+
+mail=Mail(app)
+
+
 
 bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
@@ -50,7 +61,15 @@ def init_test_user():
 @app.route('/')
 def index():
 # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
-   return render_template('index.html')
+     msg = Message(
+     'Hello',
+     sender='verbovelocity@gmail.com',
+     recipients=
+     ['verbovelocity@gmail.com'])
+     msg.body = "This is the email body"
+     mail.send(msg)
+
+     return render_template('index.html')
 
 #this displays the dashboard depending on user role
 @app.route('/dashboard')
