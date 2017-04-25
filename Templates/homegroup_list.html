@@ -3,6 +3,17 @@
 {% block title %} All Home Groups {% endblock %}
 {% block content %}
 
+    <script>
+    function switchInactive(){
+        {% if showInactive == True %}
+            {% set showInactive = False %}
+        {% endif %}
+        {% if showInactive == False %}
+            {% set showInactive = True %}
+        {% endif %}
+    }
+</script>
+
 <div class="container-fluid">
 <h1>All Home Groups</h1>
     <div class="row">
@@ -27,6 +38,9 @@
     <tr>
         <th> Name</th>
         <th> Location</th>
+        {% if showInactive==True %}
+            <th> Inactive? </th>
+        {% endif %}
         <th> </th>
     </tr>
     </thead>
@@ -35,6 +49,9 @@
     <tr>
         <td> {{ homegroup.name }}</td>
         <td> {{ homegroup.location }}</td>
+        {% if showInactive==True %}
+            <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
+        {% endif %}
         <td>
         <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-info btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
@@ -42,11 +59,29 @@
         <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="btn btn-warning btn-sm">
           <span class="glyphicon glyphicon-user"></span> Members
         </a>
+            <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-danger btn-sm">
+          <span class="glyphicon glyphicon-trash"></span> Remove
+        </a>
         </td>
     </tr>
     {% endfor %}
+    {% if showInactive==True %}
+        {%  for inactiveHomegroup in inactiveHomegroups %}
+            <tr>
+            <td> {{ inactiveHomegroup.name }}</td>
+            <td> {{ inactiveHomegroup.location }}</td>
+            <td> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
+            <td>
+            <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">
+              <span class="glyphicon glyphicon-plus"></span> Reactivate
+            </a>
+            </td>
+        {% endfor %}
+    {% endif %}
     </tbody>
 </table>
 
+
 </div>
 {% endblock %}
+

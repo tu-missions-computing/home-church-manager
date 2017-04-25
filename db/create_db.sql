@@ -43,6 +43,7 @@ create table homegroup (
   description TEXT,
   latitude REAL,
   longitude REAL,
+  is_active BOOLEAN,
 
   foreign key (id) REFERENCES homegroup_member (homegroup_id),
   foreign key (id) REFERENCES homegroup_leader (homegroup_id)

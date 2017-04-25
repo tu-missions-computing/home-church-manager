@@ -7,11 +7,11 @@ INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('admin@example.com', 'Ryley', 'Hoekert', '5551353245', 'F', '1989-11-14', 1, '2016-08-01', 1 );
 
 
-INSERT INTO homegroup(name, location, description, latitude, longitude) values ('TWEET', '236 W. Reade Ave Upland, IN 46989', 'Taylor Women Engaged in Engineering and Technology',40.4756, -85.4944);
-INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Ball State CRU', '2000 W University Ave Muncie, IN 47306', 'Cru at Ball State is a movement of people passionate about knowing Jesus and telling His story by getting, giving, and multiplying the Gospel.',40.2061, -85.4070);
-INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Chocolate Pudding', '124 W Michigan Avenue Lansing, MI 48933', 'A cult that brings chocolate pudding to their worship services. No vanilla pudding allowed - only chocolate.',42.7371, -84.5563);
-INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Indiana University Group','107 S. Indiana Ave Bloomington, IN 47405','Group of students from Indiana University',39.1766, -86.5130);
-INSERT INTO homegroup(name, location, description, latitude, longitude) values ('Mexican Hot Chocolate','2539 East Vaughn Court Gilbert, AZ 85234 ','Group of students from Indiana University',33.3651, -111.7495);
+INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('TWEET', '236 W. Reade Ave Upland, IN 46989', 'Taylor Women Engaged in Engineering and Technology',40.4756, -85.4944, 1);
+INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('Ball State CRU', '2000 W University Ave Muncie, IN 47306', 'Cru at Ball State is a movement of people passionate about knowing Jesus and telling His story by getting, giving, and multiplying the Gospel.',40.2061, -85.4070, 1);
+INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('Chocolate Pudding', '124 W Michigan Avenue Lansing, MI 48933', 'A cult that brings chocolate pudding to their worship services. No vanilla pudding allowed - only chocolate.',42.7371, -84.5563, 1);
+INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('Indiana University Group','107 S. Indiana Ave Bloomington, IN 47405','Group of students from Indiana University',39.1766, -86.5130, 1);
+INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('Mexican Hot Chocolate','2539 East Vaughn Court Gilbert, AZ 85234 ','Group of students from Indiana University',33.3651, -111.7495, 1);
 
 INSERT INTO homegroup_member values (1,4,1);
 INSERT INTO homegroup_member values (1,2,1);

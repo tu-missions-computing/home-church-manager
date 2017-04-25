@@ -313,11 +313,44 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     g.db.commit()
     return cursor.rowcount
 
-#returns all homegroups + leaders
+#returns all homegroups
 def get_all_homegroups():
+    query = '''
+        SELECT * FROM homegroup
+        WHERE is_active=1
+        '''
+    cursor = g.db.execute(query)
     cursor = g.db.execute('select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id  left outer join user on homegroup_leader.user_id = user.id left outer join member on user.email = member.email')
     return cursor.fetchall()
 
+#deactivates a homegroup
+def deactivate_homegroup(homegroup_id):
+    homegroup_id = int(homegroup_id)
+    query='''
+    UPDATE homegroup SET is_active = 0
+    WHERE id = :homegroup_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id})
+    g.db.commit()
+    return cursor.rowcount
+
+def reactivate_homegroup(homegroup_id):
+    homegroup_id = int(homegroup_id)
+    query='''
+    UPDATE homegroup SET is_active = 1
+    WHERE id = :homegroup_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id})
+    g.db.commit()
+    return cursor.rowcount
+
+def get_all_inactive_homegroups():
+    query = '''
+    SELECT * FROM homegroup
+    WHERE is_active=0
+    '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()
 
 #################################### Admin ########################################
 
