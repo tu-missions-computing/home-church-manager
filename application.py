@@ -568,7 +568,7 @@ def reactivate_member(member_id):
 @login_required
 @requires_roles('admin')
 def advanced_search():
-    return render_template('advanced_search.html', members=db.get_all_members())
+    return render_template('advanced_search.html', members=db.get_all_members(), inactiveMembers=db.get_all_inactive_members(), showInactive=False)
 
 
 #### Admin - Admin ###########
