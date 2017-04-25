@@ -16,10 +16,9 @@ import db
 from mail_settings import config_email
 
 app = Flask(__name__)
-mail = Mail(app)
-
-app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 config_email(app)
+app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
+mail = Mail(app)
 
 bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
@@ -54,13 +53,13 @@ def init_test_user():
 @app.route('/')
 def index():
     # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
-    msg = Message(
-        'Hello',
-        sender='verbovelocity@gmail.com',
-        recipients=
-        ['verbovelocity@gmail.com'])
-    msg.body = "This is the email body"
-    mail.send(msg)
+    # msg = Message(
+    #     'Hello',
+    #     sender='verbovelocity@gmail.com',
+    #     recipients=
+    #     ['verbovelocity@gmail.com'])
+    # msg.body = "This is the email body"
+    # mail.send(msg)
 
     return render_template('index.html')
 
