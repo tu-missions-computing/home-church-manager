@@ -276,6 +276,10 @@ def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
 
+
+
+
+
 #edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
@@ -287,8 +291,13 @@ def edit_homegroup(homegroup_id):
                                 location = row['location'],
                                 latitude = row['latitude'],
                                 longitude = row['longitude'])
-    if hg_form.validate_on_submit():
-        rowcount = db.edit_homegroup(homegroup_id, hg_form.name.data, hg_form.location.data, hg_form.description.data, hg_form.latitude.data, hg_form.longitude.data)
+    if hg_form.validate_on_submit() and hg_form.validate():
+        name = hg_form.name.data
+        description = hg_form.description.data
+        location = hg_form.location.data
+        latitude = hg_form.latitude.data
+        longitude = hg_form.longitude.data
+        rowcount = db.edit_homegroup(name, description, location, latitude, longitude)
         if (rowcount == 1):
             flash("Home Group updated!")
             if (current_user.role == 'admin'):
@@ -340,6 +349,7 @@ def create_new_member_for_homegroup(homegroup_id):
             db.add_member_to_homegroup(homegroup_id, member_id)
             flash("Member {} Created!".format(member.first_name.data, member.last_name.data))
             return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
+
 
     return render_template('create_member.html', form=member, homegroup_id = homegroup_id)
 
@@ -398,9 +408,9 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField('Name')
-    location = StringField('Address')
-    description = StringField('Description')
+    name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
+    location = StringField('Address',[validators.InputRequired(message="Please enter valid Address")])
+    description = StringField('Description',[validators.InputRequired(message="Please enter a description")])
     latitude = StringField('Latitude')
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')

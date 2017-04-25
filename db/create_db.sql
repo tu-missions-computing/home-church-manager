@@ -1,5 +1,3 @@
-
-
 drop table if exists member;
 create table member (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,4 +81,3 @@ CREATE TABLE attendance (
   attendance BOOLEAN,
   PRIMARY KEY(homegroup_id, member_id, meeting_id)
 );
-
