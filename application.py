@@ -439,7 +439,30 @@ def create_homegroup():
 @login_required
 @requires_roles('admin')
 def get_homegroups():
-    return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups())
+    return render_template('homegroup_list.html', homegroup_list = db.get_all_homegroups(), inactiveHomegroups = db.get_all_inactive_homegroups(), showInactive = False)
+
+#deactivates a homegroup
+@app.route('/member/delete/<homegroup_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def deactivate_homegroup(homegroup_id):
+    rowcount = db.deactivate_homegroup(homegroup_id)
+    print(db.find_homegroup(homegroup_id)[6])
+    # if the member is not active
+    if db.find_homegroup(homegroup_id)[6] == 0:
+        flash("Homegroup Deactivated!")
+    return redirect(url_for('get_homegroups'))
+
+@app.route('/member/add/<homegroup_id>', methods = ['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def reactivate_homegroup(homegroup_id):
+    rowcount = db.reactivate_homegroup(homegroup_id)
+    print(db.find_homegroup(homegroup_id)[6])
+    # if the member is not active
+    if db.find_homegroup(homegroup_id)[6] == 0:
+        flash("Homegroup Reactivated!")
+    return redirect(url_for('get_homegroups'))
 
 #### Admin - Member ###########
 
@@ -499,6 +522,14 @@ def reactivate_member(member_id):
     if db.find_member(member_id)[9] == 0:
         flash("Member Reactivated!")
     return redirect(url_for('all_members'))
+
+#shows all members
+@app.route('/member/all/advanced_search')
+@login_required
+@requires_roles('admin')
+def advanced_search():
+    return render_template('advanced_search.html', members = db.get_all_members())
+
 
 #### Admin - Admin ###########
 
