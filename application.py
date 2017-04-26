@@ -136,7 +136,7 @@ def create_user(member_id):
         pw_hash = bcrypt.generate_password_hash(password)
         db.create_user(user_form.email.data, pw_hash, user_form.role.data)
         user = db.find_user(email)
-        email_html = render_template('user_account_email.html', password=password, user_id=user['id'])
+        email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
             'User account created for Verbo Velocity',
             sender='verbovelocity@gmail.com',
