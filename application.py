@@ -82,6 +82,11 @@ def map():
     homegroups = db.get_all_homegroups()
     return render_template('map.html', homegroups=homegroups)
 
+# displays the faq page
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 
 ########################## USER + LOGIN ##############################################
 

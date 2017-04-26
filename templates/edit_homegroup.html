@@ -21,12 +21,13 @@
         <p> {{form.location.label}} {{form.location(class_='form-control')}}</p>
             {% if form.location.errors %}
              <div class="alert alert-warning">
-                Please add a location
+                Please add an address
              </div>
         {% endif %}
         <p> {{form.latitude.label}} {{form.latitude(class_='form-control')}}</p>
             <p> {{form.longitude.label}} {{form.longitude(class_='form-control')}}</p>
         <p> {{ form.submit(class_='btn btn-default')}}</p>
+
 
 
         </div>
