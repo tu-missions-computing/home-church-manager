@@ -2,7 +2,7 @@ INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('nysha@example.com', 'Nysha', 'Chen', '1112223333', 'F', '1990-05-02', 1, '2016-08-01', 1 );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('christine@example.com', 'Christine', 'Urban', '5551353245', 'F', '1993-06-03', 1, '2016-05-04', 0 );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('ellen@example.com', 'Ellen', 'Sokolowski', '5551353245', 'F', '1994-09-16', 1, '2016-08-01', 1 );
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('krista@example.com', 'Krista', 'Hapner', '5551353245', 'F', '2000-01-01', 1, '2016-08-01', 1 );
+INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('krista.hapner@gmail.com', 'Krista', 'Hapner', '5551353245', 'F', '2000-01-01', 1, '2016-08-01', 1 );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('bob@example.com', 'Bob', 'Jones', '5551353245', 'M', '2005-10-12', 1, '2016-08-01', 1 );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, join_date, is_active ) values ('admin@example.com', 'Ryley', 'Hoekert', '5551353245', 'F', '1989-11-14', 1, '2016-08-01', 1 );
 

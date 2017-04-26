@@ -237,7 +237,42 @@ def get_homegroup_emails(homegroup_id):
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         WHERE homegroup_member.is_active = 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
 
+#finds if a user has missed (number_of_misses) consecutive meetings
+def system_attendance_alert(homegroup_id, member_id, number_of_misses):
+    query = """
+    SELECT  * FROM attendance
+    WHERE homegroup_id = :homegroup_id and member_id = :member_id and attendance != 1
+    ORDER BY meeting_id
+    LIMIT :number_of_misses
+    """
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id, 'number_of_misses': number_of_misses})
+    return cursor.fetchall()
+
+
 #################################### HOME GROUP ########################################
+
+
+
+#finds a homegroup leader
+def find_homegroup_leader(homegroup_id):
+    homegroup_id = int(homegroup_id)
+    return g.db.execute('''
+    SELECT * from homegroup_leader join user on user.id = homegroup_leader.user_id
+    join member on user.email = member.email
+    where homegroup_id = ?
+    ''', (homegroup_id,)).fetchone()
+
+
+#finds a member's homegroup
+def find_member_homegroup(member_id):
+    member_id = int(member_id)
+    return g.db.execute('''
+    SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+    where member_id = ?
+    ''', (member_id,)).fetchone()
+
+
+
 
 #finds all the attendance dates entered in a particular homegroup
 def get_attendance_dates(homegroup_id):

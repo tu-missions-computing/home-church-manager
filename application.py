@@ -305,10 +305,33 @@ def attendance(homegroup_id):
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
         meeting_id = db.add_date(date, time)['id']
+        for member in members:
+            row_count = db.system_attendance_alert(homegroup_id, member['id'], 3)
+            print(len(row_count))
+            if len(row_count) == 3:
+                system_notify_member(member['id'], 3)
         db.generate_attendance_report(homegroup_id, meeting_id)
         return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
     return render_template('attendance.html', currentHomegroup=homegroup_id, form=attendance_form, members=members,
                            showmembers=show_members)
+
+#sends email if user and missed a certain number of meetings
+def system_notify_member(member_id, num_misses):
+    homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
+    leader = db.find_homegroup_leader(homegroup_id)
+    email = db.find_member(member_id)['email']
+    email_list = []
+    email_list.append(email)
+    leader_email = leader['email']
+    leader_phone = leader['phone_number']
+    leader_name = leader['first_name'] + ' ' + leader['last_name']
+    email_html = render_template('notify_member_email.html', num_misses = num_misses, leader_name = leader_name, leader_phone = leader_phone, leader_email = leader_email )
+    msg = Message(
+        'System Reminder: Missing meetings',
+        sender='verbovelocity@gmail.com',
+        recipients=email_list,
+        html=email_html)
+    mail.send(msg)
 
 
 # adds (or updates) a new entry of attendance into the db
@@ -451,7 +474,11 @@ def edit_member(member_id):
                                   baptism_status, join_date)
         if (rowcount == 1):
             flash("Member {} Updated!".format(member_form.first_name.data))
-            return redirect(url_for('all_members'))
+            if (current_user.role == 'admin'):
+                return redirect(url_for('all_members'))
+            else:
+                homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
+                return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
     return render_template('edit_member.html', form=member_form, bDay=birthday_form, joinDay=join_date_form)
 
