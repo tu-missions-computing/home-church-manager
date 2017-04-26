@@ -11,12 +11,8 @@
         <div class="form-group">
         {{ form.csrf_token }}
 
-        <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
-        {% if form.email.errors %}
-            <div class="alert alert-warning">
-                Must Enter Valid Email
-             </div>
-        {% endif %}
+            <p><b>Email:</b> {{ email }}</p>
+
 
 
         <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p>

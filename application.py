@@ -104,8 +104,8 @@ def requires_roles(*roles):
 
 
 class UserForm(FlaskForm):
-    email = StringField('E-mail Address', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+
+    password = PasswordField('Temporary Password', validators=[DataRequired()])
     role = SelectField('Change Role', choices=[], coerce=int)
     homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
     submit = SubmitField('Create User')
@@ -150,7 +150,7 @@ def create_user(member_id):
 
         flash('User Created')
         return redirect(url_for('all_members'))
-    return render_template('create_user.html', form=user_form)
+    return render_template('create_user.html', form=user_form, email = email)
 
 class UpdateUserForm(FlaskForm):
     old_password = PasswordField('Current Password', validators=[DataRequired()])
