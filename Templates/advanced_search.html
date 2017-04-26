@@ -149,6 +149,9 @@
     <tr>
         <td> {{ member.first_name }}</td>
         <td> {{ member.last_name }}</td>
+        <td hidden> {{ member.gender }}</td>
+        <td hidden> {{ member.baptism_status }}</td>
+        <td hidden> {{ member.marital_status }}</td>
         {% if showInactive==True %}
             <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
         {% endif %}

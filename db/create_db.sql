@@ -8,6 +8,7 @@ create table member (
   gender TEXT,
   birthday TEXT,
   baptism_status BOOLEAN,
+  marital_status BOOLEAN,
   join_date TEXT,
   is_active BOOLEAN,
   foreign key (id) REFERENCES attendance (member_id),
