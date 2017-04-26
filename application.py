@@ -158,6 +158,8 @@ class UpdateUserForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Update Password')
 
+
+#this updates user passwords
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def update_user(user_id):
     member = db.find_user_info(user_id)
@@ -529,6 +531,7 @@ def deactivate_homegroup(homegroup_id):
     return redirect(url_for('get_homegroups'))
 
 
+#this reactivates a homegroup
 @app.route('/member/add/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
