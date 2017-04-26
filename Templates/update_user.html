@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Update User Account{% endblock %}
+
+{% block content %}
+
+
+    <h1>Update User Account</h1>
+    <p>{{ email }}</p>
+
+    <form method = "POST" role="form" data-toggle="validator">
+        <div class="form-group">
+        {{ form.csrf_token }}
+
+        <p>{{ form.old_password.label }}{{ form.old_password(class='form-control') }}</p>
+
+        <p>{{ form.new_password.label }}{{ form.new_password(class="form-control") }}</p>
+        <p>{{ form.confirm_password.label }}{{ form.confirm_password(class="form-control") }}</p>
+
+    </div>
+
+        <p>{{ form.submit(class_='btn btn-default') }}</p>
+    </form>
+
+{% endblock %}

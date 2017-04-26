@@ -47,6 +47,19 @@ def create_user(email, password, role_id):
     g.db.commit()
     return cursor.rowcount
 
+#edits a user password
+def update_user(email, password, role_id):
+    role_id = int(role_id)
+    print("db")
+    print(role_id)
+    query = '''
+    UPDATE user SET email = :email, password = :password, role_id = :role_id
+    WHERE email = :email
+    '''
+    cursor = g.db.execute(query, {'email': email, 'password': password, 'role_id': role_id})
+    g.db.commit()
+    return cursor.rowcount
+
 #finds all roles
 def find_roles():
     query='''
@@ -58,6 +71,9 @@ def find_roles():
 #finds user based on an email
 def find_user(email):
     return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE email =?', (email,)).fetchone()
+
+def find_user_info(id):
+    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.id =?', (id,)).fetchone()
 
 
 #grabs all users in the db

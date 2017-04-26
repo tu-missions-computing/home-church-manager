@@ -116,6 +116,7 @@ class UserForm(FlaskForm):
 def create_user(member_id):
     allRoles = db.find_roles()
     roleList = []
+    email_list = []
     for role in allRoles:
         roleList.append((role["id"], role["role"]))
     member = db.find_member(member_id)
@@ -130,9 +131,18 @@ def create_user(member_id):
     user_form.homegroups.choices = homegroup_list
 
     if user_form.validate_on_submit():
+        email_list.append(email)
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
         db.create_user(user_form.email.data, pw_hash, user_form.role.data)
+        user = db.find_user(email)
+        email_html = render_template('user_account_email.html', password=password, user_id=user['id'])
+        msg = Message(
+            'User account created for Verbo Velocity',
+            sender='verbovelocity@gmail.com',
+            recipients=email_list,
+            html=email_html)
+        mail.send(msg)
         if user_form.homegroups.data is not None:
             homegroupId = user_form.homegroups.data
             user_id = db.find_user(email)['id']
@@ -141,6 +151,37 @@ def create_user(member_id):
         flash('User Created')
         return redirect(url_for('all_members'))
     return render_template('create_user.html', form=user_form)
+
+class UpdateUserForm(FlaskForm):
+    old_password = PasswordField('Current Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit = SubmitField('Create User')
+
+@app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
+def update_user(user_id):
+    member = db.find_user_info(user_id)
+    email = member['email']
+    user_form = UpdateUserForm(email=member['email'])
+    if user_form.validate_on_submit():
+        old_password = user_form.old_password.data
+        new_password = user_form.new_password.data
+        confirm_password = user_form.confirm_password.data
+        if bcrypt.check_password_hash(member['password'], old_password):
+            if new_password == confirm_password:
+                password = new_password
+                pw_hash = bcrypt.generate_password_hash(password)
+                print(member['role_id'])
+                db.update_user(email, pw_hash, member['role_id'])
+                flash('Password updated')
+                return redirect(url_for('index'))
+            else:
+                flash('New Password and Confirmation Password Do Not Match')
+                return redirect(url_for('update_user', user_id))
+        else:
+            flash('Entered in wrong current password')
+            return redirect(url_for('update_user', user_id))
+    return render_template('update_user.html', form=user_form, email=email)
 
 
 class User(object):
