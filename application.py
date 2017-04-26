@@ -156,7 +156,7 @@ class UpdateUserForm(FlaskForm):
     old_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Create User')
+    submit = SubmitField('Update Password')
 
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def update_user(user_id):
