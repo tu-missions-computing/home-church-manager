@@ -46,6 +46,7 @@
     </thead>
     <tbody>
     {% for homegroup in homegroup_list %}
+        {% if homegroup.is_active == 1 %}
     <tr>
         <td> {{ homegroup.name }}</td>
         <td> {{ homegroup.location }}</td>
@@ -64,6 +65,7 @@
         </a>
         </td>
     </tr>
+        {% endif %}
     {% endfor %}
     {% if showInactive==True %}
         {%  for inactiveHomegroup in inactiveHomegroups %}

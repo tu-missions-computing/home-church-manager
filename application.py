@@ -519,7 +519,7 @@ def get_homegroups():
 
 
 # deactivates a homegroup
-@app.route('/member/delete/<homegroup_id>', methods=['GET', 'POST'])
+@app.route('/homegroup/delete/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
 def deactivate_homegroup(homegroup_id):
@@ -532,7 +532,7 @@ def deactivate_homegroup(homegroup_id):
 
 
 #this reactivates a homegroup
-@app.route('/member/add/<homegroup_id>', methods=['GET', 'POST'])
+@app.route('/homegroup/reactivate/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
 def reactivate_homegroup(homegroup_id):
