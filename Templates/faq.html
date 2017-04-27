@@ -3,8 +3,9 @@
 {% block title %}FAQ{% endblock %}
 
 {% block content %}
+<body class="faq">
 
-<h1>Frequently Asked Questions</h1>
+<h1 class = "head", align = "center"> Frequently Asked Questions</h1>
 <br>
     <h3><b>How do I join a homegroup?</b></h3>
     <div> Check out the map on the homepage and find
@@ -17,8 +18,15 @@
     <br>
 
     <h3><b>Who is the best teacher?</b></h3>
-    <div>Obvious.</div><br><br>
+    <div>Obvious.</div><br>
 
-    <h3><a class="link-color" href="{{url_for('faq_homegroup_leader')}}">Homegroup Leader FAQ</a></h3>
-    <h3><a class="link-color" href="{{url_for('faq_admin')}}">Admin FAQ</a></h3>
+    <h3><a class="link-color" href="mailto:ellen_sokolowski@taylor.edu?Subject=Yellow" target="_top">&#8594 Click here to email us with any questions</a></h3>
+
+    <br>
+    <br>
+
+    <p><a class="link-color" href="{{url_for('faq_homegroup_leader')}}">Homegroup Leader FAQ</a></p>
+    <p><a class="link-color" href="{{url_for('faq_admin')}}">Admin FAQ</a></p>
+
+</body>
 {% endblock %}
