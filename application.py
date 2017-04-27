@@ -87,6 +87,13 @@ def map():
 def faq():
     return render_template('faq.html')
 
+@app.route('/faq/homegroup_leader')
+def faq_homegroup_leader():
+    return render_template('faq_homegroup_leader.html')
+
+@app.route('/faq/admin')
+def faq_admin():
+    return render_template('faq_admin.html')
 
 ########################## USER + LOGIN ##############################################
 

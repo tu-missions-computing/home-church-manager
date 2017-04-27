@@ -135,7 +135,7 @@
             {% endif %}
 
             {% if current_user.role == 'homegroup_leader' %}
-            <li role="presentation" ><a href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Settings</a></li>
+            <li role="presentation" ><a href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit Homegroup</a></li>
             {% endif %}
              <li role="presentation"><a class="active" href="{{ url_for('faq')}}">FAQ</a></li>
           <li role="presentation"><a href="#contact">Contact</a></li>
