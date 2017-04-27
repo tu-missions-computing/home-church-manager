@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Flask, session, render_template, request, flash, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, DateField
+from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, TextAreaField
 from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, \
     ValidationError
 from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
@@ -87,13 +87,40 @@ def map():
 def faq():
     return render_template('faq.html')
 
+# displays the homegroup leader faq page
 @app.route('/faq/homegroup_leader')
 def faq_homegroup_leader():
     return render_template('faq_homegroup_leader.html')
 
+# displays the admin faq page
 @app.route('/faq/admin')
 def faq_admin():
     return render_template('faq_admin.html')
+
+class ContactForm(FlaskForm):
+    name = StringField('First & Last Name', validators=[DataRequired()])
+    email = StringField('E-mail Address', validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send Email')
+
+# displays the contact page
+@app.route('/contact')
+def contact():
+    contact_form = ContactForm()
+    if contact_form.validate_on_submit():
+        name = contact_form.name.data
+        email = contact_form.email.data
+        message = contact_form.message.data
+        email_html = render_template('user_account_email.html', name=name, email=email, message=message)
+        msg = Message(
+            'Contact Email Received',
+            sender=email,
+            recipients='curban779@gmail.com',
+            html=email_html)
+        Mail.send(msg)
+        flash('Email Sent!')
+        return redirect(url_for('index'))
+    return render_template('contact.html', form=contact_form)
 
 ########################## USER + LOGIN ##############################################
 

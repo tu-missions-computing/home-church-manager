@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <h1>Contact Us</h1>
+    <form method = "POST" role="form" data-toggle="validator">
+        <div class="form-group">
+        {{ form.csrf_token }}
+        <p> {{form.name.label}} {{form.name(class_='form-control')}}</p>
+        {% if form.name.errors %}
+            <div class="alert alert-warning">
+                Please enter first and last name
+             </div>
+        {% endif %}
+
+        <p> {{form.email.label(for="inputEmail", class_="control-label")}} {{form.email(class_='form-control', type="email", id="inputEmail", placeholder="Email", dataerror="Email address is invalid")}}</p>
+        {% if form.email.errors %}
+            <div class="alert alert-warning">
+                Invalid Email Address
+             </div>
+        {% endif %}
+
+        <p> {{form.message.label}} {{form.message(class_='form-control')}}</p>
+        {% if form.message.errors %}
+            <div class="alert alert-warning">
+                Please enter message
+             </div>
+        {% endif %}
+        <p> {{ form.submit(class_='btn btn-default')}}</p>
+        </div>
+    </form>
+
+
+{% endblock %}
