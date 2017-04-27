@@ -241,7 +241,7 @@ def get_homegroup_emails(homegroup_id):
 def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     query = """
     SELECT  * FROM attendance
-    WHERE homegroup_id = :homegroup_id and member_id = :member_id and attendance != 1
+    WHERE homegroup_id = :homegroup_id and member_id = :member_id
     ORDER BY meeting_id
     LIMIT :number_of_misses
     """

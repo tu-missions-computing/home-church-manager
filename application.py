@@ -250,7 +250,7 @@ def login():
     # temporary
     init_test_user()
     login_form = LoginForm()
-    print (request.form)
+
     if login_form.validate_on_submit():
         if authenticate(login_form.email.data, login_form.password.data):
             # Credentials authenticated.
@@ -310,11 +310,6 @@ def attendance(homegroup_id):
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
         meeting_id = db.add_date(date, time)['id']
-        for member in members:
-            row_count = db.system_attendance_alert(homegroup_id, member['id'], 3)
-            print(len(row_count))
-            if len(row_count) == 3:
-                system_notify_member(member['id'], 3)
         db.generate_attendance_report(homegroup_id, meeting_id)
         return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
     return render_template('attendance.html', currentHomegroup=homegroup_id, form=attendance_form, members=members,
@@ -340,24 +335,51 @@ def system_notify_member(member_id, num_misses):
 
 
 # adds (or updates) a new entry of attendance into the db
-@app.route('/homegroup/attendance/add/<homegroup_id>/<member_id>/<meeting_id>/<attendance>')
-@login_required
-@requires_roles('homegroup_leader')
 def updateAttendance(homegroup_id, member_id, attendance, meeting_id):
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
     return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
 
 
+class EditAttendanceForm(FlaskForm):
+    submit = SubmitField('Save')
+
 # This allows you to edit homegroup attendance
-@app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>')
+@app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>',  methods=['GET', 'POST'])
 @login_required
 @requires_roles('homegroup_leader')
 def edit_attendance(homegroup_id, meeting_id):
+    att_form = EditAttendanceForm()
     members = db.get_attendance(homegroup_id, meeting_id)
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
+    edit_or_new = 'new'
+    for member in members:
+        if (member['attendance'] == 1):
+            edit_or_new = 'edit'
+    if att_form.validate_on_submit():
+        for member in members:
+            input_name =  'member_' + str(member['member_id'] )
+            if (input_name in request.form):
+                updateAttendance(homegroup_id, member['member_id'], 1, meeting_id)
+            else:
+                updateAttendance(homegroup_id, member['member_id'], 0, meeting_id)
+                if(edit_or_new == 'new'):
+                    print(member['member_id'])
+                    attendance = db.system_attendance_alert(homegroup_id, member['id'], 3)
+                    notify = True
+                    for date in attendance:
+                        print(date['attendance'])
+                        if date['attendance'] == 1:
+                            notify = False
+                    if len(attendance) <3:
+                        notify = False
+                    if notify == True:
+                        system_notify_member(member['id'], 3)
+
+                return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
+
     return render_template('edit_attendance.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
-                           members=members, date=date, time=time)
+                           members=members, date=date, time=time, form = att_form)
 
 
 # returns all the attendance dates -- this is for the attendance reports page
