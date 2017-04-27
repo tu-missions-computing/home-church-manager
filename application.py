@@ -382,38 +382,43 @@ class EditAttendanceForm(FlaskForm):
 @login_required
 @requires_roles('homegroup_leader')
 def edit_attendance(homegroup_id, meeting_id):
+    print(meeting_id)
     att_form = EditAttendanceForm()
-    members = db.get_attendance(homegroup_id, meeting_id)
+    members_in_attendance = db.get_attendance(homegroup_id, meeting_id)
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
     edit_or_new = 'new'
-    for member in members:
+    for member in members_in_attendance:
         if (member['attendance'] == 1):
             edit_or_new = 'edit'
+    print("Edit/New: " + edit_or_new)
     if att_form.validate_on_submit():
-        for member in members:
+        for member in members_in_attendance:
             input_name =  'member_' + str(member['member_id'] )
-            if (input_name in request.form):
-                updateAttendance(homegroup_id, member['member_id'], 1, meeting_id)
+            if input_name in request.form:
+                print(member['first_name'] + " in attendance")
+                updateAttendance(homegroup_id, member['member_id'], meeting_id, 1)
             else:
-                updateAttendance(homegroup_id, member['member_id'], 0, meeting_id)
+                updateAttendance(homegroup_id, member['member_id'], meeting_id, 0)
                 if(edit_or_new == 'new'):
-                    print(member['member_id'])
-                    attendance = db.system_attendance_alert(homegroup_id, member['id'], 3)
+                    print(member['first_name'] + " not in attendance")
+                    attendancedates = db.system_attendance_alert(homegroup_id, member['id'], 3)
                     notify = True
-                    for date in attendance:
-                        print(date['attendance'])
+                    for date in attendancedates:
+                        print('meeting ' + str(date['meeting_id']))
+                        print('attendance: ' + str(date['attendance']))
+
                         if date['attendance'] == 1:
                             notify = False
-                    if len(attendance) <3:
+                    if len(attendancedates) <3:
                         notify = False
                     if notify == True:
                         system_notify_member(member['id'], 3)
 
-                return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
+        return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
     return render_template('edit_attendance.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
-                           members=members, date=date, time=time, form = att_form)
+                           members=members_in_attendance, date=date, time=time, form = att_form)
 
 
 # returns all the attendance dates -- this is for the attendance reports page

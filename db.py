@@ -242,7 +242,7 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     query = """
     SELECT  * FROM attendance
     WHERE homegroup_id = :homegroup_id and member_id = :member_id
-    ORDER BY meeting_id
+    ORDER BY meeting_id desc
     LIMIT :number_of_misses
     """
     cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id, 'number_of_misses': number_of_misses})
@@ -318,8 +318,8 @@ def update_attendance(homegroup_id, member_id, meeting_id, attendance):
         UPDATE attendance SET attendance = :attendance
         WHERE homegroup_id = :homegroup_id and member_id = :member_id and meeting_id = :meeting_id
         '''
-    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id, 'attendance': attendance,
-                                  'meeting_id': meeting_id})
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id,
+                                  'meeting_id': meeting_id, 'attendance': attendance,})
     g.db.commit()
     return cursor.rowcount
 

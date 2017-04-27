@@ -32,7 +32,7 @@
                 <td>
                     {% if member.attendance == 1 %}
 
-                    <input class = "checkbox checkbox-info" type="checkbox" name="member_{{member.member_id}}"  value="attend" checked></input>
+                    <input type="checkbox" name="member_{{member.member_id}}"  value="attend" checked></input>
                     {%  else %}
                     <input type="checkbox" name="member_{{member.member_id}}"  value = "attend" ></input>
                     {% endif %}
