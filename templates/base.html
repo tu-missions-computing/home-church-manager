@@ -138,7 +138,7 @@
             <li role="presentation" ><a href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit Homegroup</a></li>
             {% endif %}
              <li role="presentation"><a class="active" href="{{ url_for('faq')}}">FAQ</a></li>
-          <li role="presentation"><a href="#contact">Contact</a></li>
+          <li role="presentation"><a href="{{ url_for('contact') }}">Contact</a></li>
              {%  if current_user.name %}
                  <li role="presentation" ><a href="/logout"><b>Log Out</b></a></li>
             {%  else %}

@@ -98,26 +98,28 @@ def faq_admin():
     return render_template('faq_admin.html')
 
 class ContactForm(FlaskForm):
-    name = StringField('First & Last Name', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
     email = StringField('E-mail Address', validators=[DataRequired()])
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send Email')
 
 # displays the contact page
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    recipient_list=[]
     contact_form = ContactForm()
     if contact_form.validate_on_submit():
         name = contact_form.name.data
         email = contact_form.email.data
+        recipient_list.append('curban779@gmail.com')
         message = contact_form.message.data
-        email_html = render_template('user_account_email.html', name=name, email=email, message=message)
+        email_html = render_template('contact_email.html', name=name, email=email, message=message)
         msg = Message(
-            'Contact Email Received',
-            sender=email,
-            recipients='curban779@gmail.com',
+            'Message Received',
+            sender='verbovelocity@gmail.com',
+            recipients=recipient_list,
             html=email_html)
-        Mail.send(msg)
+        mail.send(msg)
         flash('Email Sent!')
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
@@ -160,7 +162,7 @@ def create_user(member_id):
         roleList.append((role["id"], role["role"]))
     member = db.find_member(member_id)
     email = member['email']
-    user_form = UserForm(email=member['email'])
+    user_form = UserForm()
     user_form.role.choices = roleList
 
     homegroups = db.get_all_homegroups()
@@ -173,7 +175,7 @@ def create_user(member_id):
         email_list.append(email)
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
-        db.create_user(user_form.email.data, pw_hash, user_form.role.data)
+        db.create_user(email, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
