@@ -4,7 +4,8 @@
 
 {% block content %}
 
-<h1>Frequently Asked Questions - Admin</h1><br><br>
+<h1>Frequently Asked Questions - Admin</h1><br>
+     <h3><a class="btn btn-info" href="{{url_for('faq')}}"><span class="glyphicon glyphicon-menu-left"></span>Back</a></h3><br>
     <h3><b>How do I add a person to a homegroup?</b></h3>
     <p>Click on the "Homegroups" tab on the navigation bar. Select the "Members" button of the desired homegroup. Click "Add Member" at the top of the page.</p><br>
     <h3><b>How do I delete a homegroup?</b></h3>
@@ -12,5 +13,6 @@
     <h3><b>How do I view all members of all homegroups?</b></h3>
     <p>Click on "Members" tab. Here, you can edit, create role, or remove a member.</p><br>
     <h3><b>How do I search by member demographics?</b></h3>
-    <p>On the "All Members" page, click the "Advanced Search" button at the top. Click on the criteria you would like to filter by, and click "Query." This will display a list of members who meet the desired criteria. From here, you can email these members or download a report of the members.</p>
+    <p>On the "All Members" page, click the "Advanced Search" button at the top. Click on the criteria you would like to filter by, and click "Query." This will display a list of members who meet the desired criteria. From here, you can email these members or download a report of the members.</p><br><br>
+    <h4>Questions? <a class="link-color" href="mailto:verbovelocity@gmail.com?Subject=Website Support" target="_top">Contact Our Support Team</a></h4>
 {% endblock %}

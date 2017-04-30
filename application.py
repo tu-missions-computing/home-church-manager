@@ -111,12 +111,12 @@ def contact():
     if contact_form.validate_on_submit():
         name = contact_form.name.data
         email = contact_form.email.data
-        recipient_list.append('curban779@gmail.com')
+        recipient_list.append('verbovelocity@gmail.com')
         message = contact_form.message.data
         email_html = render_template('contact_email.html', name=name, email=email, message=message)
         msg = Message(
             'Message Received',
-            sender='verbovelocity@gmail.com',
+            sender=email,
             recipients=recipient_list,
             html=email_html)
         mail.send(msg)
