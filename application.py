@@ -416,6 +416,7 @@ def edit_attendance(homegroup_id, meeting_id):
                         notify = False
                     if notify == True:
                         system_notify_member(member['id'], 3)
+                        flash("An email was sent to {} notifying them that they have missed 3 consecutive attendance dates".format(member['email']))
 
         return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
@@ -428,7 +429,6 @@ def edit_attendance(homegroup_id, meeting_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
-
     current_homegroup = homegroup_id
     return render_template('attendance_reports.html', currentHomegroup=current_homegroup,
                            records=db.get_attendance_dates(homegroup_id))
