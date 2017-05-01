@@ -428,7 +428,8 @@ def edit_attendance(homegroup_id, meeting_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
-    current_homegroup = db.find_homegroup(homegroup_id)
+
+    current_homegroup = homegroup_id
     return render_template('attendance_reports.html', currentHomegroup=current_homegroup,
                            records=db.get_attendance_dates(homegroup_id))
 
