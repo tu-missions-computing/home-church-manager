@@ -570,8 +570,8 @@ class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
     location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     description = StringField('Description', [validators.InputRequired(message="Please enter a description")])
-    latitude = StringField('Latitude')
-    longitude = StringField('Longitude')
+    latitude = StringField('Latitude', [validators.InputRequired(message="Please enter valid Latitude")])
+    longitude = StringField('Longitude', [validators.InputRequired(message="Please enter valid Longitude")])
     submit = SubmitField('Save Home Group')
 
 

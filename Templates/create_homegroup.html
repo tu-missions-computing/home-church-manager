@@ -8,14 +8,38 @@
         <div class="form-group">
         {{ form.csrf_token }}
         <p> {{form.name.label}} {{form.name(class_='form-control')}}</p>
+            {% if form.name.errors %}
+              <div class="alert alert-warning">
+                Enter a Name
+             </div>
+        {% endif %}
             <p> {{form.description.label}} {{form.description(class_='form-control')}}</p>
+        {% if form.description.errors %}
+              <div class="alert alert-warning">
+                Add a Description
+             </div>
+        {% endif %}
         <p> {{form.location.label}} {{form.location(class_='form-control')}}</p>
+        {% if form.location.errors %}
+              <div class="alert alert-warning">
+                Add a Location
+             </div>
+        {% endif %}
         <p> {{form.latitude.label}} {{form.latitude(class_='form-control')}}</p>
+         {% if form.latitude.errors %}
+              <div class="alert alert-warning">
+                Add a Latitude
+             </div>
+        {% endif %}
             <p> {{form.longitude.label}} {{form.longitude(class_='form-control')}}</p>
+         {% if form.longitude.errors %}
+              <div class="alert alert-warning">
+                Add a Longitude
+             </div>
+        {% endif %}
         <p> {{ form.submit(class_='btn btn-default')}}</p>
-
-
         </div>
+
     </form>
     <button class="btn btn-default" id="findLocation">Find Location</button>
 
