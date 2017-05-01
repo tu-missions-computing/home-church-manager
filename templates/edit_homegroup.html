@@ -25,10 +25,18 @@
              </div>
         {% endif %}
         <p> {{form.latitude.label}} {{form.latitude(class_='form-control')}}</p>
+          {% if form.latitude.errors %}
+             <div class="alert alert-warning">
+                Please add the Longitude
+             </div>
+        {% endif %}
             <p> {{form.longitude.label}} {{form.longitude(class_='form-control')}}</p>
+         {% if form.longitude.errors %}
+             <div class="alert alert-warning">
+                Please add the Latitude
+             </div>
+        {% endif %}
         <p> {{ form.submit(class_='btn btn-default')}}</p>
-
-
 
         </div>
     </form>
