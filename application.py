@@ -382,7 +382,7 @@ class EditAttendanceForm(FlaskForm):
 # This allows you to edit homegroup attendance
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>',  methods=['GET', 'POST'])
 @login_required
-@requires_roles('homegroup_leader')
+@requires_roles('homegroup_leader','admin')
 def edit_attendance(homegroup_id, meeting_id):
     print(meeting_id)
     att_form = EditAttendanceForm()
@@ -428,7 +428,8 @@ def edit_attendance(homegroup_id, meeting_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
-    return render_template('attendance_reports.html', currentHomegroup=homegroup_id,
+    current_homegroup = db.find_homegroup(homegroup_id)
+    return render_template('attendance_reports.html', currentHomegroup=current_homegroup,
                            records=db.get_attendance_dates(homegroup_id))
 
 
