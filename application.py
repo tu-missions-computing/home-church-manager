@@ -287,7 +287,7 @@ def login():
     init_test_user()
     login_form = LoginForm()
 
-    if login_form.validate_on_submit():
+    if login_form.validate_on_submit() and login_form.validate():
         if authenticate(login_form.email.data, login_form.password.data):
             # Credentials authenticated.
             # Create the user object, let Flask-Login know, and redirect to the home page

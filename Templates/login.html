@@ -9,7 +9,17 @@
     {{ form.csrf_token }}
 
         <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
+        {% if form.email.errors %}
+            <div class="alert alert-warning">
+                Please enter a valid E-mail
+             </div>
+        {% endif %}
         <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p>
+        {% if form.password.errors %}
+            <div class="alert alert-warning">
+                Please enter a valid Password
+             </div>
+        {% endif %}
         <p>{{ form.submit(class_='btn btn-default') }}</p>
     </form>
 {% endblock %}
