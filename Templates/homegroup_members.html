@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="col form-group pull-left">
-            <a href="{{url_for('create_new_member_for_homegroup', homegroup_id = currentHomegroup.id)}}" class="btn btn-success">
+            <a href="{{url_for('member_search', homegroup_id = currentHomegroup.id)}}" class="btn btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
-                Create Member
+                Add Member
              </a>
         </div>
         <div class="col form-group pull-left">
@@ -75,11 +75,9 @@
                     Text here will be overridden :D
               </div>
               <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">
-
-                            <a href="#0" id="modal-confirm"> Confirm </a>
-
-                                </button>
+                        <a href="#0" id="modal-confirm"><button type="button" class="btn btn-primary">
+                            Confirm
+                                </button>  </a>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
               </div>

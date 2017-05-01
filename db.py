@@ -127,6 +127,39 @@ def get_all_members():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
+#finds all members NOT in a particular homegroup
+def get_all_members_not_in_homegroup(homegroup_id):
+    homegroup_id = int (homegroup_id)
+    query ='''
+    select * from member where member.is_active = 1 and member.id not in (
+    select member_id from homegroup_member
+    where homegroup_id = :homegroup_id and
+    homegroup_member.is_active = 1
+    )
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id})
+    return cursor.fetchall()
+
+# finds all the inactive homegroup members
+def get_homegroup_inactive_members(homegroup_id):
+    return g.db.execute('''SELECT * FROM member
+        JOIN homegroup_member ON member.id = homegroup_member.member_id
+        JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
+        WHERE homegroup_member.is_active != 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
+
+
+#sets a homegroup member to be reactivated in the homegroup
+def reactive_homegroup_member(homegroup_id, member_id):
+    homegroup_id = int (homegroup_id)
+    member_id = int(member_id)
+    query = '''
+    UPDATE homegroup_member SET is_active = 1
+    where homegroup_id = :homegroup_id and member_id = :member_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id})
+    g.db.commit()
+    return cursor.rowcount
+
 #finds all inactive members in the db
 def get_all_inactive_members():
     query = '''
