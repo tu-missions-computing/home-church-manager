@@ -99,7 +99,7 @@
         .left-addon input  { padding-left:  30px; }
         .right-addon input { padding-right: 30px; }
 
-<<<<<<< Updated upstream
+
         .link-color {color:#000080;
                     }
                     a:hover {
@@ -109,55 +109,91 @@
 
 }
         }
-=======
-        .custom-checkbox {
-          min-height: 1rem;
-          padding-left: 0;
-          margin-right: 0;
-          cursor: pointer;
-        }
-          .custom-checkbox .custom-control-indicator {
-            content: "";
-            display: inline-block;
-            position: relative;
-            width: 30px;
-            height: 10px;
-            background-color: #818181;
-            border-radius: 15px;
-            margin-right: 10px;
-            -webkit-transition: background .3s ease;
-            transition: background .3s ease;
-            vertical-align: middle;
-            margin: 0 16px;
-            box-shadow: none;
-          }
-            .custom-checkbox .custom-control-indicator:after {
-              content: "";
-              position: absolute;
-              display: inline-block;
-              width: 18px;
-              height: 18px;
-              background-color: #f1f1f1;
-              border-radius: 21px;
-              box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
-              left: -2px;
-              top: -4px;
-              -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
-              transition: left .3s ease, background .3s ease, box-shadow .1s ease;
-            }
-          .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
-            background-color: #84c7c1;
-            background-image: none;
-            box-shadow: none !important;
-          }
-            .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
-              background-color: #84c7c1;
-              left: 15px;
-            }
-          .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
-            box-shadow: none !important;
-          }
->>>>>>> Stashed changes
+
+
+
+.toggle-button {
+  margin: 0 20px; }
+
+/*
+ * Toggle button styles
+ */
+.toggle-button {
+  position: relative;
+  display: inline-block;
+  color: #fff; }
+  .toggle-button label {
+    display: inline-block;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left; }
+  .toggle-button input {
+    display: none; }
+  .toggle-button__icon {
+    cursor: pointer;
+    pointer-events: none; }
+    .toggle-button__icon:before, .toggle-button__icon:after {
+      content: "";
+      position: absolute;
+      top: 45%;
+      left: 35%;
+      transition: 0.2s ease-out; }
+
+/*
+ * Toggle button variables
+ */
+/*
+ * Toggle button styles
+ */
+.toggle-button--tuuli label {
+  height: 30px;
+  transition: all 0.2s;
+  border-radius: 2rem; }
+  .toggle-button--tuuli label:before, .toggle-button--tuuli label:after {
+    position: absolute;
+    right: 1rem;
+    transition: all 0.2s .1s ease-out; }
+
+.toggle-button--tuuli input[type=checkbox] + label {
+  width: 30px;
+  background: #FF5335; }
+  .toggle-button--tuuli input[type=checkbox] + label:before {
+    opacity: 0;
+    transform: translate(0, 20px); }
+  .toggle-button--tuuli input[type=checkbox] + label:after {
+    opacity: 1;
+    transform: translate(0, 0); }
+
+.toggle-button--tuuli input[type=checkbox]:checked ~ label {
+  width: 30px;
+  background: #61B136; }
+
+.toggle-button--tuuli input[type=checkbox]:checked ~ .toggle-button__icon:before {
+  transform: translate(-30%, 100%) rotate(45deg) scale(0.6, 1); }
+
+.toggle-button--tuuli input[type=checkbox]:checked ~ .toggle-button__icon:after {
+  transform: translate(20%) rotate(-45deg); }
+
+.toggle-button--tuuli .toggle-button__icon {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 0;
+  left: 0; }
+  .toggle-button--tuuli .toggle-button__icon:before, .toggle-button--tuuli .toggle-button__icon:after {
+    width: 15px;
+    height: 3px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    margin-left: -10%;
+    top: 48%; }
+  .toggle-button--tuuli .toggle-button__icon:before {
+    transform: rotate(45deg); }
+  .toggle-button--tuuli .toggle-button__icon:after {
+    transform: rotate(-45deg); }
+
+
 
 }
     </style>
