@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import date, datetime
 from flask import g
 
 # from application import app
@@ -125,7 +126,17 @@ def get_all_members():
     ORDER BY last_name asc
     '''
     cursor = g.db.execute(query)
-    return cursor.fetchall()
+    return add_age_to_member_rows(cursor.fetchall())
+
+def add_age_to_member_rows(rows):
+    resultSet = []
+    for row in rows:
+        member = {}
+        for field in row.keys():
+            member[field] = row[field]
+        member["age"] = int((date.today() - datetime.strptime(member["birthday"], '%Y-%m-%d').date()).days / 365.25)
+        resultSet.append(member)
+    return resultSet
 
 #finds all inactive members in the db
 def get_all_inactive_members():
@@ -134,7 +145,7 @@ def get_all_inactive_members():
     WHERE is_active=0
     '''
     cursor = g.db.execute(query)
-    return cursor.fetchall()
+    return add_age_to_member_rows(cursor.fetchall())
 
 #edits member info
 def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):

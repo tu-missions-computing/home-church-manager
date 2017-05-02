@@ -12,6 +12,7 @@ from wtforms import validators
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 
+
 import db
 from mail_settings import config_email
 
@@ -477,6 +478,7 @@ class CreateMemberForm(FlaskForm):
     phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
+    marital_status = SelectField('Married?', choices=[('1', 'Yes'), ('0', 'No')])
     submit = SubmitField('Save Member')
 
 
@@ -494,9 +496,10 @@ def create_new_member_for_homegroup(homegroup_id):
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
+        marital_status = member.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    join_date)
+                                    marital_status, join_date)
         if rowcount == 1:
             row = db.recent_member()
             member_id = row['id']
@@ -528,7 +531,8 @@ def edit_member(member_id):
                                    email=row['email'],
                                    phone_number=row['phone_number'],
                                    gender=row['gender'],
-                                   baptism_status=row['baptism_status'])
+                                   baptism_status=row['baptism_status'],
+                                   marital_status=row['marital_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
     if request.method == "POST" and member_form.validate():
@@ -539,9 +543,10 @@ def edit_member(member_id):
         gender = member_form.gender.data
         birthday = request.form['Birthday']
         baptism_status = member_form.baptism_status.data
+        marital_status = member_form.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
-                                  baptism_status, join_date)
+                                  baptism_status, marital_status, join_date)
         if (rowcount == 1):
             flash("Member {} Updated!".format(member_form.first_name.data))
             if (current_user.role == 'admin'):
@@ -667,9 +672,10 @@ def create_member():
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
+        marital_status = member.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    join_date)
+                                    marital_status, join_date)
 
         if rowcount == 1:
             flash("Member {} Created!".format(member.first_name.data))
