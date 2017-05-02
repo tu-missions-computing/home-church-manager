@@ -23,6 +23,17 @@
                 <input type="text" class="search form-control" placeholder="Search">
             </div>
         </div>
+        <div class="col form-group pull-right">
+
+            <div class="section section--sade">
+                Show Inactive Homegroups
+                   <div class="toggle-button toggle-button--sade">
+                       <input id="checkbox1" type="checkbox" checked=''>
+                       <label for="checkbox1"></label>
+                       <div class="toggle-button__icon"></div>
+                   </div>
+            </div>
+        </div>
         <div class="col form-group pull-left">
             <a href="{{url_for('create_homegroup')}}" class="btn btn-success">
                 <span class="glyphicon glyphicon-plus"></span>
@@ -38,10 +49,8 @@
     <tr>
         <th> Name</th>
         <th> Location</th>
-        {% if showInactive==True %}
-            <th> Inactive? </th>
-        {% endif %}
         <th> </th>
+        <th class="content">Inactive?</th>
     </tr>
     </thead>
     <tbody>
@@ -50,9 +59,6 @@
     <tr>
         <td> {{ homegroup.name }}</td>
         <td> {{ homegroup.location }}</td>
-        {% if showInactive==True %}
-            <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
-        {% endif %}
         <td>
         <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-info btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
@@ -67,22 +73,21 @@
           <span class="glyphicon glyphicon-trash"></span> Remove
         </a>
         </td>
+    <td class="content"> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
     </tr>
         {% endif %}
     {% endfor %}
-    {% if showInactive==True %}
         {%  for inactiveHomegroup in inactiveHomegroups %}
             <tr>
-            <td> {{ inactiveHomegroup.name }}</td>
-            <td> {{ inactiveHomegroup.location }}</td>
-            <td> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
-            <td>
+            <td class="content"> {{ inactiveHomegroup.name }}</td>
+            <td class="content"> {{ inactiveHomegroup.location }}</td>
+            <td class="content">
             <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">
               <span class="glyphicon glyphicon-plus"></span> Reactivate
             </a>
             </td>
+            <td class="content"> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
         {% endfor %}
-    {% endif %}
     </tbody>
 </table>
 
