@@ -183,6 +183,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
     g.db.commit()
     return cursor.rowcount
 
+
 #creates a new member
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
     query = '''

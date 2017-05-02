@@ -124,7 +124,7 @@ def contact():
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
-########################## USER + LOGIN ##############################################
+########################## USER + LOGIN + Profile/Settings ##############################################
 
 # this allows/disallows users from accessing pages based on their roles
 def requires_roles(*roles):
@@ -311,6 +311,13 @@ def logout():
     user_name = session.pop('username', None)
     flash('Logged out')
     return redirect(url_for('index'))
+
+@app.route('/user/profile/<user_id>')
+@login_required
+def user_profile(user_id):
+    user_info = db.find_user_info(user_id)
+    member = db.find_member_info(user_info['email'])
+    return render_template('profile_settings.html', member_id = member['id'])
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
