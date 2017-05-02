@@ -416,6 +416,7 @@ def edit_attendance(homegroup_id, meeting_id):
                         notify = False
                     if notify == True:
                         system_notify_member(member['id'], 3)
+                        flash("An email was sent to {} notifying them that they have missed 3 consecutive attendance dates".format(member['email']))
 
         return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
@@ -428,7 +429,6 @@ def edit_attendance(homegroup_id, meeting_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
-
     current_homegroup = homegroup_id
     return render_template('attendance_reports.html', currentHomegroup=current_homegroup,
                            records=db.get_attendance_dates(homegroup_id))
@@ -478,6 +478,33 @@ class CreateMemberForm(FlaskForm):
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
     submit = SubmitField('Save Member')
+
+@app.route('/homegroup/member/new/<homegroup_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
+def member_search(homegroup_id):
+    members = db.get_all_members_not_in_homegroup(homegroup_id)
+    return render_template ('member_search.html', all_members = members, homegroup_id = homegroup_id)
+
+
+#adds a member to a particular homegroup
+@app.route('/homegroup/member/add/<homegroup_id>/<member_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
+def add_member_to_homegroup(homegroup_id, member_id):
+    inactive_homegroup_members = db.get_homegroup_inactive_members(homegroup_id)
+    new = 'Y'
+    for members in inactive_homegroup_members:
+        print(members['member_id'])
+        if int (members['member_id']) == int(member_id):
+            new = 'N'
+            db.reactive_homegroup_member(homegroup_id, member_id)
+    print(new)
+    if new == 'Y':
+        db.add_member_to_homegroup(homegroup_id, member_id)
+    member = db.find_member(member_id)
+    flash ("Member {} added to homegroup".format(member['first_name']  + " " + member['last_name']))
+    return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
 # creates a new member for a particular homegroup
