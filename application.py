@@ -318,7 +318,7 @@ def logout():
 def user_profile(user_id):
     user_info = db.find_user_info(user_id)
     member = db.find_member_info(user_info['email'])
-    return redirect
+    return redirect (url_for('edit_member', member_id = member_id))
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
