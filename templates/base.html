@@ -10,7 +10,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
 
-	<link rel="stylesheet" href="/static/style.css"> <!-- Resource style for the popup confirmation box -->
+   <link rel="stylesheet" href="/static/style.css"> <!-- Resource style for the popup confirmation box -->
     <link rel="stylesheet" href="/static/hamburgermenu.css"> <!-- Resource style for the hamburger menu -->
 
 
@@ -99,12 +99,14 @@
         .left-addon input  { padding-left:  30px; }
         .right-addon input { padding-right: 30px; }
 
-        .link-color {color:#000080;
-                    }
+
+        .link-color {color:#95ccf5;  }
+
                     a:hover {
-                    text-decoration: none;
-                    color: lightseagreen;
+                        text-decoration: none;
+                        color: lightseagreen;
                     }
+
 
 
         .custom-checkbox {
@@ -154,6 +156,118 @@
           .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
             box-shadow: none !important;
           }
+
+
+        .head-style {color:#000000;
+                    text-decoration: underline;
+                    text-shadow: 2px 2px #95ccf5;
+                    text-align: center;}
+
+
+
+
+        .toggle-button {
+         position: relative;
+         display: inline-block;
+         color: #fff; }
+         .toggle-button label {
+           display: inline-block;
+           text-transform: uppercase;
+           cursor: pointer;
+           text-align: left; }
+         .toggle-button input {
+           display: none; }
+         .toggle-button__icon {
+           cursor: pointer;
+           pointer-events: none; }
+           .toggle-button__icon:before, .toggle-button__icon:after {
+             content: "";
+             position: absolute;
+             top: 45%;
+             left: 35%;
+             transition: 0.2s ease-out; }
+
+
+        .toggle-button--sade {
+         width: 100px;
+         height: 20px; }
+         .toggle-button--sade label {
+           position: absolute;
+           left: 0;
+           width: 30px;
+           height: 30px;
+           line-height: 30px;
+           transition: all 0.2s;
+           background: #e3e3e3;
+           border-radius: 4px;
+           box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+           text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+           .toggle-button--sade label:before, .toggle-button--sade label:after {
+             position: absolute;
+             top: 0;
+             left: 40px;
+             transition: all 0.2s .1s ease-out; }
+           .toggle-button--sade label:before {
+             content: attr(data-on-text); }
+           .toggle-button--sade label:after {
+             content: attr(data-off-text); }
+         .toggle-button--sade input + label:before {
+           opacity: 0;
+           transform: translate(30px, 0); }
+         .toggle-button--sade input + label:after {
+           opacity: 1;
+           transform: translate(0, 0); }
+         .toggle-button--sade input:checked ~ label:before {
+           opacity: 1;
+           transform: translate(0, 0); }
+         .toggle-button--sade input:checked ~ label:after {
+           opacity: 0;
+           transform: translate(30px, 0); }
+         .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before, .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
+           background: #61B136 ; }
+         .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before {
+           transform: translate(-30%, 70%) rotate(45deg) scale(0.7, 1); }
+         .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
+           transform: translate(20%) rotate(-45deg); }
+         .toggle-button--sade .toggle-button__icon {
+           position: absolute;
+           height: 30px;
+           width: 30px;
+           top: 0;
+           left: 0; }
+           .toggle-button--sade .toggle-button__icon:before, .toggle-button--sade .toggle-button__icon:after {
+             width: calc(30px - 15px);
+             height: 3px;
+             border-radius: 3px;
+             background: #fff;
+             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+             margin-left: -3px;
+             top: 40%;
+             background: #FF5335; }
+           .toggle-button--sade .toggle-button__icon:before {
+             transform: rotate(45deg); }
+           .toggle-button--sade .toggle-button__icon:after {
+             transform: rotate(-45deg); }
+         .toggle-button--sade:hover label {
+           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+           text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+         .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:before {
+           animation: icon-hover-before .2s; }
+         .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:after {
+           animation: icon-hover-after .2s; }
+
+        @keyframes icon-hover-before {
+         0% {
+           transform: rotate(45deg) scale(1, 1); }
+         100% {
+           transform: rotate(45deg) scale(1.2, 1.2); } }
+
+        @keyframes icon-hover-after {
+         0% {
+           transform: rotate(-45deg) scale(1, 1); }
+         50% {
+           transform: rotate(-45deg) scale(1.2, 1.2); } }
+
 
 
 
@@ -206,8 +320,8 @@
         <div id="page-content-wrapper">
             <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
                 <span class="hamb-top"></span>
-    			<span class="hamb-middle"></span>
-				<span class="hamb-bottom"></span>
+             <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
             </button>
 
 
@@ -270,8 +384,11 @@ function googleTranslateElementInit() {
 
     <!-- Uses jQuery, so load after jQuery -->
     <script type="text/javascript" src="/static/javascript.js"></script>
-    <script src="/static/main.js"></script> <!-- Resource jQuery for the confirmation popup-->
-    <script src="/static/hamburgermenu.js"></script> <!-- Resource jQuery for the hamburger menu -->
+
+
+
+<script src="/static/main.js"></script> <!-- Resource jQuery for the confirmation popup-->
+<script src="/static/hamburgermenu.js"></script> <!-- Resource jQuery for the hamburger menu -->
 
 
 
