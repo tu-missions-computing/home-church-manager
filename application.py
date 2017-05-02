@@ -432,6 +432,7 @@ def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id,
                            records=db.get_attendance_dates(homegroup_id))
 
+#view attendance history for a particular
 @app.route('/homegroup/attendance/view/<homegroup_id>', methods=['GET'])
 @login_required
 @requires_roles('admin')
@@ -440,6 +441,17 @@ def view_attendance(homegroup_id):
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     return render_template('view_attendance.html', currentHomegroup=homegroup,
                            attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
+
+@app.route('/homegroup/attendance/view/report/<homegroup_id>/<meeting_id>',  methods=['GET'])
+@login_required
+@requires_roles('homegroup_leader','admin')
+def view_attendance_report(homegroup_id, meeting_id):
+    members_in_attendance = db.get_attendance(homegroup_id, meeting_id)
+    attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    date = db.find_date(meeting_id)['date']
+    time = db.find_date(meeting_id)['time']
+    return render_template('view_attendance_report.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
+                           members=members_in_attendance, date=date, time=time, attendance_count=attendance_count)
 
 # edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
