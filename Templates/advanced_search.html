@@ -3,16 +3,6 @@
 {% block title %} Advanced Search {% endblock %}
 {% block content %}
 
-<script>
-    function switchInactive(){
-        {% if showInactive == True %}
-            {% set showInactive = False %}
-        {% endif %}
-        {% if showInactive == False %}
-            {% set showInactive = True %}
-        {% endif %}
-    }
-</script>
 
 <div class="container-fluid">
 <h1>Advanced Search</h1>
@@ -138,9 +128,8 @@
     <tr>
         <th> First Name</th>
         <th> Last Name</th>
-        {% if showInactive==True %}
             <th> Inactive? </th>
-        {% endif %}
+
         <th> </th>
     </tr>
     </thead>
@@ -152,9 +141,9 @@
         <td hidden> {{ member.gender }}</td>
         <td hidden> {{ member.baptism_status }}</td>
         <td hidden> {{ member.marital_status }}</td>
-        {% if showInactive==True %}
+
             <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
-        {% endif %}
+
         <td>
         <a href="{{url_for('edit_member', member_id = member.id)}}" class="btn btn-info btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
@@ -168,7 +157,6 @@
         </td>
     </tr>
     {% endfor %}
-    {% if showInactive==True %}
         {%  for inactiveMember in inactiveMembers %}
             <tr>
             <td> {{ inactiveMember.first_name }}</td>
@@ -183,7 +171,7 @@
             </a>
             </td>
         {% endfor %}
-    {% endif %}
+
     </tbody>
 </table>
 
