@@ -60,7 +60,7 @@
         <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="btn btn-warning btn-sm">
           <span class="glyphicon glyphicon-user"></span> Members
         </a>
-            <a href="{{url_for('get_attendance_dates', homegroup_id = homegroup.id)}}" class="btn btn-primary btn-sm">
+            <a href="{{url_for('view_attendance', homegroup_id = homegroup.id)}}" class="btn btn-primary btn-sm">
           <span class="glyphicon glyphicon-time"></span> Attendance
         </a>
             <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-danger btn-sm">
