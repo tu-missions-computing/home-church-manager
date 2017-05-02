@@ -86,7 +86,7 @@
         <td>{{ attendance_record.date }}</td>
         <td>{{ attendance_record.countMembers}}</td>
         <td>
-<a href="{{ url_for('edit_attendance', homegroup_id = myHomegroup, meeting_id = attendance_record.meeting_id) }}"><button class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Edit</button>  </a>
+<a href="{{ url_for('view_attendance_report', homegroup_id = myHomegroup, meeting_id = attendance_record.meeting_id) }}"><button class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-time"></span> View</button>  </a>
 
         </td>
 
