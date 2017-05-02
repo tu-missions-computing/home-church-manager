@@ -31,12 +31,7 @@
                 <td>{{ member.last_name }}</td>
                 <td>
                     {% if member.attendance == 1 %}
-
-<<<<<<< Updated upstream
                     <input type="checkbox" name="member_{{member.member_id}}"  value="attend" checked></input>
-=======
-                    <input class = "checkbox" type="checkbox" name="member_{{member.member_id}}"  value="attend" checked></input>
->>>>>>> Stashed changes
                     {%  else %}
                     <input type="checkbox" name="member_{{member.member_id}}"  value = "attend" ></input>
                     {% endif %}

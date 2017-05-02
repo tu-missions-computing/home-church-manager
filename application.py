@@ -439,7 +439,7 @@ def view_attendance(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     return render_template('view_attendance.html', currentHomegroup=homegroup,
-                           attendance_count=attendance_count, myHomegroup=homegroup_id)
+                           attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
 
 # edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])

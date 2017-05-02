@@ -471,7 +471,7 @@ def get_attendance_counts():
 
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+    SELECT date, time, meeting_id, COUNT(member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = 1 AND homegroup_id = :myhomegroup

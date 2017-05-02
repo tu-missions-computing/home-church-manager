@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+
 {% block title %}Attendance Reports{% endblock %}
 
 {% block content %}
@@ -5,6 +7,11 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+        <h1>{{currentHomegroup.name}} Attendance</h1><br><br>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 
  <table id="datatable" hidden>
     <thead>
@@ -24,7 +31,6 @@
     </tbody>
 </table>
 
-    <h1>{{currentHomegroup.name}} Attendance</h1>
 
 <script>
     Highcharts.chart('container', {
@@ -52,9 +58,8 @@
     });
 </script>
 
-</div>
 
-<h1>Attendance reports</h1>
+<h2>Attendance Reports</h2>
 <div class="container-fluid">
     <div class="row">
         <div class="col form-group pull-right">
@@ -69,18 +74,19 @@
     <thead>
     <tr>
         <th>Date</th>
-        <th>Time</th>
+        <th>Attendees</th>
         <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    {% for record in records %}
+
+    {% for attendance_record in attendance_count %}
     <tr>
 
-        <td>{{ record.date }}</td>
-        <td>{{ record.time }}</td>
+        <td>{{ attendance_record.date }}</td>
+        <td>{{ attendance_record.countMembers}}</td>
         <td>
-                <a href="{{ url_for('edit_attendance', homegroup_id = myHomegroup, meeting_id = record.meeting_id) }}"><button class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Edit</button>  </a>
+<a href="{{ url_for('edit_attendance', homegroup_id = myHomegroup, meeting_id = attendance_record.meeting_id) }}"><button class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-pencil"></span> Edit</button>  </a>
 
         </td>
 
