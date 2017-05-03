@@ -125,7 +125,7 @@ def contact():
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
-########################## USER + LOGIN ##############################################
+########################## USER + LOGIN + Profile/Settings ##############################################
 
 # this allows/disallows users from accessing pages based on their roles
 def requires_roles(*roles):
@@ -236,6 +236,7 @@ class User(object):
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
+            self.member_id = db.find_member_info(self.email)['id']
         else:
             self.role = 'no role'
             self.name = 'no name'
@@ -312,6 +313,13 @@ def logout():
     user_name = session.pop('username', None)
     flash('Logged out')
     return redirect(url_for('index'))
+
+@app.route('/user/profile/<user_id>')
+@login_required
+def user_profile(user_id):
+    user_info = db.find_user_info(user_id)
+    member = db.find_member_info(user_info['email'])
+    return redirect (url_for('edit_member', member_id = member_id))
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
@@ -430,10 +438,29 @@ def edit_attendance(homegroup_id, meeting_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
 
-    current_homegroup = homegroup_id
-    return render_template('attendance_reports.html', currentHomegroup=current_homegroup,
+    return render_template('attendance_reports.html', currentHomegroup=homegroup_id,
                            records=db.get_attendance_dates(homegroup_id))
 
+#view attendance history for a particular
+@app.route('/homegroup/attendance/view/<homegroup_id>', methods=['GET'])
+@login_required
+@requires_roles('admin')
+def view_attendance(homegroup_id):
+    homegroup = db.find_homegroup(homegroup_id)
+    attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    return render_template('view_attendance.html', currentHomegroup=homegroup,
+                           attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
+
+@app.route('/homegroup/attendance/view/report/<homegroup_id>/<meeting_id>',  methods=['GET'])
+@login_required
+@requires_roles('homegroup_leader','admin')
+def view_attendance_report(homegroup_id, meeting_id):
+    members_in_attendance = db.get_attendance(homegroup_id, meeting_id)
+    attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    date = db.find_date(meeting_id)['date']
+    time = db.find_date(meeting_id)['time']
+    return render_template('view_attendance_report.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
+                           members=members_in_attendance, date=date, time=time, attendance_count=attendance_count)
 
 # edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
@@ -480,6 +507,33 @@ class CreateMemberForm(FlaskForm):
     baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
     marital_status = SelectField('Married?', choices=[('1', 'Yes'), ('0', 'No')])
     submit = SubmitField('Save Member')
+
+@app.route('/homegroup/member/new/<homegroup_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
+def member_search(homegroup_id):
+    members = db.get_all_members_not_in_homegroup(homegroup_id)
+    return render_template ('member_search.html', all_members = members, homegroup_id = homegroup_id)
+
+
+#adds a member to a particular homegroup
+@app.route('/homegroup/member/add/<homegroup_id>/<member_id>')
+@login_required
+@requires_roles('homegroup_leader', 'admin')
+def add_member_to_homegroup(homegroup_id, member_id):
+    inactive_homegroup_members = db.get_homegroup_inactive_members(homegroup_id)
+    new = 'Y'
+    for members in inactive_homegroup_members:
+        print(members['member_id'])
+        if int (members['member_id']) == int(member_id):
+            new = 'N'
+            db.reactive_homegroup_member(homegroup_id, member_id)
+    print(new)
+    if new == 'Y':
+        db.add_member_to_homegroup(homegroup_id, member_id)
+    member = db.find_member(member_id)
+    flash ("Member {} added to homegroup".format(member['first_name']  + " " + member['last_name']))
+    return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
 # creates a new member for a particular homegroup
@@ -576,8 +630,8 @@ class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
     location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     description = StringField('Description', [validators.InputRequired(message="Please enter a description")])
-    latitude = StringField('Latitude', [validators.InputRequired(message="Please enter valid Latitude")])
-    longitude = StringField('Longitude', [validators.InputRequired(message="Please enter valid Longitude")])
+    latitude = StringField('Latitude')
+    longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
 
 

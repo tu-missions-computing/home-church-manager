@@ -138,6 +138,39 @@ def add_age_to_member_rows(rows):
         resultSet.append(member)
     return resultSet
 
+#finds all members NOT in a particular homegroup
+def get_all_members_not_in_homegroup(homegroup_id):
+    homegroup_id = int (homegroup_id)
+    query ='''
+    select * from member where member.is_active = 1 and member.id not in (
+    select member_id from homegroup_member
+    where homegroup_id = :homegroup_id and
+    homegroup_member.is_active = 1
+    )
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id})
+    return cursor.fetchall()
+
+# finds all the inactive homegroup members
+def get_homegroup_inactive_members(homegroup_id):
+    return g.db.execute('''SELECT * FROM member
+        JOIN homegroup_member ON member.id = homegroup_member.member_id
+        JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
+        WHERE homegroup_member.is_active != 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
+
+
+#sets a homegroup member to be reactivated in the homegroup
+def reactive_homegroup_member(homegroup_id, member_id):
+    homegroup_id = int (homegroup_id)
+    member_id = int(member_id)
+    query = '''
+    UPDATE homegroup_member SET is_active = 1
+    where homegroup_id = :homegroup_id and member_id = :member_id
+    '''
+    cursor = g.db.execute(query, {'homegroup_id': homegroup_id, 'member_id': member_id})
+    g.db.commit()
+    return cursor.rowcount
+
 #finds all inactive members in the db
 def get_all_inactive_members():
     query = '''
@@ -160,6 +193,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
                                   'join': join_date})
     g.db.commit()
     return cursor.rowcount
+
 
 #creates a new member
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
@@ -449,7 +483,7 @@ def get_attendance_counts():
 
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+    SELECT date, time, meeting_id, COUNT(member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = 1 AND homegroup_id = :myhomegroup
