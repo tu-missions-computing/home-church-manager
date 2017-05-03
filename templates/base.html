@@ -113,12 +113,6 @@
                     text-shadow: 3px 2px #d2d9da;
                     text-align: center;}
 
-
-
-
-
-
-
         .toggle-button {
          position: relative;
          display: inline-block;
@@ -239,8 +233,9 @@
                 <li class="dropdown">
                     <li role="presentation" class="white dropdown-toggle" data-toggle="dropdown"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
                   <ul class="dropdown-menu" role="menu">
-                      <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Dashboard</a></li>
-                    <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Profile Settings</a></li>
+                      <li style="padding-left: 20px;"><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Dashboard</a></li>
+                    <li style="padding-left: 20px;"><a href="{{ url_for('user_profile', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Profile Settings</a></li>
+                    <li style="padding-left: 20px;"><a href="{{ url_for('update_user', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Update Password</a></li>
                   </ul>
                 </li>
             {% endif %}

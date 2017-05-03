@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit Member{% endblock %}
+{% block title %}{{ heading_text }}{% endblock %}
 
 {% block content %}
-    <h1 class="head-style"> Edit Member</h1>
+    <h1 class="head-style"> {{ heading_text }}</h1>
     <form method = "POST" role="form" data-toggle="validator">
         <div class="form-group">
         {{ form.csrf_token }}
