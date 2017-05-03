@@ -100,12 +100,8 @@
         .right-addon input { padding-right: 30px; }
 
 
-<<<<<<< HEAD
-        .link-color {color:#0382DA;  }
-=======
         .link-color {color:#95ccf5;  }
 
->>>>>>> origin/master
                     a:hover {
                         text-decoration: none;
                         color: lightseagreen;
@@ -117,14 +113,7 @@
                     text-shadow: 3px 2px #d2d9da;
                     text-align: center;}
 
-<<<<<<< HEAD
 
-
-
-
-
-=======
->>>>>>> origin/master
         .toggle-button {
          position: relative;
          display: inline-block;
@@ -243,10 +232,10 @@
                 </li>
             {% if current_user.name %}
                 <li class="dropdown">
-                    <li role="presentation" class="white dropdown-toggle" data-toggle="dropdown"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
+                    <li role="presentation" class="dropdown-toggle" data-toggle="dropdown"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
                   <ul class="dropdown-menu" role="menu">
-                      <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Dashboard</a></li>
-                    <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Profile Settings</a></li>
+                      <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Dashboard</a></li>
+                    <li style="padding-left: 20px;"><a href="#"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Profile Settings</a></li>
                   </ul>
                 </li>
             {% endif %}
