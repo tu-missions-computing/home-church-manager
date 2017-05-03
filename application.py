@@ -12,6 +12,7 @@ from wtforms import validators
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 
+
 import db
 from mail_settings import config_email
 
@@ -124,7 +125,7 @@ def contact():
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
-########################## USER + LOGIN ##############################################
+########################## USER + LOGIN + Profile/Settings ##############################################
 
 # this allows/disallows users from accessing pages based on their roles
 def requires_roles(*roles):
@@ -235,6 +236,7 @@ class User(object):
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
+            self.member_id = db.find_member_info(self.email)['id']
         else:
             self.role = 'no role'
             self.name = 'no name'
@@ -311,6 +313,13 @@ def logout():
     user_name = session.pop('username', None)
     flash('Logged out')
     return redirect(url_for('index'))
+
+@app.route('/user/profile/<user_id>')
+@login_required
+def user_profile(user_id):
+    user_info = db.find_user_info(user_id)
+    member = db.find_member_info(user_info['email'])
+    return redirect (url_for('edit_member', member_id = member_id))
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
@@ -432,6 +441,7 @@ def get_attendance_dates(homegroup_id):
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id,
                            records=db.get_attendance_dates(homegroup_id))
 
+#view attendance history for a particular
 @app.route('/homegroup/attendance/view/<homegroup_id>', methods=['GET'])
 @login_required
 @requires_roles('admin')
@@ -440,6 +450,17 @@ def view_attendance(homegroup_id):
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     return render_template('view_attendance.html', currentHomegroup=homegroup,
                            attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
+
+@app.route('/homegroup/attendance/view/report/<homegroup_id>/<meeting_id>',  methods=['GET'])
+@login_required
+@requires_roles('homegroup_leader','admin')
+def view_attendance_report(homegroup_id, meeting_id):
+    members_in_attendance = db.get_attendance(homegroup_id, meeting_id)
+    attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    date = db.find_date(meeting_id)['date']
+    time = db.find_date(meeting_id)['time']
+    return render_template('view_attendance_report.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
+                           members=members_in_attendance, date=date, time=time, attendance_count=attendance_count)
 
 # edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
@@ -484,6 +505,7 @@ class CreateMemberForm(FlaskForm):
     phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
+    marital_status = SelectField('Married?', choices=[('1', 'Yes'), ('0', 'No')])
     submit = SubmitField('Save Member')
 
 @app.route('/homegroup/member/new/<homegroup_id>')
@@ -528,9 +550,10 @@ def create_new_member_for_homegroup(homegroup_id):
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
+        marital_status = member.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    join_date)
+                                    marital_status, join_date)
         if rowcount == 1:
             row = db.recent_member()
             member_id = row['id']
@@ -562,7 +585,8 @@ def edit_member(member_id):
                                    email=row['email'],
                                    phone_number=row['phone_number'],
                                    gender=row['gender'],
-                                   baptism_status=row['baptism_status'])
+                                   baptism_status=row['baptism_status'],
+                                   marital_status=row['marital_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
     if request.method == "POST" and member_form.validate():
@@ -573,9 +597,10 @@ def edit_member(member_id):
         gender = member_form.gender.data
         birthday = request.form['Birthday']
         baptism_status = member_form.baptism_status.data
+        marital_status = member_form.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
-                                  baptism_status, join_date)
+                                  baptism_status, marital_status, join_date)
         if (rowcount == 1):
             flash("Member {} Updated!".format(member_form.first_name.data))
             if (current_user.role == 'admin'):
@@ -701,9 +726,10 @@ def create_member():
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
+        marital_status = member.marital_status.data
         join_date = request.form['JoinDate']
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    join_date)
+                                    marital_status, join_date)
 
         if rowcount == 1:
             flash("Member {} Created!".format(member.first_name.data))

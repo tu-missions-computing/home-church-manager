@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Title{% endblock %}</title>
+    <title>{% block title %}My Title{% endblock %}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -13,7 +13,7 @@
    <link rel="stylesheet" href="/static/style.css"> <!-- Resource style for the popup confirmation box -->
     <link rel="stylesheet" href="/static/hamburgermenu.css"> <!-- Resource style for the hamburger menu -->
 
-
+<!-- CSS Styling-->
     <style>
         body {
             padding: 10px;
@@ -100,7 +100,12 @@
         .right-addon input { padding-right: 30px; }
 
 
+<<<<<<< HEAD
         .link-color {color:#0382DA;  }
+=======
+        .link-color {color:#95ccf5;  }
+
+>>>>>>> origin/master
                     a:hover {
                         text-decoration: none;
                         color: lightseagreen;
@@ -111,11 +116,14 @@
                     text-shadow: 3px 2px #d2d9da;
                     text-align: center;}
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> origin/master
         .toggle-button {
          position: relative;
          display: inline-block;
@@ -230,7 +238,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand" >
-                    <a class="navbar-brand" style="padding-left:0; padding-top:10;" href="{{ url_for('index') }}"><img src="/static/verbo-velocity.png" width="100%"></a>
+                    <a class="navbar-brand" style="padding-left:0; padding-top:10" href="{{ url_for('index') }}"><img src="/static/verbo-velocity.png" width="100%"></a>
                 </li>
             {% if current_user.name %}
                 <li role="presentation" class="white"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}</h4></li></a>
