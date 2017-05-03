@@ -236,7 +236,7 @@ class User(object):
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
-            self.member_id = db.find_member_info(self.email)['id']
+            self.user_id = db.find_user(self.email)['id']
         else:
             self.role = 'no role'
             self.name = 'no name'
@@ -319,7 +319,7 @@ def logout():
 def user_profile(user_id):
     user_info = db.find_user_info(user_id)
     member = db.find_member_info(user_info['email'])
-    return redirect (url_for('edit_member', member_id = member_id))
+    return redirect (url_for('edit_member', member_id = member['id']))
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
