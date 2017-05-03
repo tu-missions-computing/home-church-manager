@@ -492,3 +492,10 @@ def get_homegroup_attendance_counts(myhomegroup):
     cursor = g.db.execute(query, {'myhomegroup': myhomegroup})
     return cursor.fetchall()
 
+def get_all_members_emails():
+    query = '''
+    SELECT email
+    FROM member
+    '''
+    cursor = g.db.execute(query)
+    return cursor.fetchall()
