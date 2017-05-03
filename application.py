@@ -707,7 +707,15 @@ def reactivate_homegroup(homegroup_id):
 @login_required
 @requires_roles('admin')
 def all_members():
-    return render_template('all_members.html', members=db.get_all_members(),
+    emails = db.get_all_members_emails()
+    list = []
+    for email in emails:
+        list.append(email["email"])
+    list2=""
+    for item in list:
+        list2 = list2+", " + item
+    print(list2)
+    return render_template('all_members.html', members=db.get_all_members(), emails=list2,
                            inactiveMembers=db.get_all_inactive_members(), showInactive=False)
 
 
@@ -786,3 +794,5 @@ def all_admin():
 # Make this the last line in the file!
 if __name__ == '__main__':
     app.run(debug=True)
+
+
