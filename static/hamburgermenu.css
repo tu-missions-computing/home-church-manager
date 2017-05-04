@@ -164,6 +164,11 @@ html { height: 100%;}
     box-shadow: none;
 }
 
+.sidebar-nav .dropdown-menu li a:hover {
+    text-decoration: none;
+
+}
+
 /*-------------------------------*/
 /*       Hamburger-Cross         */
 /*-------------------------------*/
