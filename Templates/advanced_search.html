@@ -144,9 +144,6 @@
         <td class="baptismData" hidden>{{member.baptism_status}}</td>
         <td class="ageData" hidden>{{member.age}}</td>
         <td class="maritalData" hidden>{{member.marital_status }}</td>
-        {% if showInactive==True %}
-            <td> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
-        {% endif %}
         <td>
         <a href="{{url_for('edit_member', member_id = member.id)}}" class="btn btn-info btn-sm">
           <span class="glyphicon glyphicon-pencil"></span> Edit
@@ -170,7 +167,6 @@
             <td class="baptismData" hidden>{{inactiveMember.baptism_status}}</td>
             <td class="ageData" hidden>{{inactiveMember.age}}</td>
             <td class="maritalData" hidden>{{inactiveMember.marital_status }}</td>
-            <td> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
             <td>
             <a href="{{url_for('edit_member', member_id = inactiveMember.id)}}" class="btn btn-info btn-sm">
               <span class="glyphicon glyphicon-pencil"></span> Edit
