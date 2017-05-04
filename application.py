@@ -571,8 +571,15 @@ def create_new_member_for_homegroup(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
+    homegroup_members = db.get_homegroup_members(homegroup_id)
+    list = []
+    for member in homegroup_members:
+        list.append(member["email"])
+    list2 = ""
+    for item in list:
+        list2 = list2 + ", " + item
     return render_template('homegroup_members.html', homegroup=db.get_homegroup_members(homegroup_id),
-                           currentHomegroup=current_homegroup, homegroupEmails=db.get_homegroup_emails(homegroup_id))
+                           currentHomegroup=current_homegroup, homegroupEmails=db.get_homegroup_emails(homegroup_id), emails=list2)
 
 
 # edits member information
@@ -719,7 +726,6 @@ def all_members():
     list2=""
     for item in list:
         list2 = list2+", " + item
-    print(list2)
     return render_template('all_members.html', members=db.get_all_members(), emails=list2,
                            inactiveMembers=db.get_all_inactive_members(), showInactive=False)
 

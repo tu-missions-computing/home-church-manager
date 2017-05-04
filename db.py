@@ -499,3 +499,10 @@ def get_all_members_emails():
     '''
     cursor = g.db.execute(query)
     return cursor.fetchall()
+
+def get_homegroup_emails(homegroup_id):
+    query = '''
+    SELECT email
+    FROM homegroup_member
+    WHERE '''
+
