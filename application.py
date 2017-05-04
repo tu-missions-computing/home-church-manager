@@ -721,7 +721,6 @@ def all_members():
     list2=""
     for item in list:
         list2 = list2+", " + item
-    print(list2)
     return render_template('all_members.html', members=db.get_all_members(), emails=list2,
                            inactiveMembers=db.get_all_inactive_members(), showInactive=False)
 
