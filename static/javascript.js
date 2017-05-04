@@ -24,7 +24,14 @@ function searchGuts() {
     });
 
     var jobCount = $('.results tbody tr[visible="true"]').length;
-    $('.counter').text(jobCount + ' item');
+    var tempJobCount = toString(jobCount)
+        if (tempJobCount > 0) {
+             $('.counter').text(jobCount + ' item');
+        }
+        else{
+             $('.counter').text(jobCount + ' items');
+        }
+
 
     if (jobCount == '0') {
         $('.no-result').show();
