@@ -236,6 +236,7 @@ class User(object):
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
+            self.user_id = db.find_user(self.email)['id']
             self.member_id = db.find_member_info(self.email)['id']
         else:
             self.role = 'no role'
@@ -586,6 +587,10 @@ def get_homegroup_members(homegroup_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def edit_member(member_id):
+    if (int(current_user.member_id )== int(member_id)):
+        heading_text = 'Edit My Info'
+    else:
+        heading_text = 'Edit Member'
     row = db.find_member(member_id)
     member_form = CreateMemberForm(first_name=row['first_name'],
                                    last_name=row['last_name'],
@@ -616,7 +621,7 @@ def edit_member(member_id):
                 homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
                 return redirect(url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
-    return render_template('edit_member.html', form=member_form, bDay=birthday_form, joinDay=join_date_form)
+    return render_template('edit_member.html', heading_text = heading_text, form=member_form, bDay=birthday_form, joinDay=join_date_form)
 
 
 # removes a member from a particular homegroup
@@ -721,7 +726,6 @@ def all_members():
     list2=""
     for item in list:
         list2 = list2+", " + item
-    print(list2)
     return render_template('all_members.html', members=db.get_all_members(), emails=list2,
                            inactiveMembers=db.get_all_inactive_members(), showInactive=False)
 
