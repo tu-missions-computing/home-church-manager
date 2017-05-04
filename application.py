@@ -319,7 +319,7 @@ def logout():
 def user_profile(user_id):
     user_info = db.find_user_info(user_id)
     member = db.find_member_info(user_info['email'])
-    return redirect (url_for('edit_member', member_id = member_id))
+    return redirect (url_for('edit_member', member_id = member['id']))
 
 
 ########################## HOME GROUP  (Home Group Leader)##############################################
@@ -570,8 +570,15 @@ def create_new_member_for_homegroup(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
+    homegroup_members = db.get_homegroup_members(homegroup_id)
+    list = []
+    for member in homegroup_members:
+        list.append(member["email"])
+    list2 = ""
+    for item in list:
+        list2 = list2 + ", " + item
     return render_template('homegroup_members.html', homegroup=db.get_homegroup_members(homegroup_id),
-                           currentHomegroup=current_homegroup, homegroupEmails=db.get_homegroup_emails(homegroup_id))
+                           currentHomegroup=current_homegroup, homegroupEmails=db.get_homegroup_emails(homegroup_id), emails=list2)
 
 
 # edits member information
