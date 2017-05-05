@@ -181,15 +181,15 @@ def get_all_inactive_members():
     return add_age_to_member_rows(cursor.fetchall())
 
 #edits member info
-def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
+def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
     member_id = int(member_id)
     print(member_id)
     query = '''
-    UPDATE member SET first_name = :first, last_name = :last, email = :email, phone_number = :phone, gender = :gender, birthday = :bday, baptism_status = :baptism, join_date = :join
+    UPDATE member SET first_name = :first, last_name = :last, email = :email, phone_number = :phone, gender = :gender, birthday = :bday, baptism_status = :baptism, marital_status = :marital_status, join_date = :join
     WHERE id = :member_id
     '''
     cursor = g.db.execute(query, {'member_id': member_id, 'first': first_name, 'last': last_name, 'email': email,
-                                  'phone': phone_number, 'gender': gender, 'bday': birthday, 'baptism': baptism_status,
+                                  'phone': phone_number, 'gender': gender, 'bday': birthday, 'baptism': baptism_status, 'marital_status': marital_status,
                                   'join': join_date})
     g.db.commit()
     return cursor.rowcount
