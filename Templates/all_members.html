@@ -54,7 +54,7 @@
         <th> First Name</th>
         <th> Last Name</th>
         <th> </th>
-         <th class="content">Inactive?</th>
+         <th class="content">Active?</th>
 
 
     </tr>
@@ -75,7 +75,7 @@
                     <span class="glyphicon glyphicon-trash"></span>
                     Remove</button>
         </td>
-     <td class="content"> <button class="btn btn-secondary" disabled> &nbsp; &nbsp;</button></td>
+     <td class="content"><span style="color:green" class="glyphicon glyphicon-ok"></span></td>
     </tr>
     {% endfor %}
 
@@ -92,7 +92,7 @@
               <span class="glyphicon glyphicon-plus"></span> Reactivate
             </a>
             </td>
-            <td class="content"> <button class="btn btn-secondary" disabled> <span class="glyphicon glyphicon-ok"></span> </button></td>
+            <td class="content">  <span  style="color:red" class="glyphicon glyphicon-remove"></span></td>
         {% endfor %}
 
 
