@@ -189,7 +189,32 @@
          50% {
            transform: rotate(-45deg) scale(1.2, 1.2); } }
 
-
+        @media (max-width: 990px) {
+                .navbar-header {
+                    float: none;
+                }
+                .navbar-toggle {
+                    display: block;
+                }
+                .navbar-collapse {
+                    border-top: 1px solid transparent;
+                    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+                }
+                .navbar-collapse.collapse {
+                    display: none!important;
+                }
+                .navbar-nav {
+                    float: none!important;
+                    margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
 
     </style>
 </head>
@@ -205,24 +230,22 @@
                 </li>
             {% if current_user.name %}
                 <li class="dropdown">
-                    <li role="presentation" class="dropdown-toggle" data-toggle="dropdown"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
-                  <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-toggle" data-toggle="dropdown" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
+
+                <ul class="dropdown-menu" role="menu">
                       <li style="padding-left: 20px;"><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Dashboard</a></li>
                     <li style="padding-left: 20px;"><a href="{{ url_for('user_profile', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Profile Settings</a></li>
                     <li style="padding-left: 20px;"><a href="{{ url_for('update_user', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Update Password</a></li>
                   </ul>
                 </li>
             {% endif %}
-
-
-
                 {% if current_user.role == 'homegroup_leader' %}
             <li><a href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a></li>
                 {% endif %}
                 {% if current_user.role == 'admin' %}
                     <li role="presentation" ><a href="{{ url_for('get_homegroups') }}">Home Groups</a></li>
                     <li role="presentation" ><a href="{{ url_for('all_members') }}">Members</a></li>
-<!--                   <li role="presentation" ><a href="{{ url_for('all_admin') }}">All Admin</a></li>-->
+
             {% endif %}
             {% if current_user.role == 'homegroup_leader' %}
                 <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a></li>
@@ -241,6 +264,7 @@
 
             </ul>
         </nav>
+</nav>
         <!-- /#sidebar-wrapper -->
 
  <!-- Page Content -->
@@ -256,15 +280,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2" style="float:right;">
-                         <div id="google_translate_element"></div><script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                         <div id="google_translate_element"></div>
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                                }
+                            </script>
+                            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                     </div>
                     <div class="col-lg-8 col-lg-offset-2">
-
-
 
     {% if message %}
         <p>Note: {{ message }}</p>
@@ -313,10 +337,8 @@ function googleTranslateElementInit() {
     <script type="text/javascript" src="/static/javascript.js"></script>
 
 
-
 <script src="/static/main.js"></script> <!-- Resource jQuery for the confirmation popup-->
 <script src="/static/hamburgermenu.js"></script> <!-- Resource jQuery for the hamburger menu -->
-
 
 
 </body>
