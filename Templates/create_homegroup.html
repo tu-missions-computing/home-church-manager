@@ -49,7 +49,18 @@
                             {% endif %}
 						</div>
 
-						<div class="form-group">
+
+                        <div class='btn btn-primary btn-lg btn-block' style="display: block; width: 100%; font-family: 'Questrial', sans-serif;" id="findLocation">Find Location</div>
+
+
+
+    <iframe style="visibility: hidden" id="mapFrame" width=100% height="300px" src="../../homegroup/select_location">
+
+</iframe>
+                    <div class="form-group ">
+                              <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="visibility: hidden; display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
+						</div>
+                        	<div class="form-group" style="visibility: hidden">
 							 <p> {{form.latitude.label}} {{form.latitude(class_='form-control')}}</p>
                              {% if form.latitude.errors %}
                                   <div class="alert alert-warning">
@@ -58,7 +69,7 @@
                             {% endif %}
 						</div>
 
-                     <div class="form-group">
+                     <div class="form-group" style="visibility: hidden">
                          <p> {{form.longitude.label}} {{form.longitude(class_='form-control')}}</p>
                              {% if form.longitude.errors %}
                                   <div class="alert alert-warning">
@@ -66,15 +77,6 @@
                                  </div>
                             {% endif %}
                         </div>
-
-						<div class="form-group ">
-                              <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
-						</div>
-                         <button class="btn btn-default" id="findLocation">Find Location</button>
-
-    <iframe width=100% height="300px" src="../../homegroup/select_location">
-
-</iframe>
 
 					</form>
 				</div>

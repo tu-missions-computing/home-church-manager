@@ -45,8 +45,12 @@
         var geocoder = new google.maps.Geocoder();
 
         parent.document.getElementById('findLocation').addEventListener('click', function() {
+            parent.document.getElementById('submit').style.visibility = 'visible';
+            parent.document.getElementById('mapFrame').style.visibility = 'visible';
+            parent.document.getElementById('findLocation').style.visibility = 'hidden';
           geocodeAddress(geocoder, map);
         });
+
       }
 
 
