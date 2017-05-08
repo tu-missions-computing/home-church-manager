@@ -416,8 +416,13 @@ def get_all_homegroups():
         WHERE is_active=1
         '''
     cursor = g.db.execute(query)
+    return cursor.fetchall()
+
+#returns all homegroup info - including leader info etc.
+def get_all_homegroup_info():
     cursor = g.db.execute('select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id  left outer join user on homegroup_leader.user_id = user.id left outer join member on user.email = member.email')
     return cursor.fetchall()
+
 
 #deactivates a homegroup
 def deactivate_homegroup(homegroup_id):

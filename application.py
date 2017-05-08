@@ -80,7 +80,7 @@ def dashboard():
 # displays the map of all the homegroups
 @app.route('/map')
 def map():
-    homegroups = db.get_all_homegroups()
+    homegroups = db.get_all_homegroup_info()
     return render_template('map.html', homegroups=homegroups)
 
 # displays the faq page
