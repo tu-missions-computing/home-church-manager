@@ -45,9 +45,9 @@
         var geocoder = new google.maps.Geocoder();
 
         parent.document.getElementById('findLocation').addEventListener('click', function() {
-            parent.document.getElementById('submit').style.visibility = 'visible';
-            parent.document.getElementById('mapFrame').style.visibility = 'visible';
-            parent.document.getElementById('findLocation').style.visibility = 'hidden';
+            parent.document.getElementById('submit').style.display = 'block';
+            parent.document.getElementById('mapFrame').style.display = 'block';
+            parent.document.getElementById('findLocation').style.display = 'none';
           geocodeAddress(geocoder, map);
         });
 

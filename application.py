@@ -474,13 +474,15 @@ def edit_homegroup(homegroup_id):
                                   location=row['location'],
                                   latitude=row['latitude'],
                                   longitude=row['longitude'])
-    if hg_form.validate_on_submit() and hg_form.validate():
+    if request.method == "POST" and hg_form.validate():
         name = hg_form.name.data
         description = hg_form.description.data
         location = hg_form.location.data
         latitude = hg_form.latitude.data
         longitude = hg_form.longitude.data
-        rowcount = db.edit_homegroup(name, description, location, latitude, longitude)
+        print(latitude)
+        print(longitude)
+        rowcount = db.edit_homegroup(homegroup_id, name, location, description, latitude, longitude)
         if (rowcount == 1):
             flash("Home Group updated!")
             if (current_user.role == 'admin'):
@@ -640,8 +642,8 @@ def remove_member(homegroup_id, member_id):
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
-    location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     description = StringField('Description', [validators.InputRequired(message="Please enter a description")])
+    location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     latitude = StringField('Latitude')
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
