@@ -71,11 +71,15 @@ def find_roles():
 
 #finds user based on an email
 def find_user(email):
-    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE email =?', (email,)).fetchone()
+    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.email =?', (email,)).fetchone()
 
 def find_user_info(id):
-    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.id =?', (id,)).fetchone()
+    return g.db.execute('SELECT * from user WHERE user.id =?', (id,)).fetchone()
 
+#finds the most recent user entered into the db
+def recent_user():
+    cursor = g.db.execute('select id from user order by id desc LIMIT 1')
+    return cursor.fetchone()
 
 #grabs all users in the db
 def get_all_users():
