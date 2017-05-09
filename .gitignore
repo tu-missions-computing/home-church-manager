@@ -2,4 +2,5 @@
 *.sqlite
 *.pyc
 *.xml
+*.iml
 mail_settings.py
