@@ -39,3 +39,8 @@ Homegroup Leader:
         john@example.com
         password
 
+
+Database Items:
+            1. Add database and call it: MyDatabase.sqlite.
+            2. Run init_db.sql and create_db.sql before anything
+
