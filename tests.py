@@ -144,6 +144,16 @@ class DatabaseTestCase(FlaskTestCase):
     #     self.assertEqual(test_hg['password'], 'passwordssss')
     #     self.assertEqual(test_hg['role_id'], 1)
 
+    def test_find_roles(self):
+        """Make sure we can find roles"""
+        g.db.execute("INSERT into role(role) values('admin')")
+        roles = db.find_roles()
+        self.assertEqual(roles[0][1], "admin")
+
+    # def test_find_user(self):
+    #     """Make sure we can find user"""
+    #     row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, 0, "2/3/09")
+    #     member_id = db.find()['id']
 
     #################################### MEMBER ########################################
     # Test adding a new member
