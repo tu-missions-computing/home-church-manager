@@ -121,37 +121,45 @@ class DatabaseTestCase(FlaskTestCase):
     #################################### USER ########################################
 
     # Test adding a new user
-    # def test_add_user(self):
-    #     """Make sure we can add a new user"""
-    #     row_count = db.create_user("testing@test.com", "password", 1)
-    #     self.assertEqual(row_count, 1)
-    #     user = db.recent_user()
-    #     user_email=user.email
-    #     test_hg = db.find_user(user_email)
-    #     self.assertIsNotNone(test_hg)
-    #
-    #     self.assertEqual(test_hg['email'], 'testing@test.com')
-    #     self.assertEqual(test_hg['password'], 'password')
-    #     self.assertEqual(test_hg['role_id'], 1)
-    #
+    def test_add_user(self):
+        """Make sure we can add a new user"""
+        row_count = db.create_user("testing@test.com", "password", 1)
+        self.assertEqual(row_count, 1)
+        user_id = db.recent_user()['id']
+        test_hg = db.find_user_info(user_id)
+        self.assertIsNotNone(test_hg)
+        self.assertEqual(test_hg['email'], 'testing@test.com')
+        self.assertEqual(test_hg['password'], 'password')
+        self.assertEqual(test_hg['role_id'], 1)
+
     # def test_edit_user(self):
     #     """Make sure we can edit a homegroup"""
     #     row_count = db.create_user("testing@test.com", "password", 1)
     #     user_id = db.recent_user()['id']
-    #     row_count = db.edit_user("testingggggg@test.com", "passwordssss", 1)
-    #     test_hg = db.find_member(user_id)
+    #     row_count = db.update_user("testingggggg@test.com", "passwordssss", 1)
+    #     test_hg = db.find_user_info(user_id)
     #     self.assertIsNotNone(test_hg)
-    #
+    #     print("emaillll", test_hg['email'])
     #     self.assertEqual(test_hg['email'], 'testingggggg@test.com')
     #     self.assertEqual(test_hg['password'], 'passwordssss')
     #     self.assertEqual(test_hg['role_id'], 1)
 
+    def test_find_roles(self):
+        """Make sure we can find roles"""
+        g.db.execute("INSERT into role(role) values('admin')")
+        roles = db.find_roles()
+        self.assertEqual(roles[0][1], "admin")
+
+    # def test_find_user(self):
+    #     """Make sure we can find user"""
+    #     row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, 0, "2/3/09")
+    #     member_id = db.find()['id']
 
     #################################### MEMBER ########################################
     # Test adding a new member
     def test_add_member(self):
         """Make sure we can add a new user"""
-        row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, "9/12/16")
+        row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, 0, "9/12/16")
         self.assertEqual(row_count, 1)
         member_id = db.recent_member()['id']
         test_hg = db.find_member(member_id)
@@ -168,9 +176,9 @@ class DatabaseTestCase(FlaskTestCase):
 
     def test_edit_member(self):
         """Make sure we can edit a homegroup"""
-        row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, "2/3/09")
+        row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, 0, "2/3/09")
         member_id = db.recent_member()['id']
-        row_count = db.edit_member(member_id,'First', 'Last', 'test@example.com', "2", "Male", "Easter", 1, "2/3/09")
+        row_count = db.edit_member(member_id,'First', 'Last', 'test@example.com', "2", "Male", "Easter", 1, 1, "2/3/09")
         test_hg = db.find_member(member_id)
         self.assertIsNotNone(test_hg)
 

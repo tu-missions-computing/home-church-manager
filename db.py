@@ -71,11 +71,15 @@ def find_roles():
 
 #finds user based on an email
 def find_user(email):
-    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE email =?', (email,)).fetchone()
+    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.email =?', (email,)).fetchone()
 
 def find_user_info(id):
-    return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.id =?', (id,)).fetchone()
+    return g.db.execute('SELECT * from user WHERE user.id =?', (id,)).fetchone()
 
+#finds the most recent user entered into the db
+def recent_user():
+    cursor = g.db.execute('select id from user order by id desc LIMIT 1')
+    return cursor.fetchone()
 
 #grabs all users in the db
 def get_all_users():
@@ -196,14 +200,14 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 
 
 #creates a new member
-def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date):
+def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
     query = '''
-    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, join_date, is_active)
-    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :join_date, 1)
+    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active)
+    VALUES(:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :marital_status, :join_date, 1)
     '''
     cursor = g.db.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email,
                                   'phone_number': phone_number, 'gender': gender, 'birthday': birthday,
-                                  'baptism_status': baptism_status, 'join_date': join_date})
+                                  'baptism_status': baptism_status, 'marital_status': marital_status, 'join_date': join_date})
     g.db.commit()
     return cursor.rowcount
 
