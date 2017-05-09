@@ -1,4 +1,5 @@
 .idea/
 *.sqlite
 *.pyc
+*.xml
 mail_settings.py
