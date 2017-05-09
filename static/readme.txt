@@ -1,3 +1,12 @@
+<INSERT INFO HERE ABOUT:
+
+1. mail_settings.py is not in github (tell him how to get that info)
+2. creating a db called MyDatabase.sqlite
+3. Have him run create and init db
+
+
+>
+
 User Roles
 
 Admin:
