@@ -151,7 +151,7 @@ class DatabaseTestCase(FlaskTestCase):
     # Test adding a new member
     def test_add_member(self):
         """Make sure we can add a new user"""
-        row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, "9/12/16")
+        row_count = db.create_member("Ryley", "Hoekert", "ryley@email.com", "7192009832", "Female", "Never", 1, 0, "9/12/16")
         self.assertEqual(row_count, 1)
         member_id = db.recent_member()['id']
         test_hg = db.find_member(member_id)
@@ -168,9 +168,9 @@ class DatabaseTestCase(FlaskTestCase):
 
     def test_edit_member(self):
         """Make sure we can edit a homegroup"""
-        row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, "2/3/09")
+        row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, 0, "2/3/09")
         member_id = db.recent_member()['id']
-        row_count = db.edit_member(member_id,'First', 'Last', 'test@example.com', "2", "Male", "Easter", 1, "2/3/09")
+        row_count = db.edit_member(member_id,'First', 'Last', 'test@example.com', "2", "Male", "Easter", 1, 1, "2/3/09")
         test_hg = db.find_member(member_id)
         self.assertIsNotNone(test_hg)
 
