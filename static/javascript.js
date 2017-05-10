@@ -20,32 +20,27 @@ function searchGuts() {
 
     $(".results tbody tr").each(function (idx, elt) {
         if (checkMatch(elt) && checkGender(elt) && checkBaptism(elt) && checkAge(elt) && checkMarital(elt)) {
-            $(this).attr('visible', 'true');
-            // console.log("email", $('#email').val(),$(elt).find(".email").text()) ;
-            // emailList += ($(elt).find(".email").text());
+            emailList += ($(elt).find(".email").text());
+            $(this).show();
             console.log(emailList);
         } else {
-            console.log("getting here");
-            $(this).attr('visible', 'false');
+            $(this).hide();
         }
     });
 
-    // var jobCount = $('.results tbody tr[visible="true"]').length;
-    // var tempJobCount = toString(jobCount);
-    //     if (tempJobCount > 0) {
-    //          $('.counter').text(jobCount + ' item');
-    //     }
-    //     else{
-    //          $('.counter').text(jobCount + ' items');
-    //     }
-    //
-    //
-    // if (jobCount == '0') {
-    //     $('.no-result').show();
-    // }
-    // else {
-    //     $('.no-result').hide();
-    // }
+    var jobCount = $('.results tbody tr:visible').length;
+    if (jobCount == 1) {
+        $('.counter').text(jobCount + ' item');
+    } else {
+        $('.counter').text(jobCount + ' items');
+    }
+
+    if (jobCount == '0') {
+        $('.no-result').show();
+    }
+    else {
+        $('.no-result').hide();
+    }
 
     function checkMatch(elt) {
         rtn = null;
@@ -89,7 +84,7 @@ function searchGuts() {
         return rtn
     }
 
-    function checkAge(elt){
+    function checkAge(elt) {
         rtn = null;
         if ($('.ageCheckbox').prop("checked")) {
             rtn = ageInRange(($('#age').val()), $(elt).find(".ageData").text())
@@ -100,40 +95,40 @@ function searchGuts() {
         return rtn
     }
 
-    function ageInRange(ageLabel, userAge){
-        if (ageLabel == "children" && userAge <= 5){
+    function ageInRange(ageLabel, userAge) {
+        if (ageLabel == "children" && userAge <= 5) {
             return true
         }
-        else if (ageLabel == "youth" && userAge <=12 && userAge > 5){
+        else if (ageLabel == "youth" && userAge <= 12 && userAge > 5) {
             return true
         }
-        else if (ageLabel == "teen" && userAge <=19 && userAge > 12){
+        else if (ageLabel == "teen" && userAge <= 19 && userAge > 12) {
             return true
         }
-        else if (ageLabel == "youngAdult" && userAge <=25 && userAge > 19){
+        else if (ageLabel == "youngAdult" && userAge <= 25 && userAge > 19) {
             return true
         }
-        else if (ageLabel == "adult" && userAge <=64 && userAge > 25){
+        else if (ageLabel == "adult" && userAge <= 64 && userAge > 25) {
             return true
         }
-        else if (ageLabel == "senior" && userAge >=65){
+        else if (ageLabel == "senior" && userAge >= 65) {
             return true
         }
-        else{
+        else {
             return false
         }
     }
 }
 
 $('#confirmModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget); // Button that triggered the modal
-  var url = button.data('url'); // Extract info from data-* attributes
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var url = button.data('url'); // Extract info from data-* attributes
     var firstname = button.data('firstname');
     var lastname = button.data('lastname');
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this);
-  modal.find('.modal-body').text('Are you sure you want to remove ' +  firstname + ' ' + lastname + '?');
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find('.modal-body').text('Are you sure you want to remove ' + firstname + ' ' + lastname + '?');
     modal.find('#modal-confirm').attr("href", url)
 });
 
