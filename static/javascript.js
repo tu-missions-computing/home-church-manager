@@ -1,3 +1,5 @@
+var emailList = [];
+
 $(document).ready(function () {
     $(".search").keyup(searchGuts);
     $(".searchToggle").click(searchGuts);
@@ -5,9 +7,10 @@ $(document).ready(function () {
 });
 
 function searchGuts() {
+    emailList = [];
     var searchTerm = $(".search").val();
     var listItem = $('.results tbody').children('tr');
-    var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+    var searchSplit = searchTerm.replace(/ /g, "'):containsi('");
 
     $.extend($.expr[':'], {
         'containsi': function (elem, i, match, array) {
@@ -18,27 +21,31 @@ function searchGuts() {
     $(".results tbody tr").each(function (idx, elt) {
         if (checkMatch(elt) && checkGender(elt) && checkBaptism(elt) && checkAge(elt) && checkMarital(elt)) {
             $(this).attr('visible', 'true');
+            // console.log("email", $('#email').val(),$(elt).find(".email").text()) ;
+            // emailList += ($(elt).find(".email").text());
+            console.log(emailList);
         } else {
+            console.log("getting here");
             $(this).attr('visible', 'false');
         }
     });
 
-    var jobCount = $('.results tbody tr[visible="true"]').length;
-    var tempJobCount = toString(jobCount)
-        if (tempJobCount > 0) {
-             $('.counter').text(jobCount + ' item');
-        }
-        else{
-             $('.counter').text(jobCount + ' items');
-        }
-
-
-    if (jobCount == '0') {
-        $('.no-result').show();
-    }
-    else {
-        $('.no-result').hide();
-    }
+    // var jobCount = $('.results tbody tr[visible="true"]').length;
+    // var tempJobCount = toString(jobCount);
+    //     if (tempJobCount > 0) {
+    //          $('.counter').text(jobCount + ' item');
+    //     }
+    //     else{
+    //          $('.counter').text(jobCount + ' items');
+    //     }
+    //
+    //
+    // if (jobCount == '0') {
+    //     $('.no-result').show();
+    // }
+    // else {
+    //     $('.no-result').hide();
+    // }
 
     function checkMatch(elt) {
         rtn = null;
@@ -51,12 +58,12 @@ function searchGuts() {
         rtn = null;
         // console.log("genderButton", $('.gender').checked());
         if ($('.gender').prop("checked")) {
+            console.log($('#gender').val(), $(elt).find(".genderData").text())
             rtn = ($('#gender').val() == $(elt).find(".genderData").text())
         }
         else {
             rtn = true
         }
-        console.log("checkGender", rtn);
         return rtn;
     }
 
@@ -68,7 +75,6 @@ function searchGuts() {
         else {
             rtn = true
         }
-        console.log("checkBaptism", rtn);
         return rtn
     }
 
@@ -80,7 +86,6 @@ function searchGuts() {
         else {
             rtn = true
         }
-        console.log("checkMarital", rtn);
         return rtn
     }
 
@@ -92,12 +97,10 @@ function searchGuts() {
         else {
             rtn = true
         }
-        console.log("checkAge", rtn);
         return rtn
     }
 
     function ageInRange(ageLabel, userAge){
-        console.log("Label", ageLabel, "age", userAge);
         if (ageLabel == "children" && userAge <= 5){
             return true
         }
