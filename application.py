@@ -642,7 +642,7 @@ def remove_member(homegroup_id, member_id):
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
     name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
-    description = StringField('Description', [validators.InputRequired(message="Please enter a description")])
+    description = TextAreaField('Description', [validators.InputRequired(message="Please enter a description")])
     location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     latitude = StringField('Latitude')
     longitude = StringField('Longitude')
