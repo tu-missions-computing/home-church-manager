@@ -4,6 +4,7 @@ $(document).ready(function () {
     $(".search").keyup(searchGuts);
     $(".searchToggle").click(searchGuts);
     $(".searchDropdown").change(searchGuts);
+    //console.log(emailList);
 });
 
 function searchGuts() {
