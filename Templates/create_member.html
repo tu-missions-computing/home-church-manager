@@ -13,7 +13,7 @@
 			<div class="row main">
 				<div class="main-login main-center">
                      <h2 class="head-style" > Create New Member</h2>
-					<form class="" method="post" action="#">
+                    <form method="POST">
 
 						<div class="form-group">
 							{{ form.csrf_token }}
@@ -70,6 +70,11 @@
                                 <p> {{form.baptism_status.label}} {{form.baptism_status(class_='form-control')}}</p>
                             </div>
                          </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <p> {{ form.marital_status.label }} {{ form.marital_status(class_='form-control') }}</p>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">

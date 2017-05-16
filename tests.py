@@ -61,8 +61,9 @@ class LoginTestCase(FlaskTestCase):
 
 
 class AdminTestCase(FlaskTestCase):
-    """Test the basic behavior of page routing and display"""
+    """Test the basic behavior of page routing and display for admin pages"""
     def login(self, email, password):
+
         return self.client.post('/login', data=dict(
             email=email,
             password=password
@@ -83,6 +84,75 @@ class AdminTestCase(FlaskTestCase):
         resp = self.client.get(url_for('get_homegroups'))
         self.assertTrue(b'All Home Groups' in resp.data, "Did not find the phrase: All Home Groups")
 
+    def test_profile_settings_page(self):
+        """ Verify the profile settings page"""
+        self.login('admin@example.com', 'password')
+        email = 'admin@example.com'
+        db.open_db_connection('MyDatabase.sqlite')
+        member = db.find_member_info(email)
+        resp = self.client.get(url_for('edit_member', member_id=member['id']))
+        self.assertTrue(b'Edit My Info' in resp.data, "Did not find the phrase: Edit My Info")
+
+    def test_edit_password_page(self):
+        self.login('admin@example.com', 'password')
+        email = 'admin@example.com'
+        db.open_db_connection('MyDatabase.sqlite')
+        user = db.find_user(email)
+        resp = self.client.get(url_for('update_user', user_id=user['id']))
+        self.assertTrue(b'Update Password' in resp.data, "Did not find the phrase: Update Password")
+        self.assertTrue(b'admin@example.com' in resp.data, "Did not find the phrase: admin@example.com")
+
+    def test_faq_page(self):
+        self.login('admin@example.com', 'password')
+        resp = self.client.get(url_for('faq'))
+        self.assertTrue(b'Frequently Asked Questions' in resp.data,
+                        "Did not find the phrase: Frequently Asked Questions")
+        self.assertTrue(b'How do I view all members of all homegroups?' in resp.data,
+                        "Did not find the phrase: How do I view all members of all homegroups?")
+
+    def test_contact_page(self):
+        self.login('admin@example.com', 'password')
+        resp = self.client.get(url_for('contact'))
+        self.assertTrue(b'Contact Our Support Team' in resp.data, "Did not find the phrase: Contact Our Support Team")
+
+
+class HGLeaderTestCase(FlaskTestCase):
+    """Test the basic behavior of page routing and display for HG Leader pages"""
+
+    def login(self, email, password):
+        return self.client.post('/login', data=dict(
+            email=email,
+            password=password
+        ), follow_redirects=True)
+
+    def logout(self):
+        return self.client.get('/logout', follow_redirects=True)
+
+    def test_dashboard(self):
+        """Verify the dashboard page."""
+        self.logout()
+        self.login('john@example.com', 'password')
+        resp = self.client.get(url_for('dashboard'), follow_redirects=True)
+        self.assertTrue(b'Taylor Women Engaged in Engineering and Technology' in resp.data,
+                        "Did not find the phrase: Taylor Women Engaged in Engineering and Technology")
+
+    def test_member_page(self):
+        """Verify the member page."""
+        self.login('john@example.com', 'password')
+        resp = self.client.get(url_for('get_homegroup_members', homegroup_id=1), follow_redirects=True)
+        self.assertTrue(b'Homegroup Members' in resp.data, "Did not find the phrase: Homegroup Members")
+
+    def test_attendance_page(self):
+        """Verify the member page."""
+        self.login('john@example.com', 'password')
+        resp = self.client.get(url_for('attendance', homegroup_id=1), follow_redirects=True)
+        self.assertTrue(b'Attendance Report' in resp.data, "Did not find the phrase: Attendance Report")
+
+    def test_edit_hg_page(self):
+        """Verify the edit homegroup page."""
+        self.login('john@example.com', 'password')
+        resp = self.client.get(url_for('edit_homegroup', homegroup_id=1), follow_redirects=True)
+        self.assertTrue(b'Edit Home Group' in resp.data, "Did not find the phrase: Edit Home Group")
 
 class DatabaseTestCase(FlaskTestCase):
     """Test database access and update functions."""

@@ -75,6 +75,7 @@ def dashboard():
         return redirect(url_for('homegroup', homegroup_id=homegroup_id))
     if role == "admin":
         return redirect(url_for('admin_home'))
+    return redirect(url_for('index'))
 
 
 # displays the map of all the homegroups
@@ -500,12 +501,11 @@ def select_location():
 
 ########################## MEMBER (Home Group Leader) ##############################################
 
-
 class CreateMemberForm(FlaskForm):
     first_name = StringField('First Name', [validators.Length(min=2, max=30, message="First name is a required field")])
     last_name = StringField('Last Name', [validators.Length(min=2, max=30, message="Last name is a required field")])
     email = StringField('Email', [validators.Email("Please enter valid email")])
-    phone_number = IntegerField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
+    phone_number = StringField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
     marital_status = SelectField('Married?', choices=[('1', 'Yes'), ('0', 'No')])
@@ -739,7 +739,7 @@ def all_members():
 def create_member():
     member = CreateMemberForm()
 
-    if member.validate_on_submit():
+    if request.method == "POST" and member.validate():
         first_name = member.first_name.data
         last_name = member.last_name.data
         email = member.email.data
