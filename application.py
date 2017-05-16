@@ -302,7 +302,7 @@ def login():
         else:
             # Authentication failed.
             flash('Invalid email address or password')
-            return redirect(url_for('index'))
+            return redirect(url_for('login'))
 
     return render_template('login.html', form=login_form)
 
