@@ -382,7 +382,7 @@ def system_notify_member(member_id, num_misses):
 
 
 # adds (or updates) a new entry of attendance into the db
-def updateAttendance(homegroup_id, member_id, attendance, meeting_id):
+def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
     return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
 
