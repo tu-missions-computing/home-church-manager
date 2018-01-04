@@ -45,8 +45,8 @@ INSERT INTO role(role) values ('admin');
 
 
 --
-INSERT INTO member_role(member_id, password, role_id) values (1, 'password',  2);
-INSERT INTO member_role(member_id, password, role_id) values (2, 'password',  1);
-INSERT INTO member_role(member_id, password, role_id) values (7, 'password', 3);
+-- INSERT INTO member_role(member_id, password, role_id) values (1, 'password',  2);
+-- INSERT INTO member_role(member_id, password, role_id) values (2, 'password',  1);
+-- INSERT INTO member_role(member_id, password, role_id) values (7, 'password', 3);
 
 INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(1, 1, '1');
