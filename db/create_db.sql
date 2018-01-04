@@ -1,6 +1,7 @@
-drop table if exists member;
+
+drop  table if exists member CASCADE;
 create table member (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY ,
   first_name TEXT,
   last_name TEXT,
   email TEXT UNIQUE,
@@ -10,75 +11,77 @@ create table member (
   baptism_status BOOLEAN,
   marital_status BOOLEAN,
   join_date TEXT,
-  is_active BOOLEAN,
-  foreign key (id) REFERENCES attendance (member_id),
-  foreign key (id) REFERENCES homegroup_member (member_id),
-  foreign key (email) REFERENCES user(email)
+  is_active BOOLEAN
+
 );
 
-drop table if exists user;
-create table user (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+drop table if exists member_role  CASCADE;
+create table member_role(
+  member_id INTEGER,
   email TEXT UNIQUE,
   password TEXT,
   role_id INTEGER,
-  foreign key (id) REFERENCES homegroup_leader (user_id)
+  foreign key (member_id) REFERENCES member(id),
+  foreign key (role_id) references role(id)
 );
-drop table if exists role;
+drop table if exists role CASCADE;
 create table role (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  role TEXT,
-  FOREIGN KEY (id) references user(role_id)
+  id SERIAL PRIMARY KEY ,
+  role TEXT
 );
 
 
 
 
-drop table if exists homegroup;
+drop table if exists homegroup CASCADE;
 create table homegroup (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY ,
   name TEXT,
   location TEXT,
   description TEXT,
   latitude REAL,
   longitude REAL,
-  is_active BOOLEAN,
+  is_active BOOLEAN
 
-  foreign key (id) REFERENCES homegroup_member (homegroup_id),
-  foreign key (id) REFERENCES homegroup_leader (homegroup_id)
 );
 
-drop table if exists homegroup_leader;
+drop table if exists homegroup_leader CASCADE;
 create table homegroup_leader (
-  user_id,
-  homegroup_id,
-  PRIMARY KEY (user_id, homegroup_id)
+  member_id INTEGER,
+  homegroup_id INTEGER,
+  is_active boolean,
+  foreign key (member_id) REFERENCES member(id),
+  foreign key (homegroup_id) references homegroup(id),
+  PRIMARY KEY (member_id, homegroup_id)
 );
 
 
-drop table if exists homegroup_member;
+drop table if exists homegroup_member CASCADE;
 create table homegroup_member (
-  homegroup_id,
-  member_id,
+  homegroup_id INTEGER,
+  member_id INTEGER,
   is_active BOOLEAN,
+  foreign key (member_id) REFERENCES member (id),
+  foreign key (homegroup_id) REFERENCES homegroup(id),
   PRIMARY KEY (homegroup_id, member_id)
 );
 
 
 
-drop table if exists meeting;
+drop table if exists meeting CASCADE;
 create table meeting (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY ,
   date TEXT,
-  time TEXT,
-  foreign key (id) REFERENCES attendance (meeting_id)
+  time TEXT
 
 );
-drop table if exists attendance;
+drop table if exists attendance CASCADE;
 CREATE TABLE attendance (
   homegroup_id INTEGER,
   member_id INTEGER,
   meeting_id INTEGER,
   attendance BOOLEAN,
+  foreign key (member_id) REFERENCES member (id),
+  foreign key (meeting_id) REFERENCES meeting (id),
   PRIMARY KEY(homegroup_id, member_id, meeting_id)
 );

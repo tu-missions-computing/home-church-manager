@@ -1,3 +1,4 @@
+db
 Flask==0.12.2
 Flask-Bcrypt==0.7.1
 Flask-Login==0.4.1
