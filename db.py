@@ -1,29 +1,22 @@
-import sqlite3
-import os
+import psycopg2
 from datetime import date, datetime
 from flask import g
 
-# from application import app
-DATABASE = 'MyDatabase.sqlite'
-
 
 # Connect to the database.
-def connect_db(db_path):
-    if db_path is None:
-        db_path = os.path.join(os.getcwd(), DATABASE)
-    if not os.path.isfile(db_path):
-        raise RuntimeError("Can't find database file '{}'".format(db_path))
-    connection = sqlite3.connect(db_path)
-    connection.row_factory = sqlite3.Row
+def connect_db():
+    connection = psycopg2.connect(host="faraday.cse.taylor.edu",
+                                  dbname="verbo",
+                                  user="verbo", password="cuenca")
+    # TODO: Don't store the database password here.
     return connection
 
 
-def open_db_connection(db_path=None):
+def open_db_connection():
     """Open a connection to the database.
-    Open a connection to the SQLite database at `db_path`.
     Store the resulting connection in the `g.db` global object.
     """
-    g.db = connect_db(db_path)
+    g.db = connect_db()
 
 
 # If the database is open, close it.
@@ -36,9 +29,7 @@ def close_db_connection():
 #################################### USER ########################################
 
 
-
-
-#creates a new user
+# creates a new user
 def create_user(email, password, role_id):
     query = '''
     INSERT INTO user(email, password, role_id)
@@ -48,7 +39,7 @@ def create_user(email, password, role_id):
     g.db.commit()
     return cursor.rowcount
 
-#edits a user password
+# edits a user password
 def update_user(email, password, role_id):
     role_id = int(role_id)
     print("db")
@@ -61,7 +52,7 @@ def update_user(email, password, role_id):
     g.db.commit()
     return cursor.rowcount
 
-#finds all roles
+# finds all roles
 def find_roles():
     query='''
     SELECT * FROM role
@@ -69,19 +60,19 @@ def find_roles():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
-#finds user based on an email
+# finds user based on an email
 def find_user(email):
     return g.db.execute('SELECT * from user join role on role.id = user.role_id WHERE user.email =?', (email,)).fetchone()
 
 def find_user_info(id):
     return g.db.execute('SELECT * from user WHERE user.id =?', (id,)).fetchone()
 
-#finds the most recent user entered into the db
+# finds the most recent user entered into the db
 def recent_user():
     cursor = g.db.execute('select id from user order by id desc LIMIT 1')
     return cursor.fetchone()
 
-#grabs all users in the db
+# grabs all users in the db
 def get_all_users():
     query = '''
         SELECT * FROM user
@@ -90,7 +81,7 @@ def get_all_users():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
-#finds a users associated homegroup (specifically for homegroup leaders)
+# finds a users associated homegroup (specifically for homegroup leaders)
 def find_user_homegroup(email):
     query = '''SELECT * from homegroup_leader JOIN user on homegroup_leader.user_id = user.id
     WHERE email = :email
@@ -99,14 +90,14 @@ def find_user_homegroup(email):
     homegroup_id = cursor.fetchone()['homegroup_id']
     return homegroup_id
 
-#finds the most recent user entered into the db
+# finds the most recent user entered into the db
 def recent_user():
     cursor = g.db.execute('select id from user order by id desc LIMIT 1')
     return cursor.fetchone()
 
 #################################### MEMBER ########################################
 
-#returns a count of all members in the db
+# returns a count of all members in the db
 def get_member_count():
     query = '''
         SELECT count(id)
@@ -114,15 +105,15 @@ def get_member_count():
         '''
     return g.db.execute(query).fetchall()
 
-#finds member info by passing in an email
+# finds member info by passing in an email
 def find_member_info(email):
     return g.db.execute('SELECT * from member WHERE email =?', (email,)).fetchone()
 
-#finds member info by passing in a member id
+# finds member info by passing in a member id
 def find_member(member_id):
     return g.db.execute('SELECT * FROM member WHERE id = ?', (member_id,)).fetchone()
 
-#finds all members in the db
+# finds all members in the db
 def get_all_members():
     query = '''
     SELECT * FROM member
@@ -142,7 +133,7 @@ def add_age_to_member_rows(rows):
         resultSet.append(member)
     return resultSet
 
-#finds all members NOT in a particular homegroup
+# finds all members NOT in a particular homegroup
 def get_all_members_not_in_homegroup(homegroup_id):
     homegroup_id = int (homegroup_id)
     query ='''
@@ -163,7 +154,7 @@ def get_homegroup_inactive_members(homegroup_id):
         WHERE homegroup_member.is_active != 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
 
 
-#sets a homegroup member to be reactivated in the homegroup
+# sets a homegroup member to be reactivated in the homegroup
 def reactive_homegroup_member(homegroup_id, member_id):
     homegroup_id = int (homegroup_id)
     member_id = int(member_id)
@@ -175,7 +166,7 @@ def reactive_homegroup_member(homegroup_id, member_id):
     g.db.commit()
     return cursor.rowcount
 
-#finds all inactive members in the db
+# finds all inactive members in the db
 def get_all_inactive_members():
     query = '''
     SELECT * FROM member
@@ -184,7 +175,7 @@ def get_all_inactive_members():
     cursor = g.db.execute(query)
     return add_age_to_member_rows(cursor.fetchall())
 
-#edits member info
+# edits member info
 def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
     member_id = int(member_id)
     print(member_id)
@@ -199,7 +190,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
     return cursor.rowcount
 
 
-#creates a new member
+# creates a new member
 def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
     query = '''
     INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active)
@@ -211,7 +202,7 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
     g.db.commit()
     return cursor.rowcount
 
-#adds leader to a homegroup
+# adds leader to a homegroup
 def add_leader_to_homegroup(user_id, homegroup_id):
     user_id = int(user_id)
     homegroup_id = int(homegroup_id)
@@ -223,7 +214,7 @@ def add_leader_to_homegroup(user_id, homegroup_id):
     return cursor.rowcount
 
 
-#adds a member to a homegroup
+# adds a member to a homegroup
 def add_member_to_homegroup(homegroup_id, member_id):
     homegroup_id = int(homegroup_id)
     member_id = int(member_id)
@@ -234,12 +225,12 @@ def add_member_to_homegroup(homegroup_id, member_id):
     g.db.commit()
     return cursor.rowcount
 
-#finds the most recent member entered into the db
+# finds the most recent member entered into the db
 def recent_member():
     cursor = g.db.execute('select id from member order by id desc LIMIT 1')
     return cursor.fetchone()
 
-#removes a member from a homegroup -- really just sets them inactive
+# removes a member from a homegroup -- really just sets them inactive
 def remove_member(homegroup_id, member_id):
     member_id = int(member_id)
     homegroup_id = int(homegroup_id)
@@ -251,7 +242,7 @@ def remove_member(homegroup_id, member_id):
     g.db.commit()
     return cursor.rowcount
 
-#this sets a member as inactive in the system
+# this sets a member as inactive in the system
 def deactivate_member(member_id):
     member_id = int(member_id)
     query='''
@@ -262,7 +253,7 @@ def deactivate_member(member_id):
     g.db.commit()
     return cursor.rowcount
 
-#this sets a member as active in the system
+# this sets a member as active in the system
 def reactivate_member(member_id):
     member_id = int(member_id)
     query='''
@@ -273,7 +264,7 @@ def reactivate_member(member_id):
     g.db.commit()
     return cursor.rowcount
 
-#finds all members in a particular homegroup
+# finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
     JOIN homegroup_member ON member.id = homegroup_member.member_id
@@ -286,7 +277,7 @@ def get_homegroup_emails(homegroup_id):
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         WHERE homegroup_member.is_active = 1 and  homegroup.id = ?''', (homegroup_id,)).fetchall()
 
-#finds if a user has missed (number_of_misses) consecutive meetings
+# finds if a user has missed (number_of_misses) consecutive meetings
 def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     query = """
     SELECT  * FROM attendance
@@ -302,7 +293,7 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
 
 
 
-#finds a homegroup leader
+# finds a homegroup leader
 def find_homegroup_leader(homegroup_id):
     homegroup_id = int(homegroup_id)
     return g.db.execute('''
@@ -312,7 +303,7 @@ def find_homegroup_leader(homegroup_id):
     ''', (homegroup_id,)).fetchone()
 
 
-#finds a member's homegroup
+# finds a member's homegroup
 def find_member_homegroup(member_id):
     member_id = int(member_id)
     return g.db.execute('''
@@ -323,7 +314,7 @@ def find_member_homegroup(member_id):
 
 
 
-#finds all the attendance dates entered in a particular homegroup
+# finds all the attendance dates entered in a particular homegroup
 def get_attendance_dates(homegroup_id):
     homegroup_id = int(homegroup_id)
 
@@ -334,7 +325,7 @@ def get_attendance_dates(homegroup_id):
         ''', (homegroup_id,)).fetchall()
 
 
-#creates a new attendance report and initializes everyones attendance to false
+# creates a new attendance report and initializes everyones attendance to false
 def generate_attendance_report(homegroup_id, meeting_id):
     meeting_id = int(meeting_id)
     members = get_homegroup_members(homegroup_id)
@@ -347,7 +338,7 @@ def generate_attendance_report(homegroup_id, meeting_id):
     g.db.commit()
     return cursor.rowcount
 
-#returns the attendance of a particular homegroup on a particular day/time
+# returns the attendance of a particular homegroup on a particular day/time
 def get_attendance(homegroup_id, meeting_id):
     meeting_id = int(meeting_id)
     query = '''SELECT * from attendance join member on attendance.member_id = member.id
@@ -356,12 +347,12 @@ def get_attendance(homegroup_id, meeting_id):
     return cursor.fetchall()
 
 
-#finds date information from a meeting id
+# finds date information from a meeting id
 def find_date(meeting_id):
     meeting_id = int(meeting_id)
     return g.db.execute('SELECT * from meeting WHERE id =?', (meeting_id,)).fetchone()
 
-#updates attendance for a homegroup's member on a particular day/time
+# updates attendance for a homegroup's member on a particular day/time
 def update_attendance(homegroup_id, member_id, meeting_id, attendance):
     query = '''
         UPDATE attendance SET attendance = :attendance
@@ -372,7 +363,7 @@ def update_attendance(homegroup_id, member_id, meeting_id, attendance):
     g.db.commit()
     return cursor.rowcount
 
-#creates a new date or "meeting" time in the db
+# creates a new date or "meeting" time in the db
 def add_date(date, time):
     query = '''
     INSERT INTO meeting (date, time) VALUES (:adate, :atime)
@@ -383,16 +374,16 @@ def add_date(date, time):
     cursor = g.db.execute(query)
     return cursor.fetchone()
 
-#returns the most recent homegroup added to the db
+# returns the most recent homegroup added to the db
 def recent_homegroup():
     cursor = g.db.execute('select id from homegroup order by id desc LIMIT 1')
     return cursor.fetchone()
 
-#finds a homegroup based on homegroup_id
+# finds a homegroup based on homegroup_id
 def find_homegroup(homegroup_id):
     return g.db.execute('SELECT * from homegroup WHERE id =?', (homegroup_id,)).fetchone()
 
-#creates a new homegroup
+# creates a new homegroup
 def create_homegroup(name, location, description, latitude, longitude):
     query = '''
         INSERT INTO homegroup(name, location, description, latitude, longitude, is_active)
@@ -402,7 +393,7 @@ def create_homegroup(name, location, description, latitude, longitude):
     g.db.commit()
     return cursor.rowcount
 
-#edits homegroup info
+# edits homegroup info
 def edit_homegroup(homegroup_id, name, location, description, latitude, longitude):
     query = '''
     UPDATE homegroup SET name = :name, location = :location, description = :description, latitude = :latitude, longitude = :longitude
@@ -413,7 +404,7 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     g.db.commit()
     return cursor.rowcount
 
-#returns all homegroups
+# returns all homegroups
 def get_all_homegroups():
     query = '''
         SELECT * FROM homegroup
@@ -422,13 +413,13 @@ def get_all_homegroups():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
-#returns all homegroup info - including leader info etc.
+# returns all homegroup info - including leader info etc.
 def get_all_homegroup_info():
     cursor = g.db.execute('select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id  left outer join user on homegroup_leader.user_id = user.id left outer join member on user.email = member.email')
     return cursor.fetchall()
 
 
-#deactivates a homegroup
+# deactivates a homegroup
 def deactivate_homegroup(homegroup_id):
     homegroup_id = int(homegroup_id)
     query='''
@@ -459,7 +450,7 @@ def get_all_inactive_homegroups():
 
 #################################### Admin ########################################
 
-#finds all active admin in the db
+# finds all active admin in the db
 def get_all_admin():
     query = '''
         SELECT * FROM member
@@ -469,7 +460,7 @@ def get_all_admin():
     cursor = g.db.execute(query)
     return cursor.fetchall()
 
-#finds all inactive admin in the db
+# finds all inactive admin in the db
 def get_all_inactive_admin():
     query = '''
     SELECT * FROM member
