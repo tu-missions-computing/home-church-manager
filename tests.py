@@ -7,12 +7,7 @@ from flask import g, url_for
 import db
 from application import app
 
-
-
-
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
-
-
 
 class FlaskTestCase(unittest.TestCase):
     # This is a helper class that sets up the proper Flask execution context
