@@ -18,7 +18,6 @@ create table member (
 drop table if exists member_role  CASCADE;
 create table member_role(
   member_id INTEGER,
-  email TEXT UNIQUE,
   password TEXT,
   role_id INTEGER,
   foreign key (member_id) REFERENCES member(id),

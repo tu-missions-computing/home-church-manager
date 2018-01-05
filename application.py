@@ -41,11 +41,11 @@ def init_test_user():
     if db.find_user('john@example.com') is None:
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password)
-        db.create_user('john@example.com', pw_hash, 2)
+        db.create_user(1, pw_hash, 2)
     if db.find_user('admin@example.com') is None:
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password)
-        db.create_user('admin@example.com', pw_hash, 3)
+        db.create_user(7, pw_hash, 3)
 
 
 ########################## INDEX + MAP + Dashboard##############################################
@@ -177,7 +177,7 @@ def create_user(member_id):
         email_list.append(email)
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password)
-        db.create_user(email, pw_hash, user_form.role.data)
+        db.create_user(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
@@ -234,6 +234,7 @@ class User(object):
 
     def __init__(self, email):
         self.email = email
+        print(db.find_user(self.email))
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
@@ -272,7 +273,12 @@ def load_user(id):
 def authenticate(email, password):
     """Check whether the arguments match a user from the "database" of valid users."""
     valid_users = db.get_all_users()
+    print(valid_users)
+
     for user in valid_users:
+        print(user)
+        # print(user['email'])
+
         if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
