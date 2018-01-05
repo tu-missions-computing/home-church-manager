@@ -8,14 +8,14 @@ from flask import g
 # Connect to the database.
 def connect_db():
     connection = psycopg2.connect("host=faraday.cse.taylor.edu port=5432 dbname=verbo user=verbo password=cuenca")
+    dict_cur = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # cursor = connection.cursor()
 
-    cursor = connection.cursor()
-
-    print('connection = %s' % connection)
-    print('cursor = %s' % cursor)
+    # print('connection = %s' % connection)
+    # print('cursor = %s' % cursor)
 
     # TODO: Don't store the database password here.
-    return cursor
+    return dict_cur
 
 
 def open_db_connection():
@@ -69,6 +69,7 @@ def find_roles():
 
 # finds member based on an email
 def find_user(email):
+
     g.db.execute('SELECT * from member join member_role on member.id = member_role.member_id WHERE member.email = %s', (email,))
     return g.db.fetchone()
 
@@ -211,14 +212,11 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
     g.db.commit()
 
     # dict_cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # dict_cur.execute("INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active) VALUES(%s, %s, %s, %d, %b, %d, %b, %b, %s, %b)", (:first_name, :last_name, :email, :phone_number, :gender, :birthday, :baptism_status, :marital_status, :join_date, 1))
+    # dict_cur.execute("INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active) VALUES(%s, %s, %s, %d, %s, %d, %s, %s, %s, %s)", (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, 1))
     #
-    #
-    # dict_cur.execute(query, {'first_name': first_name, 'last_name': last_name, 'email': email,
-    #                      'phone_number': phone_number, 'gender': gender, 'birthday': birthday,
-    #                      'baptism_status': baptism_status, 'marital_status': marital_status, 'join_date': join_date})
-
+    # dict_cur.commit()
     return g.db.rowcount
+    # return dict_cur.rowcount
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(user_id, homegroup_id):

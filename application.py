@@ -234,6 +234,7 @@ class User(object):
 
     def __init__(self, email):
         self.email = email
+        print(db.find_user(self.email))
         if db.find_user(self.email) is not None:
             self.role = db.find_user(self.email)['role']
             self.name = db.find_member_info(self.email)['first_name']
@@ -278,7 +279,7 @@ def authenticate(email, password):
         print(user)
         # print(user['email'])
 
-        if email == user[8] and bcrypt.check_password_hash(user[1], password):
+        if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
 
