@@ -128,7 +128,7 @@ def find_member(member_id):
 def get_all_members():
     query = '''
     SELECT * FROM member
-    WHERE is_active=1
+    WHERE is_active='1'
     ORDER BY last_name asc
     '''
     g.db.execute(query)
@@ -162,7 +162,7 @@ def get_homegroup_inactive_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-        WHERE homegroup_member.is_active != 1 and  homegroup.id = %s''', (homegroup_id,)).fetchall()
+        WHERE homegroup_member.is_active != '1' and  homegroup.id = %s''', (homegroup_id,)).fetchall()
 
 
 # sets a homegroup member to be reactivated in the homegroup
@@ -170,18 +170,18 @@ def reactive_homegroup_member(homegroup_id, member_id):
     homegroup_id = int (homegroup_id)
     member_id = int(member_id)
     query = '''
-    UPDATE homegroup_member SET is_active = 1
+    UPDATE homegroup_member SET is_active = '1'
     where homegroup_id = %s and member_id = %s
     '''
     g.db.execute(query, (homegroup_id, member_id))
-    g.db.commit()
-    return g.db.rowcount
+    g.connection.commit()
+    return g.db
 
 # finds all inactive members in the db
 def get_all_inactive_members():
     query = '''
     SELECT * FROM member
-    WHERE is_active=0
+    WHERE is_active='0'
     '''
     g.db.execute(query)
     return add_age_to_member_rows(g.db.fetchall())
@@ -207,13 +207,13 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
     '''
     g.db.execute(query, (first_name,  last_name, email, phone_number,  gender,  birthday,
                                    baptism_status,  marital_status,  join_date))
-    g.db.commit()
+    g.connection.commit()
 
     # dict_cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
     # dict_cur.execute("INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active) VALUES(%s, %s, %s, %d, %s, %d, %s, %s, %s, %s)", (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, 1))
     #
     # dict_cur.commit()
-    return g.db.rowcount
+    return g.db
     # return dict_cur.rowcount
 
 # adds leader to a homegroup
@@ -258,25 +258,23 @@ def remove_member(homegroup_id, member_id):
 
 # this sets a member as inactive in the system
 def deactivate_member(member_id):
-    member_id = int(member_id)
     query='''
-    UPDATE member SET is_active = 0
+    UPDATE member SET is_active = '0'
     WHERE id = %s
     '''
     g.db.execute(query, ( member_id))
-    g.db.commit()
-    return g.db.rowcount
+    g.connection.commit()
+    return g.db
 
 # this sets a member as active in the system
 def reactivate_member(member_id):
-    member_id = int(member_id)
     query='''
-    UPDATE member SET is_active = 1
+    UPDATE member SET is_active = '1'
     WHERE id = %s
     '''
     g.db.execute(query, member_id)
-    g.db.commit()
-    return g.db.rowcount
+    g.connection.commit()
+    return g.db
 
 # finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):

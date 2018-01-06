@@ -609,7 +609,10 @@ def edit_member(member_id):
                                    marital_status=row['marital_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
-    if request.method == "POST" and member_form.validate():
+
+
+    ## to do add validators back!!! and member_form.validate()
+    if request.method == "POST" :
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
         email = member_form.email.data
@@ -619,6 +622,7 @@ def edit_member(member_id):
         baptism_status = member_form.baptism_status.data
         marital_status = member_form.marital_status.data
         join_date = request.form['JoinDate']
+
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, join_date)
         if (rowcount == 1):
@@ -771,9 +775,9 @@ def create_member():
 @requires_roles('admin')
 def deactivate_member(member_id):
     rowcount = db.deactivate_member(member_id)
-    print(db.find_member(member_id)[9])
+    print(db.find_member(member_id)['is_active'])
     # if the member is not active
-    if db.find_member(member_id)[9] == 0:
+    if db.find_member(member_id)['is_active'] == '0':
         flash("Member Deactivated!")
     return redirect(url_for('all_members'))
 
@@ -784,9 +788,7 @@ def deactivate_member(member_id):
 @requires_roles('admin')
 def reactivate_member(member_id):
     rowcount = db.reactivate_member(member_id)
-    print(db.find_member(member_id)[9])
-    # if the member is not active
-    if db.find_member(member_id)[9] == 0:
+    if db.find_member(member_id)['is_active'] == '1':
         flash("Member Reactivated!")
     return redirect(url_for('all_members'))
 
