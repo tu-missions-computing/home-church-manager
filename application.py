@@ -61,6 +61,7 @@ def index():
     #     ['verbovelocity@gmail.com'])
     # msg.body = "This is the email body"
     # mail.send(msg)
+    init_test_user()
 
     return render_template('index.html')
 
@@ -273,12 +274,13 @@ def load_user(id):
 def authenticate(email, password):
     """Check whether the arguments match a user from the "database" of valid users."""
     valid_users = db.get_all_users()
-    print(valid_users)
 
     for user in valid_users:
         print(user)
         # print(user['email'])
-
+        print (user['email'])
+        print (user['password'])
+        print (password)
         if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
