@@ -329,11 +329,13 @@ def find_member_homegroup(member_id):
 def get_attendance_dates(homegroup_id):
     homegroup_id = int(homegroup_id)
 
-    return g.db.execute('''
+    query = '''
         SELECT DISTINCT meeting.date, meeting.time, attendance.meeting_id
         from meeting JOIN attendance on meeting.id = attendance.meeting_id
         WHERE homegroup_id = %s
-        ''', (homegroup_id,)).fetchall()
+    '''
+    g.db.execute(query, (homegroup_id,))
+    return g.db.fetchall()
 
 
 # creates a new attendance report and initializes everyones attendance to false
@@ -502,7 +504,7 @@ def get_homegroup_attendance_counts(myhomegroup):
     WHERE attendance = '1' AND homegroup_id = %s
     GROUP BY date, time
     '''
-    g.db.execute(query, ( myhomegroup))
+    g.db.execute(query, myhomegroup)
     return g.db.fetchall()
 
 def get_all_members_emails():
