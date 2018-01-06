@@ -247,8 +247,8 @@
 
                 <ul class="dropdown-menu" role="menu">
                       <li style="padding-left: 20px;"><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Dashboard</a></li>
-                    <li style="padding-left: 20px;"><a href="{{ url_for('user_profile', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Profile Settings</a></li>
-                    <li style="padding-left: 20px;"><a href="{{ url_for('update_user', user_id = current_user.user_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Update Password</a></li>
+                    <li style="padding-left: 20px;"><a href="{{ url_for('user_profile', user_id = current_user.member_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Profile Settings</a></li>
+                    <li style="padding-left: 20px;"><a href="{{ url_for('update_user', user_id = current_user.member_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Update Password</a></li>
                   </ul>
                 </li>
             {% endif %}

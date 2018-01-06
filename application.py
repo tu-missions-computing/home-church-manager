@@ -40,11 +40,11 @@ def after(exception):
 def init_test_user():
     if db.find_user('john@example.com') is None:
         password = 'password'
-        pw_hash = bcrypt.hashpw(password, bcrypt.gensalt())
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         db.create_user(1, pw_hash, 2)
     if db.find_user('admin@example.com') is None:
         password = 'password'
-        pw_hash = bcrypt.hashpw(password, bcrypt.gensalt())
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         db.create_user(7, pw_hash, 3)
 
 
@@ -177,7 +177,7 @@ def create_user(member_id):
     if user_form.validate_on_submit():
         email_list.append(email)
         password = user_form.password.data
-        pw_hash = bcrypt.generate_password_hash(password)
+        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         db.create_user(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
@@ -216,7 +216,7 @@ def update_user(user_id):
         if bcrypt.check_password_hash(member['password'], old_password):
             if new_password == confirm_password:
                 password = new_password
-                pw_hash = bcrypt.generate_password_hash(password)
+                pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
                 print(member['role_id'])
                 db.update_user(email, pw_hash, member['role_id'])
                 flash('Password updated')
@@ -235,11 +235,12 @@ class User(object):
 
     def __init__(self, email):
         self.email = email
-        print(db.find_user(self.email))
-        if db.find_user(self.email) is not None:
-            self.role = db.find_user(self.email)['role']
+        user = db.find_user(self.email)
+        if user is not None:
+
+            self.role = user['role']
             self.name = db.find_member_info(self.email)['first_name']
-            self.user_id = db.find_user(self.email)['id']
+            self.user_id = user['id']
             self.member_id = db.find_member_info(self.email)['id']
         else:
             self.role = 'no role'
@@ -278,7 +279,7 @@ def authenticate(email, password):
     for user in valid_users:
         print(user)
         # print(user['email'])
-        if email == user['email'] and bcrypt.check_password_hash(user['password'], bin(password)):
+        if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
 
@@ -608,7 +609,10 @@ def edit_member(member_id):
                                    marital_status=row['marital_status'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
-    if request.method == "POST" and member_form.validate():
+
+
+    ## to do add validators back!!! and member_form.validate()
+    if request.method == "POST" :
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
         email = member_form.email.data
@@ -618,6 +622,7 @@ def edit_member(member_id):
         baptism_status = member_form.baptism_status.data
         marital_status = member_form.marital_status.data
         join_date = request.form['JoinDate']
+
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, join_date)
         if (rowcount == 1):
@@ -770,9 +775,9 @@ def create_member():
 @requires_roles('admin')
 def deactivate_member(member_id):
     rowcount = db.deactivate_member(member_id)
-    print(db.find_member(member_id)[9])
+    print(db.find_member(member_id)['is_active'])
     # if the member is not active
-    if db.find_member(member_id)[9] == 0:
+    if db.find_member(member_id)['is_active'] == '0':
         flash("Member Deactivated!")
     return redirect(url_for('all_members'))
 
@@ -783,9 +788,7 @@ def deactivate_member(member_id):
 @requires_roles('admin')
 def reactivate_member(member_id):
     rowcount = db.reactivate_member(member_id)
-    print(db.find_member(member_id)[9])
-    # if the member is not active
-    if db.find_member(member_id)[9] == 0:
+    if db.find_member(member_id)['is_active'] == '1':
         flash("Member Reactivated!")
     return redirect(url_for('all_members'))
 
