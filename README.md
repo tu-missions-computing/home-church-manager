@@ -30,4 +30,3 @@ Task | Details | Importance |
 | Notifications | Ability for the admin to send out either notifications or newsletters (something of the sort) to home group leaders | -- |
 | Spanish | Change the page to be in Spanish rather than using google translate ? | -- |
 
-
