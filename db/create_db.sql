@@ -1,10 +1,11 @@
-DROP TABLE IF EXISTS member_role;
+
 DROP TABLE IF EXISTS homegroup_leader;
 DROP TABLE IF EXISTS homegroup_member;
 DROP TABLE IF EXISTS attendance;
 
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS member_role;
 DROP TABLE IF EXISTS homegroup;
 DROP TABLE IF EXISTS meeting;
 
