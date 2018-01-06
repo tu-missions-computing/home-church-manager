@@ -1,10 +1,10 @@
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('john@example.com', 'John', 'Smith', '5555555555', 'M', '1980-03-12', '1', '1', '2016-08-01', '1' );
+--INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('john@example.com', 'John', 'Smith', '5555555555', 'M', '1980-03-12', '1', '1', '2016-08-01', '1' );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('nysha_chen@taylor.edu', 'Nysha', 'Chen', '1112223333', 'F', '1990-05-02', '0', '1', '2016-08-01', '1' );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('christine@example.com', 'Christine', 'Urban', '5551353245', 'F', '1993-06-03', '1', '1', '2016-05-04', '0' );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('ellen@example.com', 'Ellen', 'Sokolowski', '5551353245', 'F', '1994-09-16', '0', '0', '2016-08-01', '1' );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('krista.hapner@gmail.com', 'Krista', 'Hapner', '5551353245', 'F', '2000-01-01', '1', '0', '2016-08-01', '1' );
 INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('bob@example.com', 'Bob', 'Jones', '5551353245', 'M', '2005-10-12', '1', '0', '2016-08-01', '1' );
-INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('admin@example.com', 'Ryley', 'Hoekert', '5551353245', 'F', '1989-11-14', '1', '1', '2016-08-01', '1' );
+--INSERT INTO member(email, first_name, last_name,  phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active ) values ('admin@example.com', 'Ryley', 'Hoekert', '5551353245', 'F', '1989-11-14', '1', '1', '2016-08-01', '1' );
 
 
 INSERT INTO homegroup(name, location, description, latitude, longitude, is_active) values ('TWEET', '236 W. Reade Ave Upland, IN 46989', 'Taylor Women Engaged in Engineering and Technology',40.4756, -85.4944, '1');
@@ -26,16 +26,6 @@ INSERT INTO meeting(date, time) values ('03-09-2017', '12:00');
 INSERT INTO meeting(date, time) values ('03-23-2017', '16:00');
 
 
-INSERT INTO attendance VALUES (1,1,1,'1');
-INSERT INTO attendance VALUES (1,2,1,'1');
-INSERT INTO attendance VALUES (1,1,2,'1');
-INSERT INTO attendance VALUES (1,2,2,'1');
-INSERT INTO attendance VALUES (1,3,2,'1');
-INSERT INTO attendance VALUES (1,1,3,'1');
-INSERT INTO attendance VALUES (1,2,3,'0');
-INSERT INTO attendance VALUES (1,1,4,'1');
-INSERT INTO attendance VALUES (1,2,4,'1');
-INSERT INTO attendance VALUES (1,3,4,'1');
 
 
 
@@ -50,3 +40,4 @@ INSERT INTO role(role) values ('admin');
 -- INSERT INTO member_role(member_id, password, role_id) values (7, 'password', 3);
 
 INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(1, 1, '1');
+
