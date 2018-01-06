@@ -23,7 +23,14 @@ CREATE TABLE member (
 );
 
 
-drop table if exists member_role  CASCADE;
+
+
+create table role (
+  id SERIAL PRIMARY KEY ,
+  role TEXT
+);
+
+
 create table member_role(
   member_id INTEGER,
   password TEXT,
@@ -32,11 +39,7 @@ create table member_role(
   foreign key (member_id) REFERENCES member(id),
   foreign key (role_id) references role(id)
 );
-drop table if exists role CASCADE;
-create table role (
-  id SERIAL PRIMARY KEY ,
-  role TEXT
-);
+
 
 CREATE TABLE member_role (
   member_id INTEGER,
