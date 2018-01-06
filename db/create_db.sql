@@ -31,13 +31,13 @@ create table role (
 );
 
 create table member_role(
-  member_role_id SERIAL PRIMARY KEY,
   member_id INTEGER,
   password TEXT,
   role_id INTEGER,
   is_active BOOLEAN,
   foreign key (member_id) REFERENCES member(id),
-  foreign key (role_id) references role(id)
+  foreign key (role_id) references role(id),
+  primary key (member_id, role_id)
 );
 
 
