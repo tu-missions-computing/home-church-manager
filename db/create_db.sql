@@ -1,8 +1,8 @@
-
+DROP TABLE IF EXISTS member_role;
 DROP TABLE IF EXISTS homegroup_leader;
 DROP TABLE IF EXISTS homegroup_member;
 DROP TABLE IF EXISTS attendance;
-DROP TABLE IF EXISTS member_role;
+
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS homegroup;
@@ -30,7 +30,7 @@ create table role (
   role TEXT
 );
 
-
+drop table if exists member_role  CASCADE;
 create table member_role(
   member_id INTEGER,
   password TEXT,
