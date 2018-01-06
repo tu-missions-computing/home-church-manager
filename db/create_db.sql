@@ -22,8 +22,19 @@ CREATE TABLE member (
   is_active      BOOLEAN
 );
 
-CREATE TABLE role (
-  id   SERIAL PRIMARY KEY,
+
+drop table if exists member_role  CASCADE;
+create table member_role(
+  member_id INTEGER,
+  password TEXT,
+  role_id INTEGER,
+  is_active BOOLEAN,
+  foreign key (member_id) REFERENCES member(id),
+  foreign key (role_id) references role(id)
+);
+drop table if exists role CASCADE;
+create table role (
+  id SERIAL PRIMARY KEY ,
   role TEXT
 );
 
