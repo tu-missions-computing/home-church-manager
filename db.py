@@ -380,7 +380,7 @@ def add_date(date, time):
     INSERT INTO meeting (date, time) VALUES (%s, %s)
     '''
     g.db.execute(query, (date, time))
-    g.db.commit()
+    g.connection.commit()
     query = '''SELECT id from meeting order by id desc limit 1'''
     g.db.execute(query)
     return g.db.fetchone()
@@ -413,7 +413,7 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     '''
     g.db.execute(query,  (name,  location,
                                   description, latitude,  longitude, homegroup_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 # returns all homegroups
