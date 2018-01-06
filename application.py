@@ -40,11 +40,11 @@ def after(exception):
 def init_test_user():
     if db.find_user('john@example.com') is None:
         password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password)
+        pw_hash = bcrypt.hashpw(password, bcrypt.gensalt())
         db.create_user(1, pw_hash, 2)
     if db.find_user('admin@example.com') is None:
         password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password)
+        pw_hash = bcrypt.hashpw(password, bcrypt.gensalt())
         db.create_user(7, pw_hash, 3)
 
 
@@ -278,10 +278,7 @@ def authenticate(email, password):
     for user in valid_users:
         print(user)
         # print(user['email'])
-        print (user['email'])
-        print (user['password'])
-        print (password)
-        if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
+        if email == user['email'] and bcrypt.check_password_hash(user['password'], bin(password)):
             return email
     return None
 
