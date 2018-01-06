@@ -10,7 +10,7 @@ def connect_db():
     connection = psycopg2.connect("host=faraday.cse.taylor.edu port=5432 dbname=verbo user=verbo password=cuenca")
     dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     # cursor = connection.cursor()
-
+    g.connection = connection
     # print('connection = %s' % connection)
     # print('cursor = %s' % cursor)
 
@@ -42,9 +42,9 @@ def create_user(member_id, password, role_id):
     VALUES(%s, %s, %s, %s);
     '''
     g.db.execute(query, (member_id, password, role_id, '1'))
-    rowcount = g.db.rowcount
-    # g.db.commit()
-    return rowcount
+    #rowcount = g.db.rowcount
+    g.connection.commit()
+    return g.db
 
 # edits a member password
 def update_user(email, password, role_id):

@@ -31,6 +31,7 @@ create table role (
 );
 
 create table member_role(
+  member_role_id SERIAL PRIMARY KEY,
   member_id INTEGER,
   password TEXT,
   role_id INTEGER,
