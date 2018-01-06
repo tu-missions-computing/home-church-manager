@@ -396,7 +396,7 @@ def find_homegroup(homegroup_id):
 def create_homegroup(name, location, description, latitude, longitude):
     query = '''
         INSERT INTO homegroup(name, location, description, latitude, longitude, is_active)
-        VALUES(%s, %s, %s, %s, %s, %s, '1')
+        VALUES(%s, %s, %s, %s, %s, '1')
         '''
     g.db.execute(query, ( name, location, description, latitude, longitude))
     g.connection.commit()
