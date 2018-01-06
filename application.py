@@ -209,6 +209,7 @@ def update_user(user_id):
     member = db.find_user_info(user_id)
     email = member['email']
     user_form = UpdateUserForm(email=member['email'])
+    print (member)
     if user_form.validate_on_submit():
         old_password = user_form.old_password.data
         new_password = user_form.new_password.data
@@ -218,7 +219,7 @@ def update_user(user_id):
                 password = new_password
                 pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
                 print(member['role_id'])
-                db.update_user(email, pw_hash, member['role_id'])
+                db.update_user(user_id, pw_hash, member['role_id'])
                 flash('Password updated')
                 return redirect(url_for('index'))
             else:
@@ -704,9 +705,9 @@ def get_homegroups():
 @requires_roles('admin')
 def deactivate_homegroup(homegroup_id):
     rowcount = db.deactivate_homegroup(homegroup_id)
-    print(db.find_homegroup(homegroup_id)[6])
+
     # if the member is not active
-    if db.find_homegroup(homegroup_id)[6] == 0:
+    if not db.find_homegroup(homegroup_id)['is_active']:
         flash("Homegroup Deactivated!")
     return redirect(url_for('get_homegroups'))
 
@@ -717,9 +718,8 @@ def deactivate_homegroup(homegroup_id):
 @requires_roles('admin')
 def reactivate_homegroup(homegroup_id):
     rowcount = db.reactivate_homegroup(homegroup_id)
-    print(db.find_homegroup(homegroup_id)[6])
     # if the member is not active
-    if db.find_homegroup(homegroup_id)[6] == 0:
+    if db.find_homegroup(homegroup_id)['is_active']:
         flash("Homegroup Reactivated!")
     return redirect(url_for('get_homegroups'))
 
@@ -748,8 +748,8 @@ def all_members():
 @requires_roles('admin')
 def create_member():
     member = CreateMemberForm()
-
-    if request.method == "POST" and member.validate():
+    #TODO add validators back!! and member.validate()
+    if request.method == "POST" :
         first_name = member.first_name.data
         last_name = member.last_name.data
         email = member.email.data
@@ -759,9 +759,10 @@ def create_member():
         baptism_status = member.baptism_status.data
         marital_status = member.marital_status.data
         join_date = request.form['JoinDate']
+
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
                                     marital_status, join_date)
-
+        print(rowcount)
         if rowcount == 1:
             flash("Member {} Created!".format(member.first_name.data))
             return redirect(url_for('all_members'))

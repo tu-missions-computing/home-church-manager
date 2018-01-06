@@ -47,15 +47,13 @@ def create_user(member_id, password, role_id):
     return g.db
 
 # edits a member password
-def update_user(email, password, role_id):
-    role_id = int(role_id)
+def update_user(member_id, password, role_id):
     query = '''
-    UPDATE member_role SET  password = :%s, role_id = %s
-    join member on member.id = member_role.member_id
-    WHERE email = %s
+    UPDATE member_role SET  password = %s, role_id = %s
+    WHERE member_id = %s
     '''
-    g.db.execute(query,(password, role_id, email))
-    g.db.commit()
+    g.db.execute(query,(password, role_id, member_id))
+    g.connection.commit()
     return g.db.rowcount
 
 # finds all roles
@@ -72,7 +70,7 @@ def find_user(email):
     return g.db.fetchone()
 
 def find_user_info(id):
-    g.db.execute('SELECT * from member WHERE member.id =%s', (id,))
+    g.db.execute('SELECT * from member join member_role on member_role.member_id = member.id WHERE member.id =%s', (id,))
     return g.db.fetchone()
 
 # finds the most recent member entered into the db
@@ -196,7 +194,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
     '''
     g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, member_id))
     g.connection.commit()
-    return g.db.rowcount
+    return g.connection.rowcount
 
 
 # creates a new member
@@ -209,7 +207,9 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
                                    baptism_status,  marital_status,  join_date))
     g.connection.commit()
 
-    return g.db
+
+    return g.db.rowcount
+
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(user_id, homegroup_id):
@@ -386,7 +386,8 @@ def recent_homegroup():
 
 # finds a homegroup based on homegroup_id
 def find_homegroup(homegroup_id):
-    return g.db.execute('SELECT * from homegroup WHERE id =%s', (homegroup_id,)).fetchone()
+    g.db.execute('SELECT * from homegroup WHERE id =%s', (homegroup_id,))
+    return g.db.fetchone()
 
 # creates a new homegroup
 def create_homegroup(name, location, description, latitude, longitude):
@@ -395,7 +396,7 @@ def create_homegroup(name, location, description, latitude, longitude):
         VALUES(%s, %s, %s, %s, %s, %s, '1')
         '''
     g.db.execute(query, ( name, location, description, latitude, longitude))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 # edits homegroup info
@@ -429,23 +430,21 @@ def get_all_homegroup_info():
 
 # deactivates a homegroup
 def deactivate_homegroup(homegroup_id):
-    homegroup_id = int(homegroup_id)
     query='''
     UPDATE homegroup SET is_active = '0'
     WHERE id = %s
     '''
     g.db.execute(query, ( homegroup_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 def reactivate_homegroup(homegroup_id):
-    homegroup_id = int(homegroup_id)
     query='''
     UPDATE homegroup SET is_active = '1'
     WHERE id = %s
     '''
     g.db.execute(query, ( homegroup_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 def get_all_inactive_homegroups():
