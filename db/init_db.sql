@@ -15,9 +15,8 @@ INSERT INTO homegroup(name, location, description, latitude, longitude, is_activ
 
 INSERT INTO homegroup_member values (1,4,'1');
 INSERT INTO homegroup_member values (1,2,'1');
-INSERT INTO homegroup_member values (1,5,'1');
 INSERT INTO homegroup_member values (2,2,'1');
-INSERT INTO homegroup_member values (2,6,'1');
+
 
 
 INSERT INTO meeting(date, time) values ('03-07-2017', '12:00');
