@@ -50,10 +50,11 @@ def create_user(member_id, password, role_id):
 def update_user(email, password, role_id):
     role_id = int(role_id)
     query = '''
-    UPDATE member SET email = %s, password = :%s, role_id = %s
+    UPDATE member_role SET  password = :%s, role_id = %s
+    join member on member.id = member_role.member_id
     WHERE email = %s
     '''
-    g.db.execute(query,(email, password, role_id, email))
+    g.db.execute(query,(password, role_id, email))
     g.db.commit()
     return g.db.rowcount
 
@@ -67,11 +68,12 @@ def find_roles():
 
 # finds member based on an email
 def find_user(email):
-    g.db.execute('SELECT * from member join member_role on member.id = member_role.member_id WHERE member.email = %s', (email,))
+    g.db.execute('SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s', (email,))
     return g.db.fetchone()
 
 def find_user_info(id):
-    return g.db.execute('SELECT * from member WHERE member.id =%s', (id,)).fetchone()
+    g.db.execute('SELECT * from member WHERE member.id =%s', (id,))
+    return g.db.fetchone()
 
 # finds the most recent member entered into the db
 def recent_user():
@@ -114,11 +116,13 @@ def get_member_count():
 
 # finds member info by passing in an email
 def find_member_info(email):
-    return g.db.execute('SELECT * from member WHERE email =%s', (email,)).fetchone()
+    g.db.execute('SELECT * from member WHERE email =%s', (email,))
+    return g.db.fetchone()
 
 # finds member info by passing in a member id
 def find_member(member_id):
-    return g.db.execute('SELECT * FROM member WHERE id = %s', (member_id,)).fetchone()
+    g.db.execute('SELECT * FROM member WHERE id = %s', (member_id,))
+    return g.db.fetchone()
 
 # finds all members in the db
 def get_all_members():
@@ -185,13 +189,13 @@ def get_all_inactive_members():
 # edits member info
 def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
     member_id = int(member_id)
-    print(member_id)
+
     query = '''
     UPDATE member SET first_name = %s, last_name = %s, email = %s, phone_number = %s, gender = %s, birthday = %s, baptism_status = %s, marital_status = %s, join_date = %s
     WHERE id = %s
     '''
     g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, member_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 
