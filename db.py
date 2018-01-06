@@ -148,10 +148,10 @@ def add_age_to_member_rows(rows):
 def get_all_members_not_in_homegroup(homegroup_id):
     homegroup_id = int (homegroup_id)
     query ='''
-    select * from member where member.is_active = 1 and member.id not in (
+    select * from member where member.is_active = '1' and member.id not in (
     select member_id from homegroup_member
     where homegroup_id = :%s and
-    homegroup_member.is_active = 1
+    homegroup_member.is_active = '1'
     )
     '''
     g.db.execute(query, ( homegroup_id))
@@ -209,12 +209,7 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
                                    baptism_status,  marital_status,  join_date))
     g.connection.commit()
 
-    # dict_cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # dict_cur.execute("INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active) VALUES(%s, %s, %s, %d, %s, %d, %s, %s, %s, %s)", (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, 1))
-    #
-    # dict_cur.commit()
     return g.db
-    # return dict_cur.rowcount
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(user_id, homegroup_id):
@@ -249,7 +244,7 @@ def remove_member(homegroup_id, member_id):
     member_id = int(member_id)
     homegroup_id = int(homegroup_id)
     query = '''
-    UPDATE homegroup_member SET is_active = 0
+    UPDATE homegroup_member SET is_active = '0'
     WHERE homegroup_id = %s AND member_id = %s
     '''
     g.db.execute(query, (homegroup_id,  member_id))
@@ -281,13 +276,13 @@ def get_homegroup_members(homegroup_id):
     return g.db.execute('''SELECT * FROM member
     JOIN homegroup_member ON member.id = homegroup_member.member_id
     JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-    WHERE homegroup_member.is_active = 1 and  homegroup.id = %s''', (homegroup_id,)).fetchall()
+    WHERE homegroup_member.is_active = '1' and  homegroup.id = %s''', (homegroup_id,)).fetchall()
 
 def get_homegroup_emails(homegroup_id):
     return g.db.execute('''SELECT email FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-        WHERE homegroup_member.is_active = 1 and  homegroup.id = %s''', (homegroup_id,)).fetchall()
+        WHERE homegroup_member.is_active = '1' and  homegroup.id = %s''', (homegroup_id,)).fetchall()
 
 # finds if a member has missed (number_of_misses) consecutive meetings
 def system_attendance_alert(homegroup_id, member_id, number_of_misses):
@@ -418,7 +413,7 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
 def get_all_homegroups():
     query = '''
         SELECT * FROM homegroup
-        WHERE is_active=1
+        WHERE is_active='1'
         '''
     g.db.execute(query)
     return g.db.fetchall()
@@ -436,7 +431,7 @@ def get_all_homegroup_info():
 def deactivate_homegroup(homegroup_id):
     homegroup_id = int(homegroup_id)
     query='''
-    UPDATE homegroup SET is_active = 0
+    UPDATE homegroup SET is_active = '0'
     WHERE id = %s
     '''
     g.db.execute(query, ( homegroup_id))
@@ -446,7 +441,7 @@ def deactivate_homegroup(homegroup_id):
 def reactivate_homegroup(homegroup_id):
     homegroup_id = int(homegroup_id)
     query='''
-    UPDATE homegroup SET is_active = 1
+    UPDATE homegroup SET is_active = '1'
     WHERE id = %s
     '''
     g.db.execute(query, ( homegroup_id))
@@ -456,7 +451,7 @@ def reactivate_homegroup(homegroup_id):
 def get_all_inactive_homegroups():
     query = '''
     SELECT * FROM homegroup
-    WHERE is_active=0
+    WHERE is_active='0'
     '''
     g.db.execute(query)
     return g.db.fetchall()
