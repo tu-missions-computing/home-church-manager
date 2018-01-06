@@ -30,7 +30,6 @@ create table role (
   role TEXT
 );
 
-drop table if exists member_role  CASCADE;
 create table member_role(
   member_id INTEGER,
   password TEXT,
