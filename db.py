@@ -90,12 +90,9 @@ def get_all_users():
 
 # finds a members associated homegroup (specifically for homegroup leaders)
 def find_user_homegroup(email):
-    query = '''SELECT * from homegroup_leader JOIN member on homegroup_leader.member_id = member.id
-    WHERE email = %s
-    '''
-    g.db.execute(query, (email))
-    homegroup_id = g.db.fetchone()['homegroup_id']
-    return homegroup_id
+
+    g.db.execute('SELECT * from homegroup_leader JOIN member on homegroup_leader.member_id = member.id WHERE email = %s',(email,))
+    return g.db.fetchone()['homegroup_id']
 
 # finds the most recent member entered into the db
 def recent_user():
@@ -498,7 +495,7 @@ def get_homegroup_attendance_counts(myhomegroup):
     SELECT date, time, meeting_id, COUNT(member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
-    WHERE attendance = '1' AND homegroup_id = '%s'
+    WHERE attendance = '1' AND homegroup_id = %s
     GROUP BY date, time
     '''
     g.db.execute(query, ( myhomegroup))
