@@ -40,14 +40,6 @@ create table member_role(
 );
 
 
-CREATE TABLE member_role (
-  member_id INTEGER,
-  password  TEXT,
-  role_id   INTEGER,
-  FOREIGN KEY (member_id) REFERENCES member (id),
-  FOREIGN KEY (role_id) REFERENCES role (id)
-);
-
 CREATE TABLE homegroup (
   id          SERIAL PRIMARY KEY,
   name        TEXT,
