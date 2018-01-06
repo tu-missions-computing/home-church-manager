@@ -20,6 +20,7 @@ create table member_role(
   member_id INTEGER,
   password TEXT,
   role_id INTEGER,
+  is_active BOOLEAN,
   foreign key (member_id) REFERENCES member(id),
   foreign key (role_id) references role(id)
 );
