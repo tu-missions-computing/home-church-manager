@@ -40,3 +40,4 @@ INSERT INTO role(role) values ('admin');
 
 INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(1, 1, '1');
 
+INSERT INTO attendance(homegroup_id, member_id, meeting_id, attendance) values(1, 1, 1, '1');

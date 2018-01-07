@@ -191,7 +191,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
     '''
     g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, member_id))
     g.connection.commit()
-    return g.connection.rowcount
+    return g.db.rowcount
 
 
 # creates a new member
@@ -326,11 +326,13 @@ def find_member_homegroup(member_id):
 def get_attendance_dates(homegroup_id):
     homegroup_id = int(homegroup_id)
 
-    return g.db.execute('''
+    query = '''
         SELECT DISTINCT meeting.date, meeting.time, attendance.meeting_id
         from meeting JOIN attendance on meeting.id = attendance.meeting_id
         WHERE homegroup_id = %s
-        ''', (homegroup_id,)).fetchall()
+    '''
+    g.db.execute(query, (homegroup_id,))
+    return g.db.fetchall()
 
 
 # creates a new attendance report and initializes everyones attendance to false
@@ -341,8 +343,8 @@ def generate_attendance_report(homegroup_id, meeting_id):
         query = '''INSERT INTO attendance (homegroup_id, member_id, meeting_id, attendance)
         VALUES (%s, %s, %s, %s)
         '''
-        g.db.execute(query, ( homegroup_id,  member['id'],  meeting_id,'0'))
-    g.db.commit()
+        g.db.execute(query, ( homegroup_id, member['id'], meeting_id, '0'))
+    g.connection.commit()
     return g.db.rowcount
 
 # returns the attendance of a particular homegroup on a particular day/time
@@ -375,7 +377,7 @@ def add_date(date, time):
     INSERT INTO meeting (date, time) VALUES (%s, %s)
     '''
     g.db.execute(query, (date, time))
-    g.db.commit()
+    g.connection.commit()
     query = '''SELECT id from meeting order by id desc limit 1'''
     g.db.execute(query)
     return g.db.fetchone()
@@ -408,7 +410,7 @@ def edit_homegroup(homegroup_id, name, location, description, latitude, longitud
     '''
     g.db.execute(query,  (name,  location,
                                   description, latitude,  longitude, homegroup_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 # returns all homegroups
@@ -499,7 +501,7 @@ def get_homegroup_attendance_counts(myhomegroup):
     WHERE attendance = '1' AND homegroup_id = %s
     GROUP BY date, time
     '''
-    g.db.execute(query, ( myhomegroup))
+    g.db.execute(query, myhomegroup)
     return g.db.fetchall()
 
 def get_all_members_emails():
