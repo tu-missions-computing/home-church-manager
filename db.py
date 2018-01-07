@@ -191,7 +191,7 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
     '''
     g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, member_id))
     g.connection.commit()
-    return g.connection.rowcount
+    return g.db.rowcount
 
 
 # creates a new member
@@ -346,8 +346,8 @@ def generate_attendance_report(homegroup_id, meeting_id):
         query = '''INSERT INTO attendance (homegroup_id, member_id, meeting_id, attendance)
         VALUES (%s, %s, %s, %s)
         '''
-        g.db.execute(query, ( homegroup_id,  member['id'],  meeting_id,'0'))
-    g.db.commit()
+        g.db.execute(query, ( homegroup_id, member['id'], meeting_id, '0'))
+    g.connection.commit()
     return g.db.rowcount
 
 # returns the attendance of a particular homegroup on a particular day/time
