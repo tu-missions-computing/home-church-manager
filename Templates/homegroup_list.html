@@ -1,3 +1,89 @@
+
+<style>
+    .homegroup-heading{
+        font-family: 'Lato', sans-serif;
+        font-weight:bold;
+        font-size:150%;
+        text-align: left;
+        border-top: 2px solid;
+        background-color: #2B75A0;
+        margin: 0;
+        color: white;
+        padding: 5%;
+    }
+    .glifarrows{
+        text-align: right;
+
+    }
+    .homegroup-heading:hover{
+        background-color: #235F82;
+        cursor: pointer;
+
+    }
+
+    .homegroupcontent{
+        display: inline;
+    }
+
+
+.btn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #0099cc;
+    color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #33a6cc;
+}
+
+.btn-primary:active, .btn-primary.active {
+    background: #007299;
+    box-shadow: none;
+}
+.btn-primary.gradient {
+	background: -moz-linear-gradient(top,  #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* IE10+ */
+	background: linear-gradient(to bottom,  #33a6cc 50%,#0099cc 50%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
+}
+.btn-primary.gradient:hover, .btn-primary.gradient:focus, .btn-primary.gradient:active, .btn-primary.gradient.active, .open > .dropdown-toggle.btn-primary {
+	background: -moz-linear-gradient(top,  #66b2cc 50%, #33a6cc 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#66b2cc), color-stop(50%,#33a6cc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* IE10+ */
+	background: linear-gradient(to bottom,  #66b2cc 50%,#33a6cc 50%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66b2cc', endColorstr='#33a6cc',GradientType=0 ); /* IE6-9 */
+}
+
+.btn-primary.gradient:active, .btn-primary.gradient.active {
+	background: -moz-linear-gradient(top,  #267c99 50%, #007299 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#267c99), color-stop(50%,#007299)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #267c99 50%,#007299 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #267c99 50%,#007299 50%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #267c99 50%,#007299 50%); /* IE10+ */
+	background: linear-gradient(to bottom,  #267c99 50%,#007299 50%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c99', endColorstr='#007299',GradientType=0 ); /* IE6-9 */
+}
+.custombuttonwidth {
+    width: 120px !important;
+}
+</style>
+
 {%  extends "base.html" %}
 
 {% block title %} All Home Groups {% endblock %}
@@ -82,5 +168,50 @@
 
 
 </div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<span class="counter pull-right"></span>
+    {% for homegroup in homegroup_list %}
+        {% if homegroup.is_active == 1 %}
+        <p class="homegroup-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ homegroup.id }}"> {{ homegroup.name }} <span class="glifarrows glyphicon glyphicon-menu-down" style="float:right; font-size:75%; padding:7px;"></span> </p>
+           <div id="collapse{{ homegroup.id }}" class="panel-collapse collapse">
+           <div class="row">
+              <div style="padding-left:5%" class="col-md-4 col-xs-4"><div  class="homegroupcontent panel-body">{{ homegroup.location }}</div>
+</div>
+              <div style="padding-top:1.5%"class="col-md-6 col-xs-6">
+                  <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}"  class="custombuttonwidth homegroupcontent btn btn-outline-info btn-sm">
+                  <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+                <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-warning btn-sm">
+                  <span class="glyphicon glyphicon-user"></span> Members
+                </a>
+                    <a href="{{url_for('view_attendance', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-primary btn-sm">
+                  <span class="glyphicon glyphicon-time"></span> Attendance
+                </a>
+                    <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
+                  <span class="glyphicon glyphicon-trash"></span> Remove
+                </a>
+              </div>
+              <div style="padding-top:1.5%" class="col-md-2 col-xs-2">
+                  <p>Active?</p>
+                <p class="content"><span style="color:green" class="homegroupcontent glyphicon glyphicon-ok"></span></p>
+              </div>
+            </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+        {%  for inactiveHomegroup in inactiveHomegroups %}
+            <p class="homegroup-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ inactiveHomegroup.id }}"> {{ inactiveHomegroup.name }} <span class="glifarrows glyphicon glyphicon-menu-down" style="float:right; font-size:75%"></span> </p>
+           <div id="collapse{{ inactiveHomegroup.id }}" class="panel-collapse collapse">
+               <div class="homegroupcontent panel-body">{{ inactiveHomegroup.location }}</div>
+               <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">
+              <span class="glyphicon glyphicon-plus"></span> Reactivate
+            </a>
+               <p >Active?</p>
+               <p class="content"><span style="color:red" class="homegroupcontent glyphicon glyphicon-remove"></span></p>
+            </div>
+        {% endfor %}
+
+{#    <p class="homegroup-heading"></p>#}
+
 {% endblock %}
 
