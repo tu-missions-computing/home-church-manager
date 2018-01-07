@@ -204,12 +204,9 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
                                    baptism_status,  marital_status,  join_date))
     g.connection.commit()
 
-    # dict_cur = g.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # dict_cur.execute("INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active) VALUES(%s, %s, %s, %d, %s, %d, %s, %s, %s, %s)", (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, 1))
-    #
-    # dict_cur.commit()
+
     return g.db.rowcount
-    # return dict_cur.rowcount
+
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(user_id, homegroup_id):
