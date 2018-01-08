@@ -1,9 +1,8 @@
-
 <style>
-    .homegroup-heading{
+    .homegroup-heading {
         font-family: 'Lato', sans-serif;
-        font-weight:bold;
-        font-size:150%;
+        font-weight: bold;
+        font-size: 150%;
         text-align: left;
         border-top: 2px solid;
         background-color: #2B75A0;
@@ -11,260 +10,269 @@
         color: white;
         padding: 5%;
     }
-    .glifarrows{
+
+    .glifarrows {
         text-align: right;
 
     }
-    .homegroup-heading:hover{
+
+    .homegroup-heading:hover {
         background-color: #235F82;
         cursor: pointer;
 
-
     }
 
-    .homegroupcontent{
+    .homegroupcontent {
         display: inline;
     }
 
+    .btn {
+        padding: 14px 24px;
+        border: 0 none;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
 
-.btn {
-    padding: 14px 24px;
-    border: 0 none;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+    .btn:focus, .btn:active:focus, .btn.active:focus {
+        outline: 0 none;
+    }
 
-.btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: 0 none;
-}
+    .btn-primary {
+        background: #0099cc;
+        color: #ffffff;
+    }
 
-.btn-primary {
-    background: #0099cc;
-    color: #ffffff;
-}
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+        background: #33a6cc;
+    }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-    background: #33a6cc;
-}
+    .btn-primary:active, .btn-primary.active {
+        background: #007299;
+        box-shadow: none;
+    }
 
-.btn-primary:active, .btn-primary.active {
-    background: #007299;
-    box-shadow: none;
-}
-.btn-primary.gradient {
-	background: -moz-linear-gradient(top,  #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* IE10+ */
-	background: linear-gradient(to bottom,  #33a6cc 50%,#0099cc 50%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
-}
-.btn-primary.gradient:hover, .btn-primary.gradient:focus, .btn-primary.gradient:active, .btn-primary.gradient.active, .open > .dropdown-toggle.btn-primary {
-	background: -moz-linear-gradient(top,  #66b2cc 50%, #33a6cc 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#66b2cc), color-stop(50%,#33a6cc)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* IE10+ */
-	background: linear-gradient(to bottom,  #66b2cc 50%,#33a6cc 50%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66b2cc', endColorstr='#33a6cc',GradientType=0 ); /* IE6-9 */
-}
+    .btn-primary.gradient {
+        background: -moz-linear-gradient(top, #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #33a6cc), color-stop(50%, #0099cc)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #33a6cc 50%, #0099cc 50%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #33a6cc 50%, #0099cc 50%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #33a6cc 50%, #0099cc 50%); /* IE10+ */
+        background: linear-gradient(to bottom, #33a6cc 50%, #0099cc 50%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33a6cc', endColorstr='#0099cc', GradientType=0); /* IE6-9 */
+    }
 
-.btn-primary.gradient:active, .btn-primary.gradient.active {
-	background: -moz-linear-gradient(top,  #267c99 50%, #007299 50%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#267c99), color-stop(50%,#007299)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #267c99 50%,#007299 50%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #267c99 50%,#007299 50%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #267c99 50%,#007299 50%); /* IE10+ */
-	background: linear-gradient(to bottom,  #267c99 50%,#007299 50%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c99', endColorstr='#007299',GradientType=0 ); /* IE6-9 */
-}
-.custombuttonwidth {
-    width: 120px !important;
-}
-{#.rotating{#}
-{#    transform: rotate(0deg);#}
-{#}#}
-{#.testing{#}
-{#    transition: all 1s ease;#}
-{#}#}
+    .btn-primary.gradient:hover, .btn-primary.gradient:focus, .btn-primary.gradient:active, .btn-primary.gradient.active, .open > .dropdown-toggle.btn-primary {
+        background: -moz-linear-gradient(top, #66b2cc 50%, #33a6cc 50%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #66b2cc), color-stop(50%, #33a6cc)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #66b2cc 50%, #33a6cc 50%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #66b2cc 50%, #33a6cc 50%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #66b2cc 50%, #33a6cc 50%); /* IE10+ */
+        background: linear-gradient(to bottom, #66b2cc 50%, #33a6cc 50%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66b2cc', endColorstr='#33a6cc', GradientType=0); /* IE6-9 */
+    }
 
-    .homegroup-heading:hover > .glyphicon-menu-down{
-        animation:rotate180 .7s;
-        animation-fill-mode: forwards;}
+    .btn-primary.gradient:active, .btn-primary.gradient.active {
+        background: -moz-linear-gradient(top, #267c99 50%, #007299 50%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #267c99), color-stop(50%, #007299)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #267c99 50%, #007299 50%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #267c99 50%, #007299 50%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #267c99 50%, #007299 50%); /* IE10+ */
+        background: linear-gradient(to bottom, #267c99 50%, #007299 50%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#267c99', endColorstr='#007299', GradientType=0); /* IE6-9 */
+    }
+
+    .custombuttonwidth {
+        width: 120px !important;
+    }
+
+    .homegroup-heading:hover > .glyphicon-menu-down {
+        animation: rotate180 .7s;
+        animation-fill-mode: forwards;
+    }
+
     @keyframes rotate180 {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform:rotateX(180deg);
-}}
-    .homegroup-heading.active .glyphicon-menu-down{
-	opacity:1;
-	filter: alpha(opacity = 100);
-	transition:opacity 0.5s;
-	-moz-transition:opacity 0.5s;
-	-webkit-transition:opacity 0.5s;
-}
-{#    .homegroup-heading:hover > .homegroupname{#}
-{#        animation: excited .7s;#}
-{#    }#}
-{#    @keyframes excited {#}
-{#    0% {#}
-{#		transform: translateY(0%);#}
-{#	}#}
-{#	50% {#}
-{#		transform: translateY(8%);#}
-{#        transform: rotateX(70deg);#}
-{#	}#}
-{#	100% {#}
-{#		transform: translateY(0%);#}
-{#	}#}
-{#    }#}
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotateX(180deg);
+        }
+    }
+
+    .homegroup-heading.active .glyphicon-menu-down {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        transition: opacity 0.5s;
+        -moz-transition: opacity 0.5s;
+        -webkit-transition: opacity 0.5s;
+    }
+
 </style>
 
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %} All Home Groups {% endblock %}
 {% block content %}
 
-<div class="container-fluid">
-<h1 class="head-style animated stretchLeft">All Home Groups</h1>
-    <div class="row">
-        <div class="col form-group pull-right">
-            <div class="inner-addon right-addon">
-                <i class="glyphicon glyphicon-search"></i>
-                <input type="text" class="search form-control" placeholder="Search">
-            </div>
-        </div>
-        <div class="col form-group pull-right">
+    <div class="container">
+        <h1 class="head-style animated stretchLeft">All Home Groups</h1>
+        <div class="row">
 
-            <div class="section section--sade">
-                Show Inactive Home Groups
-                   <div class="toggle-button toggle-button--sade">
-                       <input id="checkbox1" type="checkbox" checked=''>
-                       <label for="checkbox1"></label>
-                       <div class="toggle-button__icon"></div>
-                   </div>
+{#            <div class="col form-group pull-right">#}
+{##}
+{#                <div class="section section--sade">#}
+{#                    Show Inactive Home Groups#}
+{#                    <div class="toggle-button toggle-button--sade">#}
+{#                        <input id="checkbox1" type="checkbox" checked=''>#}
+{#                        <label for="checkbox1"></label>#}
+{#                        <div class="toggle-button__icon"></div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="col form-group float-left">
+                <a href="{{ url_for('create_homegroup') }}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add Home Group
+                </a>
             </div>
-        </div>
-        <div class="col form-group pull-left">
-            <a href="{{url_for('create_homegroup')}}" class="btn btn-success">
-                <span class="glyphicon glyphicon-plus"></span>
-                Add Home Group
-             </a>
+            <div class="col form-group float-right">
+                <div class="inner-addon right-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" class="search form-control" placeholder="Search">
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<span class="counter pull-right"></span>
-{#<table class="table table-striped table-bordered table-hover results">#}
-{#    <thead>#}
-{#    <tr>#}
-{#        <th> Name</th>#}
-{#        <th> Location</th>#}
-{#        <th> </th>#}
-{#        <th class="content">Active?</th>#}
-{#    </tr>#}
-{#    </thead>#}
-{#    <tbody>#}
-{#    {% for homegroup in homegroup_list %}#}
-{#        {% if homegroup.is_active == 1 %}#}
-{#    <tr>#}
-{#        <td> {{ homegroup.name }}</td>#}
-{#        <td> {{ homegroup.location }}</td>#}
-{#        <td>#}
-{#        <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-info btn-sm">#}
-{#          <span class="glyphicon glyphicon-pencil"></span> Edit#}
-{#        </a>#}
-{#        <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="btn btn-warning btn-sm">#}
-{#          <span class="glyphicon glyphicon-user"></span> Members#}
-{#        </a>#}
-{#            <a href="{{url_for('view_attendance', homegroup_id = homegroup.id)}}" class="btn btn-primary btn-sm">#}
-{#          <span class="glyphicon glyphicon-time"></span> Attendance#}
-{#        </a>#}
-{#            <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-danger btn-sm">#}
-{#          <span class="glyphicon glyphicon-trash"></span> Remove#}
-{#        </a>#}
-{#        </td>#}
-{#    <td class="content"><span style="color:green" class="glyphicon glyphicon-ok"></span></td>#}
-{#    </tr>#}
-{#        {% endif %}#}
-{#    {% endfor %}#}
-{#        {%  for inactiveHomegroup in inactiveHomegroups %}#}
-{#            <tr>#}
-{#            <td class="content"> {{ inactiveHomegroup.name }}</td>#}
-{#            <td class="content"> {{ inactiveHomegroup.location }}</td>#}
-{#            <td class="content">#}
-{#            <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">#}
-{#              <span class="glyphicon glyphicon-plus"></span> Reactivate#}
-{#            </a>#}
-{#            </td>#}
-{#            <td class="content"> <span  style="color:red" class="glyphicon glyphicon-remove"></span></td>#}
-{#        {% endfor %}#}
-{#    </tbody>#}
-{#</table>#}
+    <span class="counter pull-right"></span>
+    <table class="table table-striped table-bordered table-hover results">
+        <thead>
+        <tr>
+            <th> Name</th>
+            <th> Location</th>
+            <th> </th>
+            <th class="content">Active?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for homegroup in homegroup_list %}
+            {% if homegroup.is_active == 1 %}
+        <tr>
+            <td> {{ homegroup.name }}</td>
+            <td> {{ homegroup.location }}</td>
+            <td>
+            <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-info btn-sm">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </a>
+            <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="btn btn-warning btn-sm">
+              <span class="glyphicon glyphicon-user"></span> Members
+            </a>
+                <a href="{{url_for('view_attendance', homegroup_id = homegroup.id)}}" class="btn btn-primary btn-sm">
+              <span class="glyphicon glyphicon-time"></span> Attendance
+            </a>
+                <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="btn btn-danger btn-sm">
+              <span class="glyphicon glyphicon-trash"></span> Remove
+            </a>
+            </td>
+        <td class="content"><span style="color:green" class="glyphicon glyphicon-ok"></span></td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+            {%  for inactiveHomegroup in inactiveHomegroups %}
+                <tr>
+                <td class="content"> {{ inactiveHomegroup.name }}</td>
+                <td class="content"> {{ inactiveHomegroup.location }}</td>
+                <td class="content">
+                <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">
+                  <span class="glyphicon glyphicon-plus"></span> Reactivate
+                </a>
+                </td>
+                <td class="content"> <span  style="color:red" class="glyphicon glyphicon-remove"></span></td>
+            {% endfor %}
+        </tbody>
+    </table>
 
+    </div>
 
-</div>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<span class="counter pull-right"></span>
+    <div class="container">
+
+
+    <span class="counter pull-right"></span>
     {% for homegroup in homegroup_list %}
         {% if homegroup.is_active == 1 %}
-            <p class="homegroup-heading homegroup{{ homegroup.id }} " data-toggle="collapse" data-parent="#accordion" href="#collapse{{ homegroup.id }}"> <span class="homegroupname">{{ homegroup.name }}</span> <span class="glifarrows testing glyphicon glyphicon-menu-down" style="float:right; font-size:75%; padding:7px;"></span> </p>
-           <div id="collapse{{ homegroup.id }}" class="panel-collapse collapse">
-           <div class="row">
-              <div style="padding-left:5%" class="col-md-4 col-xs-4"><div  class="homegroupcontent panel-body">{{ homegroup.location }}</div>
-</div>
-              <div style="padding-top:1.5%"class="col-md-6 col-xs-6">
-                  <a href="{{url_for('edit_homegroup', homegroup_id = homegroup.id)}}"  class="custombuttonwidth homegroupcontent btn btn-outline-info btn-sm">
-                  <span class="glyphicon glyphicon-pencil"></span> Edit
-                </a>
-                <a href="{{url_for('get_homegroup_members', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-warning btn-sm">
-                  <span class="glyphicon glyphicon-user"></span> Members
-                </a>
-                    <a href="{{url_for('view_attendance', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-primary btn-sm">
-                  <span class="glyphicon glyphicon-time"></span> Attendance
-                </a>
-                    <a href="{{url_for('deactivate_homegroup', homegroup_id = homegroup.id)}}" class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
-                  <span class="glyphicon glyphicon-trash"></span> Remove
-                </a>
-              </div>
-              <div style="padding-top:1.5%" class="col-md-2 col-xs-2">
-                  <p>Active?</p>
-                <p class="content"><span style="color:green" class="homegroupcontent glyphicon glyphicon-ok"></span></p>
-              </div>
-            </div>
+            <div class="row">
+
+                <p class="homegroup-heading homegroup{{ homegroup.id }} w-100" data-toggle="collapse"
+                   data-parent="#accordion" href="#collapse{{ homegroup.id }}"><span
+                        class="homegroupname">{{ homegroup.name }}</span> <span
+                        class="glifarrows testing glyphicon glyphicon-menu-down"
+                        style="float:right; font-size:75%; padding:7px;"></span></p>
+                <div id="collapse{{ homegroup.id }}" class="panel-collapse collapse">
+                    <div class="row">
+                        <div style="padding-left:5%" class="col-md-4 col-xs-4">
+                            <div class="homegroupcontent panel-body">{{ homegroup.location }}</div>
+                        </div>
+                        <div style="padding-top:1.5%" class="col-md-6 col-xs-6">
+                            <a href="{{ url_for('edit_homegroup', homegroup_id = homegroup.id) }}"
+                               class="custombuttonwidth homegroupcontent btn btn-outline-info btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                            </a>
+                            <a href="{{ url_for('get_homegroup_members', homegroup_id = homegroup.id) }}"
+                               class="custombuttonwidth homegroupcontent btn btn-outline-warning btn-sm">
+                                <span class="glyphicon glyphicon-user"></span> Members
+                            </a>
+                            <a href="{{ url_for('view_attendance', homegroup_id = homegroup.id) }}"
+                               class="custombuttonwidth homegroupcontent btn btn-outline-primary btn-sm">
+                                <span class="glyphicon glyphicon-time"></span> Attendance
+                            </a>
+                            <a href="{{ url_for('deactivate_homegroup', homegroup_id = homegroup.id) }}"
+                               class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </a>
+                        </div>
+                        <div style="padding-top:1.5%" class="col-md-2 col-xs-2">
+                            <p>Active?</p>
+                            <p class="content"><span style="color:green"
+                                                     class="homegroupcontent glyphicon glyphicon-ok"></span></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endif %}
     {% endfor %}
-        {%  for inactiveHomegroup in inactiveHomegroups %}
-            <p class="homegroup-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ inactiveHomegroup.id }}"> {{ inactiveHomegroup.name }} <span class="glifarrows glyphicon glyphicon-menu-down" style="float:right; font-size:75%"></span> </p>
-           <div id="collapse{{ inactiveHomegroup.id }}" class="panel-collapse collapse">
-               <div class="homegroupcontent panel-body">{{ inactiveHomegroup.location }}</div>
-               <a href="{{url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id)}}" class="btn btn-success btn-sm">
-              <span class="glyphicon glyphicon-plus"></span> Reactivate
-            </a>
-               <p >Active?</p>
-               <p class="content"><span style="color:red" class="homegroupcontent glyphicon glyphicon-remove"></span></p>
+    {% for inactiveHomegroup in inactiveHomegroups %}
+        <div class="row">
+            <p class="homegroup-heading w-100" data-toggle="collapse" data-parent="#accordion"
+               href="#collapse{{ inactiveHomegroup.id }}"> {{ inactiveHomegroup.name }} <span
+                    class="glifarrows glyphicon glyphicon-menu-down" style="float:right; font-size:75%"></span></p>
+            <div id="collapse{{ inactiveHomegroup.id }}" class="panel-collapse collapse">
+                <div class="row">
+                    <div style="padding-left:5%" class="col-md-4 col-xs-4">
+                        <div class="homegroupcontent panel-body">{{ inactiveHomegroup.location }}</div>
+                    </div>
+                    <div style="padding-top:1.5%" class="col-md-6 col-xs-6">
+                        <a href="{{ url_for('reactivate_homegroup', homegroup_id = inactiveHomegroup.id) }}"
+                           class="btn btn-outline-success btn-sm">
+                            <span class="glyphicon glyphicon-plus"></span> Reactivate
+                        </a>
+                    </div>
+                    <div style="padding-top:1.5%" class="col-md-2 col-xs-2">
+                        <p >Active?</p>
+                        <p class="content"><span style="color:red" class="homegroupcontent glyphicon glyphicon-remove"></span>
+                        </p>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-
-{#    <p class="homegroup-heading"></p>#}
-
+        </div>
+    {% endfor %}
 {% endblock %}
+</div>
 
 <script>
-{#    $(function(){#}
-{#       $('homegroup-heading').on('click',function() {#}
-{#           $('glyphicon-menu-down').addClass('rotate180deg');#}
-{#       })#}
-{#    });#}
-{#$(".homegroup-heading").click(function() {#}
-{#    $('.testing').toggleClass('rotating');#}
 
-       $('.homegroup-heading').on('click',function() {
-           $('.glyphicon-menu-down').toggleClass('active');
-       });
+    $('.homegroup-heading').on('click', function () {
+        $('.glyphicon-menu-down').toggleClass('active');
+    });
 </script>
