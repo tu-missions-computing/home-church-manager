@@ -18,14 +18,25 @@ li.nav-item .btn-white {
   color: #46484a; }
 
 .cover {
-  background: #2b2d34 url(backgroundimage.jpg) center;
-  background-size: cover;
-  min-height: 50rem;
-  height: auto;
-  border-radius: 0;
-  width: 100%;
-  color: #fff;
-  padding-top: 1rem; }
+    background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url("backgroundimage.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 50rem;
+    height: auto;
+    border-radius: 0;
+    color: #fff;
+    /*padding-top: 1rem; */
+}
+
+/*.bg-overlay {*/
+    /*background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url("backgroundimage.jpg");*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*background-position: center center;*/
+    /*color: #fff;*/
+    /*height: 800px;*/
+    /*padding-top: 50px;*/
+/*}*/
 
   .cover h1 {
     font-weight: 200; }
