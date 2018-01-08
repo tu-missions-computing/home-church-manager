@@ -190,11 +190,50 @@ def create_user(member_id):
         if user_form.homegroups.data is not None:
             homegroupId = user_form.homegroups.data
             user_id = db.find_user(email)['id']
+
             db.add_leader_to_homegroup(user_id, homegroupId)
 
         flash('User Created')
         return redirect(url_for('all_members'))
     return render_template('create_user.html', form=user_form, email = email)
+
+
+# shows role page
+@app.route('/roles')
+@login_required
+@requires_roles('admin')
+def get_roles():
+    member_roles = db.get_all_member_roles()
+    return render_template('roles.html', member_roles = member_roles)
+
+
+@app.route('/roles/edit/<member_id>/<role_id>')
+@login_required
+@requires_roles('admin')
+def edit_role(member_id, role_id):
+    is_active = db.role_is_active(member_id, role_id)
+    active = '1'
+    if is_active:
+        active = '0'
+    db.update_role(member_id, role_id, active)
+    return redirect(url_for('get_roles' ))
+
+
+@app.route('/hgleader/<member_id>/<homegroup_id>')
+@login_required
+@requires_roles('admin')
+def deactivate_hgleader(member_id, homegroup_id):
+    db.deactivate_hgleader(member_id, homegroup_id)
+    return redirect(url_for('get_roles'))
+
+
+@app.route('/admin/create/<member_id>')
+@login_required
+@requires_roles('admin')
+def create_admin(member_id):
+    db.create_role
+    return redirect(url_for('get_roles' ))
+
 
 class UpdateUserForm(FlaskForm):
     old_password = PasswordField('Current Password', validators=[DataRequired()])
@@ -812,6 +851,7 @@ def advanced_search():
 def all_admin():
     return render_template('admin_profiles.html', admin=db.get_all_admin(),
                            inactiveAdmin=db.get_all_inactive_admin(), showInactive=False)
+
 
 
 # Make this the last line in the file!
