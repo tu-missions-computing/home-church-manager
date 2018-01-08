@@ -64,6 +64,20 @@ def find_roles():
     g.db.execute(query)
     return g.db.fetchall()
 
+# finds all the members and their roles
+def get_all_member_roles():
+    query = '''
+    select first_name, last_name, member.id, homegroup_id, role_id, role, member_role.is_active as "roleActive", homegroup_leader.is_active as "hgLeaderActive", name as "hgName" from member 
+    left outer join member_role on member.id = member_role.member_id 
+    left outer join homegroup_leader on member.id = homegroup_leader.member_id
+    left outer join role on member_role.role_id = role.id 
+    left outer join homegroup on homegroup_leader.homegroup_id = homegroup.id
+    where member.is_active = '1'
+    order by last_name, first_name
+    '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
 # finds member based on an email
 def find_user(email):
     g.db.execute('SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s', (email,))
@@ -72,6 +86,32 @@ def find_user(email):
 def find_user_info(id):
     g.db.execute('SELECT * from member join member_role on member_role.member_id = member.id WHERE member.id =%s', (id,))
     return g.db.fetchone()
+
+# finds if the user is active
+def role_is_active(id, role_id):
+    g.db.execute('select is_active from member_role where member_id = %s and role_id = %s', (id, role_id))
+    return g.db.fetchone()
+
+# updates the user role
+def update_role(id, role_id, is_active):
+    query = '''
+        UPDATE member_role SET is_active = %s
+        where member_id = %s and role_id = %s
+        '''
+    g.db.execute(query, ( is_active,id, role_id))
+    g.connection.commit()
+    return g.db.rowcount
+
+
+# updates the user role from admin role view based on selection
+def assign_new_role(id, role_id):
+    query = '''
+    update member_role set is_active = '1' and role_id = %s where member_id = %s
+    '''
+    g.db.execute(query, ( role_id, id ))
+    g.connection.commit()
+    return g.db.rowcount
+
 
 # finds the most recent member entered into the db
 def recent_user():
@@ -162,8 +202,7 @@ def get_homegroup_inactive_members(homegroup_id):
 
 # sets a homegroup member to be reactivated in the homegroup
 def reactive_homegroup_member(homegroup_id, member_id):
-    homegroup_id = int (homegroup_id)
-    member_id = int(member_id)
+
     query = '''
     UPDATE homegroup_member SET is_active = '1'
     where homegroup_id = %s and member_id = %s
@@ -209,15 +248,30 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
 
 
 # adds leader to a homegroup
-def add_leader_to_homegroup(user_id, homegroup_id):
-    member_id = int(user_id)
-    homegroup_id = int(homegroup_id)
+def add_leader_to_homegroup(member_id, homegroup_id):
     query = '''
-    INSERT INTO homegroup_leader(user_id, homegroup_id) values(:user_id, :homegroup_id)
+    INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(%s, %s, '1')
     '''
-    g.db.execute(query, { 'user_id': member_id, 'homegroup_id': homegroup_id})
-    g.db.commit()
+    g.db.execute(query, (member_id, homegroup_id))
+    g.connection.commit()
     return g.db.rowcount
+
+# deactivates hg leader
+
+def deactivate_hgleader(member_id, homegroup_id):
+    query = '''
+    update  homegroup_leader set is_active = '0'
+    where member_id = %s and homegroup_id = %s
+    '''
+    g.db.execute(query, (member_id, homegroup_id))
+    g.connection.commit()
+    g.db = connect_db()
+    query = '''
+    update member_role set is_active = '0'
+    where member_id = %s '''
+    g.db.execute(query, (member_id))
+    return g.db.rowcount
+
 
 
 # adds a member to a homegroup
