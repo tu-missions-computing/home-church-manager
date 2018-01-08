@@ -1291,3 +1291,68 @@ stretchRight
          margin-top: 10%;
         text-align:center;
 }
+
+ /*Extra small devices (portrait phones, less than 576px)*/
+/*// No media query since this is the default in Bootstrap*/
+
+/*// Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+	.verbobox {
+         width: 70%;
+       }
+      .findahomegroupbtn{
+            width:70%;
+      }
+
+        .verbotext{
+          font-size:375%;
+      }
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+	@media only screen and (min-width: 992px) {
+		.verbobox {
+			width: 50%;
+		}
+
+		.findahomegroupbtn {
+			width: 60%;
+		}
+
+		.verbotext {
+			font-size: 375%;
+		}
+	}
+
+	/*// Large devices (desktops, 992px and up)*/
+	@media (min-width: 992px) {
+		.verbobox {
+			width: 35%;
+		}
+
+		.findahomegroupbtn {
+			width: 40%;
+		}
+
+		.verbotext {
+			font-size: 375%;
+		}
+	}
+
+	/*// Extra large devices (large desktops, 1200px and up)*/
+	@media (min-width: 1200px) {
+
+		.verbobox {
+			width: 35%;
+		}
+
+		.findahomegroupbtn {
+			width: 40%;
+		}
+
+		.verbotext {
+			font-size: 375%;
+		}
+
+	}
