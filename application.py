@@ -223,7 +223,7 @@ def assign_new_role(member_id):
         roleList.append((role["id"], role["role"]))
     member = db.find_member(member_id)
     email = member['email']
-    user_form = UserForm()
+    user_form = RoleForm()
     user_form.role.choices = roleList
     homegroups = db.get_all_homegroups()
     homegroup_list = []
@@ -234,12 +234,12 @@ def assign_new_role(member_id):
         email_list.append(email)
         db.assign_new_role(member_id, user_form.role.data)
         print (user_form.homegroups.data)
-        if user_form.role.data == 1:
+        if user_form.role.data == 0:
             homegroupId = user_form.homegroups.data
             user_id = db.find_user(email)['id']
             db.add_leader_to_homegroup(user_id, homegroupId)
 
-        flash('User Created')
+        flash('Role Created')
         return redirect(url_for('get_roles'))
     return render_template('assign_role.html', form=user_form, email = email)
 

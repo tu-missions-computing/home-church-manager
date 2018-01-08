@@ -28,7 +28,6 @@ INSERT INTO meeting(date, time) values ('03-23-2017', '16:00');
 
 
 
-INSERT INTO role(role) values ('member');
 INSERT INTO role(role) values ('homegroup_leader');
 INSERT INTO role(role) values ('admin');
 
