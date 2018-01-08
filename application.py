@@ -364,6 +364,7 @@ def attendance(homegroup_id):
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
         meeting_id = db.add_date(date, time)['id']
+
         db.generate_attendance_report(homegroup_id, meeting_id)
         return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
     return render_template('attendance.html', currentHomegroup=homegroup_id, form=attendance_form, members=members,
@@ -417,9 +418,9 @@ def edit_attendance(homegroup_id, meeting_id):
             input_name =  'member_' + str(member['member_id'] )
             if input_name in request.form:
                 print(member['first_name'] + " in attendance")
-                updateAttendance(homegroup_id, member['member_id'], meeting_id, 1)
+                updateAttendance(homegroup_id, member['member_id'], meeting_id, '1')
             else:
-                updateAttendance(homegroup_id, member['member_id'], meeting_id, 0)
+                updateAttendance(homegroup_id, member['member_id'], meeting_id, '0')
                 if(edit_or_new == 'new'):
                     print(member['first_name'] + " not in attendance")
                     attendancedates = db.system_attendance_alert(homegroup_id, member['id'], 3)

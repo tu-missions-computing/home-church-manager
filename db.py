@@ -337,13 +337,13 @@ def get_attendance_dates(homegroup_id):
 
 # creates a new attendance report and initializes everyones attendance to false
 def generate_attendance_report(homegroup_id, meeting_id):
-    meeting_id = int(meeting_id)
     members = get_homegroup_members(homegroup_id)
     for member in members:
+        print (member)
         query = '''INSERT INTO attendance (homegroup_id, member_id, meeting_id, attendance)
         VALUES (%s, %s, %s, %s)
         '''
-        g.db.execute(query, ( homegroup_id, member['id'], meeting_id, '0'))
+        g.db.execute(query, ( homegroup_id, member['member_id'], meeting_id, '0'))
     g.connection.commit()
     return g.db.rowcount
 
@@ -358,8 +358,8 @@ def get_attendance(homegroup_id, meeting_id):
 
 # finds date information from a meeting id
 def find_date(meeting_id):
-    meeting_id = int(meeting_id)
-    return g.db.execute('SELECT * from meeting WHERE id =%s', (meeting_id,)).fetchone()
+    g.db.execute('SELECT * from meeting WHERE id =%s', (meeting_id,))
+    return g.db.fetchone()
 
 # updates attendance for a homegroup's member on a particular day/time
 def update_attendance(homegroup_id, member_id, meeting_id, attendance):
@@ -368,7 +368,7 @@ def update_attendance(homegroup_id, member_id, meeting_id, attendance):
         WHERE homegroup_id = %s and member_id = %s and meeting_id = %s
         '''
     g.db.execute(query, (attendance, homegroup_id,  member_id, meeting_id))
-    g.db.commit()
+    g.connection.commit()
     return g.db.rowcount
 
 # creates a new date or "meeting" time in the db
@@ -378,6 +378,7 @@ def add_date(date, time):
     '''
     g.db.execute(query, (date, time))
     g.connection.commit()
+    g.db = connect_db()
     query = '''SELECT id from meeting order by id desc limit 1'''
     g.db.execute(query)
     return g.db.fetchone()
