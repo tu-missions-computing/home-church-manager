@@ -499,7 +499,7 @@ def get_homegroup_attendance_counts(myhomegroup):
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = '1' AND homegroup_id = %s
-    GROUP BY date, time
+    GROUP BY date, time, meeting_id, member_id
     '''
     g.db.execute(query, myhomegroup)
     return g.db.fetchall()
