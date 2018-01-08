@@ -154,6 +154,11 @@ class UserForm(FlaskForm):
     homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
     submit = SubmitField('Create User')
 
+class RoleForm(FlaskForm):
+    role = SelectField('Change Role', choices=[], coerce=int)
+    homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
+    submit = SubmitField('New Role')
+
 
 # Creates a new user and hashes their password in the database
 @app.route('/user/create/<member_id>', methods=['GET', 'POST'])
@@ -207,6 +212,37 @@ def get_roles():
     return render_template('roles.html', member_roles = member_roles)
 
 
+
+# Creates a new role for the user that already exists
+@app.route('/roles/new_role/<member_id>', methods=['GET', 'POST'])
+def assign_new_role(member_id):
+    allRoles = db.find_roles()
+    roleList = []
+    email_list = []
+    for role in allRoles:
+        roleList.append((role["id"], role["role"]))
+    member = db.find_member(member_id)
+    email = member['email']
+    user_form = UserForm()
+    user_form.role.choices = roleList
+    homegroups = db.get_all_homegroups()
+    homegroup_list = []
+    for homegroup in homegroups:
+        homegroup_list.append((homegroup['id'], homegroup['name']))
+    user_form.homegroups.choices = homegroup_list
+    if request.method == "POST":
+        email_list.append(email)
+        db.assign_new_role(member_id, user_form.role.data)
+        print (user_form.homegroups.data)
+        if user_form.role.data == 1:
+            homegroupId = user_form.homegroups.data
+            user_id = db.find_user(email)['id']
+            db.add_leader_to_homegroup(user_id, homegroupId)
+
+        flash('User Created')
+        return redirect(url_for('get_roles'))
+    return render_template('assign_role.html', form=user_form, email = email)
+
 @app.route('/roles/edit/<member_id>/<role_id>')
 @login_required
 @requires_roles('admin')
@@ -227,12 +263,12 @@ def deactivate_hgleader(member_id, homegroup_id):
     return redirect(url_for('get_roles'))
 
 
-@app.route('/admin/create/<member_id>')
-@login_required
-@requires_roles('admin')
-def create_admin(member_id):
-    db.create_role
-    return redirect(url_for('get_roles' ))
+# @app.route('/admin/create/<member_id>')
+# @login_required
+# @requires_roles('admin')
+# def create_admin(member_id):
+#     db.create_role(member_id)
+#     return redirect(url_for('get_roles' ))
 
 
 class UpdateUserForm(FlaskForm):

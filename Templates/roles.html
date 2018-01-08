@@ -53,18 +53,23 @@
             <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
         </td>
         {% else %}
-        <td> User</td>
-        <td><a href="" class="btn btn-info btn-sm">
+        <td> Inactive User</td>
+        <td><a href="{{ url_for('assign_new_role', member_id = member.id)}}" class="btn btn-info btn-sm">
              <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
         {% endif %}
         {% endif %}
 
 
         {% else %}
+        {% if member.role_id %}
+             <td>Inactive User</td>
+        <td><a href="{{ url_for('assign_new_role', member_id = member.id)}}" class="btn btn-info btn-sm">
+             <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
+        {% else %}
         <td> &mdash;  </td>
          <td><a href="{{url_for('create_user', member_id = member.id)}}" class="btn btn-warning btn-sm">
              <span class="glyphicon glyphicon-plus"></span> Create Account</a></td>
-
+        {% endif %}
         {% endif %}
     </tr>
         {% endfor %}

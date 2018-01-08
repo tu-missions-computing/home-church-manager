@@ -103,6 +103,16 @@ def update_role(id, role_id, is_active):
     return g.db.rowcount
 
 
+# updates the user role from admin role view based on selection
+def assign_new_role(id, role_id):
+    query = '''
+    update member_role set is_active = '1' and role_id = %s where member_id = %s
+    '''
+    g.db.execute(query, ( role_id, id ))
+    g.connection.commit()
+    return g.db.rowcount
+
+
 # finds the most recent member entered into the db
 def recent_user():
     g.db.execute('select id from member order by id desc LIMIT 1')
@@ -255,7 +265,13 @@ def deactivate_hgleader(member_id, homegroup_id):
     '''
     g.db.execute(query, (member_id, homegroup_id))
     g.connection.commit()
+    g.db = connect_db()
+    query = '''
+    update member_role set is_active = '0'
+    where member_id = %s '''
+    g.db.execute(query, (member_id))
     return g.db.rowcount
+
 
 
 # adds a member to a homegroup
