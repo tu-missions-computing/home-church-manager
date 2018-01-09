@@ -299,16 +299,15 @@ def update_user(user_id):
             if new_password == confirm_password:
                 password = new_password
                 pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-                print(member['role_id'])
                 db.update_user(user_id, pw_hash, member['role_id'])
                 flash('Password updated')
                 return redirect(url_for('index'))
             else:
                 flash('New Password and Confirmation Password Do Not Match')
-                return redirect(url_for('update_user', user_id))
+                return redirect(url_for('update_user', user_id = user_id))
         else:
             flash('Entered in wrong current password')
-            return redirect(url_for('update_user', user_id))
+            return redirect(url_for('update_user', user_id =  user_id))
     return render_template('update_user.html', form=user_form, email=email)
 
 
