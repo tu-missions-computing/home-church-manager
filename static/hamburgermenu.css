@@ -17,16 +17,6 @@ li.nav-item .btn {
 li.nav-item .btn-white {
   color: #46484a; }
 
-.cover {
-    background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url("backgroundimage.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 50rem;
-    height: auto;
-    border-radius: 0;
-    color: #fff;
-    /*padding-top: 1rem; */
-}
 
 /*.bg-overlay {*/
     /*background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url("backgroundimage.jpg");*/
