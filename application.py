@@ -41,11 +41,11 @@ def init_test_user():
     if db.find_user('john@example.com') is None:
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(1, pw_hash, 2)
+        db.create_user(1, pw_hash, 1)
     if db.find_user('admin@example.com') is None:
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(7, pw_hash, 3)
+        db.create_user(7, pw_hash, 2)
 
 
 ########################## INDEX + MAP + Dashboard##############################################
