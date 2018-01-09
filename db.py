@@ -44,7 +44,7 @@ def create_user(member_id, password, role_id):
     g.db.execute(query, (member_id, password, role_id, '1'))
     #rowcount = g.db.rowcount
     g.connection.commit()
-    return g.db
+    return g.db.rowcount
 
 # edits a member password
 def update_user(member_id, password, role_id):
@@ -92,6 +92,11 @@ def role_is_active(id, role_id):
     g.db.execute('select is_active from member_role where member_id = %s and role_id = %s', (id, role_id))
     return g.db.fetchone()
 
+# finds if the user has an active role
+def has_active_role (id):
+    g.db.execute('''select is_active from member_role where member_id = %s and is_active = '1' ''', id)
+    return g.db.fetchone()
+
 # updates the user role
 def update_role(id, role_id, is_active):
     query = '''
@@ -106,7 +111,7 @@ def update_role(id, role_id, is_active):
 # updates the user role from admin role view based on selection
 def assign_new_role(id, role_id):
     query = '''
-    update member_role set is_active = '1' and role_id = %s where member_id = %s
+    update member_role set is_active = '1', role_id = %s where member_id = %s
     '''
     g.db.execute(query, ( role_id, id ))
     g.connection.commit()
@@ -249,12 +254,22 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(member_id, homegroup_id):
-    query = '''
-    INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(%s, %s, '1')
-    '''
-    g.db.execute(query, (member_id, homegroup_id))
+    g.db.execute('select * from homegroup_leader where member_id =%s ', (member_id))
+    if (g.db.fetchone()):
+        g.db = connect_db()
+        query = '''update homegroup_leader set is_active = '1', homegroup_id = %s where member_id = %s'''
+        g.db.execute(query, ( homegroup_id, member_id))
+    else:
+        g.db = connect_db()
+        query = '''
+        INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(%s, %s, '1')
+        '''
+        g.db.execute(query, (member_id, homegroup_id))
     g.connection.commit()
     return g.db.rowcount
+
+
+
 
 # deactivates hg leader
 

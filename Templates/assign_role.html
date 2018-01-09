@@ -27,7 +27,7 @@
 						</div>
 
 						<div class="form-group">
-							 <p id = 'homegroups' style="visibility:hidden"> {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
+							 <p id = 'homegroups' style=""> {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
 						</div>
 
 						<div class="form-group ">
@@ -46,7 +46,9 @@
         var role = role_id.options[role_id.selectedIndex].text;
         if (role == 'homegroup_leader') {
             document.getElementById('homegroups').style.visibility = 'visible';
-        }
+        } else {
+            document.getElementById('homegroups').style.visibility = 'hidden';
+		}
     }
 
     </script>
