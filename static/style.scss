@@ -34,11 +34,12 @@ html * {
 
 
  .findahomegroupbtn {
-      color:#2e3036;
+      //color:#2e3036;
       font-weight:800;
       font-style:italic;
       height:40px;
       font-size:20px;
+	 margin-top:1.5%;
 
     }
 
@@ -79,6 +80,11 @@ html * {
 		    .verbobox {
              height: 75px; }
 
+		 .findahomegroupbtn{
+			 width:100%;
+			 margin-bottom:30%;
+		 }
+
 	}
         @include media-breakpoint-up(sm) {
 			.verbotext{
@@ -93,6 +99,11 @@ html * {
 
 			.verbobox {
              height: 75px; }
+
+			.findahomegroupbtn{
+			 width:100%;
+				margin-bottom:30%;
+		 }
 		}
         @include media-breakpoint-up(md) {
 			 .verbotext{
@@ -107,6 +118,12 @@ html * {
 
 			.verbobox {
              height: 100px; }
+
+			.findahomegroupbtn{
+			 width:50%;
+			margin-bottom:30%;
+
+		 }
 
 		}
         @include media-breakpoint-up(lg) {
@@ -123,6 +140,11 @@ html * {
 			.verbobox {
              height: 100px; }
 
+			.findahomegroupbtn{
+			 width:45%;
+				margin-bottom:30%;
+		 }
+
 		}
         @include media-breakpoint-up(xl) {
 			 .verbotext {
@@ -137,6 +159,11 @@ html * {
 
 			.verbobox {
              height: 100px; }
+
+			.findahomegroupbtn{
+			 width:45%;
+				margin-bottom:30%;
+		 	}
 		}
 
 

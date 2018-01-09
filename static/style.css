@@ -6670,11 +6670,11 @@ html * {
   /*padding-top: 1rem; */ }
 
 .findahomegroupbtn {
-  color: #2e3036;
   font-weight: 800;
   font-style: italic;
   height: 40px;
-  font-size: 20px; }
+  font-size: 20px;
+  margin-top: 1.5%; }
 
 /*For the Homepage*/
 .verbotext {
@@ -6706,6 +6706,10 @@ html * {
 .verbobox {
   height: 75px; }
 
+.findahomegroupbtn {
+  width: 100%;
+  margin-bottom: 30%; }
+
 @media (min-width: 576px) {
   .verbotext {
     font-size: 300%; }
@@ -6717,7 +6721,11 @@ html * {
     background-size: 250% !important; }
 
   .verbobox {
-    height: 75px; } }
+    height: 75px; }
+
+  .findahomegroupbtn {
+    width: 100%;
+    margin-bottom: 30%; } }
 @media (min-width: 768px) {
   .verbotext {
     font-size: 300%; }
@@ -6729,7 +6737,11 @@ html * {
     background-size: 150% !important; }
 
   .verbobox {
-    height: 100px; } }
+    height: 100px; }
+
+  .findahomegroupbtn {
+    width: 50%;
+    margin-bottom: 30%; } }
 @media (min-width: 992px) {
   .verbotext {
     font-size: 300%; }
@@ -6741,7 +6753,11 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; } }
+    height: 100px; }
+
+  .findahomegroupbtn {
+    width: 45%;
+    margin-bottom: 30%; } }
 @media (min-width: 1200px) {
   .verbotext {
     font-size: 300%; }
@@ -6753,7 +6769,11 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; } }
+    height: 100px; }
+
+  .findahomegroupbtn {
+    width: 45%;
+    margin-bottom: 30%; } }
 /* --------------------------------
 
 Main components
