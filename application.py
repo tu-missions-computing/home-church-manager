@@ -172,17 +172,18 @@ def create_user(member_id):
     email = member['email']
     user_form = UserForm()
     user_form.role.choices = roleList
-
     homegroups = db.get_all_homegroups()
     homegroup_list = []
     for homegroup in homegroups:
         homegroup_list.append((homegroup['id'], homegroup['name']))
     user_form.homegroups.choices = homegroup_list
-
-    if user_form.validate_on_submit():
+    if request.method == "POST":
         email_list.append(email)
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        if (db.has_active_role(member_id)):
+            flash("User already has account")
+            return redirect(url_for('get_roles'))
         db.create_user(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
@@ -192,14 +193,12 @@ def create_user(member_id):
             recipients=email_list,
             html=email_html)
         mail.send(msg)
-        if user_form.homegroups.data is not None:
+        if user_form.role.data == 1:
             homegroupId = user_form.homegroups.data
-            user_id = db.find_user(email)['id']
-
-            db.add_leader_to_homegroup(user_id, homegroupId)
+            db.add_leader_to_homegroup(member_id, homegroupId)
 
         flash('User Created')
-        return redirect(url_for('all_members'))
+        return redirect(url_for('get_roles'))
     return render_template('create_user.html', form=user_form, email = email)
 
 
@@ -216,6 +215,10 @@ def get_roles():
 # Creates a new role for the user that already exists
 @app.route('/roles/new_role/<member_id>', methods=['GET', 'POST'])
 def assign_new_role(member_id):
+    current_user = db.find_user(session['username'])['member_id']
+    if (str(member_id) == str(current_user)):
+        flash("You cannot edit your own role - please contact a system administrator")
+        return redirect(url_for('get_roles'))
     allRoles = db.find_roles()
     roleList = []
     email_list = []
@@ -230,14 +233,13 @@ def assign_new_role(member_id):
     for homegroup in homegroups:
         homegroup_list.append((homegroup['id'], homegroup['name']))
     user_form.homegroups.choices = homegroup_list
+
     if request.method == "POST":
-        email_list.append(email)
+
         db.assign_new_role(member_id, user_form.role.data)
-        print (user_form.homegroups.data)
-        if user_form.role.data == 0:
+        if user_form.role.data == 1:
             homegroupId = user_form.homegroups.data
-            user_id = db.find_user(email)['id']
-            db.add_leader_to_homegroup(user_id, homegroupId)
+            db.add_leader_to_homegroup(member_id, homegroupId)
 
         flash('Role Created')
         return redirect(url_for('get_roles'))
@@ -247,6 +249,10 @@ def assign_new_role(member_id):
 @login_required
 @requires_roles('admin')
 def edit_role(member_id, role_id):
+    current_user = db.find_user(session['username'])['member_id']
+    if (str(member_id) == str(current_user)):
+        flash("You cannot edit your own role - please contact a system administrator")
+        return redirect(url_for('get_roles'))
     is_active = db.role_is_active(member_id, role_id)
     active = '1'
     if is_active:
