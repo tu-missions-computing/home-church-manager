@@ -311,6 +311,20 @@
     </style>
 </head>
 <body>
+
+
+ {% with messages = get_flashed_messages() %}
+    {%  if messages %}
+        {% for  category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{category}}"  role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
 <section >
 
 			<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse">
@@ -421,6 +435,9 @@
         </nav>
 </nav>
         <!-- /#sidebar-wrapper -->#}
+<!-- info, warning, danger, and success -->
+
+
 
     {# <!-- Page Content -->
         <div id="page-content-wrapper">
@@ -447,23 +464,7 @@
                 </div>
                 <div class="allthecontent col-lg-8 col-lg-offset-2">
 
-                    {% if message %}
-        <p>Note: {{ message }}</p>
-    {% endif %}
 
-    {% with messages = get_flashed_messages() %}
-    {%  if messages %}
-        <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-              </button>
-            {% for message in get_flashed_messages() %}
-                {{ message }}
-            {% endfor %}
-
-    {% endif %}
-{% endwith %}
-   </div>
 
     {% block content %}
     {% endblock %}
