@@ -324,13 +324,13 @@
 					<button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-                                <a class="navbar-brand" style="padding-left:1; padding-top:10; font-weight:300; font-size:30" href="{{ url_for('index') }}">VERBO VELOCITY</a>
+                                <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:300; font-size:30px" href="{{ url_for('index') }}">VERBO VELOCITY</a>
 
 					<div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
 						<ul class="navbar-nav mt-2 mt-md-0">
                         {% if current_user.name %}
                             <li class="dropdown nav-item">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Welcome, {{ current_user.name }}  <span class="caret"></span></a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;"> Welcome, {{ current_user.name }}  <span class="caret"></span></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
                                 <a class="dropdown-item"
