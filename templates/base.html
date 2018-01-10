@@ -12,7 +12,6 @@
 
     <title>{% block title %}My Title{% endblock %}</title>
 
-
 <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
     <!-- Resource style for the popup confirmation box -->
@@ -25,82 +24,72 @@
 
     <!-- CSS Styling-->
     <style>
+{#        .buttons-coll {#}
+{#  width: 90%;#}
+{#  margin: 50px auto;#}
+{#  text-align: center;#}
 
+{#button {#}
+{#  margin: 20px;#}
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+.custom-btn {
+  padding: 10px 25px;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
 
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        a:hover {
-            text-decoration: none;
-            color: white;
-        }
-
-        li {
-            float: left;
-        }
+}
+        /**** BTN No. 12 ****/
+.btn-12 {
+  z-index: 1;
+    background:white;
+    color:black;
+}
+.btn-12:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background: #F0F0F0;
+  transition: all 0.3s ease;
+}
+.btn-12:hover {
+  color:black;
+}
+.btn-12:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-12:active {top: 2px;}
 
         footer {
             padding-top: 5%;
         }
 
-        .singleLineChildren {
-            /* prevents the contents from wrapping to a new line: */
-            white-space: nowrap;
-            /* prevents the overflow being seen/scrolled-to;
-               adjust to taste: */
-            overflow: hidden;
-            /* to emphasize/speed-up the effect: */
-            width: 100%;
-        }
+{#        .singleLineChildren {#}
+{#            /* prevents the contents from wrapping to a new line: */#}
+{#            white-space: nowrap;#}
+{#            /* prevents the overflow being seen/scrolled-to;#}
+{#               adjust to taste: */#}
+{#            overflow: hidden;#}
+{#            /* to emphasize/speed-up the effect: */#}
+{#            width: 100%;#}
+{#        }#}
 
-        /* FOR ADDING ICONS TO INPUT BOXES, SEARCH BOXES, ETC */
-        /* enable absolute positioning */
-        .inner-addon {
-            position: relative;
-        }
+{#        /* FOR ADDING ICONS TO INPUT BOXES, SEARCH BOXES, ETC */#}
+{#        /* enable absolute positioning */#}
+{#        .inner-addon {#}
+{#            position: relative;#}
+{#        }#}
 
-        /* style icon */
-        .inner-addon .glyphicon {
-            position: absolute;
-            padding: 10px;
-            pointer-events: none;
-        }
 
-        /* align icon */
-        .left-addon .glyphicon {
-            left: 0px;
-        }
 
-        .right-addon .glyphicon {
-            right: 0px;
-        }
-
-        /* add padding  */
-        .left-addon input {
-            padding-left: 30px;
-        }
-
-        .right-addon input {
-            padding-right: 30px;
-        }
-
-        .link-color {
-            color: #0382DA;
-        }
-
-        a:hover {
-            text-decoration: none;
-            color: lightseagreen;
-        }
 
         .head-style {
             font-size: 40px;
@@ -300,13 +289,12 @@
         }
 
         .navbar {
-{#            position: fixed;#}
-            background: rgba(0, 0, 0, 0.5);
+
+            background: rgba(0, 0, 0, 0.0);
         }
-{##}
-{#        .allthecontent {#}
-{#            margin-top: 110px;#}
-{#        }#}
+        .navbar-inverse .navbar-nav .nav-link{
+            color: white;
+        }
 
     </style>
 </head>
@@ -327,6 +315,7 @@
     {% endwith %}
 <section >
 
+
 			<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse">
 				<div class="container">
 					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
@@ -337,117 +326,53 @@
 						<ul class="navbar-nav mt-2 mt-md-0">
                         {% if current_user.name %}
                             <li class="dropdown nav-item">
-                            <a href="{{ url_for('dashboard') }}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Welcome, {{ current_user.name }}  <span class="caret"></span></a>
-
-
-
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="dropdown-item"><a href="{{ url_for('dashboard') }}"> Dashboard</a></li>
-                                <li class="dropdown-item"><a
-                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">Profile
-                                    Settings</a></li>
-                                <li class="dropdown-item"><a
-                                        href="{{ url_for('update_user', user_id = current_user.member_id) }}"> Update
-                                    Password</a></li>
-                            </ul>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Welcome, {{ current_user.name }}  <span class="caret"></span></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"> DASHBOARD</a>
+                                <a class="dropdown-item"
+                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">PROFILE
+                                    SETTINGS</a>
+                                <a class="dropdown-item"
+                                        href="{{ url_for('update_user', user_id = current_user.member_id) }}"> UPDATE PASSWORD</a>
+                            </div>
                         </li>
                     {% endif %}
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a>
+                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">MEMBERS</a>
                         </li>
                     {% endif %}
                     {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home Groups</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">HOME GROUPS</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">MEMBERS</a></li>
                     {% endif %}
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a>
+                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">ATTENDANCE</a>
                         </li>
                     {% endif %}
 
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit
-                            Homegroup</a></li>
+                                                href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">EDIT HOMEGROUP</a></li>
                     {% endif %}
 
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">CONTACT</a></li>
                     {% if current_user.name %}
                         <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
-                                class="fa fa-user"></i>Log Out</b></a></li>
+                                class="fa fa-user"></i>LOG OUT</b></a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
-                                class="fa fa-user"></i>Log In</b></a></li>
+                                class="fa fa-user"></i>LOG IN</b></a></li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-    {# <div class="overlay"></div>
-        <!-- Sidebar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-            <ul class="nav sidebar-nav">
-                <li class="sidebar-brand" >
-                    <a class="navbar-brand" style="padding-left:1; padding-top:10" href="{{ url_for('index') }}"><img src="/static/verbo-velocity.png" width="100%"></a>
-                </li>
-            {% if current_user.name %}
-                <li class="dropdown">
-                    <li role="presentation" class="dropdown-toggle" data-toggle="dropdown" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><h4><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-user"></span> Welcome, {{ current_user.name }}  <span class="caret"></span></h4></li></a>
-
-                <ul class="dropdown-menu" role="menu">
-                      <li style="padding-left: 20px;"><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Dashboard</a></li>
-                    <li style="padding-left: 20px;"><a href="{{ url_for('user_profile', user_id = current_user.member_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Profile Settings</a></li>
-                    <li style="padding-left: 20px;"><a href="{{ url_for('update_user', user_id = current_user.member_id) }}"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> Update Password</a></li>
-                  </ul>
-                </li>
-            {% endif %}
-                {% if current_user.role == 'homegroup_leader' %}
-            <li><a href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a></li>
-                {% endif %}
-                {% if current_user.role == 'admin' %}
-                    <li role="presentation" ><a href="{{ url_for('get_homegroups') }}">Home Groups</a></li>
-                    <li role="presentation" ><a href="{{ url_for('all_members') }}">Members</a></li>
-
-            {% endif %}
-            {% if current_user.role == 'homegroup_leader' %}
-                <li role="presentation" ><a href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a></li>
-            {% endif %}
-
-            {% if current_user.role == 'homegroup_leader' %}
-            <li role="presentation" ><a href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit Homegroup</a></li>
-            {% endif %}
-             <li role="presentation"><a class="active" href="{{ url_for('faq')}}">FAQ</a></li>
-          <li role="presentation"><a href="{{ url_for('contact') }}">Contact</a></li>
-             {%  if current_user.name %}
-                 <li role="presentation" ><a href="/logout"><b>Log Out</b></a></li>
-            {%  else %}
-                 <li role="presentation" ><a href="/login"><b>Log In</b></a></li>
-            {% endif %}
-
-            </ul>
-        </nav>
-</nav>
-        <!-- /#sidebar-wrapper -->#}
-<!-- info, warning, danger, and success -->
-
-
-
-    {# <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-             <span class="hamb-middle"></span>
-            <span class="hamb-bottom"></span>
-            </button>#}
-
-</section>
 <section>
     <main class="Site-content ">
         <div class="container ">
@@ -470,25 +395,36 @@
     {% endblock %}
     </main>
 </section>
-        </div>
-                </div>
+
+
 
 
         <!-- /#page-content-wrapper -->
 
 <footer>
 </footer>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-        crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 
-<!-- Uses jQuery, so load after jQuery -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
+ <script src="/static/main.js"></script>
+    <script type="text/javascript" src="/static/javascript.js"></script>
+
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>#}
+{#<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"#}
+{#        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"#}
+{#        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"#}
+{#        crossorigin="anonymous"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"#}
+{#        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"#}
+{#        crossorigin="anonymous"></script>#}
+
+
 <script type="text/javascript" src="/static/javascript.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script type="text/javascript">
@@ -498,8 +434,6 @@
     });
 }, 4000);
     </script>
-
-<script src="/static/main.js"></script> <!-- Resource jQuery for the confirmation popup-->
 
 
 </body>
