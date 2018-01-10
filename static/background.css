@@ -9,7 +9,15 @@ body, html{
      font-family: 'Lato', sans-serif;
      font-weight:bold;
         }
+.question{
+	text-transform: uppercase;
+    font-weight:800;
+    font-size:125%;
 
+}
+.answer{
+    font-weight:300;
+}
 .main{
  	margin:50px 15px;
 }
@@ -20,7 +28,6 @@ h1.title {
 }
 
 hr{
-	width: 10%;
 	color: #fff;
 }
 
@@ -81,9 +88,21 @@ padding: 8px 12px !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
 }
 .main-center{
- 	margin-top: 30px;
  	margin: 0 auto;
  	max-width: 500px;
+    padding: 10px 40px;
+	background:#f2f2f2;
+	    color: #000000;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+
+}
+.faq-box{
+ 	margin: 0 auto;
+ 	max-width: 100%;
+    text-align: left;
     padding: 10px 40px;
 	background:#f2f2f2;
 	    color: #000000;

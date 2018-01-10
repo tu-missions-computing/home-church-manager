@@ -318,10 +318,11 @@
 
 			<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse">
 				<div class="container">
-                <a class="navbar-brand" style="padding-left:1; padding-top:10; font-weight:300; font-size:30" href="{{ url_for('index') }}">VERBO VELOCITY</a>
 					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
+                                <a class="navbar-brand" style="padding-left:1; padding-top:10; font-weight:300; font-size:30" href="{{ url_for('index') }}">VERBO VELOCITY</a>
+
 					<div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
 						<ul class="navbar-nav mt-2 mt-md-0">
                         {% if current_user.name %}
@@ -389,6 +390,7 @@
 {#          #}
 {#    </main>#}
 {#</section>#}
+
 
 
     {% block content %}
