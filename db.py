@@ -374,8 +374,9 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
 def find_homegroup_leader(homegroup_id):
     homegroup_id = int(homegroup_id)
     return g.db.execute('''
-    SELECT * from homegroup_leader join member on member.id = homegroup_leader.member_id
-    join homegroup_id = homegroup.id
+    SELECT * from homegroup_leader
+    join member on member.id = homegroup_leader.member_id
+    join homegroup on homegroup_leader.homegroup_id = homegroup.id
     where homegroup_id = %s
     ''', (homegroup_id,)).fetchone()
 
