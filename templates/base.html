@@ -290,7 +290,7 @@
 
         .navbar {
 
-            background: rgba(0, 0, 0, 0.0);
+            background: rgba(0, 0, 0, 0.5);
         }
         .navbar-inverse .navbar-nav .nav-link{
             color: white;
@@ -321,80 +321,81 @@
 					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<a class="navbar-brand" style="padding-left:1; padding-top:10" href="{{ url_for('index') }}"><img src="/static/verbo-velocity.png" width="100%"></a>
+                                <a class="navbar-brand" style="padding-left:1; padding-top:10; font-weight:300; font-size:30" href="{{ url_for('index') }}">VERBO VELOCITY</a>
+
 					<div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
 						<ul class="navbar-nav mt-2 mt-md-0">
                         {% if current_user.name %}
                             <li class="dropdown nav-item">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Welcome, {{ current_user.name }}  <span class="caret"></span></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"> DASHBOARD</a>
+                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
                                 <a class="dropdown-item"
-                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">PROFILE
-                                    SETTINGS</a>
+                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">Profile Settings</a>
                                 <a class="dropdown-item"
-                                        href="{{ url_for('update_user', user_id = current_user.member_id) }}"> UPDATE PASSWORD</a>
+                                        href="{{ url_for('update_user', user_id = current_user.member_id) }}"> Update Password</a>
                             </div>
                         </li>
                     {% endif %}
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">MEMBERS</a>
+                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a>
                         </li>
                     {% endif %}
                     {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">HOME GROUPS</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home Group</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">MEMBERS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a></li>
                     {% endif %}
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">ATTENDANCE</a>
+                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendence</a>
                         </li>
                     {% endif %}
 
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">EDIT HOMEGROUP</a></li>
+                                                href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit Homegroup</a></li>
                     {% endif %}
 
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">CONTACT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
                     {% if current_user.name %}
                         <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
-                                class="fa fa-user"></i>LOG OUT</b></a></li>
+                                class="fa fa-user"></i>Log Out</b></a></li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
-                                class="fa fa-user"></i>LOG IN</b></a></li>
+                                class="fa fa-user"></i>Log In</b></a></li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-<section>
-    <main class="Site-content ">
-        <div class="container ">
-            <div class="row ">
-                <div class="col-lg-2" style="float:right;">
-                    <div id="google_translate_element"></div>
-                    <script type="text/javascript">
-                        function googleTranslateElementInit() {
-                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-                        }
-                    </script>
-                    <script type="text/javascript"
-                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2">
+{#<section>#}
+{#    <main class="Site-content ">#}
+{#        <div class="container ">#}
+{#            <div class="row ">#}
+{#                <div class="col-lg-2" style="float:right;">#}
+{#                    <div id="google_translate_element"></div>#}
+{#                    <script type="text/javascript">#}
+{#                        function googleTranslateElementInit() {#}
+{#                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');#}
+{#                        }#}
+{#                    </script>#}
+{#                    <script type="text/javascript"#}
+{#                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+{#                </div>#}
+{#          #}
+{#    </main>#}
+{#</section>#}
 
 
 
     {% block content %}
     {% endblock %}
-    </main>
-</section>
+
 
 
 
@@ -403,13 +404,13 @@
 
 <footer>
 </footer>
- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="/static/main.js"></script>
     <script type="text/javascript" src="/static/javascript.js"></script>
 
