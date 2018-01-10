@@ -53,7 +53,7 @@
             <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
         </td>
         {% else %}
-        <td> Inactive User</td>
+        <td>Inactive User</td>
         <td><a href="{{ url_for('assign_new_role', member_id = member.id)}}" class="btn btn-info btn-sm">
              <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
         {% endif %}
