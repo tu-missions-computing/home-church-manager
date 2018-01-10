@@ -78,7 +78,7 @@
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> <label>Join Date</label> <input type="date" style="color: black" name="JoinDate" required/></p>
+                                <p> <label>Join Date</label> <input type="date" id="datePicker" value="" style="color: black" name="JoinDate" required/></p>
                             </div>
                         </div><br>
 
@@ -91,6 +91,17 @@
 			</div>
 		</div>
 
+<script>
 
+    Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+
+
+    document.getElementById('datePicker').value = new Date().toDateInputValue();
+
+</script>
 
 {% endblock %}
