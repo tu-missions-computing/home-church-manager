@@ -1,5 +1,6 @@
 from functools import wraps
 
+import os
 from flask import Flask, session, render_template, request, flash, redirect, url_for, jsonify, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
@@ -12,7 +13,6 @@ from wtforms import validators
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 import flask_excel as excel
-from openpyxl import Workbook
 from openpyxl import Workbook
 from openpyxl.compat import range
 from openpyxl.utils import get_column_letter
@@ -70,30 +70,16 @@ def index():
     # msg.body = "This is the email body"
     # mail.send(msg)
     init_test_user()
-    excel()
+
     return render_template('index.html')
 
 
 @app.route('/downloads/<path:filename>')
 def download_file(filename):
-    return send_from_directory(app.config[''],
+    return send_from_directory(os.getcwd(),
                                filename, as_attachment=True)
 
-def excel():
-    wb = Workbook()
-    dest_filename = 'empty_book.xlsx'
-    ws1 = wb.active
-    ws1.title = "range names"
-    for row in range(1, 40):
-        ws1.append(range(600))
-    ws2 = wb.create_sheet(title="Pi")
-    ws2['F5'] = 3.14
-    ws3 = wb.create_sheet(title="Data")
-    for row in range(10, 20):
-        for col in range(27, 54):
 
-         _ = ws3.cell(column=col, row=row, value="{0}".format(get_column_letter(col)))
-    wb.save(filename=dest_filename)
 
 # this displays the dashboard depending on user role
 @app.route('/dashboard')
@@ -449,6 +435,7 @@ def user_profile(user_id):
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    print (attendance_count)
     return render_template('homegroup.html', currentHomegroup=homegroup,
                            attendance_count=attendance_count)
 
@@ -497,6 +484,53 @@ def system_notify_member(member_id, num_misses):
         html=email_html)
     mail.send(msg)
 
+
+
+@app.route('/homegroup/data/<homegroup_id>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def homegroup_data(homegroup_id):
+    attendance = db.get_homegroup_attendance_records(homegroup_id)
+    hgname = db.find_homegroup(homegroup_id)['name']
+    wb = Workbook()
+    dest_filename = hgname + '-attendance' + '.xlsx'
+    ws1 = wb.active
+    ws1.title = "Attendance"
+    row_num = 2
+    for row in attendance:
+        col_num = 1
+        for col in row:
+            if row_num == 2:
+                _ = ws1.cell(column=col_num, row=1, value=col)
+            _ = ws1.cell(column=col_num, row=row_num, value=row[col])
+            col_num = col_num + 1
+        row_num = row_num + 1
+    wb.save(filename=dest_filename)
+    return redirect(url_for('download_file', filename = dest_filename))
+
+
+
+@app.route('/homegroup/data/all', methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def all_homegroup_data():
+    attendance = db.get_all_homegroup_attendance_records()
+    hgname = "all-homegroup"
+    wb = Workbook()
+    dest_filename = hgname + '-attendance' + '.xlsx'
+    ws1 = wb.active
+    ws1.title = "Attendance"
+    row_num = 2
+    for row in attendance:
+        col_num = 1
+        for col in row:
+            if row_num == 2:
+                _ = ws1.cell(column=col_num, row=1, value=col)
+            _ = ws1.cell(column=col_num, row=row_num, value=row[col])
+            col_num = col_num + 1
+        row_num = row_num + 1
+    wb.save(filename=dest_filename)
+    return redirect(url_for('download_file', filename = dest_filename))
 
 # adds (or updates) a new entry of attendance into the db
 def updateAttendance(homegroup_id, member_id, meeting_id, attendance):

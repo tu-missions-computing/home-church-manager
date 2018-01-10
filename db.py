@@ -374,21 +374,22 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
 # finds a homegroup leader
 def find_homegroup_leader(homegroup_id):
     homegroup_id = int(homegroup_id)
-    return g.db.execute('''
-    SELECT * from homegroup_leader
-    join member on member.id = homegroup_leader.member_id
-    join homegroup on homegroup_leader.homegroup_id = homegroup.id
-    where homegroup_id = %s
-    ''', (homegroup_id,)).fetchone()
+    g.db.execute('''
+        SELECT * from homegroup_leader
+        join member on member.id = homegroup_leader.member_id
+        join homegroup on homegroup_leader.homegroup_id = homegroup.id
+        where homegroup_id = %s
+        ''', (homegroup_id,))
+    return g.db.fetchone()
 
 
 # finds a member's homegroup
 def find_member_homegroup(member_id):
-    member_id = int(member_id)
-    return g.db.execute('''
-    SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
-    where member_id = %s
-    ''', (member_id,)).fetchone()
+    g.db.execute('''
+       SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+       where member_id = %s
+       ''', (member_id,))
+    return g.db.fetchone()
 
 
 
@@ -530,6 +531,24 @@ def get_all_inactive_homegroups():
     g.db.execute(query)
     return g.db.fetchall()
 
+def get_homegroup_attendance_records(homegroup_id):
+    query = ''' select date, time,  first_name, last_name, attendance from attendance
+    join member on member.id = attendance.member_id
+    join meeting on meeting.id = attendance.meeting_id 
+    WHERE homegroup_id = %s'''
+    g.db.execute(query, (homegroup_id,) )
+    return g.db.fetchall()
+
+def get_all_homegroup_attendance_records():
+    query = ''' select name As "Home Group", date, time,  first_name, last_name, attendance from attendance
+        join member on member.id = attendance.member_id
+        join meeting on meeting.id = attendance.meeting_id 
+        join homegroup on attendance.homegroup_id = homegroup.id
+        '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+
 #################################### Admin ########################################
 
 # finds all active admin in the db
@@ -567,13 +586,13 @@ def get_attendance_counts():
 
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT date, time, meeting_id, COUNT(member.id) AS "countMembers" FROM attendance
+    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = '1' AND homegroup_id = %s
-    GROUP BY date, time, meeting_id, member_id
+    GROUP BY date, time
     '''
-    g.db.execute(query, myhomegroup)
+    g.db.execute(query, (myhomegroup,))
     return g.db.fetchall()
 
 def get_all_members_emails():
