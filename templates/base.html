@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name=“viewport” content=“width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
@@ -99,160 +100,160 @@
 
         .in_line {
             display: inline;
-        }
+{#        }#}
+{#        .toggle-button {#}
+{#            position: relative;#}
+{#            display: inline-block;#}
+{#            color: #fff;#}
+{#        }#}
+{##}
+{#        .toggle-button label {#}
+{#            display: inline-block;#}
+{#            text-transform: uppercase;#}
+{#            cursor: pointer;#}
+{#            text-align: left;#}
+{#        }#}
+{##}
+{#        .toggle-button input {#}
+{#            display: none;#}
+{#        }#}
+{##}
+{#        .toggle-button__icon {#}
+{#            cursor: pointer;#}
+{#            pointer-events: none;#}
+{#        }#}
+{##}
+{#        .toggle-button__icon:before, .toggle-button__icon:after {#}
+{#            content: "";#}
+{#            position: absolute;#}
+{#            top: 45%;#}
+{#            left: 35%;#}
+{#            transition: 0.2s ease-out;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade {#}
+{#            width: 100px;#}
+{#            height: 20px;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade label {#}
+{#            position: absolute;#}
+{#            left: 0;#}
+{#            width: 30px;#}
+{#            height: 30px;#}
+{#            line-height: 30px;#}
+{#            transition: all 0.2s;#}
+{#            background: #e3e3e3;#}
+{#            border-radius: 4px;#}
+{#            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);#}
+{#            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade label:before, .toggle-button--sade label:after {#}
+{#            position: absolute;#}
+{#            top: 0;#}
+{#            left: 40px;#}
+{#            transition: all 0.2s .1s ease-out;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade label:before {#}
+{#            content: attr(data-on-text);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade label:after {#}
+{#            content: attr(data-off-text);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input + label:before {#}
+{#            opacity: 0;#}
+{#            transform: translate(30px, 0);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input + label:after {#}
+{#            opacity: 1;#}
+{#            transform: translate(0, 0);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input:checked ~ label:before {#}
+{#            opacity: 1;#}
+{#            transform: translate(0, 0);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input:checked ~ label:after {#}
+{#            opacity: 0;#}
+{#            transform: translate(30px, 0);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before, .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {#}
+{#            background: #61B136;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before {#}
+{#            transform: translate(-30%, 70%) rotate(45deg) scale(0.7, 1);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {#}
+{#            transform: translate(20%) rotate(-45deg);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade .toggle-button__icon {#}
+{#            position: absolute;#}
+{#            height: 30px;#}
+{#            width: 30px;#}
+{#            top: 0;#}
+{#            left: 0;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade .toggle-button__icon:before, .toggle-button--sade .toggle-button__icon:after {#}
+{#            width: calc(30px - 15px);#}
+{#            height: 3px;#}
+{#            border-radius: 3px;#}
+{#            background: #fff;#}
+{#            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);#}
+{#            margin-left: -3px;#}
+{#            top: 40%;#}
+{#            background: #FF5335;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade .toggle-button__icon:before {#}
+{#            transform: rotate(45deg);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade .toggle-button__icon:after {#}
+{#            transform: rotate(-45deg);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade:hover label {#}
+{#            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);#}
+{#            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);#}
+{#        }#}
+{##}
+{#        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:before {#}
+{#            animation: icon-hover-before .2s;#}
+{#        }#}
+{##}
+{#        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:after {#}
+{#            animation: icon-hover-after .2s;#}
+{#        }#}
+{##}
+{#        @keyframes icon-hover-before {#}
+{#            0% {#}
+{#                transform: rotate(45deg) scale(1, 1);#}
+{#            }#}
+{#            100% {#}
+{#                transform: rotate(45deg) scale(1.2, 1.2);#}
+{#            }#}
+{#        }#}
+{##}
+{#        @keyframes icon-hover-after {#}
+{#            0% {#}
+{#                transform: rotate(-45deg) scale(1, 1);#}
+{#            }#}
+{#            50% {#}
+{#                transform: rotate(-45deg) scale(1.2, 1.2);#}
+{#            }#}
+{#        }#}
 
-        .toggle-button {
-            position: relative;
-            display: inline-block;
-            color: #fff;
-        }
-
-        .toggle-button label {
-            display: inline-block;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .toggle-button input {
-            display: none;
-        }
-
-        .toggle-button__icon {
-            cursor: pointer;
-            pointer-events: none;
-        }
-
-        .toggle-button__icon:before, .toggle-button__icon:after {
-            content: "";
-            position: absolute;
-            top: 45%;
-            left: 35%;
-            transition: 0.2s ease-out;
-        }
-
-        .toggle-button--sade {
-            width: 100px;
-            height: 20px;
-        }
-
-        .toggle-button--sade label {
-            position: absolute;
-            left: 0;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            transition: all 0.2s;
-            background: #e3e3e3;
-            border-radius: 4px;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .toggle-button--sade label:before, .toggle-button--sade label:after {
-            position: absolute;
-            top: 0;
-            left: 40px;
-            transition: all 0.2s .1s ease-out;
-        }
-
-        .toggle-button--sade label:before {
-            content: attr(data-on-text);
-        }
-
-        .toggle-button--sade label:after {
-            content: attr(data-off-text);
-        }
-
-        .toggle-button--sade input + label:before {
-            opacity: 0;
-            transform: translate(30px, 0);
-        }
-
-        .toggle-button--sade input + label:after {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        .toggle-button--sade input:checked ~ label:before {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        .toggle-button--sade input:checked ~ label:after {
-            opacity: 0;
-            transform: translate(30px, 0);
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before, .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
-            background: #61B136;
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before {
-            transform: translate(-30%, 70%) rotate(45deg) scale(0.7, 1);
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
-            transform: translate(20%) rotate(-45deg);
-        }
-
-        .toggle-button--sade .toggle-button__icon {
-            position: absolute;
-            height: 30px;
-            width: 30px;
-            top: 0;
-            left: 0;
-        }
-
-        .toggle-button--sade .toggle-button__icon:before, .toggle-button--sade .toggle-button__icon:after {
-            width: calc(30px - 15px);
-            height: 3px;
-            border-radius: 3px;
-            background: #fff;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            margin-left: -3px;
-            top: 40%;
-            background: #FF5335;
-        }
-
-        .toggle-button--sade .toggle-button__icon:before {
-            transform: rotate(45deg);
-        }
-
-        .toggle-button--sade .toggle-button__icon:after {
-            transform: rotate(-45deg);
-        }
-
-        .toggle-button--sade:hover label {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:before {
-            animation: icon-hover-before .2s;
-        }
-
-        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:after {
-            animation: icon-hover-after .2s;
-        }
-
-        @keyframes icon-hover-before {
-            0% {
-                transform: rotate(45deg) scale(1, 1);
-            }
-            100% {
-                transform: rotate(45deg) scale(1.2, 1.2);
-            }
-        }
-
-        @keyframes icon-hover-after {
-            0% {
-                transform: rotate(-45deg) scale(1, 1);
-            }
-            50% {
-                transform: rotate(-45deg) scale(1.2, 1.2);
-            }
-        }
 
         @media (max-width: 990px) {
             .navbar-header {
@@ -292,6 +293,8 @@
 
             background: rgba(0, 0, 0, 0.5);
         }
+
+
         .navbar-inverse .navbar-nav .nav-link{
             color: white;
         }
@@ -316,9 +319,9 @@
 <section >
 
 
-			<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse">
+			<nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5);">
 				<div class="container">
-					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
                                 <a class="navbar-brand" style="padding-left:1; padding-top:10; font-weight:300; font-size:30" href="{{ url_for('index') }}">VERBO VELOCITY</a>
