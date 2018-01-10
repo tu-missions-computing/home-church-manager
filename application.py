@@ -400,7 +400,7 @@ def login():
 def logout():
     logout_user()
     user_name = session.pop('username', None)
-    flash('Logged out', category="info")
+    #flash('Logged out', category="info")
     return redirect(url_for('index'))
 
 @app.route('/user/profile/<user_id>')
