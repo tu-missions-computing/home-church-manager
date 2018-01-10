@@ -111,9 +111,7 @@
 {#    <div class="container">#}
         <h1 class="head-style animated stretchLeft">All Home Groups</h1>
         <div class="row">
-
             <div class="col form-group pull-right">
-
                 <div class="section section--sade">
                     Show Inactive Home Groups
                     <div class="toggle-button toggle-button--sade">
@@ -223,6 +221,7 @@
                                class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
                                Remove
                             </a>
+                             <a href="{{url_for('homegroup_data',homegroup_id = homegroup.id)}}">Download</a>
                         </div>
                         <div style="padding-top:1.5%" class="col-xl-2 col-lg-2 col-md-2 col-xs-2">
                             <p>Active?
