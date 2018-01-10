@@ -3,11 +3,15 @@ import psycopg2.extensions
 import psycopg2.extras
 from datetime import date, datetime
 from flask import g
-
+import os
 
 # Connect to the database.
 def connect_db():
-    connection = psycopg2.connect("host=faraday.cse.taylor.edu port=5432 dbname=verbo user=verbo password=cuenca")
+    # To connect to an arbitrary database server, define PG_HOST to its host name.
+    # Otherwise, use default host.
+    pg_host = os.environ.get('PG_HOST', "faraday.cse.taylor.edu")
+    connection = psycopg2.connect(host=pg_host, dbname="verbo", user="verbo", password="cuenca")
+
     dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     # cursor = connection.cursor()
     g.connection = connection
@@ -374,8 +378,9 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
 def find_homegroup_leader(homegroup_id):
     homegroup_id = int(homegroup_id)
     return g.db.execute('''
-    SELECT * from homegroup_leader join member on member.id = homegroup_leader.member_id
-    join homegroup_id = homegroup.id
+    SELECT * from homegroup_leader
+    join member on member.id = homegroup_leader.member_id
+    join homegroup on homegroup_leader.homegroup_id = homegroup.id
     where homegroup_id = %s
     ''', (homegroup_id,)).fetchone()
 

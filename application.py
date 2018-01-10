@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, session, render_template, request, flash, redirect, url_for
+from flask import Flask, session, render_template, request, flash, redirect, url_for,jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, TextAreaField
@@ -11,6 +11,12 @@ from wtforms.validators import Length
 from wtforms import validators
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
+import flask_excel as excel
+from openpyxl import Workbook
+from openpyxl import Workbook
+from openpyxl.compat import range
+from openpyxl.utils import get_column_letter
+import io
 
 
 import db
@@ -25,6 +31,8 @@ bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
 login_mgr = LoginManager(app)
 
+
+excel.init_excel(app)
 
 @app.before_request
 def before():
@@ -62,9 +70,29 @@ def index():
     # msg.body = "This is the email body"
     # mail.send(msg)
     init_test_user()
-
+    excel()
     return render_template('index.html')
 
+
+@app.route('/download/<path:name>')
+def download(name):
+    redirect(name)
+
+def excel():
+    wb = Workbook()
+    dest_filename = 'empty_book.xlsx'
+    ws1 = wb.active
+    ws1.title = "range names"
+    for row in range(1, 40):
+        ws1.append(range(600))
+    ws2 = wb.create_sheet(title="Pi")
+    ws2['F5'] = 3.14
+    ws3 = wb.create_sheet(title="Data")
+    for row in range(10, 20):
+        for col in range(27, 54):
+
+         _ = ws3.cell(column=col, row=row, value="{0}".format(get_column_letter(col)))
+    wb.save(filename=dest_filename)
 
 # this displays the dashboard depending on user role
 @app.route('/dashboard')
@@ -400,7 +428,7 @@ def login():
 def logout():
     logout_user()
     user_name = session.pop('username', None)
-    flash('Logged out', category="info")
+    #flash('Logged out', category="info")
     return redirect(url_for('index'))
 
 @app.route('/user/profile/<user_id>')

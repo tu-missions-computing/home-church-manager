@@ -305,11 +305,11 @@
  {% with messages = get_flashed_messages() %}
     {%  if messages %}
         {% for  category, message in get_flashed_messages(with_categories=true) %}
-            <div class="alert alert-{{category}}"  role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
+            <div style="width:40%; text-align: center; position:absolute;left:0; right:0;top:5px;margin-left:auto; margin-right:auto; z-index:1" class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{message}}</strong>
             </div>
         {% endfor %}
     {% endif %}
@@ -393,6 +393,7 @@
 {#</section>#}
 
 
+
     {% block content %}
     {% endblock %}
 
@@ -425,11 +426,16 @@
 {#        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"#}
 {#        crossorigin="anonymous"></script>#}
 
-<!-- Uses jQuery, so load after jQuery -->
 
-
-
-
+<script type="text/javascript" src="/static/javascript.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script type="text/javascript">
+    window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(0, function(){
+        $(this).remove();
+    });
+}, 4000);
+    </script>
 
 
 </body>
