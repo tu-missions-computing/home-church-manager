@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, session, render_template, request, flash, redirect, url_for,jsonify
+from flask import Flask, session, render_template, request, flash, redirect, url_for, jsonify, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, TextAreaField
@@ -74,9 +74,10 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/download/<path:name>')
-def download(name):
-    redirect(name)
+@app.route('/downloads/<path:filename>')
+def download_file(filename):
+    return send_from_directory(app.config[''],
+                               filename, as_attachment=True)
 
 def excel():
     wb = Workbook()
@@ -651,7 +652,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
     if new == 'Y':
         db.add_member_to_homegroup(homegroup_id, member_id)
     member = db.find_member(member_id)
-    flash ("Member {} added to homegroup".format(member['first_name']  + " " + member['last_name']))
+    flash ("Member {} added to homegroup".format(member['first_name']  + " " + member['last_name']), category="success")
     return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
