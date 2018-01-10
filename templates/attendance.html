@@ -21,13 +21,13 @@
                         <h4><span class="label label-default">Date</span></h4>
                     </span>
                     <span class="col form-group pull-left counter">
-                        <input class="date" id="datePicker" type="date" name="AttendanceDate" required/>
+                        <input type="date" id="datePicker" name="AttendanceDate" class="date"required/>
                     </span>
                     <span class="col form-group pull-left counter">
                         <h4><span class="label label-default">Time</span></h4>
                     </span>
                     <span class="col form-group pull-left counter">
-                        <input class="date counter" type="time" name = "AttendanceTime" required/><br>
+                        <input class="date counter" id="timePicker" type="time" name = "AttendanceTime" required/><br>
                     </span>
                 </span>
                 <span class="col form-group pull-left counter">
@@ -40,31 +40,24 @@
 
 </div>
 
-{% endblock %}
 
 <script>
+
     Date.prototype.toDateInputValue = (function() {
-        var local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0,10);
-    });
-    $(document).ready( function() {
-        $('#datePicker').val(new Date().toDateInputValue());
-    });​
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+    Date.prototype.toTimeInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    console.log(local.toJSON());
 
-    document.getElementById('datePicker').valueAsDate = new Date();
+    return local.toJSON().slice(11,16);
+});
 
-    $(document).ready(function() {
-        var date = new Date();
+    document.getElementById('datePicker').value = new Date().toDateInputValue();
+    document.getElementById('timePicker').value = new Date().toTimeInputValue();
 
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-
-        if (month < 10) month = "0" + month;
-        if (day < 10) day = "0" + day;
-
-        var today = year + "-" + month + "-" + day;
-        $("#datePicker").attr("value", today);
-    });
 </script>
+{% endblock %}
