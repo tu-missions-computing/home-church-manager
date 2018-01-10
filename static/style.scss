@@ -1,4 +1,5 @@
 @import "/Users/Nysha/Downloads/bootstrap-4.0.0-alpha.6/scss/bootstrap";
+//@import "//bootstrap-4.0.0-alpha.6/scss/bootstrap";
 
 html * {
   -webkit-font-smoothing: antialiased;
@@ -31,7 +32,21 @@ html * {
    background-size: 100% !important;
     /*padding-top: 1rem; */
 }
+	.faq-box{
+ 	margin: 0 auto;
+ 	max-width: 100%;
+    text-align: left;
+    padding: 10px 40px;
+	background:#f2f2f2;
+	    color: #000000;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+		margin-top:3.5%;
 
+
+}
 
  .findahomegroupbtn {
       //color:#2e3036;
@@ -66,6 +81,7 @@ html * {
              text-align:center;
     }
 
+
 	@include media-breakpoint-up(xs) {
 			.verbotext{
          		 font-size:200%;
@@ -84,8 +100,12 @@ html * {
 			 width:100%;
 			 margin-bottom:30%;
 		 }
+		.faq-box {
+			width: 75%
+		}
+		}
 
-	}
+
         @include media-breakpoint-up(sm) {
 			.verbotext{
          		 font-size:300%;
@@ -104,6 +124,9 @@ html * {
 			 width:100%;
 				margin-bottom:30%;
 		 }
+					.faq-box {
+			width: 75%
+		}
 		}
         @include media-breakpoint-up(md) {
 			 .verbotext{
@@ -124,6 +147,9 @@ html * {
 			margin-bottom:30%;
 
 		 }
+					.faq-box {
+			width: 75%
+		}
 
 		}
         @include media-breakpoint-up(lg) {
@@ -144,6 +170,9 @@ html * {
 			 width:45%;
 				margin-bottom:30%;
 		 }
+			faq-box {
+			width: 50%
+		}
 
 		}
         @include media-breakpoint-up(xl) {
@@ -164,6 +193,9 @@ html * {
 			 width:45%;
 				margin-bottom:30%;
 		 	}
+			.faq-box {
+			width: 50%
+		}
 		}
 
 
@@ -569,7 +601,7 @@ slideExpandUp
 	-webkit-animation-duration: 1.6s;
 
 	animation-timing-function: ease-out;
-	-webkit-animation-timing-function: ease -out;
+	-webkit-animation-timing-function: ease-out;
 
 	visibility: visible !important;
 }
