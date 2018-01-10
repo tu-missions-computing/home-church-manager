@@ -6659,7 +6659,7 @@ html * {
   white-space: nowrap; }
 
 .cover {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("backgroundimage.jpg");
+  background: url("backgroundimage.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 50rem;
