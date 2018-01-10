@@ -105,10 +105,10 @@
 .btn-outline-white, .btn-outline-white:visited {
   background: none;
   color: #fff;
-  border-color: #fff; }
+  border-color: #fff;  }
 
 .btn-outline-white:hover, .btn-outline-white:focus, .btn-outline-white:active {
-  color: #46484a;
+  color: black;
   background: #fff; }
 
 .link-white, link-white:visited {
