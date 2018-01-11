@@ -575,22 +575,49 @@ def get_all_inactive_admin():
 
 def get_attendance_counts():
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+SELECT  to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", COUNT (DISTINCT member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
+    JOIN homegroup on  homegroup.id = attendance.homegroup_id
     WHERE attendance = '1'
-    GROUP BY date, time
+    GROUP BY month
+    order by month asc
+    '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+def get_top_n_homegroup_member_counts(n):
+    n = int(n)
+    query = '''
+    select name, count(distinct member_id) as memberCount from homegroup_member
+    join member on member.id = homegroup_member.member_id
+    join homegroup on homegroup_member.homegroup_id = homegroup.id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
+    group by name
+    order by memberCount desc limit %s
+    '''
+    g.db.execute(query, (n,))
+    return g.db.fetchall()
+
+def gender_report():
+    query = '''
+     select gender, count(distinct member_id) as memberCount from homegroup_member
+    join member on member.id = homegroup_member.member_id
+    join homegroup on homegroup_member.homegroup_id = homegroup.id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
+    group by gender
     '''
     g.db.execute(query)
     return g.db.fetchall()
 
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+    SELECT to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", COUNT( distinct member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = '1' AND homegroup_id = %s
-    GROUP BY date, time
+    GROUP BY month
+
     '''
     g.db.execute(query, (myhomegroup,))
     return g.db.fetchall()

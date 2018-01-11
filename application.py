@@ -813,9 +813,9 @@ class CreateHomeGroupForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
-    print(attendance_count)
-    homegroup_data = [{'total':[1,5,2]}]
-    return render_template('admin_home.html', attendance_count=attendance_count,  homegroup_data = homegroup_data)
+    homegroup_member_data = db.get_top_n_homegroup_member_counts('10')
+    gender = db.gender_report()
+    return render_template('admin_home.html', gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup

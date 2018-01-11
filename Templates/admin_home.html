@@ -9,21 +9,40 @@
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-
-<div id="container" style="width: 40%; height: 400px; margin: 0 auto"></div>
-
+<h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">Admin Dashboard</h1>
+<div id="container" style="width: 48%; height: 45%; float:left; margin-left:2%"></div>
+<div id="line-chart" style="width:48%; height:45%;float:right; margin-right:2%" ></div>
+<div id="gender" style="padding-top:10px; width: 48%; height: 45%; float:left; margin-left:2%"></div>
+<div id="homegroupPie" style="padding-top:10px; width:48%; height:45%;float:right; margin-right:2%" ></div>
 <table id="datatable" hidden>
     <thead>
         <tr>
             <th></th>
-            <th>Date</th>
+            <th>Home Group</th>
         </tr>
     </thead>
     <tbody>
-        {% for attendance_record in attendance_count %}
+        {% for hg in hgdata %}
         <tr>
-            <th>{{ attendance_record.date }}</th>
-            <td>{{ attendance_record.countMembers}}</td>
+            <th>{{ hg.name }}</th>
+            <td>{{ hg.membercount}}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+<table id="genderTable" hidden>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for g in gender %}
+        <tr>
+            <th>{{ g.gender }}</th>
+            <td>{{ g.membercount}}</td>
         </tr>
         {% endfor %}
 
@@ -40,12 +59,12 @@
             type: 'column'
         },
         title: {
-            text: 'Total Attendance Counts'
+            text: 'Top 10 Home Groups '
         },
         yAxis: {
             allowDecimals: false,
             title: {
-                text: 'Attendance Count'
+                text: 'Member Count'
             }
         },
         tooltip: {
@@ -57,45 +76,37 @@
     });
 </script>
 
-</div>
 
 
-<table style="visibility:hidden" id="testtable">
+
+
+    <table id="attendanceReport" hidden>
     <thead>
         <tr>
             <th></th>
-            <th>Homegroup Totals</th>
+
+            <th>Total People</th>
         </tr>
     </thead>
     <tbody>
-    {% for amount in homegroup_data%}
+    {% for a in attendance_count%}
         <tr>
-            <th>January</th>
-            <td>{{amount.total[0]}}</td>
-        </tr>
-        <tr>
-            <th>February</th>
-            <td>{{amount.total[1]}}</td>
-        </tr>
-        <tr>
-            <th>March</th>
-            <td>{{amount.total[2]}}</td>
+            <td>{{a.month}}</td>
+            <td>{{a.countMembers}}</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<div id="line-chart" style="width:70%; height:400px;"></div>
+
 
 <script>
-
-
 Highcharts.chart('line-chart', {
     chart: {
         type: 'line'
     },
     title: {
-        text: 'Attendance Report'
+        text: 'Total Attendance Report'
     },
     subtitle: {
         text: 'Monthly'
@@ -106,7 +117,7 @@ Highcharts.chart('line-chart', {
         }
     },
     data: {
-        table: 'testtable'
+        table: 'attendanceReport'
     },
     plotOptions: {
         line: {
@@ -119,9 +130,70 @@ Highcharts.chart('line-chart', {
 
 });
 
+Highcharts.chart('gender', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Home Group Gender Report'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+     data: {
+            table: 'genderTable'
+        },
+});
 
+Highcharts.chart('homegroupPie', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Home Groups'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+     data: {
+            table: 'datatable'
+        },
+});
 </script>
 
+<div style="float:left; margin-left:2%">
 <a href="{{url_for('all_homegroup_data')}}">Download Data</a>
-
+</div>
 {% endblock %}
