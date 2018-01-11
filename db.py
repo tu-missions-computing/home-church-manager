@@ -366,9 +366,35 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     g.db.execute(query, (homegroup_id, member_id, number_of_misses))
     return g.db.fetchall()
 
+def get_member_attendance(homegroup_id, member_id):
+    query='''
+    SELECT  first_name, last_name, date, attendance FROM attendance
+    join member on attendance.member_id = member.id
+    join meeting on meeting.id = attendance.meeting_id
+    WHERE homegroup_id = %s and member_id = %s
+    and date in (
+        select distinct date from attendance
+            join meeting on meeting.id = attendance.meeting_id
+        where homegroup_id = %s
+        order by date desc limit 3
+    )
+    order by date desc
+    '''
+
+    g.db.execute(query, (homegroup_id, member_id, homegroup_id))
+    return g.db.fetchall()
+
+def get_last_3_dates(homegroup_id):
+    query = '''
+    select distinct date from attendance
+            join meeting on meeting.id = attendance.meeting_id
+        where homegroup_id = %s
+        order by date desc limit 3'''
+    g.db.execute(query, (homegroup_id))
+    return g.db.fetchall()
+
 
 #################################### HOME GROUP ########################################
-
 
 
 # finds a homegroup leader
@@ -610,13 +636,31 @@ def gender_report():
     g.db.execute(query)
     return g.db.fetchall()
 
+def homegroup_member_attendance(homegroup_id):
+    query='''
+       select first_name, last_name, date, attendance
+   from attendance join meeting on meeting.id = attendance.meeting_id
+   join member on attendance.member_id = member.id
+   where homegroup_id = %s and date in (
+       select distinct date from attendance
+       join meeting on meeting_id = meeting.id
+       where homegroup_id = %s
+       order by date desc limit 3
+   )
+   order by first_name, last_name, date desc
+    '''
+    g.db.execute(query, (homegroup_id, homegroup_id))
+    return g.db.fetchall()
+
+
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", COUNT( distinct member.id) AS "countMembers" FROM attendance
+    SELECT to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", extract(month from TO_DATE(date, 'YYYY-MM-DD')) as "month_num", COUNT( distinct member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = '1' AND homegroup_id = %s
-    GROUP BY month
+    GROUP BY month, month_num
+    order by month_num asc
 
     '''
     g.db.execute(query, (myhomegroup,))
