@@ -10,7 +10,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container" style="width: 40%; height: 400px; margin: 0 auto"></div>
 
 <table id="datatable" hidden>
     <thead>
@@ -58,6 +58,69 @@
 </script>
 
 </div>
+
+
+<table style="visibility:hidden" id="testtable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Homegroup Totals</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for amount in homegroup_data%}
+        <tr>
+            <th>January</th>
+            <td>{{amount.total[0]}}</td>
+        </tr>
+        <tr>
+            <th>February</th>
+            <td>{{amount.total[1]}}</td>
+        </tr>
+        <tr>
+            <th>March</th>
+            <td>{{amount.total[2]}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div id="line-chart" style="width:70%; height:400px;"></div>
+
+<script>
+
+
+Highcharts.chart('line-chart', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Attendance Report'
+    },
+    subtitle: {
+        text: 'Monthly'
+    },
+    yAxis: {
+        title: {
+            text: '# of people'
+        }
+    },
+    data: {
+        table: 'testtable'
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+
+});
+
+
+</script>
 
 <a href="{{url_for('all_homegroup_data')}}">Download Data</a>
 

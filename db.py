@@ -84,7 +84,7 @@ def get_all_member_roles():
 
 # finds member based on an email
 def find_user(email):
-    g.db.execute('SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s', (email,))
+    g.db.execute('''SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s and member_role.is_active = '1' ''', (email,))
     return g.db.fetchone()
 
 def find_user_info(id):
