@@ -83,7 +83,7 @@
     }
 
     .custombuttonwidth {
-        width: 120px !important;
+        width: 105px !important;
     }
 
     .homegroup-heading:hover > .active {
@@ -107,10 +107,16 @@
 
 {% block title %} All Home Groups {% endblock %}
 {% block content %}
+    <div class="container" style="margin:5%;">
 
-{#    <div class="container">#}
         <h1 class="head-style animated stretchLeft">All Home Groups</h1>
         <div class="row">
+            <div class="col form-group float-left">
+                <a href="{{ url_for('create_homegroup') }}" class="btn btn-success">
+                    <span class="fa fa-plus"></span>
+                    Add Home Group
+                </a>
+            </div>
             <div class="col form-group pull-right">
                 <div class="section section--sade">
                     Show Inactive Home Groups
@@ -121,20 +127,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col form-group float-left">
-                <a href="{{ url_for('create_homegroup') }}" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add Home Group
-                </a>
-            </div>
-            <div class="col form-group float-right">
-                <div class="inner-addon right-addon">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <input type="text" class="search form-control" placeholder="Search">
-                </div>
+
+            <div class="search">
+                <span class="fa fa-search"></span>
+                <input type="text" class="form-control" placeholder="Search">
             </div>
         </div>
-    </div>
 {##}
 {#    <span class="counter pull-right"></span>#}
 {#    <table class="table table-striped table-bordered table-hover results">#}
@@ -185,14 +183,14 @@
 {#    </table>#}
 
 
-    <div class="container">
+{#    <div class="container">#}
 
-
+    <div class="container-fluid" style="padding:0 !important;">
     <span class="counter pull-right"></span>
     {% for homegroup in homegroup_list %}
         {% if homegroup.is_active == 1 %}
-            <div class="row w-100">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
+            <div class="row w-100"  style="padding:0; margin:0 !important;">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12"  style="padding:0 !important;">
                 <p class="homegroup-heading homegroup{{ homegroup.id }} w-100" data-toggle="collapse"
                    data-parent="#accordion" href="#collapse{{ homegroup.id }}"><span
                         class="homegroupname">{{ homegroup.name }}</span> <i class="fa fa-angle-down" aria-hidden="true" style="float:right"></i></p>
@@ -221,7 +219,8 @@
                                class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
                                Remove
                             </a>
-                             <a href="{{url_for('homegroup_data',homegroup_id = homegroup.id)}}">Download</a>
+                             <a href="{{url_for('homegroup_data',homegroup_id = homegroup.id)}}"
+                             class="custombuttonwidth homegroupcontent btn btn-outline-secondary btn-sm">Download</a>
                         </div>
                         <div style="padding-top:1.5%" class="col-xl-2 col-lg-2 col-md-2 col-xs-2">
                             <p>Active?
@@ -261,9 +260,10 @@
                </div>
             </div>
         </div>
+        </div>
     {% endfor %}
+    </div>
 {% endblock %}
-</div>
 
 {#<script>#}
 {#    $('div.homegroup-heading').onClick (function () {#}
