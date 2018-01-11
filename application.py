@@ -81,6 +81,9 @@ def download_file(filename):
 
 
 
+
+
+
 # this displays the dashboard depending on user role
 @app.route('/dashboard')
 def dashboard():
@@ -806,10 +809,13 @@ class CreateHomeGroupForm(FlaskForm):
 
 # displays admin home page
 @app.route('/admin')
+@login_required
+@requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
     print(attendance_count)
-    return render_template('admin_home.html', attendance_count=attendance_count)
+    homegroup_data = [{'total':[1,5,2]}]
+    return render_template('admin_home.html', attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup
