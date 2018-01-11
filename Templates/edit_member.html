@@ -1,11 +1,12 @@
+<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ heading_text }}{% endblock %}
 
 {% block content %}
     <div class="container">
-			<div class="row main">
-				<div class="main-login main-center">
+{#			<div class="row main">#}
+				<div class="main-login main-center" style="margin-top:3.5%">
                      <h2 class="head-style" > {{ heading_text }}</h2>
 					    <form method = "POST" role="form" data-toggle="validator">
 
@@ -54,7 +55,7 @@
 
                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                               <p> <label>Birthday</label><br> <input type="date" style="color: black" name="Birthday" value="{{ bDay }}" required/></p>
+                               <p> <label>Birthdays</label><br> <input type="date" style="color: black" name="Birthday" value="{{ bDay }}" required/></p>
                             </div>
                          </div>
 
@@ -76,7 +77,7 @@
 
 					</form>
 				</div>
-			</div>
+{#			</div>#}
 		</div>
-
+    </section>
 {% endblock %}
