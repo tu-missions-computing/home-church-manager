@@ -438,9 +438,28 @@ def user_profile(user_id):
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
-    print (attendance_count)
+   # member_attendance = db.homegroup_member_attendance(homegroup_id)
+    members = db.get_homegroup_members(homegroup_id)
+    member_attendance = []
+    for member in members:
+        attendance = db.get_member_attendance(homegroup_id, member['member_id'])
+        list = []
+        name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
+        list.append(name)
+        for item in attendance:
+            list.append(item['attendance'])
+        list_length = len(list)
+        if (list_length < 4):
+            for i in range(0, (4 - list_length)):
+                list.append(False)
+        member_attendance.append(list)
+        dates = db.get_last_3_dates(homegroup_id)
+        print(member_attendance)
+
+
+
     return render_template('homegroup.html', currentHomegroup=homegroup,
-                           attendance_count=attendance_count)
+                           attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
 
 class AttendanceForm(FlaskForm):
@@ -727,6 +746,7 @@ def create_new_member_for_homegroup(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
+    print (current_homegroup)
     homegroup_members = db.get_homegroup_members(homegroup_id)
     list = []
     for member in homegroup_members:
@@ -813,9 +833,9 @@ class CreateHomeGroupForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
-    print(attendance_count)
-    homegroup_data = [{'total':[1,5,2]}]
-    return render_template('admin_home.html', attendance_count=attendance_count,  homegroup_data = homegroup_data)
+    homegroup_member_data = db.get_top_n_homegroup_member_counts('10')
+    gender = db.gender_report()
+    return render_template('admin_home.html', gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup

@@ -366,9 +366,35 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     g.db.execute(query, (homegroup_id, member_id, number_of_misses))
     return g.db.fetchall()
 
+def get_member_attendance(homegroup_id, member_id):
+    query='''
+    SELECT  first_name, last_name, date, attendance FROM attendance
+    join member on attendance.member_id = member.id
+    join meeting on meeting.id = attendance.meeting_id
+    WHERE homegroup_id = %s and member_id = %s
+    and date in (
+        select distinct date from attendance
+            join meeting on meeting.id = attendance.meeting_id
+        where homegroup_id = %s
+        order by date desc limit 3
+    )
+    order by date desc
+    '''
+
+    g.db.execute(query, (homegroup_id, member_id, homegroup_id))
+    return g.db.fetchall()
+
+def get_last_3_dates(homegroup_id):
+    query = '''
+    select distinct date from attendance
+            join meeting on meeting.id = attendance.meeting_id
+        where homegroup_id = %s
+        order by date desc limit 3'''
+    g.db.execute(query, (homegroup_id))
+    return g.db.fetchall()
+
 
 #################################### HOME GROUP ########################################
-
 
 
 # finds a homegroup leader
@@ -575,22 +601,67 @@ def get_all_inactive_admin():
 
 def get_attendance_counts():
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+SELECT  to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", COUNT (DISTINCT member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
+    JOIN homegroup on  homegroup.id = attendance.homegroup_id
     WHERE attendance = '1'
-    GROUP BY date, time
+    GROUP BY month
+    order by month asc
     '''
     g.db.execute(query)
     return g.db.fetchall()
 
+def get_top_n_homegroup_member_counts(n):
+    n = int(n)
+    query = '''
+    select name, count(distinct member_id) as memberCount from homegroup_member
+    join member on member.id = homegroup_member.member_id
+    join homegroup on homegroup_member.homegroup_id = homegroup.id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
+    group by name
+    order by memberCount desc limit %s
+    '''
+    g.db.execute(query, (n,))
+    return g.db.fetchall()
+
+def gender_report():
+    query = '''
+     select gender, count(distinct member_id) as memberCount from homegroup_member
+    join member on member.id = homegroup_member.member_id
+    join homegroup on homegroup_member.homegroup_id = homegroup.id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
+    group by gender
+    '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+def homegroup_member_attendance(homegroup_id):
+    query='''
+       select first_name, last_name, date, attendance
+   from attendance join meeting on meeting.id = attendance.meeting_id
+   join member on attendance.member_id = member.id
+   where homegroup_id = %s and date in (
+       select distinct date from attendance
+       join meeting on meeting_id = meeting.id
+       where homegroup_id = %s
+       order by date desc limit 3
+   )
+   order by first_name, last_name, date desc
+    '''
+    g.db.execute(query, (homegroup_id, homegroup_id))
+    return g.db.fetchall()
+
+
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT date, time, COUNT(member.id) AS "countMembers" FROM attendance
+    SELECT to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", extract(month from TO_DATE(date, 'YYYY-MM-DD')) as "month_num", COUNT( distinct member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = '1' AND homegroup_id = %s
-    GROUP BY date, time
+    GROUP BY month, month_num
+    order by month_num asc
+
     '''
     g.db.execute(query, (myhomegroup,))
     return g.db.fetchall()
