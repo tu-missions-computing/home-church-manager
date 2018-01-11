@@ -7,42 +7,42 @@
     <body class="faq">
 
 <div class="main-login faq-box">
-    <p class="animated stretchLeft" style="font-size: 40px;font-weight:300; margin-top:5%;">Frequently Asked Questions</p>
+    <p class="animated stretchLeft title-text">Frequently Asked Questions</p>
     <hr>
     {% if current_user.role == 'homegroup_leader' %}
 
-        <h3 class="question"><b>How do I add a person to a homegroup?</b></h3>
+        <h3 class="header-text"><b>How do I add a person to a homegroup?</b></h3>
         <p class="answer">Click on the "Members" tab on the navigation bar, and then click "Add Member" at the top of the page.</p><br>
-        <h3 class="question"><b>How do I take attendance?</b></h3>
+        <h3 class="header-text"><b>How do I take attendance?</b></h3>
         <p class="answer">Click on "Attendance" tab on the navigation bar.
             Select the current date and time and click "Take Attendance".
             Click the check boxes next to a person's name if they are present. Leave blank if absent.
         </p><br>
-        <h3 class="question"><b>How do I edit/view past attendance reports?</b></h3>
+        <h3 class="header-text"><b>How do I edit/view past attendance reports?</b></h3>
         <p class="answer">On the "Attendance" page, click on "View Attendance History." Click "Edit" for the report you would like to
             view.</p><br>
-        <h3 class="question"><b>How do I edit my homegroup information?</b></h3>
+        <h3 class="header-text"><b>How do I edit my homegroup information?</b></h3>
         <p class="answer">Click on the "Homegroup Profile" tab, and edit your homegroup information using the form.</p><br>
-        <h3 class="question"><b>How do I email my homegroup?</b></h3>
+        <h3 class="header-text"><b>How do I email my homegroup?</b></h3>
         <p class="answer">Click on the "Members" tab. On the top right, click the "Contact Members" button, compose, and send your
             email.</p>
 
     {% endif %}
     {% if current_user.role == 'admin' %}
-        <h3 class="question"><b>How do I add a person to a homegroup?</b></h3>
+        <h3 class="header-text"><b>How do I add a person to a homegroup?</b></h3>
         <p class="answer">Click on the "Homegroups" tab on the navigation bar. Select the "Members" button of the desired homegroup.
             Click "Add Member" at the top of the page.</p><br>
-        <h3 class="question"><b>How do I delete a homegroup?</b></h3>
+        <h3 class="header-text"><b>How do I delete a homegroup?</b></h3>
         <p class="answer">Click on "Homegroups" tab. Select the "Delete" button of the desired homegroup. This will temporarily
             deactivate the homegroup. To reactivate a homegroup, click on "Show Inactive Homegroups" at the top of the
             page. Select "Reactivate" on the desired homegroup.</p><br>
-        <h3 class="question"><b>How do I view all members of all homegroups?</b></h3>
+        <h3 class="header-text"><b>How do I view all members of all homegroups?</b></h3>
         <p class="answer">Click on "Members" tab. Here, you can edit, create role, or remove a member.</p><br>
-        <h3 class="question"><b>How do I search by member demographics?</b></h3>
+        <h3 class="header-text"><b>How do I search by member demographics?</b></h3>
         <p class="answer">On the "All Members" page, click the "Advanced Search" button at the top. Click on the criteria you would
             like to filter by, and click "Query." This will display a list of members who meet the desired criteria.
             From here, you can email these members or download a report of the members.</p><br>
-        <h3 class="question"><b>How do I add homegroup leaders or admin?</b></h3>
+        <h3 class="header-text"><b>How do I add homegroup leaders or admin?</b></h3>
         <p class="answer">TODO: </p>
     {% endif %}
     {% if current_user.role != 'admin' %}
