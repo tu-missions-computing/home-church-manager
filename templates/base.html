@@ -14,15 +14,9 @@
     <title>{% block title %}My Title{% endblock %}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-        
 
-    <!-- Resource style for the popup confirmation box -->
     <link rel="stylesheet" href="/static/style.css">
-    <!-- Resource style for the hamburger menu -->
-    <link rel="stylesheet" href="/static/hamburgermenu.css">
-
     <link rel="stylesheet" href="/static/background.css">
-
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
     <!-- CSS Styling-->
     <style>
@@ -71,12 +65,6 @@
 
         footer {
             padding-top: 5%;
-        }
-
-        .head-style {
-            font-size: 40px;
-            padding: 25px;
-            text-align: center;
         }
 
         .toggle-button {
@@ -309,10 +297,10 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
                     {% if current_user.name %}
-                        <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
+                        <li class="nav-item" style="margin-top:3%"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
                                 class="fa fa-user"></i>Log Out</b></a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
+                        <li class="nav-item" style="margin-top:3%"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
                                 class="fa fa-user"></i>Log In</b></a></li>
                     {% endif %}
                 </ul>

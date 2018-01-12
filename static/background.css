@@ -5,11 +5,41 @@ body, html{
     margin-left:0px; !important
     margin-right:0px; !important
 }
+
+/*For Navigation Logout and Login Buttons*/
+
+.btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary, .btn-white, .btn-outline-white, .btn-success, .btn-outline-success, .btn-info, .btn-outline-info, .btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
+  font-size: .75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: .3rem; }
+
+
+.btn-outline-white, .btn-outline-white:visited {
+  background: none;
+  color: #fff;
+  border-color: #fff;
+}
+
+.btn-outline-white:hover, .btn-outline-white:focus, .btn-outline-white:active {
+  color: white;
+  background: lightgrey; }
+
+.link-white, link-white:visited {
+  font-size: .75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: .3rem;
+  border: 0;
+  color: #fff; }
+
+
  div{
      font-family: 'Lato', sans-serif;
      font-weight:bold;
         }
 
+ /*Text Styling*/
 
  .title-text{
      font-size: 40px;
