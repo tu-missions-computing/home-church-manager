@@ -7,44 +7,50 @@
 
 
 <div class="container">
-            <div class="main-login main-center">
-    <h1 class="title-text">Attendance Report</h1>
-    <hr>
-    <div class="row">
-        <div class="col form-group pull-left">
-            <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> <span class="glyphicon glyphicon-time"> </span> View Attendance History</button><br><br></a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col form-group pull-left">
-            <form method = "POST">
-                <span class="col">
-                    <span class="col form-group pull-left counter">
-                        <h4><span class="label label-default">Date</span></h4>
-                    </span>
-                    <span class="col form-group pull-left counter">
-                        <input type="date" id="datePicker" name="AttendanceDate" class="date"required/>
-                    </span>
-                    <span class="col form-group pull-left counter">
-                        <h4><span class="label label-default">Time</span></h4>
-                    </span>
-                    <span class="col form-group pull-left counter">
-                        <input class="date counter" id="timePicker" type="time" name = "AttendanceTime" required/><br>
-                    </span>
-                </span>
-                <span class="col form-group pull-left counter">
-                    <input type="submit" class="btn btn-info" value="Take Attendance">
-                </span>
-            </form>
-        </div>
-    </div>
+   <div class="main-login main-center">
+        <h1 class="title-text">Attendance Report</h1>
+        <hr>
+        <div class="row">
+            <div class="col form-group">
+                <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> View Attendance History</button></a>
             </div>
+        </div>
+        <div class="row">
+            <div class="col form-group">
+                <form method = "POST">
+                    <div class="container">
+                            <span class="row" >
+                                <span class="col-6">
+                                    <h4><span class="label label-default" style="float:left">Date</span></h4>
+                                </span>
+                                <span class="col-6">
+                                    <h4><span class="label label-default" style="float:left">Time</span></h4>
+                                </span>
+                            </span>
+
+                            <span class="row">
+                                  <span class="col-6">
+                                    <input type="date" id="datePicker" name="AttendanceDate" class="date inputbox-style" required/>
+                                </span>
+                                 <span class="col-6 float-right">
+                                     <input class="date inputbox-style" id="timePicker" type="time" name = "AttendanceTime" required/><br>
+                                </span>
+                            </span>
+                    <span class="col form-group">
+                        <input type="submit" class="btn btn-info" value="Take Attendance" style="margin-top:10%">
+                    </span>
+                        </div>
+                </form>
+            </div>
+        </div>
+   </div>
 
 
 </div>
 
- </section>
+
 <script>
+
 
     Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);

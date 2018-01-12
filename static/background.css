@@ -38,6 +38,14 @@ hr{
 	color: #fff;
 }
 
+/*Currently used by attendance.html */
+.inputbox-style{
+    float:left;
+    width:100%;
+    height:5%;
+    margin-top:3.5%;
+}
+
 .form-group{
 	margin-bottom: 15px;
 }
@@ -50,6 +58,16 @@ input,
 input::-webkit-input-placeholder {
     font-size: 11px;
     padding-top: 3px;
+}
+
+/*for icons inside of search box*/
+.search { position: relative; }
+.search input { text-indent: 30px;}
+.search .fa-search {
+  position: absolute;
+  top: 24px;
+  left: 7px;
+  font-size: 15px;
 }
 
 .main-login{

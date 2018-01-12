@@ -6682,6 +6682,18 @@ html * {
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
   margin-top: 3.5%; }
 
+.larger-container {
+  margin: 0 auto;
+  padding: 10px 40px;
+  background: #f2f2f2;
+  color: #000000;
+  text-shadow: none;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  margin-top: 3.5%;
+  max-width: 100%; }
+
 .findahomegroupbtn {
   font-weight: 800;
   font-style: italic;
@@ -6707,6 +6719,11 @@ html * {
   margin-top: 10%;
   text-align: center; }
 
+.larger-container {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 100%; }
+
 .verbotext {
   font-size: 200%; }
 
@@ -6727,6 +6744,11 @@ html * {
   width: 75%; }
 
 @media (min-width: 576px) {
+  .larger-container {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%; }
+
   .verbotext {
     font-size: 300%; }
 
@@ -6746,6 +6768,11 @@ html * {
   .faq-box {
     width: 75%; } }
 @media (min-width: 768px) {
+  .larger-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    max-width: 75%; }
+
   .verbotext {
     font-size: 300%; }
 
@@ -6765,6 +6792,11 @@ html * {
   .faq-box {
     width: 75%; } }
 @media (min-width: 992px) {
+  .larger-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    max-width: 75%; }
+
   .verbotext {
     font-size: 300%; }
 
@@ -6784,6 +6816,11 @@ html * {
   faq-box {
     width: 50%; } }
 @media (min-width: 1200px) {
+  .larger-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    max-width: 85%; }
+
   .verbotext {
     font-size: 300%; }
 
@@ -7664,5 +7701,116 @@ stretchRight
     -webkit-transform: scaleX(1.01); }
   100% {
     -webkit-transform: scaleX(1); } }
+/* Made by Jimmy Gillam */
+/* Checkmark style starts */
+@-moz-keyframes dothabottomcheck {
+  0% {
+    height: 0; }
+  100% {
+    height: 12.5px; } }
+@-webkit-keyframes dothabottomcheck {
+  0% {
+    height: 0; }
+  100% {
+    height: 12.5px; } }
+@keyframes dothabottomcheck {
+  0% {
+    height: 0; }
+  100% {
+    height: 12.5px; } }
+@keyframes dothatopcheck {
+  0% {
+    height: 0; }
+  50% {
+    height: 0; }
+  100% {
+    height: 30px; } }
+@-webkit-keyframes dothatopcheck {
+  0% {
+    height: 0; }
+  50% {
+    height: 0; }
+  100% {
+    height: 30px; } }
+@-moz-keyframes dothatopcheck {
+  0% {
+    height: 0; }
+  50% {
+    height: 0; }
+  100% {
+    height: 30px; } }
+input[type=checkbox] {
+  display: none; }
+
+.check-box {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: 2.5px solid #453F3B;
+  border-radius: 5px;
+  position: relative;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: border-color ease 0.2s;
+  -o-transition: border-color ease 0.2s;
+  -webkit-transition: border-color ease 0.2s;
+  transition: border-color ease 0.2s;
+  cursor: pointer; }
+  .check-box::before, .check-box::after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    height: 0;
+    width: 5px;
+    background-color: #34b93d;
+    display: inline-block;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-radius: 5px;
+    content: ' ';
+    -webkit-transition: opacity ease .5;
+    -moz-transition: opacity ease .5;
+    transition: opacity ease .5; }
+  .check-box::before {
+    top: 18px;
+    left: 10.25px;
+    box-shadow: 0 0 0 1.25px transparent;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg); }
+  .check-box::after {
+    top: 9.25px;
+    left: 1.25px;
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg); }
+
+input[type=checkbox]:checked + .check-box,
+.check-box.checked {
+  border-color: #34b93d; }
+  input[type=checkbox]:checked + .check-box::after,
+  .check-box.checked::after {
+    height: 12.5px;
+    -moz-animation: dothabottomcheck 0.2s ease 0s forwards;
+    -o-animation: dothabottomcheck 0.2s ease 0s forwards;
+    -webkit-animation: dothabottomcheck 0.2s ease 0s forwards;
+    animation: dothabottomcheck 0.2s ease 0s forwards; }
+  input[type=checkbox]:checked + .check-box::before,
+  .check-box.checked::before {
+    height: 30px;
+    -moz-animation: dothatopcheck 0.4s ease 0s forwards;
+    -o-animation: dothatopcheck 0.4s ease 0s forwards;
+    -webkit-animation: dothatopcheck 0.4s ease 0s forwards;
+    animation: dothatopcheck 0.4s ease 0s forwards; }
 
 /*# sourceMappingURL=style.css.map */

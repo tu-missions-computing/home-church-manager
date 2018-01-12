@@ -233,11 +233,9 @@
             color: white;
         }
 
-
     </style>
 </head>
 <body>
-
 
 {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -290,14 +288,14 @@
                         </li>
                     {% endif %}
                     {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home Group</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home Groups</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">Roles</a></li>
                     {% endif %}
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendence</a>
+                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a>
                         </li>
                     {% endif %}
 

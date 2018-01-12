@@ -1,11 +1,16 @@
+<section class="cover text-center">
 {%  extends "base.html" %}
 
 {% block title %} All Members {% endblock %}
 {% block content %}
+<style>
 
+</style>
 
-<div class="container-fluid">
-<h1 class="head-style">System Roles</h1>
+{#<div class="container-fluid">#}
+<div class="main-login larger-container" style="margin-top:3.5%">
+<h1 class="title-text">System Roles</h1>
+<hr>
     <div class="row">
         <div class="col form-group pull-right">
             <div class="inner-addon right-addon">
@@ -23,9 +28,10 @@
                 Advanced Search
              </a>
         </div>
-</div>
+
 
 <span class="counter pull-right"></span>
+
 <table class="table table-striped table-bordered table-hover results">
     <thead>
     <tr>
@@ -97,9 +103,10 @@
           </div>
         </div>
 
+
     </tbody>
 </table>
-
-</div>
-
+    </div>
+{#</div>#}
+</section>
 {% endblock %}
