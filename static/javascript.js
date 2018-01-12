@@ -7,10 +7,7 @@ $(document).ready(function () {
     //console.log(emailList);
 
 
-
 $('#confirmModal').on('show.bs.modal', function (event) {
-    alert("hi");
-    console.log("hi");
     var button = $(event.relatedTarget); // Button that triggered the modal
     var url = button.data('url'); // Extract info from data-* attributes
     var firstname = button.data('firstname');
