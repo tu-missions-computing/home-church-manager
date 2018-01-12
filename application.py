@@ -438,6 +438,13 @@ def user_profile(user_id):
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    if not attendance_count:
+        if (current_user.role == "admin"):
+            flash("No attendance data found for this Home Group", category="warning")
+            return redirect(url_for('get_homegroups', homegroup_id = homegroup_id))
+        else:
+            return render_template('homegroup.html', currentHomegroup=homegroup,
+                                   attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
     member_attendance = []
@@ -454,7 +461,7 @@ def homegroup(homegroup_id):
                 list.append(False)
         member_attendance.append(list)
         dates = db.get_last_3_dates(homegroup_id)
-        print(member_attendance)
+
 
 
 

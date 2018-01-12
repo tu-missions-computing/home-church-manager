@@ -326,7 +326,7 @@ def deactivate_member(member_id):
     '''
     g.db.execute(query, ( member_id))
     g.connection.commit()
-    return g.db
+    return g.db.rowcount
 
 # this sets a member as active in the system
 def reactivate_member(member_id):
