@@ -82,39 +82,9 @@
                             <!-- <a href="{{url_for('create_user', member_id = member.id)}}" class="btn btn-warning btn-sm">
           <span class="glyphicon glyphicon-plus"></span> Role
         </a> -->
-
-             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmModal" data-url="{{url_for('deactivate_member', member_id = member.member_id)}}" data-firstname="{{ member.first_name }}" data-lastname="{{ member.last_name }}">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    Remove</button>
-        </td>
-     <td class="content"><span style="color:green" class="glyphicon glyphicon-ok"></span></td>
-    </tr>
-    {% endfor %}
-
-        {%  for inactiveMember in inactiveMembers %}
-            <tr>
-
-            <td class="content"> {{ inactiveMember.first_name }}</td>
-            <td class="content"> {{ inactiveMember.last_name }}</td>
-            <td class="content">
-            <a href="{{url_for('edit_member', member_id = inactiveMember.id)}}" class="btn btn-info btn-sm">
-              <span class="glyphicon glyphicon-pencil"></span> Edit
-            </a>
-            <a href="{{url_for('reactivate_member', member_id = inactiveMember.id)}}" class="btn btn-success btn-sm">
-              <span class="glyphicon glyphicon-plus"></span> Reactivate
-            </a>
-            </td>
-            <td class="content">  <span  style="color:red" class="glyphicon glyphicon-remove"></span></td>
-        {% endfor %}
-
-
-
-
-
-
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                     data-target="#confirmModal"
-                                    data-url="{{ url_for('deactivate_member', member_id = member.id) }}"
+                                    data-url="{{ url_for('deactivate_member', member_id = member.member_id) }}"
                                     data-firstname="{{ member.first_name }}" data-lastname="{{ member.last_name }}">
                                 <span class="fa fa-trash"></span>
                                 Remove
@@ -172,31 +142,8 @@
 
                 </tbody>
             </table>
-<script>
-
-</script>
-
         </div>
 
         </section>
-                <script>
-  $(document).ready(function () {
 
-
-
-$('#confirmModal').on('shown.bs.modal', function (event) {
-    alert("hi");
-    console.log("hi");
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var url = button.data('url'); // Extract info from data-* attributes
-    var firstname = button.data('firstname');
-    var lastname = button.data('lastname');
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-body').text('Are you sure you want to remove ' + firstname + ' ' + lastname + '?');
-    modal.find('#modal-confirm').attr("href", url)
-});
-});
-            </script>
     {% endblock %}
