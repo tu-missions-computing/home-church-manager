@@ -453,18 +453,23 @@ def homegroup(homegroup_id):
     for member in members:
         attendance = db.get_member_attendance(homegroup_id, member['member_id'])
         list = []
-        name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
-        list.append(name)
-        for item in attendance:
-            list.append(item['attendance'])
-        list_length = len(list)
-        if (list_length < 4):
-            for i in range(0, (4 - list_length)):
+        if attendance:
+            name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
+            list.append(name)
+            for item in attendance:
+                list.append(item['attendance'])
+                list_length = len(list)
+            if (list_length < 4):
+                for i in range(0, (4 - list_length)):
+                    list.append(False)
+            member_attendance.append(list)
+            dates = db.get_last_3_dates(homegroup_id)
+        else:
+
+            list.append(member['first_name'] + " " + member['last_name'])
+            for i in range(0, 4):
                 list.append(False)
-        member_attendance.append(list)
-        dates = db.get_last_3_dates(homegroup_id)
-
-
+            member_attendance.append(list)
 
 
     return render_template('homegroup.html', currentHomegroup=homegroup,
