@@ -165,11 +165,15 @@
                                    class="btn btn-primary btn-sm">
                                     <span class="fa fa-clock-o"></span> Attendance
                                 </a>
-                              
-                                <a href="{{ url_for('deactivate_homegroup', homegroup_id = homegroup.id) }}"
-                                   class="btn btn-danger btn-sm">
+
+                                <a style="color:white"
+                                   class="btn btn-danger btn-sm" data-toggle="modal"
+                                    data-target="#homegroupModal"
+                                     data-url="{{ url_for('deactivate_homegroup', homegroup_id = homegroup.id) }}"
+                                    data-homegroup="{{ homegroup.name }}">
                                     <span class="fa fa-trash"></span> Remove
                                 </a>
+
                             </td>
                             <td class="content"><span style="color:green" class="fa fa-check-square-o"></span></td>
                         </tr>
@@ -185,7 +189,7 @@
                             <span class="fa fa-plus"></span> Reactivate
                         </a>
                     </td>
-                    <td class="content"><span style="color:red" class="fa fa-check-square-o"></span></td>
+                    <td class="content"><span style="color:red" class="fa fa-times"></span></td>
                 {% endfor %}
                 </tbody>
             </table>
@@ -223,10 +227,13 @@
                                        class="custombuttonwidth homegroupcontent btn btn-outline-primary btn-sm">
                                         Attendance
                                     </a>
-                                    <a href="{{ url_for('deactivate_homegroup', homegroup_id = homegroup.id) }}"
-                                       class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm">
-                                        Remove
-                                    </a>
+                                    <button type="button" class="custombuttonwidth homegroupcontent btn btn-outline-danger btn-sm" data-toggle="modal"
+                                    data-target="#homegroupModal"
+                                     data-url="{{ url_for('deactivate_homegroup', homegroup_id = homegroup.id) }}"
+                                    data-homegroup="{{ homegroup.name }}" >
+                                <span class="fa fa-trash"></span>
+                                Remove
+                            </button>
                                     <a href="{{ url_for('homegroup_data',homegroup_id = homegroup.id) }}"
                                        class="custombuttonwidth homegroupcontent btn btn-outline-secondary btn-sm">Download</a>
                                 </div>
@@ -264,7 +271,7 @@
                             </div>
                             <div style="padding-top:1.5%" class="col-xl-2 col-lg-2 col-md-2 col-xs-2">
                                 <p>Active?
-                                    <i class="fa fa-square-o" aria-hidden="true" style="color:red;"></i>
+                                    <i class="fa fa-times" aria-hidden="true" style="color:red;"></i>
                                 </p>
                             </div>
                         </div>
@@ -272,5 +279,31 @@
                     </div>
                     </div>
                 {% endfor %}
+
         </section>
+                <div class="modal fade" id="homegroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="color:black">
+        ...
+      </div>
+      <div class="modal-footer">
+        <a href="#0" id="modal-confirm"><button type="button" class="btn btn-primary">
+                            Confirm
+                                </button>  </a>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
     {% endblock %}
+
