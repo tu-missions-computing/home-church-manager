@@ -329,10 +329,11 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
                     {% if current_user.name %}
-                        <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
+                        <li class="nav-item" style="padding-top:5px;padding-left:5px;"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
                                 class="fa fa-user"></i>&nbsp; Log Out</b></a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
+
+                        <li class="nav-item" style="padding-top:5px; padding-left:5px;"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
                                 class="fa fa-user"></i>&nbsp; Log In</b></a></li>
                     {% endif %}
                 </ul>
