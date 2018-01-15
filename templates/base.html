@@ -13,8 +13,27 @@
 
     <title>{% block title %}My Title{% endblock %}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
+    <!---->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+    <!---->
+    <script type="text/javascript" src="/static/javascript.js"></script>
+    <script type="text/javascript">
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(0, function () {
+                $(this).remove();
+            });
+        }, 4000);
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/background.css">
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
@@ -222,6 +241,14 @@
             color: white;
         }
 
+        #footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px; /* Height of the footer */
+{#            background: #6cf;#}
+        }
+
     </style>
 </head>
 <body>
@@ -291,17 +318,21 @@
                     {% if current_user.role == 'homegroup_leader' %}
                         <li class="nav-item"><a class="nav-link"
                                                 href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit
-                            Homegroup</a></li>
+                            Home Group</a></li>
                     {% endif %}
 
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
                     {% if current_user.name %}
-                        <li class="nav-item" style="margin-top:3%"><a class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
-                                class="fa fa-user"></i>Log Out</b></a></li>
+                        <li class="nav-item" style="padding-top:5px;padding-left:5px;"><a
+                                class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
+                                class="fa fa-user"></i>&nbsp; Log Out</b></a></li>
                     {% else %}
-                        <li class="nav-item" style="margin-top:3%"><a class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
-                                class="fa fa-user"></i>Log In</b></a></li>
+
+                        <li class="nav-item" style="padding-top:5px; padding-left:5px;"><a
+                                class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
+                                class="fa fa-user"></i>&nbsp; Log In</b></a></li>
+
                     {% endif %}
                 </ul>
             </div>
@@ -338,31 +369,35 @@
     <!-- /#page-content-wrapper -->
 
     <footer>
+{#                <div id="footer">#}
+
+            <div class="container-fluid">
+                <div class="row" style="background: rgba(0, 0, 0, 0.5);">
+                    <div class="col-4" style="padding:0;">
+                        <div style="padding-top:6%;"> &copy; Copyright 2018, Verbo Church</div>
+                    </div>
+                    <div class="col-4" style="padding:0;">
+                        <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;"><b>Verbo Iglesia
+                            Cristiana</b> <br> Av.10 de Agosto y Av. Loja <br>
+                            Cuenca, Ecuador
+                        </div>
+                    </div>
+                    <div class="col-4" style="padding:0; padding-top:.5%; background-size: contain;">
+                        <img src="/static/VerboMinistriesL.png" alt="Verbo Ministries Logo"
+                             style="width: 100%; height: auto; padding:0; max-width:200px"/>
+                    </div>
+                    {#            <div class="col-1" style="padding:0; background-size: contain;">#}
+                    {#                <img class="float-right" src="/static/tayloruniversity.jpg" alt="Taylor University Logo"#}
+                    {#                     style="width: 50%; height: auto; padding:0;"/>#}
+                    {#            </div>#}
+                </div>
+            </div>
+        </div>
+
     </footer>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-            crossorigin="anonymous"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/static/main.js"></script>
-    <script type="text/javascript" src="/static/javascript.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        window.setTimeout(function () {
-            $(".alert").fadeTo(500, 0).slideUp(0, function () {
-                $(this).remove();
-            });
-        }, 4000);
-    </script>
-
-
-
+</section>
 </body>
+
 </html>

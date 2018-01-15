@@ -9,11 +9,43 @@
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-<h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">Admin Dashboard</h1>
+<div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
+     <h1 style="font-weight:bold;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{homegroups.numberOfHomegroups}} </h1>
+    Home Groups (we don't store year lol)
+    <br> Total
+</div>
+<div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
+     <h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">{{active_homegroups.numberOfHomegroups}} </h1>
+    Active Groups
+    <br>Total Number
+</div>
+<div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
+     <h1 style="font-weight:bold;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{members.numberOfMembers}} </h1>
+    Verbo Members
+    <br> Attending Home Groups
+</div>
+<div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
+     <h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">{{attendance_rate}} </h1>
+    Attendance Rate
+    <br>In the month of {{ currentMonth }}
+</div>
+<div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
+     <h1 style="font-weight:bold;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{homegroup_leaders.numberOfHomegroupLeaders}} </h1>
+    Group Leaders
+    <br> Total Number
+</div>
+
+ <!--active_homegroups = db.number_of_active_homegroups()-->
+    <!--members = db.number_of_members_attending_homegroups()-->
+    <!--homegroup_leaders = db.number_of_homegroup_leaders()-->
+    <!--homegroups = db.number_of_homegroups()-->
+
+
 <div id="container" style="width: 48%; height: 45%; float:left; margin-left:2%"></div>
 <div id="line-chart" style="width:48%; height:45%;float:right; margin-right:2%" ></div>
 <div id="gender" style="padding-top:10px; width: 48%; height: 45%; float:left; margin-left:2%"></div>
 <div id="homegroupPie" style="padding-top:10px; width:48%; height:45%;float:right; margin-right:2%" ></div>
+
 <table id="datatable" hidden>
     <thead>
         <tr>

@@ -344,7 +344,7 @@ def get_homegroup_members(homegroup_id):
         SELECT * FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-        WHERE homegroup_member.is_active = '1' and  homegroup.id = %s
+        WHERE homegroup_member.is_active = '1' and  homegroup.id = %s and member.is_active = '1'
     '''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
@@ -682,3 +682,69 @@ def get_homegroup_emails(homegroup_id):
     WHERE homegroup_id = %s'''
     g.db.execute(query, (homegroup_id))
     return g.db.fetchall()
+
+################## Analytics #############################################
+
+# total number of home groups created
+def number_of_homegroups():
+    query = ''' select count(id) as "numberOfHomegroups" from homegroup
+        '''
+    g.db.execute(query)
+    return g.db.fetchone()
+
+# total number of active home groups
+def number_of_active_homegroups():
+    query = '''
+            select count(id) as "numberOfHomegroups" from homegroup
+            where is_active = '1'
+            '''
+    g.db.execute(query)
+    return g.db.fetchone()
+
+# total number of members attending home groups
+def number_of_members_attending_homegroups():
+    query = '''
+            select count(distinct (homegroup_member.member_id)) as "numberOfMembers" from homegroup_member
+            join attendance on homegroup_member.member_id = attendance.member_id
+            where homegroup_member.is_active = '1'
+            '''
+    g.db.execute(query)
+    return g.db.fetchone()
+
+# attendance rate for the current month
+def attendance_rate_for_current_month(month):
+    total_attended = 0
+    total_people = 0
+    homegroups = get_all_homegroups()
+    for hg in homegroups:
+        total_attended =total_attended +  people_who_attended(month, hg['id'])['members']
+        total_people = total_people + total_in_homegroup(month, hg['id'])['totalMembers']
+    percentage = (total_attended / total_people) * 100
+    return percentage
+
+
+def people_who_attended(month, homegroup_id):
+    query = '''select count(( member_id ))as "members"
+        from attendance join meeting on meeting.id = attendance.meeting_id
+where attendance = '1' and extract(month from TO_DATE(date, 'YYYY-MM-DD')) = %s
+and homegroup_id = %s
+                '''
+    g.db.execute(query, (month,homegroup_id))
+    return g.db.fetchone()
+
+def total_in_homegroup(month, homegroup_id):
+    query = '''select count( (member_id ))as "totalMembers"
+        from attendance join meeting on meeting.id = attendance.meeting_id
+where extract(month from TO_DATE(date, 'YYYY-MM-DD')) = %s and homegroup_id = %s
+                '''
+    g.db.execute(query, (month,homegroup_id))
+    return g.db.fetchone()
+
+# number of home group leaders
+def number_of_homegroup_leaders():
+    query = '''
+            select count(distinct(member_id)) as "numberOfHomegroupLeaders" from homegroup_leader
+            where is_active = '1'
+            '''
+    g.db.execute(query)
+    return g.db.fetchone()

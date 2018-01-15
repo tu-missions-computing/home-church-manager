@@ -21,6 +21,8 @@ import io
 
 import db
 from mail_settings import config_email
+import datetime
+
 
 app = Flask(__name__)
 config_email(app)
@@ -451,18 +453,23 @@ def homegroup(homegroup_id):
     for member in members:
         attendance = db.get_member_attendance(homegroup_id, member['member_id'])
         list = []
-        name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
-        list.append(name)
-        for item in attendance:
-            list.append(item['attendance'])
-        list_length = len(list)
-        if (list_length < 4):
-            for i in range(0, (4 - list_length)):
+        if attendance:
+            name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
+            list.append(name)
+            for item in attendance:
+                list.append(item['attendance'])
+                list_length = len(list)
+            if (list_length < 4):
+                for i in range(0, (4 - list_length)):
+                    list.append(False)
+            member_attendance.append(list)
+            dates = db.get_last_3_dates(homegroup_id)
+        else:
+
+            list.append(member['first_name'] + " " + member['last_name'])
+            for i in range(0, 4):
                 list.append(False)
-        member_attendance.append(list)
-        dates = db.get_last_3_dates(homegroup_id)
-
-
+            member_attendance.append(list)
 
 
     return render_template('homegroup.html', currentHomegroup=homegroup,
@@ -842,7 +849,15 @@ def admin_home():
     attendance_count = db.get_attendance_counts()
     homegroup_member_data = db.get_top_n_homegroup_member_counts('10')
     gender = db.gender_report()
-    return render_template('admin_home.html', gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
+    active_homegroups = db.number_of_active_homegroups()
+    members = db.number_of_members_attending_homegroups()
+    now = datetime.datetime.now()
+    month = now.month
+    attendance_rate = str(int(db.attendance_rate_for_current_month(month))) + '%'
+    homegroup_leaders = db.number_of_homegroup_leaders()
+    homegroups = db.number_of_homegroups()
+    print (attendance_rate)
+    return render_template('admin_home.html',attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup

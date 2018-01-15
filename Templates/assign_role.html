@@ -1,55 +1,59 @@
-{% extends 'base.html' %}
+<section class="cover text-center">
 
-{% block title %}Assign New Role{% endblock %}
+    {% extends 'base.html' %}
 
-{% block content %}
- <style>
-    body, html{
-     height: 100%;
-}
+    {% block title %}Assign New Role{% endblock %}
 
-    </style>
-    <div class="container">
-			<div class="row main">
-				<div class="main-login main-center">
-                     <h2 class="head-style" > Assign Role</h2>
-					 <form method = "POST" role="form" data-toggle="validator">
+    {% block content %}
+        <style>
+            body, html {
+                height: 100%;
+            }
 
-						<div class="form-group">
-							{{ form.csrf_token }}
+        </style>
+        <div class="container">
+            <div class="row main">
+                <div class="main-login main-center">
+                    <h2 class="head-style"> Assign Role</h2>
+                    <form method="POST" role="form" data-toggle="validator">
 
-                             <h3><b>email:</b> {{ email }}</h3>
+                        <div class="form-group">
+                            {{ form.csrf_token }}
 
-						</div>
+                            <h3><b>email:</b> {{ email }}</h3>
 
-						<div class="form-group">
-                           <p>{{ form.role.label }}{{ form.role(class="form-control") }}</p>
-						</div>
+                        </div>
 
-						<div class="form-group">
-							 <p id = 'homegroups' style=""> {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
-						</div>
+                        <div class="form-group">
+                            <p>{{ form.role.label }}{{ form.role(class="form-control") }}</p>
+                        </div>
 
-						<div class="form-group ">
-                              <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
-						</div>
+                        <div class="form-group">
+                            <p id='homegroups' style="">
+                                {{ form.homegroups.label }}{{ form.homegroups(class="form-control") }}</p>
+                        </div>
 
-					</form>
-				</div>
-			</div>
-		</div>
+                        <div class="form-group ">
+                            <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
+                        </div>
 
-     <script>
-    document.getElementById('role').onchange = function(){
+                    </form>
+                </div>
+            </div>
+        </div>
 
-        var role_id = document.getElementById('role')
-        var role = role_id.options[role_id.selectedIndex].text;
-        if (role == 'homegroup_leader') {
-            document.getElementById('homegroups').style.visibility = 'visible';
-        } else {
-            document.getElementById('homegroups').style.visibility = 'hidden';
-		}
-    }
+        <script>
+            document.getElementById('role').onchange = function () {
 
-    </script>
-{% endblock %}
+                var role_id = document.getElementById('role');
+                var role = role_id.options[role_id.selectedIndex].text;
+                if (role == 'homegroup_leader') {
+                    document.getElementById('homegroups').style.visibility = 'visible';
+                } else {
+                    document.getElementById('homegroups').style.visibility = 'hidden';
+                }
+            }
+
+        </script>
+        </section>
+    {% endblock %}
