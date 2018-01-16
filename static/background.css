@@ -11,7 +11,6 @@ body, html{
     background-color:#f7f7f7;
     margin-left:2%;
     height:150px;
-    width:200px;
     margin-bottom:3.5%;
     margin-top:3.5%;
     border-bottom: 1px solid black;
@@ -33,7 +32,7 @@ body, html{
 
 .heading-text{
     font-weight:900;
-    font-size:20px;
+    font-size:130%;
 }
 
 .secondary-text{
@@ -43,7 +42,7 @@ body, html{
 
 .graph-styling{
     width: 48%;
-    height: 50%;
+    height: 45%;
     margin-top:5%;
     margin-left:2%;
     margin-bottom:5%;
