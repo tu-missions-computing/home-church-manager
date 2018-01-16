@@ -34,7 +34,7 @@ create table member_role(
   member_id INTEGER,
   password text ,
   role_id INTEGER,
-i  is_active BOOLEAN,
+  is_active BOOLEAN,
   foreign key (member_id) REFERENCES member(id),
   foreign key (role_id) references role(id),
   primary key (member_id, role_id)
