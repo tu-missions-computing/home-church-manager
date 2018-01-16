@@ -1,4 +1,4 @@
-baDROP TABLE IF EXISTS member_role;
+DROP TABLE IF EXISTS member_role;
 DROP TABLE IF EXISTS homegroup_leader;
 DROP TABLE IF EXISTS homegroup_member;
 DROP TABLE IF EXISTS attendance;

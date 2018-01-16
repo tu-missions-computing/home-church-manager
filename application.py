@@ -103,6 +103,7 @@ def dashboard():
 @app.route('/map')
 def map():
     homegroups = db.get_all_homegroup_info()
+    print(homegroups)
     return render_template('map.html', homegroups=homegroups)
 
 # displays the faq page
@@ -664,12 +665,10 @@ def edit_homegroup(homegroup_id):
                                   longitude=row['longitude'])
     if request.method == "POST" and hg_form.validate():
         name = hg_form.name.data
-        description = hg_form.description.data
+        description =hg_form.description.data
         location = hg_form.location.data
         latitude = hg_form.latitude.data
         longitude = hg_form.longitude.data
-        print(latitude)
-        print(longitude)
         rowcount = db.edit_homegroup(homegroup_id, name, location, description, latitude, longitude)
         if (rowcount == 1):
             flash("Home Group updated!", category="success")
@@ -967,6 +966,7 @@ def create_member():
 @login_required
 @requires_roles('admin')
 def deactivate_member(member_id):
+
     rowcount = db.deactivate_member(member_id)
     print(db.find_member(member_id)['is_active'])
     # if the member is not active
