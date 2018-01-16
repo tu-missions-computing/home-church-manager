@@ -170,6 +170,13 @@ input::-webkit-input-placeholder {
     height: auto!important;
 padding: 8px 12px !important;
 }
+.medium-form-control {
+    height: 30px!important;
+padding: 8px 12px !important;
+    width: 300px !important;
+    margin-left:75px;
+}
+
 .input-group {
     -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
     -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
@@ -313,3 +320,5 @@ input[type="checkbox"] {
         input[type="checkbox"]:checked + i:before {
             color: rgba(0, 128, 0, 0.5);
         }
+
+
