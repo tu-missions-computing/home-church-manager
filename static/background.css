@@ -47,6 +47,17 @@ body, html{
     margin-bottom:5%;
 }
 
+.btn-primary{
+    background-color: #E76245;
+    border-color:#E76245;
+}
+
+.btn-primary:hover{
+    background-color: rgba(231, 98, 69, .75);
+    border-color:  rgba(231, 98, 69, .75);
+
+}
+
 /*For Navigation Logout and Login Buttons*/
 
 .btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary, .btn-white, .btn-outline-white, .btn-success, .btn-outline-success, .btn-info, .btn-outline-info, .btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
