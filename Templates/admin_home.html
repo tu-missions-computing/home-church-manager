@@ -13,35 +13,37 @@
 <div class="container" style="color:black; margin-top:1.5%">
     <div class="row">
         <div class="col-lg-3" style="background-color:white;">
-            <div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px;margin-bottom:3.5%; margin-top:3.5%;">
-                 <h1 style="font-weight:900;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{homegroups.numberOfHomegroups}} </h1>
-                HOME GROUPS
-                <br> TOTAL NUMBER
+            <div class="dashboard-stats">
+                 <h1 class="number-text-blue">{{homegroups.numberOfHomegroups}} </h1>
+                <span class="heading-text"> HOME GROUPS</span>
+                <br> <span class="secondary-text">TOTAL NUMBER</span>
             </div>
-            <div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
-                 <h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">{{active_homegroups.numberOfHomegroups}} </h1>
-                    ACTIVE GROUPS
-                <br>TOTAL NUMBER
+            <div class="dashboard-stats">
+                 <h1 class="number-text-red">{{active_homegroups.numberOfHomegroups}} </h1>
+                <span class="heading-text"> ACTIVE GROUPS</span>
+                <br><span class="secondary-text">TOTAL NUMBER</span>
             </div>
-            <div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
-                 <h1 style="font-weight:bold;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{members.numberOfMembers}} </h1>
-                VERBO MEMBERS
-                <br> ATTENDING HOME GROUPS
+            <div class="dashboard-stats">
+                 <h1 class="number-text-blue">{{members.numberOfMembers}} </h1>
+                <span class="heading-text">VERBO MEMBERS</span>
+                <br> <span class="secondary-text">ATTENDING HOME GROUPS</span>
             </div>
-            <div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
-                 <h1 style="font-weight:bold;color:#E76245;padding-top:20px; padding-bottom:20px; margin-left:2%">{{attendance_rate}} </h1>
-                ATTENDANCE RATE
-                <br>IN THE MONTH OF {{ currentMonth }}
+            <div class="dashboard-stats">
+                 <h1 class="number-text-red">{{attendance_rate}} </h1>
+                <span class="heading-text">ATTENDANCE RATE</span>
+                <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
             </div>
-            <div style="background-color:#f7f7f7;margin-left:2%; height:150px; width:200px">
-                 <h1 style="font-weight:bold;color:#2B75A0;padding-top:20px; padding-bottom:20px; margin-left:2%">{{homegroup_leaders.numberOfHomegroupLeaders}} </h1>
-                GROUP LEADERS
-                <br> TOTAL NUMBER
+            <div class="dashboard-stats">
+                 <h1 class="number-text-blue">{{homegroup_leaders.numberOfHomegroupLeaders}} </h1>
+                <span class="heading-text">GROUP LEADERS</span>
+                <br> <span class="secondary-text">TOTAL NUMBER</span>
             </div>
         </div>
         <div class="col-lg-9" style="background-color:white;">
         <h1 class="title-text">ADMIN DASHBOARD</h1>
         <hr>
+                <a href="{{url_for('all_homegroup_data')}}" class="btn btn-primary btn-lg btn-block" style="width:50%;margin-left:auto;margin-right:auto;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
+
 
  <!--active_homegroups = db.number_of_active_homegroups()-->
     <!--members = db.number_of_members_attending_homegroups()-->
@@ -49,12 +51,13 @@
     <!--homegroups = db.number_of_homegroups()-->
 
 
-{#<div id="container" style="width: 48%; height: 45%; float:left; margin-left:2%"></div>#}
-        <div id="line-chart" style="width:48%; height:45%;float:right; margin-right:2%" ></div>
-        <div id="gender" style="padding-top:10px; width: 48%; height: 45%; float:left; margin-left:2%"></div>
-        <div id="homegroupPie" style="padding-top:10px; width:48%; height:45%;float:right; margin-right:2%" ></div>
+        <div id="container" class="graph-styling" style="float:left;"></div>
+        <div id="line-chart" class="graph-styling" style="float:right;" ></div>
 
-        <table id="datatable" hidden>
+        <div id="gender" class="graph-styling" style="float:left;"></div>
+        <div id="homegroupPie" class="graph-styling" style="float:right;" ></div>
+
+        <table id="datatable" class="graph-styling" hidden>
             <thead>
                 <tr>
                     <th></th>
@@ -89,6 +92,7 @@
             </tbody>
         </table>
 
+  </div>
         </div>
 <script>
     Highcharts.chart('container', {
@@ -138,10 +142,7 @@
     </tbody>
 </table>
 
-<div style="float:left; margin-left:2%">
-<a href="{{url_for('all_homegroup_data')}}">Download Data</a>
-</div>
-  </div>
+
     </section>
 
 <script>
