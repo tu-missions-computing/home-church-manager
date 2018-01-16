@@ -722,7 +722,10 @@ def attendance_rate_for_current_month(month):
     for hg in homegroups:
         total_attended =total_attended +  people_who_attended(month, hg['id'])['members']
         total_people = total_people + total_in_homegroup(month, hg['id'])['totalMembers']
-    percentage = (total_attended / total_people) * 100
+    if (total_attended == 0) or (total_people == 0):
+        percentage = 0
+    else:
+        percentage = (total_attended / total_people) * 100
     return percentage
 
 
