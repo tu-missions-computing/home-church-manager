@@ -48,13 +48,13 @@ body, html{
 }
 
 .btn-primary{
-    background-color: #E76245;
-    border-color:#E76245;
+    background-color: #2B75A0;
+    border-color:#2B75A0;
 }
 
 .btn-primary:hover{
-    background-color: rgba(231, 98, 69, .75);
-    border-color:  rgba(231, 98, 69, .75);
+    background-color: rgba(43, 117, 160, .75);
+    border-color:  rgba(43, 117, 160, .75);
 
 }
 
