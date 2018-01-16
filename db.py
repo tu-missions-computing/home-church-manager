@@ -205,7 +205,8 @@ def get_homegroup_inactive_members(homegroup_id):
     g.db.execute('''SELECT * FROM member
             JOIN homegroup_member ON member.id = homegroup_member.member_id
             JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-            WHERE homegroup_member.is_active != '1' and  homegroup.id = %s''', (homegroup_id,))
+            WHERE homegroup_member.is_active != '1' and  homegroup.id = %s
+            order by last_name, first_name''', (homegroup_id,))
     return g.db.fetchall()
 
 
@@ -225,6 +226,7 @@ def get_all_inactive_members():
     query = '''
     SELECT * FROM member
     WHERE is_active='0'
+    order by last_name, first_name
     '''
     g.db.execute(query)
     return add_age_to_member_rows(g.db.fetchall())
@@ -324,7 +326,7 @@ def deactivate_member(member_id):
     UPDATE member SET is_active = '0'
     WHERE id = %s
     '''
-    g.db.execute(query, ( member_id))
+    g.db.execute(query, ( member_id,))
     g.connection.commit()
     return g.db.rowcount
 
@@ -334,7 +336,7 @@ def reactivate_member(member_id):
     UPDATE member SET is_active = '1'
     WHERE id = %s
     '''
-    g.db.execute(query, member_id)
+    g.db.execute(query, (member_id,))
     g.connection.commit()
     return g.db
 

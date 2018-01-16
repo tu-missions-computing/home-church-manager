@@ -103,7 +103,9 @@ function searchGuts() {
     function checkMarital(elt) {
         rtn = null;
         if ($('.maritalCheckbox').prop("checked")) {
+
             rtn = ($('#marital').val() == $(elt).find(".maritalData").text())
+             console.log(rtn);
         }
         else {
             rtn = true
