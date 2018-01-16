@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS member_role;
+baDROP TABLE IF EXISTS member_role;
 DROP TABLE IF EXISTS homegroup_leader;
 DROP TABLE IF EXISTS homegroup_member;
 DROP TABLE IF EXISTS attendance;
@@ -34,7 +34,7 @@ create table member_role(
   member_id INTEGER,
   password text ,
   role_id INTEGER,
-  is_active BOOLEAN,
+i  is_active BOOLEAN,
   foreign key (member_id) REFERENCES member(id),
   foreign key (role_id) references role(id),
   primary key (member_id, role_id)
