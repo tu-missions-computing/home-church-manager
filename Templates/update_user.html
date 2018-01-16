@@ -21,18 +21,18 @@
 
 						<div class="form-group">
 							 {{ form.csrf_token }}
-                             <p>{{ form.old_password.label }}{{ form.old_password(class='form-control') }}</p>
+                             <p class="form-label">{{ form.old_password.label }}{{ form.old_password(class='form-control') }}</p>
 						</div>
                          <div class="form-group">
-							 <p>{{ form.new_password.label }}{{ form.new_password(class="form-control") }}</p>
+							 <p class="form-label">{{ form.new_password.label }}{{ form.new_password(class="form-control") }}</p>
 						</div>
 
                          <div class="form-group">
-							 <p>{{ form.confirm_password.label }}{{ form.confirm_password(class="form-control") }}</p>
+							 <p class="form-label">{{ form.confirm_password.label }}{{ form.confirm_password(class="form-control") }}</p>
 						</div>
 
 						<div class="form-group ">
-                              <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
+                              <p class="form-label"> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
 						</div>
 					</form>
 				</div>
