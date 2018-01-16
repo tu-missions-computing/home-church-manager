@@ -18,13 +18,13 @@
                 <form method="POST">
                     {{ form.csrf_token }}
 
-                    <p>{{ form.email.label }}{{ form.email(class='form-control') }}</p>
+                    <p class="form-label">{{ form.email.label }}{{ form.email(class='form-control') }}</p>
                     {% if form.email.errors %}
                         <div class="alert alert-warning">
                             Please enter a valid E-mail
                         </div>
                     {% endif %}
-                    <p>{{ form.password.label }}{{ form.password(class="form-control") }}</p><br>
+                    <p class="form-label">{{ form.password.label }}{{ form.password(class="form-control") }}</p><br>
                     {% if form.password.errors %}
                         <div class="alert alert-warning">
                             Please enter a valid Password
