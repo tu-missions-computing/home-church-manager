@@ -224,57 +224,16 @@ span.input-group-addon i {
 	font-size: 11px;
 	text-align: center;
 }
+
+/*For checkbox style and animation*/
 input[type="checkbox"] {
             display: none;
-        }
-
-        label {
-            position: relative;
-            font-size: 30px;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        label:before, label:after {
-            font-size: 50px;
-            position: absolute;
-            top: 0;
-            left: -49px;
-            right: 10px;
-        }
-
-        label:before {
-            content: '\f096'; /*checkbox unchecked */
-        }
-
-        label:after {
-            content: '\f00c'; /*checkbox checked*/
-            max-width: 0;
-            overflow: hidden;
-            opacity: 0.5;
-            font-size: 27px;
-            top: 16px;
-            left: -42px;
-            color: #f2ca27;
-
-            -webkit-transition: all 0.50s;
-            -moz-transition: all 0.50s;
-            -o-transition: all 0.50s;
-            transition: all 0.50s;
         }
 
         input[type="checkbox"]:checked + label:after {
             max-width: 25px;
             opacity: 1;
             margin-right: 90px;
-        }
-
-        ::-moz-selection {
-            background: white;
-        }
-
-        ::selection {
-            background: white;
         }
 
         @-webkit-keyframes icon-beat {
@@ -301,41 +260,6 @@ input[type="checkbox"] {
                 -ms-transform: scale(1);
                 transform: scale(1);
             }
-        }
-
-        * {
-            -webkit-box-sizing: content-box;
-            -moz-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-
-        label {
-            display: block;
-            position: relative;
-            line-height: 28px;
-            font-weight: normal;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        label:last-of-type {
-            margin-right: 1rem;
-        }
-
-        label i {
-            display: inline-block;
-            height: 25px;
-            position: relative;
-            top: 6px;
-            font-style: normal;
-            color: #ccc;
-        }
-
-        label span {
-            display: inline-block;
-            margin-left: 5px;
-            line-height: 25px;
-            color: gray;
         }
 
         input[type="radio"],
