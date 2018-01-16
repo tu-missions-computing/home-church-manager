@@ -20,7 +20,7 @@
 
 						<div class="form-group">
 							{{ form.csrf_token }}
-                                <p> {{form.first_name.label}} {{form.first_name(class_='form-control', placeholder="First Name")}}</p>
+                                <p class="form-label"> {{form.first_name.label}} {{form.first_name(class_='form-control', placeholder="First Name")}}</p>
 
                                 {% if form.first_name.errors %}
                                     <div class="alert alert-warning">
@@ -30,7 +30,7 @@
 						</div>
 
 						<div class="form-group">
-							<p> {{form.last_name.label}} {{form.last_name(class_='form-control' , placeholder="Last Name")}}</p>
+							<p class="form-label"> {{form.last_name.label}} {{form.last_name(class_='form-control' , placeholder="Last Name")}}</p>
                                 {% if form.last_name.errors %}
                                       <div class="alert alert-warning">
                                         Invalid Last Name
@@ -39,7 +39,7 @@
 						</div>
 
 						<div class="form-group">
-							<p> {{form.email.label(for="inputEmail", class_="control-label")}} {{form.email(class_='form-control', type="email", id="inputEmail", placeholder="ex: email@gmail.com", dataerror="Bruh, that email address is invalid")}}</p>
+							<p class="form-label"> {{form.email.label(for="inputEmail", class_="control-label")}} {{form.email(class_='form-control', type="email", id="inputEmail", placeholder="ex: email@gmail.com", dataerror="Bruh, that email address is invalid")}}</p>
                                 {% if form.email.errors %}
                                     <div class="alert alert-warning">
                                         Invalid Email Address
@@ -48,7 +48,7 @@
 						</div>
 
 						<div class="form-group">
-							 <p> {{form.phone_number.label}} {{form.phone_number(class_='form-control', placeholder="ex: 224-656-8205")}}</p>
+							 <p class="form-label"> {{form.phone_number.label}} {{form.phone_number(class_='form-control', placeholder="ex: 224-656-8205")}}</p>
                                 {% if form.phone_number.errors %}
                                     <div class="alert alert-warning">
                                         Invalid Phone Number
@@ -57,36 +57,36 @@
 						</div>
                      <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> {{form.gender.label}} {{form.gender(class_='form-control')}}</p>
+                                <p class="form-label"> {{form.gender.label}} {{form.gender(class_='form-control')}}</p>
                             </div>
                         </div>
 
 
                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> <label>Birthday</label> <input type="date" style="color: black" name="Birthday" required/></p>
+                                <p class="form-label"> <label>Birthday</label> <input type="date" style="color: black" name="Birthday" required/></p>
                             </div>
                          </div>
 
                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> {{form.baptism_status.label}} {{form.baptism_status(class_='form-control')}}</p>
+                                <p class="form-label"> {{form.baptism_status.label}} {{form.baptism_status(class_='form-control')}}</p>
                             </div>
                          </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> {{ form.marital_status.label }} {{ form.marital_status(class_='form-control') }}</p>
+                                <p class="form-label"> {{ form.marital_status.label }} {{ form.marital_status(class_='form-control') }}</p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                <p> <label>Join Date</label> <input type="date" id="datePicker" value="" style="color: black" name="JoinDate" required/></p>
+                                <p class="form-label"> <label>Join Date</label> <input type="date" id="datePicker" value="" style="color: black" name="JoinDate" required/></p>
                             </div>
                         </div><br>
 
 						<div class="form-group ">
-                              <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
+                              <p class="form-label"> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;")}}</p>
 						</div>
 
 					</form>
