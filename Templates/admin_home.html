@@ -10,9 +10,14 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<div class="container" style="color:black; margin-top:1.5%">
+<div class="container" style="background-color:white;color:black; margin-top:1.5%">
     <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12" style="background-color:white;">
+        <div class="col-12">
+            <h1 class="title-text">ADMIN DASHBOARD</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="dashboard-stats">
                  <h1 class="number-text-blue">{{homegroups.numberOfHomegroups}} </h1>
                 <span class="heading-text"> HOME GROUPS</span>
@@ -41,9 +46,8 @@
                  <a href="{{url_for('all_homegroup_data')}}" class="btn btn-primary btn-lg btn-block" style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
 
         </div>
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="background-color:white;">
-            <h1 class="title-text">ADMIN DASHBOARD</h1>
-             <hr>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
  <!--active_homegroups = db.number_of_active_homegroups()-->
     <!--members = db.number_of_members_attending_homegroups()-->
     <!--homegroup_leaders = db.number_of_homegroup_leaders()-->
