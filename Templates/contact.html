@@ -13,7 +13,7 @@
 
 						<div class="form-group">
                                 {{ form.csrf_token }}
-                                <p> {{form.name.label}} {{form.name(class_='form-control', placeholder="Name")}}</p>
+                                <p class="form-label"> {{form.name.label}} {{form.name(class_='form-control', placeholder="Name")}}</p>
                                 {% if form.name.errors %}
                                     <div class="alert alert-warning">
                                         Please enter first and last name
@@ -22,7 +22,7 @@
 						</div>
 
 						<div class="form-group">
-                                <p> {{form.email.label(for="inputEmail", class_="control-label")}} {{form.email(class_='form-control', type="email", id="inputEmail", placeholder="Email", dataerror="Email address is invalid")}}</p>
+                                <p class="form-label"> {{form.email.label(for="inputEmail", class_="control-label")}} {{form.email(class_='form-control', type="email", id="inputEmail", placeholder="Email", dataerror="Email address is invalid")}}</p>
                                 {% if form.email.errors %}
                                  <div class="alert alert-warning">
                                   Invalid Email Address</div>
@@ -30,7 +30,7 @@
 						</div>
 
 						<div class="form-group">
-                            <p> {{form.message.label}} {{form.message(class_='form-control', placeholder="Message")}}</p>
+                            <p class="form-label"> {{form.message.label}} {{form.message(class_='form-control', placeholder="Message")}}</p>
                              {% if form.message.errors %}
                               <div class="alert alert-warning">
                               Please enter message</div>
