@@ -6,6 +6,49 @@ body, html{
     margin-right:0px; !important
 }
 
+/*For Dashboard Page*/
+.dashboard-stats{
+    background-color:#f7f7f7;
+    margin-left:2%;
+    height:150px;
+    width:200px;
+    margin-bottom:3.5%;
+    margin-top:3.5%;
+    border-bottom: 1px solid black;
+}
+
+.number-text-blue{
+    font-weight:900;
+    color:#2B75A0;
+    padding-top:20px;
+    margin-left:2%
+}
+
+.number-text-red{
+    font-weight:900;
+    color:#E76245;
+    padding-top:20px;
+    margin-left:2%
+}
+
+.heading-text{
+    font-weight:900;
+    font-size:20px;
+}
+
+.secondary-text{
+    font-weight:300;
+
+}
+
+.graph-styling{
+    width: 48%;
+    height: 50%;
+    margin-top:5%;
+    margin-left:2%;
+    margin-bottom:5%;
+}
+
 /*For Navigation Logout and Login Buttons*/
 
 .btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary, .btn-white, .btn-outline-white, .btn-success, .btn-outline-success, .btn-info, .btn-outline-info, .btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
