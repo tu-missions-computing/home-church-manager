@@ -79,7 +79,9 @@ hr{
 .form-group{
 	margin-bottom: 15px;
 }
-
+.form-label{
+	text-align:left;
+}
 label{
 	margin-bottom: 15px;
 }
