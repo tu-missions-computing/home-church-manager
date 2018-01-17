@@ -1,12 +1,13 @@
 <section class="cover text-center">
-{%  extends "base.html" %}
+    {% extends "base.html" %}
 
-{% block title %} {{currentHomegroup.name}} Home {% endblock %}
-{% block content %}
+    {% block title %} {{ currentHomegroup.name }} Home {% endblock %}
+    {% block content %}
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 
 <div class="container" style="background-color:white;color:black; margin-top:1.5%">
      <div class="row">
@@ -39,157 +40,201 @@
         </div>
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <div class="row" style="background-color:#f7f7f7; margin-bottom:3.5%; margin-top:1.5%; padding:3.5%; ">
+
+        <div class="container" style="background-color:white;color:black; margin-top:1.5%">
+            <div class="row">
+
                 <div class="col-12">
-                    <div><span style="font-weight:900">DESCRIPTION:</span> {{currentHomegroup.description}}</div>
-                    <div><span style="font-weight:900">LOCATION:</span> {{currentHomegroup.location}}</div>
-                  </div>
+                    <h1 class="title-text animated stretchLeft">{{ currentHomegroup.name }} DASHBOARD</h1>
+                </div>
+                <hr>
             </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-blue">{{ countMembers.numMembers }}</h1>
+                        <span class="heading-text">{{ currentHomegroup.name }} MEMBERS</span>
+                        <br> <span class="secondary-text">ATTENDING HOME GROUP</span>
+                    </div>
 
-           <div class="row">
-               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float:left;margin-right:0;background-color:#f7f7f7;padding:3.5%;">
-                   <h3>Attendance</h3>
-                    <h5><i>3 Most Recent Meetings</i></h5>
-                    <table class="table table-striped table-bordered table-hover results">
-                    <thead>
-                        <tr>
-                        <th></th>
-                        {% for date in dates %}
-                            <th>{{ date.date}}</th>
-                        {% endfor %}
-                        </tr>
-                        <tbody>
-                            {% for member in member_attendance %}
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-red">## </h1>
+                        <span class="heading-text"> ACTIVE MEMBERS</span>
+                        <br><span class="secondary-text">ATTENDING {{ currentHomegroup.name }}</span>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-blue">{{ attendance_rate }} </h1>
+                        <span class="heading-text">ATTENDANCE RATE</span>
+                        <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
+                    </div>
+                    <a href="{{ url_for('all_homegroup_data') }}" class="btn btn-primary btn-lg btn-block"
+                       style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i
+                            class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
+
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="row"
+                         style="background-color:#f7f7f7; margin-bottom:3.5%; margin-top:1.5%; padding:3.5%; ">
+                        <div class="col-12">
+                            <div><span style="font-weight:900">DESCRIPTION:</span> {{ currentHomegroup.description }}
+                            </div>
+                            <div><span style="font-weight:900">LOCATION:</span> {{ currentHomegroup.location }}</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                             style="float:left;margin-right:0;background-color:#f7f7f7;padding:3.5%;">
+                            <h3>Attendance</h3>
+                            <h5><i>3 Most Recent Meetings</i></h5>
+                            <table class="table table-striped table-bordered table-hover results">
+                                <thead>
                                 <tr>
-                                <td>{{member[0]}}</td>
-                                    {% if member[1] %}
-                                        <td style="color:#2B75A0;"> <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i></td>
-                                    {% else %}
-                                     <td style="color:#E76245"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i> </td>
-                                    {% endif %}
-                                    {% if member[2] %}
-                                    <td style="color:#2B75A0;" > <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i></td>
-                                    {% else %}
-                                    <td style="color:#E76245"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i> </td>
-                                    {% endif %}
-                                    {% if member[3] %}
-                                    <td style="color:#2B75A0;"> <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i></td>
-                                    {% else %}
-                                    <td style="color:#E76245"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i> </td>
-                                    {% endif %}
+                                    <th></th>
+                                    {% for date in dates %}
+                                        <th>{{ date.date }}</th>
+                                    {% endfor %}
                                 </tr>
+                                <tbody>
+                                {% for member in member_attendance %}
+                                    <tr>
+                                        <td>{{ member[0] }}</td>
+                                        {% if member[1] %}
+                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                                                          aria-hidden="true"></i></td>
+                                        {% else %}
+                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                                                         aria-hidden="true"></i></td>
+                                        {% endif %}
+                                        {% if member[2] %}
+                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                                                          aria-hidden="true"></i></td>
+                                        {% else %}
+                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                                                         aria-hidden="true"></i></td>
+                                        {% endif %}
+                                        {% if member[3] %}
+                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                                                          aria-hidden="true"></i></td>
+                                        {% else %}
+                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                                                         aria-hidden="true"></i></td>
+                                        {% endif %}
+                                    </tr>
                                 {% endfor %}
-                        </tbody>
-                        </tr>
-                        </thead>
-                    </table>
-               </div>
+                                </tbody>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
 
-               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                   <div id="line-chart" class="graph-styling" style="margin-right:0; margin-left:0;"></div>
-               </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                            <div id="line-chart" class="graph-styling" style="margin-right:0; margin-left:0;"></div>
+                        </div>
 
-         </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<table style="display:none" id="datatable">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Home Group Attendance</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for attendance_record in attendance_count %}
-        <tr>
-            <th>{{attendance_record.month}}</th>
-            <td>{{attendance_record.countMembers}}</td>
-        </tr>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        <table style="display:none" id="datatable">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Home Group Attendance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for attendance_record in attendance_count %}
+                <tr>
+                    <th>{{ attendance_record.month }}</th>
+                    <td>{{ attendance_record.countMembers }}</td>
+                </tr>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-<script>
-Highcharts.chart('line-chart', {
-    chart: {
-        type: 'line'
-    },
-    title: {
-        text: 'Attendance Report'
-    },
-    subtitle: {
-        text: 'Monthly'
-    },
-    yAxis: {
-        title: {
-            text: '# of people'
-        }
-    },
-    data: {
-        table: 'datatable'
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true
-            },
-            enableMouseTracking: false
-        }
-    },
+        <script>
+            Highcharts.chart('line-chart', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Attendance Report'
+                },
+                subtitle: {
+                    text: 'Monthly'
+                },
+                yAxis: {
+                    title: {
+                        text: '# of people'
+                    }
+                },
+                data: {
+                    table: 'datatable'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
 
-});
+            });
 
-</script>
+        </script>
 
-<!--<table id="datatable" hidden>-->
-    <!--<thead>-->
-         <!--<tr>-->
-                <!--<th></th>-->
-              <!--<th>Date</th>-->
-          <!--</tr>-->
-     <!--</thead>-->
-    <!--<tbody>-->
-            <!--{% for attendance_record in attendance_count %}-->
-         <!--<tr>-->
-               <!--<th>{{ attendance_record.date }}</th>-->
-                <!--<td>{{ attendance_record.countMembers}}</td>-->
-           <!--</tr>-->
-           <!--{% endfor %}-->
+        <!--<table id="datatable" hidden>-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th></th>-->
+        <!--<th>Date</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--{% for attendance_record in attendance_count %}-->
+            <!--<tr>-->
+            <!--<th>{{ attendance_record.date }}</th>-->
+            <!--<td>{{ attendance_record.countMembers}}</td>-->
+            <!--</tr>-->
+            <!--{% endfor %}-->
 
-     <!--</tbody>-->
-<!--</table>-->
+        <!--</tbody>-->
+        <!--</table>-->
 
 
-<!--<script>-->
-    <!--Highcharts.chart('container', {-->
+        <!--<script>-->
+        <!--Highcharts.chart('container', {-->
         <!--data: {-->
-            <!--table: 'datatable'-->
+        <!--table: 'datatable'-->
         <!--},-->
         <!--chart: {-->
-            <!--type: 'column'-->
-       <!--},-->
+        <!--type: 'column'-->
+        <!--},-->
         <!--title: {-->
-            <!--text: 'Total Attendance Counts'-->
+        <!--text: 'Total Attendance Counts'-->
         <!--},-->
         <!--yAxis: {-->
-            <!--allowDecimals: false,-->
-            <!--title: {-->
-                <!--text: 'Attendance Count'-->
-            <!--}-->
+        <!--allowDecimals: false,-->
+        <!--title: {-->
+        <!--text: 'Attendance Count'-->
+        <!--}-->
         <!--},-->
         <!--tooltip: {-->
-            <!--formatter: function () {-->
-                <!--return '<b>' + this.series.name + '</b><br/>' +-->
-                    <!--this.point.y + ' ' + this.point.name.toLowerCase();-->
-            <!--}-->
+        <!--formatter: function () {-->
+        <!--return '<b>' + this.series.name + '</b><br/>' +-->
+        <!--this.point.y + ' ' + this.point.name.toLowerCase();-->
         <!--}-->
-    <!--});-->
-<!--</script>-->
+        <!--}-->
+        <!--});-->
+        <!--</script>-->
 
 
 
-</section>
+        </section>
 
-{% endblock %}
+    {% endblock %}

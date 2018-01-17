@@ -1,250 +1,252 @@
 <section class="cover text-center">
 
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+    {% block title %}Home{% endblock %}
 
-{% block content %}
+    {% block content %}
 
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<div class="container" style="background-color:white;color:black; margin-top:1.5%">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="title-text">ADMIN DASHBOARD</h1>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="dashboard-stats">
-                 <h1 class="number-text-blue">{{homegroups.numberOfHomegroups}} </h1>
-                <span class="heading-text"> HOME GROUPS</span>
-                <br> <span class="secondary-text">TOTAL NUMBER</span>
-            </div>
-            <div class="dashboard-stats">
-                 <h1 class="number-text-red">{{active_homegroups.numberOfHomegroups}} </h1>
-                <span class="heading-text"> ACTIVE GROUPS</span>
-                <br><span class="secondary-text">TOTAL NUMBER</span>
-            </div>
-            <div class="dashboard-stats">
-                 <h1 class="number-text-blue">{{members.numberOfMembers}} </h1>
-                <span class="heading-text">VERBO MEMBERS</span>
-                <br> <span class="secondary-text">ATTENDING HOME GROUPS</span>
-            </div>
-            <div class="dashboard-stats">
-                 <h1 class="number-text-red">{{attendance_rate}} </h1>
-                <span class="heading-text">ATTENDANCE RATE</span>
-                <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
-            </div>
-            <div class="dashboard-stats">
-                 <h1 class="number-text-blue">{{homegroup_leaders.numberOfHomegroupLeaders}} </h1>
-                <span class="heading-text">GROUP LEADERS</span>
-                <br> <span class="secondary-text">TOTAL NUMBER</span>
-            </div>
-                 <a href="{{url_for('all_homegroup_data')}}" class="btn btn-primary btn-lg btn-block" style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
-
-        </div>
-        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:.75%">
-
- <!--active_homegroups = db.number_of_active_homegroups()-->
-    <!--members = db.number_of_members_attending_homegroups()-->
-    <!--homegroup_leaders = db.number_of_homegroup_leaders()-->
-    <!--homegroups = db.number_of_homegroups()-->
-           <div class="row">
-               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                    <div id="container" class="graph-styling" style="float:left;margin-right:0;"></div>
-               </div>
-               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                    <div id="line-chart" class="graph-styling" style="float:right%;margin-right:0;" ></div>
-               </div>
-           </div>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <div class="container" style="background-color:white;color:black; margin-top:1.5%">
             <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                     <div id="gender" class="graph-styling" style="float:left;"></div>
+                <div class="col-12">
+                    <h1 class="title-text animated stretchLeft">ADMIN DASHBOARD</h1>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                    <div id="homegroupPie" class="graph-styling" style="margin-right:0;margin-left:0" ></div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-blue">{{ homegroups.numberOfHomegroups }} </h1>
+                        <span class="heading-text"> HOME GROUPS</span>
+                        <br> <span class="secondary-text">TOTAL NUMBER</span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-red">{{ active_homegroups.numberOfHomegroups }} </h1>
+                        <span class="heading-text"> ACTIVE GROUPS</span>
+                        <br><span class="secondary-text">TOTAL NUMBER</span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-blue">{{ members.numberOfMembers }} </h1>
+                        <span class="heading-text">VERBO MEMBERS</span>
+                        <br> <span class="secondary-text">ATTENDING HOME GROUPS</span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-red">{{ attendance_rate }} </h1>
+                        <span class="heading-text">ATTENDANCE RATE</span>
+                        <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
+                    </div>
+                    <div class="dashboard-stats">
+                        <h1 class="number-text-blue">{{ homegroup_leaders.numberOfHomegroupLeaders }} </h1>
+                        <span class="heading-text">GROUP LEADERS</span>
+                        <br> <span class="secondary-text">TOTAL NUMBER</span>
+                    </div>
+                    <a href="{{ url_for('all_homegroup_data') }}" class="btn btn-primary btn-lg btn-block"
+                       style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i
+                            class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
+
                 </div>
-         </div>
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:.75%">
+
+                    <!--active_homegroups = db.number_of_active_homegroups()-->
+                    <!--members = db.number_of_members_attending_homegroups()-->
+                    <!--homegroup_leaders = db.number_of_homegroup_leaders()-->
+                    <!--homegroups = db.number_of_homegroups()-->
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                            <div id="container" class="graph-styling" style="float:left;margin-right:0;"></div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                            <div id="line-chart" class="graph-styling" style="float:right%;margin-right:0;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                            <div id="gender" class="graph-styling" style="float:left;"></div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                            <div id="homegroupPie" class="graph-styling" style="margin-right:0;margin-left:0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
         </section>
+        <table id="datatable" class="graph-styling" hidden>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Home Group</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for hg in hgdata %}
+                <tr>
+                    <th>{{ hg.name }}</th>
+                    <td>{{ hg.membercount }}</td>
+                </tr>
+            {% endfor %}
 
-            <table id="datatable" class="graph-styling" hidden>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Home Group</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for hg in hgdata %}
-                    <tr>
-                        <th>{{ hg.name }}</th>
-                        <td>{{ hg.membercount}}</td>
-                    </tr>
-                    {% endfor %}
+            </tbody>
+        </table>
+        <table id="genderTable" hidden>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for g in gender %}
+                <tr>
+                    <th>{{ g.gender }}</th>
+                    <td>{{ g.membercount }}</td>
+                </tr>
+            {% endfor %}
 
-                </tbody>
-            </table>
-            <table id="genderTable" hidden>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Gender</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for g in gender %}
-                    <tr>
-                        <th>{{ g.gender }}</th>
-                        <td>{{ g.membercount}}</td>
-                    </tr>
-                    {% endfor %}
+            </tbody>
+        </table>
 
-                </tbody>
-            </table>
+        <script>
+            Highcharts.chart('container', {
+                data: {
+                    table: 'datatable'
+                },
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Top 10 Home Groups '
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    title: {
+                        text: 'Member Count'
+                    }
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + '</b><br/>' +
+                            this.point.y + ' ' + this.point.name.toLowerCase();
+                    }
 
-<script>
-    Highcharts.chart('container', {
-        data: {
-            table: 'datatable'
-        },
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Top 5 Home Groups '
-        },
-        yAxis: {
-            allowDecimals: false,
-            title: {
-                text: 'Member Count'
-            }
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' ' + this.point.name.toLowerCase();
-            }
-        }
-    });
-</script>
-    <table id="attendanceReport" hidden>
-    <thead>
-        <tr>
-            <th></th>
-
-            <th>Total People</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for a in attendance_count%}
-        <tr>
-            <td>{{a.month}}</td>
-            <td>{{a.countMembers}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-<script>
-Highcharts.chart('line-chart', {
-    chart: {
-        type: 'line'
-    },
-    title: {
-        text: 'Total Attendance Report'
-    },
-    subtitle: {
-        text: 'Monthly'
-    },
-    yAxis: {
-        title: {
-            text: '# of people'
-        }
-    },
-    data: {
-        table: 'attendanceReport'
-    },
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true
-            },
-            enableMouseTracking: false
-        }
-    },
-
-});
-
-Highcharts.chart('gender', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Home Group Gender Report'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                 }
-            }
-        }
-    },
-     data: {
-            table: 'genderTable'
-        },
-});
+            });
+        </script>
+        <table id="attendanceReport" hidden>
+            <thead>
+            <tr>
+                <th></th>
 
-Highcharts.chart('homegroupPie', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Home Groups'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-            }
-        }
-    },
-     data: {
-            table: 'datatable'
-        },
-});
-</script>
+                <th>Total People</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for a in attendance_count %}
+                <tr>
+                    <td>{{ a.month }}</td>
+                    <td>{{ a.countMembers }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
 
-{% endblock %}
+        <script>
+            Highcharts.chart('line-chart', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Total Attendance Report'
+                },
+                subtitle: {
+                    text: 'Monthly'
+                },
+                yAxis: {
+                    title: {
+                        text: '# of people'
+                    }
+                },
+                data: {
+                    table: 'attendanceReport'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+
+            });
+
+            Highcharts.chart('gender', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Home Group Gender Report'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                data: {
+                    table: 'genderTable'
+                },
+            });
+
+            Highcharts.chart('homegroupPie', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Home Groups'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                data: {
+                    table: 'datatable'
+                },
+            });
+        </script>
+
+
+    {% endblock %}
