@@ -6685,7 +6685,7 @@ html * {
 /*For Index Page*/
 .mapsearch {
   margin: auto;
-  margin-bottom: 5%; }
+  padding-bottom: 5%; }
 
 .larger-container {
   margin: 0 auto;
