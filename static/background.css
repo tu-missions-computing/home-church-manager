@@ -327,4 +327,15 @@ input[type="checkbox"] {
             color: rgba(0, 128, 0, 0.5);
         }
 
+#table-wrapper {
+  position:relative;
+}
+#table-scroll {
+  height:500px;
+  overflow:auto;
+  margin-top:20px;
+}
+#table-wrapper table {
+  width:100%;
 
+}
