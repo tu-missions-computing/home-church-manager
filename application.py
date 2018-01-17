@@ -441,12 +441,18 @@ def user_profile(user_id):
 def homegroup(homegroup_id):
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    countMembers = db.number_of_members_in_homegroup(homegroup_id)
+    mydate = datetime.datetime.now()
+    month_string = mydate.strftime("%B").upper()
+    now = datetime.datetime.now()
+    month = now.month
+    hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(homegroup_id, month))) + '%'
     if not attendance_count:
         if (current_user.role == "admin"):
             flash("No attendance data found for this Home Group", category="warning")
             return redirect(url_for('get_homegroups', homegroup_id = homegroup_id))
         else:
-            return render_template('homegroup.html', currentHomegroup=homegroup,
+            return render_template('homegroup.html',  currentHomegroup=homegroup,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
@@ -473,7 +479,7 @@ def homegroup(homegroup_id):
             member_attendance.append(list)
 
 
-    return render_template('homegroup.html', currentHomegroup=homegroup,
+    return render_template('homegroup.html', attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
 
@@ -857,7 +863,9 @@ def admin_home():
     homegroup_leaders = db.number_of_homegroup_leaders()
     homegroups = db.number_of_homegroups()
     print (attendance_rate)
-    return render_template('admin_home.html',attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
+    mydate = datetime.datetime.now()
+    month_string = mydate.strftime("%B").upper()
+    return render_template('admin_home.html',currentMonth = month_string, attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup
