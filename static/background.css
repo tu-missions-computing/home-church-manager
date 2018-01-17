@@ -176,6 +176,12 @@ padding: 8px 12px !important;
     width: 300px !important;
     margin-left:75px;
 }
+.large-form-control {
+    height: 36px!important;
+    /*padding: 8px 12px !important;*/
+    width: 420px !important;
+    /*margin-left:75px;*/
+}
 
 .input-group {
     -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
