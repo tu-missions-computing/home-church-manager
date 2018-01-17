@@ -431,6 +431,7 @@ def get_attendance_dates(homegroup_id):
         SELECT DISTINCT meeting.date, meeting.time, attendance.meeting_id
         from meeting JOIN attendance on meeting.id = attendance.meeting_id
         WHERE homegroup_id = %s
+        order by meeting.date desc
     '''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
