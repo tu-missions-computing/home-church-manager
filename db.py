@@ -548,9 +548,17 @@ def reactivate_homegroup(homegroup_id):
     UPDATE homegroup SET is_active = '1'
     WHERE id = %s
     '''
-    g.db.execute(query, ( homegroup_id))
+    g.db.execute(query, ( homegroup_id,))
     g.connection.commit()
     return g.db.rowcount
+
+
+def number_of_members_in_homegroup(homegroup_id):
+    query = '''
+    select count(distinct member_id) as "numMembers" from homegroup_member where is_active = '1'
+    and homegroup_id = %s'''
+    g.db.execute(query, (homegroup_id,))
+    return g.db.fetchone()
 
 def get_all_inactive_homegroups():
     query = '''
@@ -728,6 +736,16 @@ def attendance_rate_for_current_month(month):
         percentage = (total_attended / total_people) * 100
     return percentage
 
+
+# attendance rate for the current month for a homegroup
+def get_homegroup_attendance_rate(homegroup_id, month):
+    total_attended =  people_who_attended(month, homegroup_id)['members']
+    total_people =  total_in_homegroup(month, homegroup_id)['totalMembers']
+    if (total_attended == 0) or (total_people == 0):
+        percentage = 0
+    else:
+        percentage = (total_attended / total_people) * 100
+    return percentage
 
 def people_who_attended(month, homegroup_id):
     query = '''select count(( member_id ))as "members"
