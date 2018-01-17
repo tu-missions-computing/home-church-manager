@@ -22,7 +22,7 @@ html * {
 .cover {
     background: url("backgroundimage.jpg");
     background-size: cover;
-    background-repeat: no-repeat;
+	background-repeat: repeat-y;
     min-height: 50rem;
     height: auto;
     border-radius: 0;
@@ -44,6 +44,12 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 		margin-top:3.5%;
 
 
+}
+/*For Index Page*/
+.mapsearch{
+    margin:auto;
+	padding-bottom:5%;
+    //width:50%;
 }
 	//For pages with more content
 	.larger-container{
@@ -95,6 +101,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 
 	@include media-breakpoint-up(xs) {
+		.mapsearch{
+			width:100%;
+		}
 		.larger-container{
 			padding-left:0;
     		padding-right:0;
@@ -124,6 +133,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 
         @include media-breakpoint-up(sm) {
+			.mapsearch{
+			width:100%;
+			}
 			.larger-container{
 				padding-left:0;
 				padding-right:0;
@@ -152,6 +164,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 		}
 		}
         @include media-breakpoint-up(md) {
+			.mapsearch{
+			width:75%;
+			}
 			.larger-container{
 				padding-left:2.5%;
 				padding-right:2.5%;
@@ -181,6 +196,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 		}
         @include media-breakpoint-up(lg) {
+			.mapsearch{
+			width:50%;
+			}
 			.larger-container{
 				padding-left:2.5%;
 				padding-right:2.5%;
@@ -209,6 +227,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 		}
         @include media-breakpoint-up(xl) {
+			.mapsearch{
+			width:50%;
+			}
 			.larger-container{
 				padding-left:2.5%;
 				padding-right:2.5%;

@@ -6661,7 +6661,7 @@ html * {
 .cover {
   background: url("backgroundimage.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   min-height: 50rem;
   height: auto;
   border-radius: 0;
@@ -6681,6 +6681,11 @@ html * {
   -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
   margin-top: 3.5%; }
+
+/*For Index Page*/
+.mapsearch {
+  margin: auto;
+  margin-bottom: 5%; }
 
 .larger-container {
   margin: 0 auto;
@@ -6719,6 +6724,9 @@ html * {
   margin-top: 10%;
   text-align: center; }
 
+.mapsearch {
+  width: 100%; }
+
 .larger-container {
   padding-left: 0;
   padding-right: 0;
@@ -6744,6 +6752,9 @@ html * {
   width: 75%; }
 
 @media (min-width: 576px) {
+  .mapsearch {
+    width: 100%; }
+
   .larger-container {
     padding-left: 0;
     padding-right: 0;
@@ -6768,6 +6779,9 @@ html * {
   .faq-box {
     width: 75%; } }
 @media (min-width: 768px) {
+  .mapsearch {
+    width: 75%; }
+
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
@@ -6792,6 +6806,9 @@ html * {
   .faq-box {
     width: 75%; } }
 @media (min-width: 992px) {
+  .mapsearch {
+    width: 50%; }
+
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
@@ -6816,6 +6833,9 @@ html * {
   faq-box {
     width: 50%; } }
 @media (min-width: 1200px) {
+  .mapsearch {
+    width: 50%; }
+
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
