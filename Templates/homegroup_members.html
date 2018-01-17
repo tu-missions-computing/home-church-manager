@@ -11,28 +11,32 @@
                 window.location.href = "mailto:" + email;
             }
         </script>
-        <div class="larger-container">
+        <div class="larger-container" style="max-width:50% !important">
             <div class="container-fluid">
-                <h1 class="title-text">{{currentHomegroup.name}} Members</h1>
+                <h1 class="title-text">{{ currentHomegroup.name }} Members</h1>
                 <hr>
                 <br>
                 <div class="row">
-
-                    <div class=" form-group pull-left">
-                        <a href="{{ url_for('member_search', homegroup_id = currentHomegroup.id) }}"
-                           class="btn btn-success">
-                            <span class="fa fa-plus"></span>
-                            Add Member
-                        </a>
+                    <div class="col-6">
+                        <div class=" form-group">
+                            <a href="{{ url_for('member_search', homegroup_id = currentHomegroup.id) }}"
+                               class="btn btn-success largebuttonwidth">
+                                <span class="fa fa-plus"></span>
+                                Add Member
+                            </a>
+                        </div>
                     </div>
-                    <div class="form-group pull-left " style="padding-left:10px;">
-                        <a href="mailto:{{ emails }}" class="btn btn-primary">
-                            <span class="fa fa-envelope"></span>
-                            Email Group
-                        </a>
+                    <div class="col-6">
+                        <div class="form-group" style="padding-left:10px;">
+                            <a href="mailto:{{ emails }}" class="btn btn-primary largebuttonwidth">
+                                <span class="fa fa-envelope"></span>
+                                Email Group
+                            </a>
+                        </div>
                     </div>
-                    <div class=" form-group offset-sm-1 col-sm-5 " >
-                        <div class=" input-group">
+                    <div class="col-6"></div>
+                    <div class=" form-group col-6" style="width:170px !important;">
+                        <div class=" input-group" style="width:170px !important; margin:0 auto;">
                             <input type="text" class="search form-control" placeholder="Search">
                             <span class="input-group-addon">
                                 <i class="fa fa-search"></i>
@@ -51,33 +55,30 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 {% for member in homegroup %}
                     <tr>
-
                         <td>
-
                             {{ member.first_name }}
-                          {{ member.last_name }}
-                        {%if member.hgLeader %}
-                            <i>(Leader)</i>
-                                {% endif %}
+                            {{ member.last_name }}
+                            {% if member.hgLeader %}
+                                <i>(Leader)</i>
+                            {% endif %}
                         </td>
                         <td>
                             <a href="{{ url_for('edit_member', member_id = member.member_id) }}"
                                class="btn btn-info btn-sm">
                                 <span class="fa fa-pencil"></span> Edit
                             </a>
-                            {%if not member.hgLeader %}
+                            {% if not member.hgLeader %}
 
 
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                    data-target="#confirmModal"
-                                     data-url="{{ url_for('remove_member', member_id = member.member_id, homegroup_id = member.homegroup_id) }}"
-                                    data-firstname="{{ member.first_name }}" data-lastname="{{ member.last_name }}">
-                                <span class="fa fa-trash"></span>
-                                Remove
-                            </button>
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#confirmModal"
+                                        data-url="{{ url_for('remove_member', member_id = member.member_id, homegroup_id = member.homegroup_id) }}"
+                                        data-firstname="{{ member.first_name }}" data-lastname="{{ member.last_name }}">
+                                    <span class="fa fa-trash"></span>
+                                    Remove
+                                </button>
                             {% endif %}
                         </td>
                     </tr>
@@ -110,5 +111,5 @@
             </table>
         </div>
 
-</section>
+        </section>
     {% endblock %}
