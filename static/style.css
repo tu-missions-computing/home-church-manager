@@ -6661,7 +6661,7 @@ html * {
 .cover {
   background: url("backgroundimage.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   min-height: 50rem;
   height: auto;
   border-radius: 0;
