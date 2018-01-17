@@ -339,3 +339,8 @@ input[type="checkbox"] {
   width:100%;
 
 }
+
+.largebuttonwidth {
+    width: 170px !important;
+}
+
