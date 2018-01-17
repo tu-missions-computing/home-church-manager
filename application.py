@@ -55,7 +55,7 @@ def init_test_user():
     if db.find_user('admin@example.com') is None:
         password = 'password'
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(7, pw_hash, 2)
+        db.create_user(2, pw_hash, 2)
 
 
 ########################## INDEX + MAP + Dashboard##############################################
@@ -178,7 +178,7 @@ class UserForm(FlaskForm):
 class RoleForm(FlaskForm):
     role = SelectField('Change Role', choices=[], coerce=int)
     homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
-    submit = SubmitField('New Role')
+    submit = SubmitField('Save')
 
 
 # Creates a new user and hashes their password in the database
@@ -400,7 +400,14 @@ def login():
     login_form = LoginForm()
 
     if login_form.validate_on_submit() and login_form.validate():
-        if authenticate(login_form.email.data, login_form.password.data):
+        user = db.find_user(login_form.email.data)
+        if user:
+            member_id = user['member_id']
+            is_active = db.has_active_role(member_id)
+        else:
+            is_active = False
+
+        if authenticate(login_form.email.data, login_form.password.data) and is_active:
             # Credentials authenticated.
             # Create the user object, let Flask-Login know, and redirect to the home page
             current_user = User(login_form.email.data)
@@ -539,7 +546,6 @@ def system_notify_member(member_id, num_misses):
 
 @app.route('/homegroup/data/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
-@requires_roles('admin')
 def homegroup_data(homegroup_id):
     attendance = db.get_homegroup_attendance_records(homegroup_id)
     hgname = db.find_homegroup(homegroup_id)['name']
@@ -861,7 +867,7 @@ class CreateHomeGroupForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
-    homegroup_member_data = db.get_top_n_homegroup_member_counts('10')
+    homegroup_member_data = db.get_top_n_homegroup_member_counts('5')
     gender = db.gender_report()
     active_homegroups = db.number_of_active_homegroups()
     members = db.number_of_members_attending_homegroups()

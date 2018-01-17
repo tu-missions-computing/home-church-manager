@@ -8,8 +8,42 @@
         <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+
+<div class="container" style="background-color:white;color:black; margin-top:1.5%">
+     <div class="row">
+         <div class="col-12">
+              <h1 class="title-text">{{currentHomegroup.name}} DASHBOARD</h1>
+          </div>
+             <hr>
+        </div>
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="dashboard-stats">
+                 <h1 class="number-text-blue">{{countMembers.numMembers}}</h1>
+                <span class="heading-text">{{currentHomegroup.name}} MEMBERS</span>
+                <br> <span class="secondary-text">ATTENDING HOME GROUP</span>
+            </div>
+
+            <div class="dashboard-stats">
+                 <h1 class="number-text-red">## </h1>
+                <span class="heading-text"> ACTIVE MEMBERS</span>
+                <br><span class="secondary-text">ATTENDING {{currentHomegroup.name}}</span>
+            </div>
+
+            <div class="dashboard-stats">
+                 <h1 class="number-text-blue">{% if attendance_rate %}{{attendance_rate}}{% else %} N/A {% endif %} </h1>
+                <span class="heading-text">ATTENDANCE RATE</span>
+                <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
+            </div>
+                 <a href="{{url_for('homegroup_data', homegroup_id = currentHomegroup.id)}}" class="btn btn-primary btn-lg btn-block" style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
+
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="row" style="background-color:#f7f7f7; margin-bottom:3.5%; margin-top:1.5%; padding:3.5%; ">
+
         <div class="container" style="background-color:white;color:black; margin-top:1.5%">
             <div class="row">
+
                 <div class="col-12">
                     <h1 class="title-text animated stretchLeft">{{ currentHomegroup.name }} DASHBOARD</h1>
                 </div>
