@@ -638,6 +638,7 @@ def get_top_n_homegroup_member_counts(n):
     join member on member.id = homegroup_member.member_id
     join homegroup on homegroup_member.homegroup_id = homegroup.id
     where homegroup_member.is_active = '1' and member.is_active = '1'
+    and homegroup.is_active = '1'
     group by name
     order by memberCount desc limit %s
     '''

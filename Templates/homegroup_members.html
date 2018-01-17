@@ -60,7 +60,7 @@
                         <td>
                             {{ member.first_name }}
                             {{ member.last_name }}
-                            {% if member.hgLeader %}
+                               {% if member.hgLeader %}
                                 <i>(Leader)</i>
                             {% endif %}
                         </td>
@@ -72,9 +72,10 @@
                             {% if not member.hgLeader %}
 
 
+
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#confirmModal"
-                                        data-url="{{ url_for('remove_member', member_id = member.member_id, homegroup_id = member.homegroup_id) }}"
+                                        data-url="{{ url_for('remove_member', member_id = member.member_id, homegroup_id = currentHomegroup.id) }}"
                                         data-firstname="{{ member.first_name }}" data-lastname="{{ member.last_name }}">
                                     <span class="fa fa-trash"></span>
                                     Remove
