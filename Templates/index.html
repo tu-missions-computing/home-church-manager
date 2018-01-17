@@ -1,84 +1,84 @@
-
-
 <section class="cover text-center">
 
 
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}Home Group Locator{% endblock %}
+    {% block title %}Home Group Locator{% endblock %}
 
-{% block content %}
-    <style>
-
-
-
-    .main-center{
-
- 	max-width: 1300px;
-
-    }
+    {% block content %}
+        <style>
 
 
-    </style>
+            .main-center {
 
-    <script>
-    function resize_iframe(){
-        document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
-    }
+                max-width: 1300px;
 
-    function map_zip(){
-        var iframe = document.getElementById('mapIframe');
-        iframe.src = iframe.src;
-    }
-  window.onresize = function(){
-        resize_iframe();
-  }
-  window.onload = function(){
-    resize_iframe();
-  }
-</script>
+            }
 
-    <div class="container">
-        <div class="row">
-            <div class="verbobox">
-                <div class="verbotext">VERBO CRISTIANA</div>
-                <div class="homegrouptext">HOME GROUP FINDER</div>
 
+        </style>
+
+        <script>
+            function resize_iframe() {
+                document.getElementById('mapIframe').style.height = document.body.scrollHeight / 1.75 + 'px';
+            }
+
+            function map_zip() {
+                var iframe = document.getElementById('mapIframe');
+                iframe.src = iframe.src;
+            }
+            window.onresize = function () {
+                resize_iframe();
+            }
+            window.onload = function () {
+                resize_iframe();
+            }
+        </script>
+
+        <div class="container">
+            <div class="row">
+                <div class="verbobox">
+                    <div class="verbotext">VERBO CRISTIANA</div>
+                    <div class="homegrouptext">HOME GROUP FINDER</div>
+
+                </div>
+                <br><br>
             </div>
-            <br><br>
-        </div>
-           <div class="row">
-               <div class="col" style="text-align:center !important;">
-                   <a href="#bottom"><button type="button"  class="btn findahomegroupbtn custom-btn btn-12"> FIND A HOME GROUP</button></a>
-        </div>
-    </div>
-    </section>
+            <div class="row">
+                <div class="col" style="text-align:center !important;">
+                    <a href="#bottom">
+                        <button type="button" class="btn findahomegroupbtn custom-btn btn-12"> FIND A HOME GROUP
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-	<div class="container main-login main-center">
-        <h2 id="bottom" class="title-text">Find a Home Group</h2>
-    <div class = "row">
-        <div class="col-12">
-{#            <input type="text"  id="zip" class = "form-control" placeholder = "Enter Zip Code or Address"></input>#}
-{#            <button class="btn btn-info" onclick="map_zip()"> Search </button><br><br>#}
-                     <div class="input-group mapsearch">
-                            <input type="text" id="zip" class="search form-control" placeholder="Enter Zip Code or Address">
-                            <span class="input-group-addon" onclick="map_zip()">
+        <div class="container main-login main-center">
+            <h2 id="bottom" class="title-text">Find a Home Group</h2>
+            <div class="row">
+                <div class="col-12">
+                    {#            <input type="text"  id="zip" class = "form-control" placeholder = "Enter Zip Code or Address"></input>#}
+                    {#            <button class="btn btn-info" onclick="map_zip()"> Search </button><br><br>#}
+                    <div class="input-group mapsearch">
+                        <input type="text" id="zip" class="search form-control" placeholder="Enter Zip Code or Address">
+                        <span class="input-group-addon" onclick="map_zip()">
                                 <i class="fa fa-search"></i>
                             </span>
-                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <iframe id="mapIframe" class="embed-responsive-item" width="100%" src="../../map">
+
+                </iframe>
+            </div>
         </div>
 
 
-    </div>
-                     <div class = "row">
-        <iframe id="mapIframe" class="embed-responsive-item" width="100%"src="../../map">
+        <br>
 
-     </iframe>
-    </div>
- </div>
-
-
-    <br>
-
-{% endblock %}
+    {% endblock %}
 

@@ -1,25 +1,27 @@
 <section class="cover text-center">
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}Attendance Report{% endblock %}
+    {% block title %}Attendance Report{% endblock %}
 
-{% block content %}
+    {% block content %}
 
 
-<div class="container">
-   <div class="main-login main-center">
-        <h1 class="title-text">Attendance Report</h1>
-        <hr>
-        <div class="row">
-            <div class="col form-group">
-                <a href="{{url_for('get_attendance_dates', homegroup_id = currentHomegroup)}}"><button class="btn btn-primary"> View Attendance History</button></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col form-group">
-                <form method = "POST">
-                    <div class="container">
-                            <span class="row" >
+        <div class="container">
+            <div class="main-login main-center">
+                <h1 class="title-text animated stretchLeft">Attendance Report</h1>
+                <hr>
+                <div class="row">
+                    <div class="col form-group">
+                        <a href="{{ url_for('get_attendance_dates', homegroup_id = currentHomegroup) }}">
+                            <button class="btn btn-primary"> View Attendance History</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <form method="POST">
+                            <div class="container">
+                            <span class="row">
                                 <span class="col-6">
                                     <h4><span class="label label-default" style="float:left">Date</span></h4>
                                 </span>
@@ -28,45 +30,47 @@
                                 </span>
                             </span>
 
-                            <span class="row">
+                                <span class="row">
                                   <span class="col-6">
-                                    <input type="date" id="datePicker" name="AttendanceDate" class="date inputbox-style" required/>
+                                    <input type="date" id="datePicker" name="AttendanceDate" class="date inputbox-style"
+                                           required/>
                                 </span>
                                  <span class="col-6 float-right">
-                                     <input class="date inputbox-style" id="timePicker" type="time" name = "AttendanceTime" required/><br>
+                                     <input class="date inputbox-style" id="timePicker" type="time"
+                                            name="AttendanceTime" required/><br>
                                 </span>
                             </span>
-                    <span class="col form-group">
+                                <span class="col form-group">
                         <input type="submit" class="btn btn-info" value="Take Attendance" style="margin-top:10%">
                     </span>
-                        </div>
-                </form>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+
+
         </div>
-   </div>
+
+        </section>
+        <script>
 
 
-</div>
+            Date.prototype.toDateInputValue = (function () {
+                var local = new Date(this);
+                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                return local.toJSON().slice(0, 10);
+            });
+            Date.prototype.toTimeInputValue = (function () {
+                var local = new Date(this);
+                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                console.log(local.toJSON());
 
-    </section>
-<script>
+                return local.toJSON().slice(11, 16);
+            });
 
+            document.getElementById('datePicker').value = new Date().toDateInputValue();
+            document.getElementById('timePicker').value = new Date().toTimeInputValue();
 
-    Date.prototype.toDateInputValue = (function() {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    return local.toJSON().slice(0,10);
-});
-    Date.prototype.toTimeInputValue = (function() {
-    var local = new Date(this);
-    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-    console.log(local.toJSON());
-
-    return local.toJSON().slice(11,16);
-});
-
-    document.getElementById('datePicker').value = new Date().toDateInputValue();
-    document.getElementById('timePicker').value = new Date().toTimeInputValue();
-
-</script>
-{% endblock %}
+        </script>
+    {% endblock %}
