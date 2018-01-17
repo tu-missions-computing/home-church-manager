@@ -738,9 +738,10 @@ def attendance_rate_for_current_month(month):
 
 
 # attendance rate for the current month for a homegroup
-def get_homegroup_attendance_rate(homegroup_id, month):
+def get_homegroup_attendance_rate(month, homegroup_id):
     total_attended =  people_who_attended(month, homegroup_id)['members']
     total_people =  total_in_homegroup(month, homegroup_id)['totalMembers']
+
     if (total_attended == 0) or (total_people == 0):
         percentage = 0
     else:

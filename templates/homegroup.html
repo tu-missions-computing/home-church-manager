@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="dashboard-stats">
-                 <h1 class="number-text-blue">##</h1>
+                 <h1 class="number-text-blue">{{countMembers.numMembers}}</h1>
                 <span class="heading-text">{{currentHomegroup.name}} MEMBERS</span>
                 <br> <span class="secondary-text">ATTENDING HOME GROUP</span>
             </div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="dashboard-stats">
-                 <h1 class="number-text-blue">{{attendance_rate}}## </h1>
+                 <h1 class="number-text-blue">{{attendance_rate}} </h1>
                 <span class="heading-text">ATTENDANCE RATE</span>
                 <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
             </div>
@@ -40,8 +40,6 @@
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <div class="row" style="background-color:#f7f7f7; margin-bottom:3.5%; margin-top:1.5%; padding:3.5%; ">
                 <div class="col-12">
-                    <h3>About {{currentHomegroup.name}}</h3>
-                    <br>
                     <div><span style="font-weight:900">DESCRIPTION:</span> {{currentHomegroup.description}}</div>
                     <div><span style="font-weight:900">LOCATION:</span> {{currentHomegroup.location}}</div>
                   </div>
@@ -145,50 +143,50 @@ Highcharts.chart('line-chart', {
 
 </script>
 
-<table id="datatable" hidden>
-    <thead>
-         <tr>
-                <th></th>
-              <th>Date</th>
-          </tr>
-     </thead>
-    <tbody>
-            {% for attendance_record in attendance_count %}
-         <tr>
-               <th>{{ attendance_record.date }}</th>
-                <td>{{ attendance_record.countMembers}}</td>
-           </tr>
-           {% endfor %}
+<!--<table id="datatable" hidden>-->
+    <!--<thead>-->
+         <!--<tr>-->
+                <!--<th></th>-->
+              <!--<th>Date</th>-->
+          <!--</tr>-->
+     <!--</thead>-->
+    <!--<tbody>-->
+            <!--{% for attendance_record in attendance_count %}-->
+         <!--<tr>-->
+               <!--<th>{{ attendance_record.date }}</th>-->
+                <!--<td>{{ attendance_record.countMembers}}</td>-->
+           <!--</tr>-->
+           <!--{% endfor %}-->
 
-     </tbody>
-</table>
+     <!--</tbody>-->
+<!--</table>-->
 
 
-<script>
-    Highcharts.chart('container', {
-        data: {
-            table: 'datatable'
-        },
-        chart: {
-            type: 'column'
-       },
-        title: {
-            text: 'Total Attendance Counts'
-        },
-        yAxis: {
-            allowDecimals: false,
-            title: {
-                text: 'Attendance Count'
-            }
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' ' + this.point.name.toLowerCase();
-            }
-        }
-    });
-</script>
+<!--<script>-->
+    <!--Highcharts.chart('container', {-->
+        <!--data: {-->
+            <!--table: 'datatable'-->
+        <!--},-->
+        <!--chart: {-->
+            <!--type: 'column'-->
+       <!--},-->
+        <!--title: {-->
+            <!--text: 'Total Attendance Counts'-->
+        <!--},-->
+        <!--yAxis: {-->
+            <!--allowDecimals: false,-->
+            <!--title: {-->
+                <!--text: 'Attendance Count'-->
+            <!--}-->
+        <!--},-->
+        <!--tooltip: {-->
+            <!--formatter: function () {-->
+                <!--return '<b>' + this.series.name + '</b><br/>' +-->
+                    <!--this.point.y + ' ' + this.point.name.toLowerCase();-->
+            <!--}-->
+        <!--}-->
+    <!--});-->
+<!--</script>-->
 
 
 
