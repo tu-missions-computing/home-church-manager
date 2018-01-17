@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Info windows</title>
+
+
     <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 100%;
-        }
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+
+    </style>
+
+    <div id="map"></div>
+
+    <script>
+
+      // This example displays a marker at the center of Australia.
+      // When the user clicks the marker, an info window opens.
+
+
+
+
+      function initMap(position) {
+          var upland = {lat: 40.4756, lng: -85.4944};
+          var locations = [];
+          var tmp_locations = [];
+          {% for homegroup in homegroups  %}
+              tmp_locations = [];
+              tmp_locations.push({{homegroup.latitude}});
+              tmp_locations.push({{homegroup.longitude}});
+
+              description = `{{homegroup.description}}`;
+                  description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+              tmp_locations.push(`{{homegroup.name}}`);
+              tmp_locations.push(description);
+              tmp_locations.push(`{{homegroup.location}}`);
+              tmp_locations.push(`{{ homegroup.first_name }}`)
+              tmp_locations.push(`{{ homegroup.last_name }}`)
+              tmp_locations.push(`{{ homegroup.phone_number }}`)
+              tmp_locations.push(`{{ homegroup.email }}`)
+              locations.push(tmp_locations);
+          {% endfor %}
+
 
         /* Optional: Makes the sample page fill the window. */
         html, body {
