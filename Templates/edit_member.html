@@ -32,6 +32,10 @@
                             <div class="alert alert-warning">
                                 Invalid Email Address
                             </div>
+
+                         </div>
+                            
+
                         {% endif %}
                     </div>
                     <div class="form-group">
@@ -39,6 +43,7 @@
                         {% if form.phone_number.errors %}
                             <div class="alert alert-warning">
                                 Invalid Phone Number
+
                             </div>
                         {% endif %}
                     </div>
@@ -61,6 +66,12 @@
                             <p class="form-label"> {{ form.baptism_status.label }} {{ form.baptism_status(class_='form-control large-form-control') }}</p>
                         </div>
                     </div>
+              
+                    <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                               <p class="form-label"> {{form.marital_status.label}} {{form.marital_status(class_='form-control')}}</p>
+                            </div>
+                         </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <p class="form-label"><label>Join Date</label><br> <input type="date"

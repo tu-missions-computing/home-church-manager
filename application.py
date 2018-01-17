@@ -693,8 +693,8 @@ class CreateMemberForm(FlaskForm):
     email = StringField('Email', [validators.Email("Please enter valid email")])
     phone_number = StringField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
-    baptism_status = SelectField('Baptized?', choices=[('1', 'Yes'), ('0', 'No')])
-    marital_status = SelectField('Married?', choices=[('1', 'Yes'), ('0', 'No')])
+    baptism_status = SelectField('Baptized?', choices=[('True', 'Yes'), ('False', 'No')])
+    marital_status = SelectField('Married?', choices=[('True', 'Yes'), ('False', 'No')])
     submit = SubmitField('Save Member')
 
 @app.route('/homegroup/member/new/<homegroup_id>')
@@ -803,6 +803,7 @@ def edit_member(member_id):
         baptism_status = member_form.baptism_status.data
         marital_status = member_form.marital_status.data
         join_date = request.form['JoinDate']
+
 
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, join_date)
