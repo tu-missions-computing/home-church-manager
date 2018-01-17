@@ -111,6 +111,10 @@
         </table>
 
         <script>
+              Highcharts.setOptions({
+                 colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
+                });
+
             Highcharts.chart('container', {
                 data: {
                     table: 'datatable'
@@ -156,6 +160,8 @@
 
 
         <script>
+
+
             Highcharts.chart('line-chart', {
                 chart: {
                     type: 'line'
