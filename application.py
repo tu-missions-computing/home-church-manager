@@ -439,6 +439,7 @@ def user_profile(user_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
+    countMembers = 0
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     countMembers = db.number_of_members_in_homegroup(homegroup_id)
@@ -446,31 +447,38 @@ def homegroup(homegroup_id):
     month_string = mydate.strftime("%B").upper()
     now = datetime.datetime.now()
     month = now.month
-    hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(homegroup_id, month))) + '%'
+    hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(month, homegroup_id))) + '%'
     if not attendance_count:
         if (current_user.role == "admin"):
             flash("No attendance data found for this Home Group", category="warning")
-            return redirect(url_for('get_homegroups', homegroup_id = homegroup_id))
+            return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
-            return render_template('homegroup.html',  currentHomegroup=homegroup,
+            return render_template('homegroup.html',  countMembers = countMembers, currentHomegroup=homegroup,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
     member_attendance = []
+    dates = db.get_last_3_dates(homegroup_id)
     for member in members:
         attendance = db.get_member_attendance(homegroup_id, member['member_id'])
         list = []
         if attendance:
             name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
             list.append(name)
-            for item in attendance:
-                list.append(item['attendance'])
+            for date in dates:
+                hasDate = False
+                for item in attendance:
+                    if date['date'] == item['date'] and item['attendance']:
+                        list.append(item['attendance'])
+                        hasDate = True
+                if hasDate == False:
+                    list.append(False)
                 list_length = len(list)
             if (list_length < 4):
                 for i in range(0, (4 - list_length)):
                     list.append(False)
             member_attendance.append(list)
-            dates = db.get_last_3_dates(homegroup_id)
+
         else:
 
             list.append(member['first_name'] + " " + member['last_name'])
