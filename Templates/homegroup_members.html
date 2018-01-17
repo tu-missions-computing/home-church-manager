@@ -6,13 +6,12 @@
 
         <script>
             function emailHomegroup() {
-                console.log({{ homegroupEmails }})
                 email = {{ homegroupEmails }};
                 window.location.href = "mailto:" + email;
             }
         </script>
-        <div class="larger-container" style="max-width:50% !important">
-            <div class="container-fluid">
+        <div class="larger-container">
+            <div class="container">
                 <h1 class="title-text animated stretchLeft">{{ currentHomegroup.name }} Members</h1>
                 <hr>
                 <br>
