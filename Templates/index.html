@@ -6,18 +6,29 @@
     {% block title %}Home Group Locator{% endblock %}
 
     {% block content %}
+
+{#        This creates the sun loader on the index page     #}
         <style>
-.no-js #loader { display: none;  }
-.js #loader { display: block; position: absolute; left: 100px; top: 0; }
-.se-pre-con {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: 9999;
-	background: url(/static/sun.gif) center no-repeat white;
-}
+            .no-js #loader {
+                display: none;
+            }
+
+            .js #loader {
+                display: block;
+                position: absolute;
+                left: 100px;
+                top: 0;
+            }
+
+            .se-pre-con {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url(/static/sun.gif) center no-repeat white;
+            }
 
             .main-center {
 
@@ -28,29 +39,44 @@
 
         </style>
 
-    <script>
-    // function resize_iframe(){
-    //     document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
-    // }
+        <script>
+            $(window).on("load", function () {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");
+{#                var verbobox = document.getElementById("verbobox");#}
+{#                verbobox.classList.add("animated");#}
+{#                verbobox.classList.add("expandOpen");#}
+{#                var verbotext = document.getElementById("verbotext");#}
+{#                verbotext.classList.add("animated");#}
+{#                verbotext.classList.add("pullUp");#}
+{#                var homegrouptext = document.getElementById("homegrouptext");#}
+{#                homegrouptext.classList.add("animated");#}
+{#                homegrouptext.classList.add("pullDown");#}
+
+            });
+
+            // function resize_iframe(){
+            //     document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
+            // }
 
 
-            function map_zip() {
-                var iframe = document.getElementById('mapIframe');
-                iframe.src = iframe.src;
-            }
-            window.onresize = function () {
-                resize_iframe();
-            }
-            window.onload = function () {
-                resize_iframe();
-            }
+{#            function map_zip() {#}
+{#                var iframe = document.getElementById('mapIframe');#}
+{#                iframe.src = iframe.src;#}
+{#            }#}
+{#            window.onresize = function () {#}
+{#                resize_iframe();#}
+{#            }#}
+{#            window.onload = function () {#}
+{#                resize_iframe();#}
+{#            }#}
         </script>
 
         <div class="container">
             <div class="row">
-                <div class="verbobox">
-                    <div class="verbotext">VERBO CRISTIANA</div>
-                    <div class="homegrouptext">HOME GROUP FINDER</div>
+                <div class="verbobox draw" id="verbobox">
+                    <div class="verbotext" id="verbotext">VERBO CRISTIANA</div>
+                    <div class="homegrouptext" id="homegrouptext">HOME GROUP FINDER</div>
 
                 </div>
                 <br><br>
@@ -86,9 +112,6 @@
                 </iframe>
             </div>
         </div>
-
-
-
         <br>
 
     {% endblock %}
