@@ -6,7 +6,7 @@
         }
     </style>
 
-    {% block title %}Attendance Reports{% endblock %}
+    {% block title %}Add Home Group member{% endblock %}
 
     {% block content %}
         <div class="larger-container">
@@ -46,10 +46,19 @@
                             <td>{{ member.first_name }} {{ member.last_name }}</td>
                             <td> {{ member.email }}</td>
                             <td>
-                                <a href="{{ url_for('add_member_to_homegroup', homegroup_id = homegroup_id, member_id = member.id  ) }}"
+                                <div class="hidden-sm-down">
+                                    <a href="{{ url_for('add_member_to_homegroup', homegroup_id = homegroup_id, member_id = member.id  ) }}"
+                                       class="btn btn-success btn-sm">
+                                        <span class="fa fa-plus"></span> Add to Home Group
+                                    </a>
+                                 </div>
+
+                                <div class="hidden-md-up">
+                                   <a href="{{ url_for('add_member_to_homegroup', homegroup_id = homegroup_id, member_id = member.id  ) }}"
                                    class="btn btn-success btn-sm">
-                                    <span class="fa fa-plus"></span> Add to Home Group
+                                    <span class="fa fa-plus"></span> Add
                                 </a>
+                                </div>
                         </tr>
                     {% else %}
                         <tr>
