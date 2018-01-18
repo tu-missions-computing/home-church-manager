@@ -11,14 +11,7 @@ html * {
   box-sizing: border-box;
 }
 
-.img-replace {
-  /* replace text with an image */
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 100%;
-  color: transparent;
-  white-space: nowrap;
-}
+
 .cover {
     background: url("backgroundimage.jpg");
     background-size: cover;
@@ -65,7 +58,31 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 		max-width: 100%;
 
 }
+	.main-center{
+ 	margin: 0 auto;
+ 	//max-width: 500px;
+    padding: 10px 40px;
+	background:white;
+	    color: #000000;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+    margin-top:3.5%
 
+}
+.main-login{
+ 	background-color: white;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+
+}
  .findahomegroupbtn {
       //color:#2e3036;
       font-weight:800;
@@ -100,6 +117,12 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
     }
 
 	@include media-breakpoint-up(xs) {
+		.main-center{
+			width:95%;
+		}
+		.main-login{
+			width:95%;
+		}
 		.mapsearch{
 			width:100%;
 		}
@@ -126,12 +149,19 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			 margin-bottom:30%;
 		 }
 		.faq-box {
-			width: 75%
+			width: 95%
 		}
 		}
 
 
         @include media-breakpoint-up(sm) {
+			.main-center{
+			width:95%;
+			}
+
+			.main-login{
+				width:95%;
+			}
 			.mapsearch{
 			width:100%;
 			}
@@ -158,11 +188,17 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			 width:100%;
 				margin-bottom:30%;
 		 }
-					.faq-box {
-			width: 75%
+			.faq-box {
+			width: 95%
 		}
 		}
         @include media-breakpoint-up(md) {
+			.main-center{
+			width:50%;
+			}
+			.main-login{
+				width:50%;
+		}
 			.mapsearch{
 			width:75%;
 			}
@@ -195,6 +231,14 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 		}
         @include media-breakpoint-up(lg) {
+			.main-center{
+			width:50%;
+			}
+
+			.main-login{
+				width:35%;
+
+			}
 			.mapsearch{
 			width:50%;
 			}
@@ -226,6 +270,9 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 		}
         @include media-breakpoint-up(xl) {
+			.main-login{
+				width:35%;
+			}
 			.mapsearch{
 			width:50%;
 			}
