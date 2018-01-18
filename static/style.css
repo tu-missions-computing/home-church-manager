@@ -6676,8 +6676,7 @@ html * {
 
 /*For Index Page*/
 .mapsearch {
-  margin: auto;
-  padding-bottom: 5%; }
+  margin: auto; }
 
 .larger-container {
   margin: 0 auto;
@@ -6761,11 +6760,13 @@ html * {
   background-size: 250% !important; }
 
 .verbobox {
-  height: 75px; }
+  height: 75px;
+  margin-top: 30%; }
 
 .findahomegroupbtn {
   width: 100%;
-  margin-bottom: 30%; }
+  margin-bottom: 30%;
+  margin-top: 30%; }
 
 .faq-box {
   width: 95%; }
@@ -6795,11 +6796,13 @@ html * {
     background-size: 250% !important; }
 
   .verbobox {
-    height: 75px; }
+    height: 75px;
+    margin-top: 30%; }
 
   .findahomegroupbtn {
     width: 100%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1%; }
 
   .faq-box {
     width: 95%; } }
@@ -6828,11 +6831,13 @@ html * {
     background-size: 150% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 50%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   .faq-box {
     width: 75%; } }
@@ -6861,11 +6866,13 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 45%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   faq-box {
     width: 50%; } }
@@ -6891,11 +6898,13 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 45%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   .faq-box {
     width: 50%; } }

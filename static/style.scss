@@ -41,7 +41,6 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 /*For Index Page*/
 .mapsearch{
     margin:auto;
-	padding-bottom:5%;
     //width:50%;
 }
 	//For pages with more content
@@ -142,11 +141,13 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
    			background-size: 250% !important;
 		}
 		    .verbobox {
-             height: 75px; }
+             height: 75px;
+			margin-top:30%;}
 
 		 .findahomegroupbtn{
 			 width:100%;
 			 margin-bottom:30%;
+			 margin-top:15%;
 		 }
 		.faq-box {
 			width: 95%
@@ -182,11 +183,13 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 75px; }
+             height: 75px;
+			margin-top:30%}
 
 			.findahomegroupbtn{
 			 width:100%;
-				margin-bottom:30%;
+			margin-bottom:30%;
+			margin-top:15%;
 		 }
 			.faq-box {
 			width: 95%
@@ -218,11 +221,14 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:50%;
 			margin-bottom:30%;
+				margin-top:1.5%;
+
 
 		 }
 					.faq-box {
@@ -258,11 +264,13 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:45%;
 				margin-bottom:30%;
+				margin-top:1.5%;
 		 }
 			faq-box {
 			width: 50%
@@ -292,11 +300,13 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:45%;
 				margin-bottom:30%;
+				margin-top:1.5%;
 		 	}
 			.faq-box {
 			width: 50%
