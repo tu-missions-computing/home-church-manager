@@ -37,15 +37,18 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/background.css">
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
     <!-- CSS Styling-->
     <style>
-{#        For sticky footer#}
+
         body, wrapper {
-           min-height:100vh;
+            min-height: 100vh;
         }
 
         main {
-            flex:1;
+            flex: 1;
         }
 
         .custom-btn {
@@ -112,122 +115,6 @@
             display: none;
         }
 
-        .toggle-button__icon {
-            cursor: pointer;
-            pointer-events: none;
-        }
-
-        .toggle-button__icon:before, .toggle-button__icon:after {
-            content: "";
-            position: absolute;
-            top: 45%;
-            left: 35%;
-            transition: 0.2s ease-out;
-        }
-
-        .toggle-button--sade {
-            width: 100px;
-            height: 20px;
-        }
-
-        .toggle-button--sade label {
-            position: absolute;
-            left: 0;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            transition: all 0.2s;
-            background: #e3e3e3;
-            border-radius: 4px;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-        }
-
-        .toggle-button--sade label:before, .toggle-button--sade label:after {
-            position: absolute;
-            top: 0;
-            left: 40px;
-            transition: all 0.2s .1s ease-out;
-        }
-
-        .toggle-button--sade label:before {
-            content: attr(data-on-text);
-        }
-
-        .toggle-button--sade label:after {
-            content: attr(data-off-text);
-        }
-
-        .toggle-button--sade input + label:before {
-            opacity: 0;
-            transform: translate(30px, 0);
-        }
-
-        .toggle-button--sade input + label:after {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        .toggle-button--sade input:checked ~ label:before {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        .toggle-button--sade input:checked ~ label:after {
-            opacity: 0;
-            transform: translate(30px, 0);
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before, .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
-            background: #61B136;
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:before {
-            transform: translate(-30%, 70%) rotate(45deg) scale(0.7, 1);
-        }
-
-        .toggle-button--sade input[type=checkbox]:checked ~ .toggle-button__icon:after {
-            transform: translate(20%) rotate(-45deg);
-        }
-
-        .toggle-button--sade .toggle-button__icon {
-            position: absolute;
-            height: 30px;
-            width: 30px;
-            top: 0;
-            left: 0;
-        }
-
-        .toggle-button--sade .toggle-button__icon:before, .toggle-button--sade .toggle-button__icon:after {
-            width: calc(30px - 15px);
-            height: 3px;
-            border-radius: 3px;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-            margin-left: -3px;
-            top: 40%;
-        }
-
-        .toggle-button--sade .toggle-button__icon:before {
-            transform: rotate(45deg);
-        }
-
-        .toggle-button--sade .toggle-button__icon:after {
-            transform: rotate(-45deg);
-        }
-
-        .toggle-button--sade:hover label {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:before {
-            animation: icon-hover-before .2s;
-        }
-
-        .toggle-button--sade:hover input[type=checkbox]:not(:checked) ~ .toggle-button__icon:after {
-            animation: icon-hover-after .2s;
-        }
-
         @keyframes icon-hover-before {
             0% {
                 transform: rotate(45deg) scale(1, 1);
@@ -250,17 +137,18 @@
             color: white;
         }
 
-{#        #footer {#}
-{#            position: absolute;#}
-{#            bottom: 0;#}
-{#            width: 100%;#}
-{#            height: 60px; /* Height of the footer */#}
-{#            background: #6cf;#}
-{#        }#}
 
     </style>
 </head>
+<script>
+    $(window).load(function () {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");
+    });
+
+</script>
 <body>
+<div class="se-pre-con"></div>
 
 {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -277,110 +165,107 @@
 {% endwith %}
 <section>
 
-<wrapper class="d-flex flex-column">
-    <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5);">
-        <div class="container">
-            <button style="cursor:pointer" class="navbar-toggler float-right" type="button" data-toggle="collapse"
-                    data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:300; font-size:30px"
-               href="{{ url_for('index') }}">VERBO VELOCITY</a>
+    <wrapper class="d-flex flex-column">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5);">
+            <div class="container">
+                <button style="cursor:pointer" class="navbar-toggler float-right" type="button" data-toggle="collapse"
+                        data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:300; font-size:30px"
+                   href="{{ url_for('index') }}">VERBO VELOCITY</a>
 
-            <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
-                <ul class="navbar-nav mt-2 mt-md-0">
-                    {% if current_user.name %}
-                        <li class="dropdown nav-item">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                Welcome, {{ current_user.name }} <span class="caret"></span></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
-                                <a class="dropdown-item"
-                                   href="{{ url_for('user_profile', user_id = current_user.member_id) }}">Profile
-                                    Settings</a>
-                                <a class="dropdown-item"
-                                   href="{{ url_for('update_user', user_id = current_user.member_id) }}"> Update
-                                    Password</a>
-                            </div>
-                        </li>
-                    {% endif %}
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a>
-                        </li>
-                    {% endif %}
-                    {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home Groups</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">Roles</a></li>
-                    {% endif %}
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a>
-                        </li>
-                    {% endif %}
+                <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
+                    <ul class="navbar-nav mt-2 mt-md-0">
+                        {% if current_user.name %}
+                            <li class="dropdown nav-item">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                                    Welcome, {{ current_user.name }} <span class="caret"></span></a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('user_profile', user_id = current_user.member_id) }}">Profile
+                                        Settings</a>
+                                    <a class="dropdown-item"
+                                       href="{{ url_for('update_user', user_id = current_user.member_id) }}"> Update
+                                        Password</a>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if current_user.role == 'homegroup_leader' %}
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a>
+                            </li>
+                        {% endif %}
+                        {% if current_user.role == 'admin' %}
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home
+                                Groups</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">Roles</a></li>
+                        {% endif %}
+                        {% if current_user.role == 'homegroup_leader' %}
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a>
+                            </li>
+                        {% endif %}
 
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item"><a class="nav-link"
-                                                href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit
-                            Home Group</a></li>
-                    {% endif %}
+                        {% if current_user.role == 'homegroup_leader' %}
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit
+                                Home Group</a></li>
+                        {% endif %}
 
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-                    {% if current_user.name %}
-                        <li class="nav-item" style="padding-top:5px;padding-left:5px;"><a
-                                class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
-                                class="fa fa-user"></i>&nbsp; Log Out</b></a></li>
-                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                        {% if current_user.name %}
+                            <li class="nav-item" style="padding-top:5px;padding-left:5px;"><a
+                                    class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
+                                    class="fa fa-user"></i>&nbsp; Log Out</b></a></li>
+                        {% else %}
 
-                        <li class="nav-item" style="padding-top:5px; padding-left:5px;"><a
-                                class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
-                                class="fa fa-user"></i>&nbsp; Log In</b></a></li>
-
-                    {% endif %}
-                </ul>
+                            <li class="nav-item" style="padding-top:5px; padding-left:5px;"><a
+                                    class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
+                                    class="fa fa-user"></i>&nbsp; Log In</b></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    {#<section>#}
-    {#    <main class="Site-content ">#}
-    {#        <div class="container ">#}
-    {#            <div class="row ">#}
-    {#                <div class="col-lg-2" style="float:right;">#}
-    {#                    <div id="google_translate_element"></div>#}
-    {#                    <script type="text/javascript">#}
-    {#                        function googleTranslateElementInit() {#}
-    {#                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');#}
-    {#                        }#}
-    {#                    </script>#}
-    {#                    <script type="text/javascript"#}
-    {#                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-    {#                </div>#}
-    {#          #}
-    {#    </main>#}
-    {#</section>#}
-
-
-
-    {% block content %}
-<main class="container-fluid py-3">
-         </main>
-    {% endblock %}
+        {#<section>#}
+        {#    <main class="Site-content ">#}
+        {#        <div class="container ">#}
+        {#            <div class="row ">#}
+        {#                <div class="col-lg-2" style="float:right;">#}
+        {#                    <div id="google_translate_element"></div>#}
+        {#                    <script type="text/javascript">#}
+        {#                        function googleTranslateElementInit() {#}
+        {#                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');#}
+        {#                        }#}
+        {#                    </script>#}
+        {#                    <script type="text/javascript"#}
+        {#                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+        {#                </div>#}
+        {#          #}
+        {#    </main>#}
+        {#</section>#}
 
 
 
+        {% block content %}
+            <main class="container-fluid py-3">
+            </main>
+        {% endblock %}
 
 
+        <!-- /#page-content-wrapper -->
 
-    <!-- /#page-content-wrapper -->
-
-    <footer>
+        <footer>
             <div class="container-fluid w-10">
                 <div class="row" style="background: rgba(0, 0, 0, 0.5);">
                     <div class="col-4" style="padding:0;">
@@ -396,18 +281,10 @@
                         <img src="/static/VerboMinistriesL.png" alt="Verbo Ministries Logo"
                              style="width: 35%; height: auto; padding:0;"/>
                     </div>
-                    {#            <div class="col-1" style="padding:0; background-size: contain;">#}
-                    {#                <img class="float-right" src="/static/tayloruniversity.jpg" alt="Taylor University Logo"#}
-                    {#                     style="width: 50%; height: auto; padding:0;"/>#}
-                    {#            </div>#}
                 </div>
             </div>
-        </div>
-
-    </footer>
-</wrapper>
-
-    <script src="/static/main.js"></script>
+        </footer>
+    </wrapper>
 </section>
 </body>
 
