@@ -6650,6 +6650,13 @@ html * {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
+.verbologo {
+  width: 35%;
+  height: auto;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0; }
+
 .cover {
   background: url("backgroundimage.jpg");
   background-size: cover;
@@ -6736,6 +6743,14 @@ html * {
   margin-top: 10%;
   text-align: center; }
 
+.header-text {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 125%; }
+
+.verbologo {
+  width: 75%; }
+
 .main-center {
   width: 95%; }
 
@@ -6766,12 +6781,18 @@ html * {
 .findahomegroupbtn {
   width: 100%;
   margin-bottom: 30%;
-  margin-top: 30%; }
+  margin-top: 15%; }
 
 .faq-box {
   width: 95%; }
 
+.header-text {
+  font-size: 115%; }
+
 @media (min-width: 576px) {
+  .verbologo {
+    width: 75%; }
+
   .main-center {
     width: 95%; }
 
@@ -6802,11 +6823,17 @@ html * {
   .findahomegroupbtn {
     width: 100%;
     margin-bottom: 30%;
-    margin-top: 1%; }
+    margin-top: 15%; }
 
   .faq-box {
-    width: 95%; } }
+    width: 95%; }
+
+  .header-text {
+    font-size: 115%; } }
 @media (min-width: 768px) {
+  .verbologo {
+    width: 75%; }
+
   .main-center {
     width: 50%; }
 
@@ -6840,8 +6867,14 @@ html * {
     margin-top: 1.5%; }
 
   .faq-box {
-    width: 75%; } }
+    width: 75%; }
+
+  .header-text {
+    font-size: 125%; } }
 @media (min-width: 992px) {
+  .verbologo {
+    width: 35%; }
+
   .main-center {
     width: 50%; }
 
@@ -6875,8 +6908,14 @@ html * {
     margin-top: 1.5%; }
 
   faq-box {
-    width: 50%; } }
+    width: 50%; }
+
+  .header-text {
+    font-size: 125%; } }
 @media (min-width: 1200px) {
+  .verbologo {
+    width: 35%; }
+
   .main-login {
     width: 35%; }
 
@@ -6907,7 +6946,10 @@ html * {
     margin-top: 1.5%; }
 
   .faq-box {
-    width: 50%; } }
+    width: 50%; }
+
+  .header-text {
+    font-size: 115%; } }
 /* --------------------------------
 
 Main components
