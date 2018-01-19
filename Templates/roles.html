@@ -1,104 +1,115 @@
 <section class="cover text-center">
-{%  extends "base.html" %}
+    {% extends "base.html" %}
 
-{% block title %} All Members {% endblock %}
-{% block content %}
-<style>
+    {% block title %} All Members {% endblock %}
+    {% block content %}
+        <style>
 
-</style>
+        </style>
 
-<div class="main-login larger-container" style="margin-top:3.5%">
-<h1 class="title-text animated stretchleft">System Roles</h1>
-<hr>
-    <div class="row">
-          <div class=" form-group  " >
-                        <div class=" input-group">
-                            <input type="text" class="search form-control" placeholder="Search">
-                            <span class="input-group-addon">
+        <div class="main-container larger-container" style="margin-top:3.5%">
+            <h1 class="title-text animated stretchleft">System Roles</h1>
+            <hr>
+            <div class="row">
+                <div class="col form-group ">
+                    <div class="input-group float-right" style="width:40%;">
+                        <input type="text" class="search form-control" placeholder="Search">
+                        <span class="input-group-addon">
                                 <i class="fa fa-search"></i>
                             </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <span class="counter pull-right"></span>
+
+            <table class="table table-striped table-bordered table-hover results">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Account Type</th>
+                    <th></th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for member in member_roles %}
+                    <tr>
+                        <td> {{ member.first_name }} {{ member.last_name }}</td>
+                        {% if member.roleActive %}
+                            {% if member.role == 'admin' %}
+                                <td> Admin</td>
+                                <td>
+                                    <a href="{{ url_for('edit_role', member_id = member.id, role_id = member.role_id) }}"
+                                       class="btn btn-danger btn-sm">
+                                        <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
+                                </td>
+                            {% else %}
+                                {% if member.role == 'homegroup_leader' and member.homegroup_id  and member.hgLeaderActive %}
+                                    <td> Home Group Leader<br> ({{ member.hgName }})</td>
+                                    <td>
+                                        <a href="{{ url_for('deactivate_hgleader', member_id = member.id, homegroup_id = member.homegroup_id) }}"
+                                           class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
+                                    </td>
+                                {% else %}
+                                    <td>Inactive User</td>
+                                    <td><a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                           class="btn btn-info btn-sm">
+                                        <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
+                                {% endif %}
+                            {% endif %}
+
+
+                        {% else %}
+                            {% if member.role_id %}
+                                <td>Inactive User</td>
+                                <td><a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                       class="btn btn-info btn-sm">
+                                    <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
+                            {% else %}
+                                <td> &mdash;</td>
+                                <td><a href="{{ url_for('create_user', member_id = member.id) }}"
+                                       class="btn btn-warning btn-sm">
+                                    <span class="glyphicon glyphicon-plus"></span> Create Account</a></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+
+                <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
+                     aria-labelledby="confirmModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="confirmModalLabel">Confirm</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                Text here will be overridden :D
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#0" id="modal-confirm">
+                                    <button type="button" class="btn btn-primary">
+                                        Confirm
+                                    </button>
+                                </a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            </div>
                         </div>
                     </div>
-    </div>
+                </div>
 
 
-<span class="counter pull-right"></span>
-
-<table class="table table-striped table-bordered table-hover results">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Account Type</th>
-        <th> </th>
-
-
-    </tr>
-    </thead>
-    <tbody>
-    {% for member in member_roles %}
-    <tr>
-        <td > {{ member.first_name }} {{ member.last_name }}</td>
-        {%  if member.roleActive  %}
-        {%  if member.role == 'admin' %}
-        <td> Admin</td>
-            <td> <a href="{{ url_for('edit_role', member_id = member.id, role_id = member.role_id) }}" class="btn btn-danger btn-sm">
-            <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
-        </td>
-        {% else %}
-        {% if member.role == 'homegroup_leader' and member.homegroup_id  and member.hgLeaderActive %}
-        <td> Home Group Leader<br> ({{member.hgName}})</td>
-        <td> <a href="{{url_for('deactivate_hgleader', member_id = member.id, homegroup_id = member.homegroup_id)}}" class="btn btn-danger btn-sm">
-            <span class="glyphicon glyphicon-minus"></span> Deactivate Role </a>
-        </td>
-        {% else %}
-        <td>Inactive User</td>
-        <td><a href="{{ url_for('assign_new_role', member_id = member.id)}}" class="btn btn-info btn-sm">
-             <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
-        {% endif %}
-        {% endif %}
-
-
-        {% else %}
-        {% if member.role_id %}
-             <td>Inactive User</td>
-        <td><a href="{{ url_for('assign_new_role', member_id = member.id)}}" class="btn btn-info btn-sm">
-             <span class="glyphicon glyphicon-plus"></span> Assign new role</a></td>
-        {% else %}
-        <td> &mdash;  </td>
-         <td><a href="{{url_for('create_user', member_id = member.id)}}" class="btn btn-warning btn-sm">
-             <span class="glyphicon glyphicon-plus"></span> Create Account</a></td>
-        {% endif %}
-        {% endif %}
-    </tr>
-        {% endfor %}
-
-
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="confirmModalLabel">Confirm</h4>
-              </div>
-
-              <div class="modal-body">
-                    Text here will be overridden :D
-              </div>
-              <div class="modal-footer">
-                        <a href="#0" id="modal-confirm"><button type="button" class="btn btn-primary">
-                            Confirm
-                                </button>  </a>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
+                </tbody>
+            </table>
         </div>
-
-
-    </tbody>
-</table>
-    </div>
-{#</div>#}
-</section>
-{% endblock %}
+        {#</div>#}
+        </section>
+    {% endblock %}
