@@ -32,62 +32,58 @@
                             <div class="alert alert-warning">
                                 Invalid Email Address
                             </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <p class="form-label"> {{ form.phone_number.label }} {{ form.phone_number(class_='form-control', placeholder="ex: 224-656-8205") }}</p>
+                        {% if form.phone_number.errors %}
+                            <div class="alert alert-warning">
+                                Invalid Phone Number
 
                             </div>
-
-
                         {% endif %}
-            </div>
-            <div class="form-group">
-                <p class="form-label"> {{ form.phone_number.label }} {{ form.phone_number(class_='form-control', placeholder="ex: 224-656-8205") }}</p>
-                {% if form.phone_number.errors %}
-                    <div class="alert alert-warning">
-                        Invalid Phone Number
-
                     </div>
-                {% endif %}
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <p class="form-label"> {{ form.gender.label }} {{ form.gender(class_='form-control large-form-control') }}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <p class="form-label"><label>Birthdays</label><br> <input type="date"
-                                                                              class="large-form-control"
-                                                                              style="color: black"
-                                                                              name="Birthday" value="{{ bDay }}"
-                                                                              required/></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <p class="form-label"> {{ form.baptism_status.label }} {{ form.baptism_status(class_='form-control large-form-control') }}</p>
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <p class="form-label"> {{ form.gender.label }} {{ form.gender(class_='form-control large-form-control') }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <p class="form-label"><label>Birthdays</label><br> <input type="date"
+                                                                                      class="large-form-control"
+                                                                                      style="color: black"
+                                                                                      name="Birthday" value="{{ bDay }}"
+                                                                                      required/></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <p class="form-label"> {{ form.baptism_status.label }} {{ form.baptism_status(class_='form-control large-form-control') }}</p>
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <p class="form-label"> {{ form.marital_status.label }} {{ form.marital_status(class_='form-control') }}</p>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <p class="form-label"> {{ form.marital_status.label }} {{ form.marital_status(class_='form-control') }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <p class="form-label"><label>Join Date</label><br> <input type="date"
+                                                                                      class="large-form-control"
+                                                                                      style="color: black"
+                                                                                      name="JoinDate"
+                                                                                      value="{{ joinDay }}" required/>
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group ">
+                        <p class="form-label"> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <p class="form-label"><label>Join Date</label><br> <input type="date"
-                                                                              class="large-form-control"
-                                                                              style="color: black"
-                                                                              name="JoinDate"
-                                                                              value="{{ joinDay }}" required/>
-                    </p>
-                </div>
-            </div>
-            <br>
-            <div class="form-group ">
-                <p class="form-label"> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
-            </div>
-            </form>
-        </div>
         </div>
         </section>
     {% endblock %}
