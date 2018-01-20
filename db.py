@@ -355,6 +355,7 @@ def get_homegroup_members(homegroup_id):
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         left outer join homegroup_leader on homegroup_leader.member_id = member.id and homegroup_leader.homegroup_id = homegroup.id
         WHERE homegroup_member.is_active = '1' and  homegroup.id = %s and member.is_active = '1'
+        order by last_name, first_name
     '''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
