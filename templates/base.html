@@ -202,7 +202,7 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">Roles</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">System Roles</a></li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item"><a class="nav-link"
@@ -233,23 +233,23 @@
             </div>
         </nav>
 
-        {#<section>#}
-        {#    <main class="Site-content ">#}
-        {#        <div class="container ">#}
-        {#            <div class="row ">#}
-        {#                <div class="col-lg-2" style="float:right;">#}
-        {#                    <div id="google_translate_element"></div>#}
-        {#                    <script type="text/javascript">#}
-        {#                        function googleTranslateElementInit() {#}
-        {#                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');#}
-        {#                        }#}
-        {#                    </script>#}
-        {#                    <script type="text/javascript"#}
-        {#                            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-        {#                </div>#}
-        {#          #}
-        {#    </main>#}
-        {#</section>#}
+         <section>
+             <main class="Site-content ">
+                 <div class="container ">
+                     <div class="row ">
+                         <div class="col-lg-2" style="float:right; color:white;">
+                             <div id="google_translate_element"></div>
+                             <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                                }
+                            </script>
+                             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                         </div>
+                     </div>
+                 </div>
+             </main>
+         </section>
 
 
 
