@@ -1,7 +1,7 @@
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
+# import sys
+#
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 from functools import wraps
 
@@ -860,7 +860,7 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
+    name = StringField('Name', [validators.Length(min=2, max=50 , message="Name is a required field")])
     description = TextAreaField('Description', [validators.InputRequired(message="Please enter a description")])
     location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
     latitude = StringField('Latitude')
