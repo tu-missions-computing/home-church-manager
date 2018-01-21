@@ -260,7 +260,7 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(member_id, homegroup_id):
-    g.db.execute('select * from homegroup_leader where member_id =%s ', (member_id))
+    g.db.execute('select * from homegroup_leader where member_id =%s ', (member_id,))
     if (g.db.fetchone()):
         g.db = connect_db()
         query = '''update homegroup_leader set is_active = '1', homegroup_id = %s where member_id = %s'''
