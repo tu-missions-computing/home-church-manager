@@ -12,12 +12,13 @@
 
         </style>
         <div class="container">
-            <div class="row main">
-                <div class="main-login main-center">
-                    <h2 class="head-style animated stretchLeft"> Assign Role</h2>
+            <div class="row">
+                <div class="main-center">
+                    <h2 class="title-text animated stretchLeft"> Assign Role</h2>
+                    <hr>
                     <form method="POST" role="form" data-toggle="validator">
 
-                        <div class="form-group">
+                        <div class="form-group answer">
                             {{ form.csrf_token }}
 
                             <h3><b>email:</b> {{ email }}</h3>
