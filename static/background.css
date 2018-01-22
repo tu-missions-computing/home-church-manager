@@ -153,20 +153,18 @@ input::-webkit-input-placeholder {
 
 .form-control {
     height: auto!important;
-padding: 8px 12px !important;
+    padding: 8px 12px !important;
 }
 .medium-form-control {
-    height: 30px!important;
-padding: 8px 12px !important;
+    height: 36px !important;
+    padding: 8px 12px !important;
     width: 300px !important;
     margin-left:75px;
 }
 .large-form-control {
     height: 36px!important;
-    /*padding: 8px 12px !important;*/
     width: 420px !important;
     max-width:100%;
-    /*margin-left:75px;*/
 }
 
 .input-group {
