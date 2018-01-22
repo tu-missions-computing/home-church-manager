@@ -576,7 +576,9 @@ def reactivate_homegroup(homegroup_id):
 
 def number_of_members_in_homegroup(homegroup_id):
     query = '''
-    select count(distinct member_id) as "numMembers" from homegroup_member where is_active = '1'
+    select count(distinct member_id) as "numMembers" from homegroup_member 
+    join member on member.id = homegroup_member.member_id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
     and homegroup_id = %s'''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchone()
