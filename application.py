@@ -1,7 +1,7 @@
-# import sys
-#
-# reload(sys)
-# sys.setdefaultencoding('utf8')
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 from functools import wraps
 
@@ -640,8 +640,8 @@ def edit_attendance(homegroup_id, meeting_id):
                             notify = False
                     if len(attendancedates) <3:
                         notify = False
-                    if notify == True:
-                        system_notify_member(member['id'], 3)
+                    #if notify == True:
+                        #system_notify_member(member['id'], 3)
 
         return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
