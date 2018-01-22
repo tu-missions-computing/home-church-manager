@@ -5,17 +5,25 @@
 
     {% block title %} All Members {% endblock %}
     {% block content %}
-
+     <div class="container">
         <div class="main-center">
-            <div class="container-fluid">
+
                 <h1 class="title-text animated stretchLeft">All Members</h1>
                 <hr>
                 <div class="row">
-                    <div class=" form-group col-6 ">
-                        <a href="{{ url_for('create_member') }}" class="btn btn-success largebuttonwidth ">
+                    <div class="form-group col-6 float-left ">
+                        <div class="hidden-sm-down">
+                            <a href="{{ url_for('create_member') }}" class="btn btn-success largebuttonwidth float-left ">
+                                <span class="fa fa-plus"></span>
+                                Add Member
+                            </a>
+                            </div>
+                        <div class="hidden-md-up">
+                           <a href="{{ url_for('create_member') }}" class="btn btn-success float-left">
                             <span class="fa fa-plus"></span>
-                            Add Member
+                               Add
                         </a>
+                        </div>
                     </div>
                     <div class="form-group col-6" style="width:170px !important;">
                         <div class=" input-group">
@@ -29,14 +37,24 @@
                 </div>
                 <div class="row">
                     <div class="col-6 ">
+                         <div class="hidden-sm-down">
                         <a style="padding-left:6px" href="mailto:{{ emails }}"
-                           class="btn btn-secondary largebuttonwidth ">
+                           class="btn btn-secondary largebuttonwidth float-left ">
                             <span class="fa fa-envelope"></span>
                             Contact All Members
                         </a>
+                         </div>
+
+                        <div class="hidden-md-up">
+                           <a style="padding-left:6px" href="mailto:{{ emails }}"
+                           class="btn btn-secondary float-left ">
+                            <span class="fa fa-envelope"></span>
+                               Contact
+                        </a>
+                        </div>
                     </div>
                     <div class="form-group col-6  ">
-                        <a href="{{ url_for('advanced_search') }}" class="btn btn-primary largebuttonwidth">
+                        <a href="{{ url_for('advanced_search') }}" class="btn btn-primary largebuttonwidth float-right">
                             <span class="fa fa-search"></span>
                             Advanced Search
                         </a>
