@@ -61,12 +61,30 @@
             {% endif %}
             {% if current_user.role != 'admin' %}
                 {% if current_user.role != 'homegroup_leader' %}
+                    <h3 class="header-text"><b>What is Verbo Church?</b></h3>
+                    <p class="answer"> Verbo Church began in 1987.
+                        Since then we have seen the Lord take a small group of new believers and g
+                        row it into a thriving congregation of over 2,000,
+                        with many effective ministries impacting the city and region.
+                        Learn more about our ministries on <a class="link-color" href="http://www.verbocuenca.org/" target="_blank">our main site</a>.
+
+                    </p>
+
                     <h3 class="header-text"><b>How do I join a home group?</b></h3>
                     <p class="answer"> Check out the map on the home page and find
                         home groups near you by typing in your address. Contact the home group leader for more
                         information.
-                        Click <a class="link-color" href="{{ url_for( 'index' ) }}">here</a>
+                        Click <a class="link-color" href="{{ url_for( 'index' ) }}" target="_blank">here</a>
                         to access the map.
+                    </p>
+                     <h3 class="header-text"><b>Why can't I login?</b></h3>
+                    <p class="answer"> Login accounts are provided for admin and home group leaders. If you are an admin or home group leader who is having trouble logging in
+                        visit <a class="link-color" href="{{ url_for( 'contact' ) }}">the Contact</a> page and leave a message.
+
+                    </p>
+                     <h3 class="header-text"><b>How do I switch languages?</b></h3>
+                    <p class="answer">There is a Google translate option that allows you to switch to the language of your choice under the navigation bar.
+
                     </p>
 
 
