@@ -8,12 +8,13 @@
     <meta name=“viewport” content=“width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"#}
-{#          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">#}
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"#}
+    {#          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">#}
 
     <title>{% block title %}My Title{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <!---->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -136,7 +137,6 @@
             color: white;
         }
 
-
     </style>
 </head>
 <script>
@@ -202,7 +202,8 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">System Roles</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">System Roles</a>
+                            </li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item"><a class="nav-link"
@@ -233,23 +234,7 @@
             </div>
         </nav>
 
-         <section>
-             <main class="Site-content ">
-                 <div class="container ">
-                     <div class="row ">
-                         <div class="col-lg-2" style="float:right; color:white;">
-                             <div id="google_translate_element"></div>
-                             <script type="text/javascript">
-                                function googleTranslateElementInit() {
-                                new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-                                }
-                            </script>
-                             <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                         </div>
-                     </div>
-                 </div>
-             </main>
-         </section>
+
 
 
 
@@ -262,8 +247,8 @@
         <!-- /#page-content-wrapper -->
 
         <footer>
-            <div class="container-fluid w-10">
-                <div class="row" style="background: rgba(0, 0, 0, 0.5);">
+            <div class="container-fluid w-10" style="background: rgba(0, 0, 0, 0.5);">
+                <div class="row">
                     <div class="col-4" style="padding:0;">
                         <div style="padding-top:6%;"> &copy; Copyright 2018, Verbo Church</div>
                     </div>
@@ -277,11 +262,28 @@
                         <img src="/static/VerboMinistriesL.png" alt="Verbo Ministries Logo" class="verbologo"/>
                     </div>
                 </div>
+                <div class="row ">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col" style="float:right; color:white;">
+                        <div id="google_translate_element"></div>
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({
+                                    pageLanguage: 'en',
+                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                                }, 'google_translate_element');
+                            }
+                        </script>
+                        <script type="text/javascript"
+                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                    </div>
+                </div>
             </div>
         </footer>
     </wrapper>
 </section>
 </body>
 
-   <script type="text/javascript" src="/static/main.js"></script>
+<script type="text/javascript" src="/static/main.js"></script>
 </html>
