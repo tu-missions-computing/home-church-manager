@@ -1,7 +1,7 @@
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
+# import sys
+#
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 from functools import wraps
 
@@ -462,12 +462,13 @@ def homegroup(homegroup_id):
     now = datetime.datetime.now()
     month = now.month
     hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(month, homegroup_id))) + '%'
+    number_meetings = db.number_of_meetings_held(homegroup_id)
     if not attendance_count:
         if (current_user.role == "admin"):
             flash("No attendance data found for this Home Group", category="warning")
             return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
-            return render_template('homegroup.html',  countMembers = countMembers, currentHomegroup=homegroup,
+            return render_template('homegroup.html',   countMembers = countMembers, currentHomegroup=homegroup,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
@@ -501,7 +502,7 @@ def homegroup(homegroup_id):
             member_attendance.append(list)
 
 
-    return render_template('homegroup.html', attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
+    return render_template('homegroup.html', numMeetings = number_meetings, attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
 
