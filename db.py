@@ -98,7 +98,7 @@ def role_is_active(id, role_id):
 
 # finds if the user has an active role
 def has_active_role (id):
-    g.db.execute('''select is_active from member_role where member_id = %s and is_active = '1' ''', id)
+    g.db.execute('''select is_active from member_role where member_id = %s and is_active = '1' ''', (id,))
     return g.db.fetchone()
 
 # updates the user role
@@ -260,7 +260,7 @@ def create_member(first_name, last_name, email, phone_number, gender, birthday, 
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(member_id, homegroup_id):
-    g.db.execute('select * from homegroup_leader where member_id =%s ', (member_id))
+    g.db.execute('select * from homegroup_leader where member_id =%s ', (member_id,))
     if (g.db.fetchone()):
         g.db = connect_db()
         query = '''update homegroup_leader set is_active = '1', homegroup_id = %s where member_id = %s'''
@@ -286,12 +286,19 @@ def deactivate_hgleader(member_id, homegroup_id):
     '''
     g.db.execute(query, (member_id, homegroup_id))
     g.connection.commit()
+    deactivate_hgleader_role(member_id)
+    return g.db.rowcount
+
+
+def deactivate_hgleader_role(member_id):
     g.db = connect_db()
     query = '''
-    update member_role set is_active = '0'
-    where member_id = %s '''
-    g.db.execute(query, (member_id))
+        update member_role set is_active = False
+        where member_id = %s '''
+    g.db.execute(query, (member_id,))
+    g.connection.commit()
     return g.db.rowcount
+
 
 
 
@@ -348,15 +355,28 @@ def get_homegroup_members(homegroup_id):
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         left outer join homegroup_leader on homegroup_leader.member_id = member.id and homegroup_leader.homegroup_id = homegroup.id
         WHERE homegroup_member.is_active = '1' and  homegroup.id = %s and member.is_active = '1'
+        order by last_name, first_name
     '''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
 
+
+def number_of_meetings_held(homegroup_id):
+   query = ''' select count(distinct meeting_id) as "numMeetings"
+   from attendance
+   where homegroup_id = %s
+   '''
+   g.db.execute(query, (homegroup_id,))
+   return g.db.fetchone()
+
+
+
 def get_homegroup_emails(homegroup_id):
-    return g.db.execute('''SELECT email FROM member
+    query = '''SELECT email FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-        WHERE homegroup_member.is_active = '1' and  homegroup.id = %s''', (homegroup_id,)).fetchall()
+        WHERE homegroup_member.is_active = '1' and  homegroup.id = %s'''
+    return g.db.execute(query, (homegroup_id,)).fetchall()
 
 # finds if a member has missed (number_of_misses) consecutive meetings
 def system_attendance_alert(homegroup_id, member_id, number_of_misses):
@@ -431,6 +451,7 @@ def get_attendance_dates(homegroup_id):
         SELECT DISTINCT meeting.date, meeting.time, attendance.meeting_id
         from meeting JOIN attendance on meeting.id = attendance.meeting_id
         WHERE homegroup_id = %s
+        order by meeting.date desc, meeting.time desc
     '''
     g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
@@ -548,9 +569,19 @@ def reactivate_homegroup(homegroup_id):
     UPDATE homegroup SET is_active = '1'
     WHERE id = %s
     '''
-    g.db.execute(query, ( homegroup_id))
+    g.db.execute(query, ( homegroup_id,))
     g.connection.commit()
     return g.db.rowcount
+
+
+def number_of_members_in_homegroup(homegroup_id):
+    query = '''
+    select count(distinct member_id) as "numMembers" from homegroup_member 
+    join member on member.id = homegroup_member.member_id
+    where homegroup_member.is_active = '1' and member.is_active = '1'
+    and homegroup_id = %s'''
+    g.db.execute(query, (homegroup_id,))
+    return g.db.fetchone()
 
 def get_all_inactive_homegroups():
     query = '''
@@ -622,6 +653,7 @@ def get_top_n_homegroup_member_counts(n):
     join member on member.id = homegroup_member.member_id
     join homegroup on homegroup_member.homegroup_id = homegroup.id
     where homegroup_member.is_active = '1' and member.is_active = '1'
+    and homegroup.is_active = '1'
     group by name
     order by memberCount desc limit %s
     '''
@@ -728,6 +760,17 @@ def attendance_rate_for_current_month(month):
         percentage = (total_attended / total_people) * 100
     return percentage
 
+
+# attendance rate for the current month for a homegroup
+def get_homegroup_attendance_rate(month, homegroup_id):
+    total_attended =  people_who_attended(month, homegroup_id)['members']
+    total_people =  total_in_homegroup(month, homegroup_id)['totalMembers']
+
+    if (total_attended == 0) or (total_people == 0):
+        percentage = 0
+    else:
+        percentage = (total_attended / total_people) * 100
+    return percentage
 
 def people_who_attended(month, homegroup_id):
     query = '''select count(( member_id ))as "members"

@@ -6650,13 +6650,15 @@ html * {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-.img-replace {
-  /* replace text with an image */
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 100%;
-  color: transparent;
-  white-space: nowrap; }
+.searchbar {
+  width: 50%; }
+
+.verbologo {
+  width: 35%;
+  height: auto;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0; }
 
 .cover {
   background: url("backgroundimage.jpg");
@@ -6684,8 +6686,7 @@ html * {
 
 /*For Index Page*/
 .mapsearch {
-  margin: auto;
-  margin-bottom: 5%; }
+  margin: auto; }
 
 .larger-container {
   margin: 0 auto;
@@ -6698,6 +6699,27 @@ html * {
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
   margin-top: 3.5%;
   max-width: 100%; }
+
+.main-center {
+  margin: 0 auto;
+  padding: 10px 40px;
+  background: white;
+  color: #000000;
+  text-shadow: none;
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.31);
+  margin-top: 3.5%; }
+
+.main-login {
+  background-color: white;
+  /* shadows and rounded borders */
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); }
 
 .findahomegroupbtn {
   font-weight: 800;
@@ -6724,6 +6746,23 @@ html * {
   margin-top: 10%;
   text-align: center; }
 
+.header-text {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 125%; }
+
+.searchbar {
+  width: 100%; }
+
+.verbologo {
+  width: 75%; }
+
+.main-center {
+  width: 95%; }
+
+.main-login {
+  width: 95%; }
+
 .mapsearch {
   width: 100%; }
 
@@ -6742,16 +6781,33 @@ html * {
   background-size: 250% !important; }
 
 .verbobox {
-  height: 75px; }
+  height: 75px;
+  margin-top: 30%; }
 
 .findahomegroupbtn {
   width: 100%;
-  margin-bottom: 30%; }
+  margin-bottom: 30%;
+  margin-top: 15%; }
 
 .faq-box {
-  width: 75%; }
+  width: 95%; }
+
+.header-text {
+  font-size: 115%; }
 
 @media (min-width: 576px) {
+  .searchbar {
+    width: 85%; }
+
+  .verbologo {
+    width: 75%; }
+
+  .main-center {
+    width: 95%; }
+
+  .main-login {
+    width: 95%; }
+
   .mapsearch {
     width: 100%; }
 
@@ -6770,15 +6826,32 @@ html * {
     background-size: 250% !important; }
 
   .verbobox {
-    height: 75px; }
+    height: 75px;
+    margin-top: 30%; }
 
   .findahomegroupbtn {
     width: 100%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 15%; }
 
   .faq-box {
-    width: 75%; } }
+    width: 95%; }
+
+  .header-text {
+    font-size: 115%; } }
 @media (min-width: 768px) {
+  .searchbar {
+    width: 50%; }
+
+  .verbologo {
+    width: 75%; }
+
+  .main-center {
+    width: 50%; }
+
+  .main-login {
+    width: 50%; }
+
   .mapsearch {
     width: 75%; }
 
@@ -6797,15 +6870,32 @@ html * {
     background-size: 150% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 50%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   .faq-box {
-    width: 75%; } }
+    width: 75%; }
+
+  .header-text {
+    font-size: 125%; } }
 @media (min-width: 992px) {
+  .searchbar {
+    width: 50%; }
+
+  .verbologo {
+    width: 35%; }
+
+  .main-center {
+    width: 50%; }
+
+  .main-login {
+    width: 35%; }
+
   .mapsearch {
     width: 50%; }
 
@@ -6824,15 +6914,29 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 45%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   faq-box {
-    width: 50%; } }
+    width: 50%; }
+
+  .header-text {
+    font-size: 125%; } }
 @media (min-width: 1200px) {
+  .searchbar {
+    width: 50%; }
+
+  .verbologo {
+    width: 35%; }
+
+  .main-login {
+    width: 35%; }
+
   .mapsearch {
     width: 50%; }
 
@@ -6851,14 +6955,19 @@ html * {
     background-size: 100% !important; }
 
   .verbobox {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10%; }
 
   .findahomegroupbtn {
     width: 45%;
-    margin-bottom: 30%; }
+    margin-bottom: 30%;
+    margin-top: 1.5%; }
 
   .faq-box {
-    width: 50%; } }
+    width: 50%; }
+
+  .header-text {
+    font-size: 115%; } }
 /* --------------------------------
 
 Main components
@@ -7275,6 +7384,7 @@ expandOpen
 .expandOpen {
   animation-name: expandOpen;
   -webkit-animation-name: expandOpen;
+  animation-delay: .2s;
   animation-duration: 1.2s;
   -webkit-animation-duration: 1.2s;
   animation-timing-function: ease-out;
@@ -7458,10 +7568,9 @@ pulse
 .pulse {
   animation-name: pulse;
   -webkit-animation-name: pulse;
-  animation-duration: 1.5s;
-  -webkit-animation-duration: 1.5s;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite; }
+  -webkit-animation-duration: 1s;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1; }
 
 @keyframes pulse {
   0% {
@@ -7545,6 +7654,7 @@ pullUp
 .pullUp {
   animation-name: pullUp;
   -webkit-animation-name: pullUp;
+  animation-delay: 1s;
   animation-duration: 1.1s;
   -webkit-animation-duration: 1.1s;
   animation-timing-function: ease-out;
@@ -7591,6 +7701,7 @@ pullDown
 .pullDown {
   animation-name: pullDown;
   -webkit-animation-name: pullDown;
+  animation-delay: 1s;
   animation-duration: 1.1s;
   -webkit-animation-duration: 1.1s;
   animation-timing-function: ease-out;
@@ -7766,7 +7877,7 @@ input[type=checkbox] {
   height: 25px;
   width: 25px;
   background-color: transparent;
-  border: 2.5px solid #453F3B;
+  border: 2.5px solid #595959;
   border-radius: 5px;
   position: relative;
   display: inline-block;
@@ -7785,7 +7896,7 @@ input[type=checkbox] {
     position: absolute;
     height: 0;
     width: 5px;
-    background-color: #34b93d;
+    background-color: #87B87C;
     display: inline-block;
     -moz-transform-origin: left top;
     -ms-transform-origin: left top;
@@ -7817,7 +7928,7 @@ input[type=checkbox] {
 
 input[type=checkbox]:checked + .check-box,
 .check-box.checked {
-  border-color: #34b93d; }
+  border-color: #87B87C; }
   input[type=checkbox]:checked + .check-box::after,
   .check-box.checked::after {
     height: 12.5px;

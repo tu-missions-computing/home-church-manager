@@ -11,14 +11,18 @@ html * {
   box-sizing: border-box;
 }
 
-.img-replace {
-  /* replace text with an image */
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 100%;
-  color: transparent;
-  white-space: nowrap;
+//For Roles page
+.searchbar{
+	width:50%;
 }
+.verbologo{
+	width: 35%;
+	height: auto;
+	padding:0;
+	margin-top:0;
+	margin-bottom:0;
+}
+
 .cover {
     background: url("backgroundimage.jpg");
     background-size: cover;
@@ -48,7 +52,6 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 /*For Index Page*/
 .mapsearch{
     margin:auto;
-	padding-bottom:5%;
     //width:50%;
 }
 	//For pages with more content
@@ -65,7 +68,31 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 		max-width: 100%;
 
 }
+	.main-center{
+ 	margin: 0 auto;
+ 	//max-width: 500px;
+    padding: 10px 40px;
+	background:white;
+	    color: #000000;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+    margin-top:3.5%
 
+}
+.main-login{
+ 	background-color: white;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+
+}
  .findahomegroupbtn {
       //color:#2e3036;
       font-weight:800;
@@ -99,8 +126,26 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
              text-align:center;
     }
 
+	.header-text{
+	text-transform: uppercase;
+    font-weight:800;
+    font-size:125%;
+
+}
 
 	@include media-breakpoint-up(xs) {
+		.searchbar{
+			width:85%;
+		}
+		.verbologo{
+			width: 75%;
+		}
+		.main-center{
+			width:95%;
+		}
+		.main-login{
+			width:95%;
+		}
 		.mapsearch{
 			width:100%;
 		}
@@ -120,19 +165,38 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
    			background-size: 250% !important;
 		}
 		    .verbobox {
-             height: 75px; }
+             height: 75px;
+			margin-top:30%;}
 
 		 .findahomegroupbtn{
 			 width:100%;
 			 margin-bottom:30%;
+			 margin-top:15%;
 		 }
 		.faq-box {
-			width: 75%
+			width: 95%
+		}
+
+		.header-text{
+			font-size:115%;
 		}
 		}
 
 
         @include media-breakpoint-up(sm) {
+			.searchbar{
+			width:85%;
+			}
+			.verbologo{
+			width: 75%;
+			}
+			.main-center{
+			width:95%;
+			}
+
+			.main-login{
+				width:95%;
+			}
 			.mapsearch{
 			width:100%;
 			}
@@ -153,17 +217,34 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 75px; }
+             height: 75px;
+			margin-top:30%}
 
 			.findahomegroupbtn{
 			 width:100%;
-				margin-bottom:30%;
+			margin-bottom:30%;
+			margin-top:15%;
 		 }
-					.faq-box {
-			width: 75%
+			.faq-box {
+			width: 95%
+		}
+			.header-text{
+			font-size:115%;
 		}
 		}
         @include media-breakpoint-up(md) {
+		.searchbar{
+			width:50%;
+		}
+			.verbologo{
+			width: 75%;
+		}
+			.main-center{
+			width:50%;
+			}
+			.main-login{
+				width:50%;
+		}
 			.mapsearch{
 			width:75%;
 			}
@@ -183,19 +264,40 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:50%;
 			margin-bottom:30%;
+				margin-top:1.5%;
+
 
 		 }
-					.faq-box {
+		.faq-box {
 			width: 75%
+		}
+
+			.header-text{
+			font-size:125%;
 		}
 
 		}
         @include media-breakpoint-up(lg) {
+			.searchbar{
+			width:50%;
+			}
+			.verbologo{
+			width: 35%;
+		}
+			.main-center{
+			width:50%;
+			}
+
+			.main-login{
+				width:35%;
+
+			}
 			.mapsearch{
 			width:50%;
 			}
@@ -215,18 +317,32 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:45%;
 				margin-bottom:30%;
+				margin-top:1.5%;
 		 }
 			faq-box {
 			width: 50%
 		}
+			.header-text{
+			font-size:125%;
+		}
 
 		}
         @include media-breakpoint-up(xl) {
+			.searchbar{
+			width:50%;
+		}
+			.verbologo{
+			width: 35%;
+		}
+			.main-login{
+				width:35%;
+			}
 			.mapsearch{
 			width:50%;
 			}
@@ -246,14 +362,19 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 			}
 
 			.verbobox {
-             height: 100px; }
+             height: 100px;
+			 margin-top: 10%;}
 
 			.findahomegroupbtn{
 			 width:45%;
 				margin-bottom:30%;
+				margin-top:1.5%;
 		 	}
 			.faq-box {
 			width: 50%
+		}
+			.header-text{
+			font-size:115%;
 		}
 		}
 
@@ -840,7 +961,7 @@ expandOpen
 .expandOpen{
 	animation-name: expandOpen;
 	-webkit-animation-name: expandOpen;
-
+	animation-delay: .2s;
 	animation-duration: 1.2s;
 	-webkit-animation-duration: 1.2s;
 
@@ -1115,11 +1236,10 @@ pulse
 	animation-name: pulse;
 	-webkit-animation-name: pulse;
 
-	animation-duration: 1.5s;
-	-webkit-animation-duration: 1.5s;
+	-webkit-animation-duration: 1s;
 
-	animation-iteration-count: infinite;
-	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: 1;
+	-webkit-animation-iteration-count: 1;
 }
 
 @keyframes pulse {
@@ -1243,7 +1363,7 @@ pullUp
 .pullUp{
 	animation-name: pullUp;
 	-webkit-animation-name: pullUp;
-
+	animation-delay: 1s;
 	animation-duration: 1.1s;
 	-webkit-animation-duration: 1.1s;
 
@@ -1312,6 +1432,7 @@ pullDown
 .pullDown{
 	animation-name: pullDown;
 	-webkit-animation-name: pullDown;
+	animation-delay: 1s;
 
 	animation-duration: 1.1s;
 	-webkit-animation-duration: 1.1s;
@@ -1511,8 +1632,8 @@ stretchRight
 }
 
 /* Made by Jimmy Gillam */
-$checked-color: #34b93d;
-$unchecked-color: #453F3B;
+$checked-color: #87B87C;
+$unchecked-color: #595959;
 $checkbox-height: 25px;
 $background-color:transparent;
 $font-color:#efefef;

@@ -1,68 +1,99 @@
 <section class="cover text-center">
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}FAQ{% endblock %}
+    {% block title %}FAQ{% endblock %}
 
-{% block content %}
-    <body class="faq">
+    {% block content %}
+        <body class="faq">
 
-<div class="main-login faq-box">
-    <p class="animated stretchLeft title-text" style="text-align:center;">Frequently Asked Questions</p>
-    <hr>
-    {% if current_user.role == 'homegroup_leader' %}
+        <div class="main-login faq-box">
+            <p class="animated stretchLeft title-text" style="text-align:center;">Frequently Asked Questions</p>
+            <hr>
+            {% if current_user.role == 'homegroup_leader' %}
 
-        <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
-        <p class="answer">Click on the "Members" tab on the navigation bar, and then click "Add Member" at the top of the page.</p><br>
-        <h3 class="header-text"><b>How do I take attendance?</b></h3>
-        <p class="answer">Click on "Attendance" tab on the navigation bar.
-            Select the current date and time and click "Take Attendance".
-            Click the check boxes next to a person's name if they are present. Leave them blank if they absent.
-        </p><br>
-        <h3 class="header-text"><b>How do I edit/view past attendance reports?</b></h3>
-        <p class="answer">On the "Attendance" page, click on "View Attendance History." Click "Edit" for the report you would like to
-            view.</p><br>
-        <h3 class="header-text"><b>How do I edit my home group information?</b></h3>
-        <p class="answer">Click on the "Edit Home Group" tab and edit your home group information using the form.</p><br>
-        <h3 class="header-text"><b>How do I email my home group?</b></h3>
-        <p class="answer">Click on the "Members" tab. On the top right, click the "Contact Members" button, compose, and send your
-            email.</p>
+                <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
+                <p class="answer">Click on the "Members" tab on the navigation bar, and then click "Add Member" at the
+                    top of the page.</p><br>
+                <h3 class="header-text"><b>How do I take attendance?</b></h3>
+                <p class="answer">Click on "Attendance" tab on the navigation bar.
+                    Select the current date and time and click "Take Attendance".
+                    Click the check boxes next to a person's name if they are present. Leave them blank if they absent.
+                </p><br>
+                <h3 class="header-text"><b>How do I edit/view past attendance reports?</b></h3>
+                <p class="answer">On the "Attendance" page, click on "View Attendance History." Click "Edit" for the
+                    report you would like to
+                    view.</p><br>
+                <h3 class="header-text"><b>How do I edit my home group information?</b></h3>
+                <p class="answer">Click on the "Edit Home Group" tab and edit your home group information using the
+                    form.</p><br>
+                <h3 class="header-text"><b>How do I email my home group?</b></h3>
+                <p class="answer">Click on the "Members" tab. On the top right, click the "Contact Members" button,
+                    compose, and send your
+                    email.</p>
 
-    {% endif %}
-    {% if current_user.role == 'admin' %}
-        <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
-        <p class="answer">Click on the "Home Groups" tab on the navigation bar. Select the "Members" button of the desired home group.
-            Click "Add Member" at the top of the page.</p><br>
-        <h3 class="header-text"><b>How do I delete a home group?</b></h3>
-        <p class="answer">Click on the "Home Groups" tab. Select the "Delete" button of the desired home group. This will temporarily
-            deactivate the home group. To reactivate a home group, click on "Show Inactive Home Groups" at the top of the
-            page. Select "Reactivate" on the desired home group.</p><br>
-        <h3 class="header-text"><b>How do I view all members of all home groups?</b></h3>
-        <p class="answer">Click on "Members" tab. Here, you can edit, create, or remove a member.</p><br>
-        <h3 class="header-text"><b>How do I search by member demographics?</b></h3>
-        <p class="answer">On the "Members" page, click the "Advanced Search" button at the top. Click on the criteria you would
-            like to filter by, and scroll down to the results. This will display a list of members who meet the desired criteria.
-            From here, you can email these members or download a report of the members.</p><br>
-        <h3 class="header-text"><b>How do I add home group leaders or admin?</b></h3>
-        <p class="answer">Go to the "Roles" tab. Find the user you want to make a home group leader or admin. If they do
-            not already have an account, press create account. If they already have an account, press "Assign New Role"
-            to give them a new role. If they already have a role, you can deactivate the previous role and assign a new one. </p>
-    {% endif %}
-    {% if current_user.role != 'admin' %}
-        {% if current_user.role != 'homegroup_leader' %}
-            <h3 class="question"><b>How do I join a home group?</b></h3>
-            <p class="answer"> Check out the map on the home page and find
-                home groups near you by typing in your address. Contact the home group leader for more information.
-                Click <a class="link-color" href="{{ url_for( 'index' ) }}">here</a>
-                to access the map.
-            </p>
+            {% endif %}
+            {% if current_user.role == 'admin' %}
+                <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
+                <p class="answer">Click on the "Home Groups" tab on the navigation bar. Select the "Members" button of
+                    the desired home group.
+                    Click "Add Member" at the top of the page.</p><br>
+                <h3 class="header-text"><b>How do I delete a home group?</b></h3>
+                <p class="answer">Click on the "Home Groups" tab. Select the "Delete" button of the desired home group.
+                    This will temporarily
+                    deactivate the home group. To reactivate a home group, click on "Show Inactive Home Groups" at the
+                    top of the
+                    page. Select "Reactivate" on the desired home group.</p><br>
+                <h3 class="header-text"><b>How do I view all members of all home groups?</b></h3>
+                <p class="answer">Click on "Members" tab. Here, you can edit, create, or remove a member.</p><br>
+                <h3 class="header-text"><b>How do I search by member demographics?</b></h3>
+                <p class="answer">On the "Members" page, click the "Advanced Search" button at the top. Click on the
+                    criteria you would
+                    like to filter by, and scroll down to the results. This will display a list of members who meet the
+                    desired criteria.
+                    From here, you can email these members or download a report of the members.</p><br>
+                <h3 class="header-text"><b>How do I add home group leaders or admin?</b></h3>
+                <p class="answer">Go to the "Roles" tab. Find the user you want to make a home group leader or admin. If
+                    they do
+                    not already have an account, press create account. If they already have an account, press "Assign
+                    New Role"
+                    to give them a new role. If they already have a role, you can deactivate the previous role and
+                    assign a new one. </p>
+            {% endif %}
+            {% if current_user.role != 'admin' %}
+                {% if current_user.role != 'homegroup_leader' %}
+                    <h3 class="header-text"><b>What is Verbo Church?</b></h3>
+                    <p class="answer"> Verbo Church began in 1987.
+                        Since then we have seen the Lord take a small group of new believers and g
+                        row it into a thriving congregation of over 2,000,
+                        with many effective ministries impacting the city and region.
+                        Learn more about our ministries on <a class="link-color" href="http://www.verbocuenca.org/" target="_blank">our main site</a>.
+
+                    </p>
+
+                    <h3 class="header-text"><b>How do I join a home group?</b></h3>
+                    <p class="answer"> Check out the map on the home page and find
+                        home groups near you by typing in your address. Contact the home group leader for more
+                        information.
+                        Click <a class="link-color" href="{{ url_for( 'index' ) }}" target="_blank">here</a>
+                        to access the map.
+                    </p>
+                     <h3 class="header-text"><b>Why can't I login?</b></h3>
+                    <p class="answer"> Login accounts are provided for admin and home group leaders. If you are an admin or home group leader who is having trouble logging in
+                        visit <a class="link-color" href="{{ url_for( 'contact' ) }}">the Contact</a> page and leave a message.
+
+                    </p>
+                     <h3 class="header-text"><b>How do I switch languages?</b></h3>
+                    <p class="answer">There is a Google translate option that allows you to switch to the language of your choice under the navigation bar.
+
+                    </p>
 
 
-        {% endif %}
-    {% endif %}
-    <hr>
-    <h4 style="text-align:center">Other questions? <a href="{{ url_for('contact') }}"
-                            target="_top">Contact Our Support Team</a></h4>
-</div>
-    </body>
-    </section>
-{% endblock %}
+                {% endif %}
+            {% endif %}
+            <hr>
+            <h4 style="text-align:center">Other questions? <a href="{{ url_for('contact') }}"
+                                                              target="_top">Contact Our Support Team</a></h4>
+        </div>
+        </body>
+        </section>
+    {% endblock %}

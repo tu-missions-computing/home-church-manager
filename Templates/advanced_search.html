@@ -5,8 +5,8 @@
     {% block content %}
 
         <div class="container">
-            <div class="main-login main-center">
-                <h1 class="title-text">Advanced Search</h1>
+            <div class="main-container main-center">
+                <h1 class="title-text animated stretchLeft">Advanced Search</h1>
                 <hr>
                 <div class="row">
                     <div class="col-2">
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-xs-10 col-lg-11">
                         <div class="form-group">
-                            <select class="medium-form-control input-lg searchDropdown" id="gender">
+                            <select class="medium-form-control  searchDropdown" id="gender">
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
@@ -120,13 +120,9 @@
                     </div>
                 </div>
                 <div class="col form-group float-right">
-                    <div class="section section--sade">
                         Show Inactive Members
-                        <div class="toggle-button toggle-button--sade">
                             <input id="checkbox1" type="checkbox" checked=''>
-                            <label for="checkbox1"></label>
-                            <div class="toggle-button__icon"></div>
-                        </div>
+                            <label for="checkbox1" class="check-box" style="margin-bottom:0; margin-left:5px;"></label>
                     </div>
                 </div>
 
@@ -160,7 +156,7 @@
                                     <span class="fa fa-trash"></span> Remove
                                 </a>
                             </td>
-                            <td class="content"><i style="color:green" class="fa fa-check-square-o"></i></td>
+                            <td class="content"><i style="color:#87B87C" class="fa fa-check-square-o"></i></td>
                         </tr>
                     {% endfor %}
 

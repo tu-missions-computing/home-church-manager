@@ -11,37 +11,36 @@
 <div class="container" style="background-color:white;color:black; margin-top:1.5%">
      <div class="row">
          <div class="col-12">
-              <h1 class="title-text">{{currentHomegroup.name}} DASHBOARD</h1>
+              <h1 class="title-text">{{currentHomegroup.name}} Dashboard</h1>
           </div>
              <hr>
         </div>
     <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="dashboard-stats">
-                 <h1 class="number-text-blue">##</h1>
-                <span class="heading-text">{{currentHomegroup.name}} MEMBERS</span>
+                 <h1 class="number-text-blue">{{countMembers.numMembers}}</h1>
+                <span class="heading-text">{{currentHomegroup.name}}</span>
+                <br><span class="heading-text"> MEMBERS</span>
                 <br> <span class="secondary-text">ATTENDING HOME GROUP</span>
             </div>
 
             <div class="dashboard-stats">
-                 <h1 class="number-text-red">## </h1>
-                <span class="heading-text"> ACTIVE MEMBERS</span>
+                 <h1 class="number-text-red">{{ numMeetings.numMeetings}}</h1>
+                <span class="heading-text"> Number of Meetings </span>
                 <br><span class="secondary-text">ATTENDING {{currentHomegroup.name}}</span>
             </div>
 
             <div class="dashboard-stats">
-                 <h1 class="number-text-blue">{{attendance_rate}}## </h1>
+                 <h1 class="number-text-blue">{{attendance_rate}} </h1>
                 <span class="heading-text">ATTENDANCE RATE</span>
                 <br><span class="secondary-text">IN THE MONTH OF {{ currentMonth }}</span>
             </div>
-                 <a href="{{url_for('all_homegroup_data')}}" class="btn btn-primary btn-lg btn-block" style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
+                 <a href="{{url_for('homegroup_data', homegroup_id = currentHomegroup.id)}}" class="btn btn-primary btn-lg btn-block" style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i class="fa fa-download" aria-hidden="true"></i> Download Attendance Data</a>
 
         </div>
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <div class="row" style="background-color:#f7f7f7; margin-bottom:3.5%; margin-top:1.5%; padding:3.5%; ">
-                <div class="col-12">
-                    <h3>About {{currentHomegroup.name}}</h3>
-                    <br>
+                <div class="col-12" style="text-align:left;">
                     <div><span style="font-weight:900">DESCRIPTION:</span> {{currentHomegroup.description}}</div>
                     <div><span style="font-weight:900">LOCATION:</span> {{currentHomegroup.location}}</div>
                   </div>
@@ -114,6 +113,10 @@
 </table>
 
 <script>
+Highcharts.setOptions({
+         colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
+          });
+
 Highcharts.chart('line-chart', {
     chart: {
         type: 'line'
@@ -140,55 +143,53 @@ Highcharts.chart('line-chart', {
             enableMouseTracking: false
         }
     },
-
 });
-
 </script>
 
-<table id="datatable" hidden>
-    <thead>
-         <tr>
-                <th></th>
-              <th>Date</th>
-          </tr>
-     </thead>
-    <tbody>
-            {% for attendance_record in attendance_count %}
-         <tr>
-               <th>{{ attendance_record.date }}</th>
-                <td>{{ attendance_record.countMembers}}</td>
-           </tr>
-           {% endfor %}
+<!--<table id="datatable" hidden>-->
+    <!--<thead>-->
+         <!--<tr>-->
+                <!--<th></th>-->
+              <!--<th>Date</th>-->
+          <!--</tr>-->
+     <!--</thead>-->
+    <!--<tbody>-->
+            <!--{% for attendance_record in attendance_count %}-->
+         <!--<tr>-->
+               <!--<th>{{ attendance_record.date }}</th>-->
+                <!--<td>{{ attendance_record.countMembers}}</td>-->
+           <!--</tr>-->
+           <!--{% endfor %}-->
 
-     </tbody>
-</table>
+     <!--</tbody>-->
+<!--</table>-->
 
 
-<script>
-    Highcharts.chart('container', {
-        data: {
-            table: 'datatable'
-        },
-        chart: {
-            type: 'column'
-       },
-        title: {
-            text: 'Total Attendance Counts'
-        },
-        yAxis: {
-            allowDecimals: false,
-            title: {
-                text: 'Attendance Count'
-            }
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' ' + this.point.name.toLowerCase();
-            }
-        }
-    });
-</script>
+<!--<script>-->
+    <!--Highcharts.chart('container', {-->
+        <!--data: {-->
+            <!--table: 'datatable'-->
+        <!--},-->
+        <!--chart: {-->
+            <!--type: 'column'-->
+       <!--},-->
+        <!--title: {-->
+            <!--text: 'Total Attendance Counts'-->
+        <!--},-->
+        <!--yAxis: {-->
+            <!--allowDecimals: false,-->
+            <!--title: {-->
+                <!--text: 'Attendance Count'-->
+            <!--}-->
+        <!--},-->
+        <!--tooltip: {-->
+            <!--formatter: function () {-->
+                <!--return '<b>' + this.series.name + '</b><br/>' +-->
+                    <!--this.point.y + ' ' + this.point.name.toLowerCase();-->
+            <!--}-->
+        <!--}-->
+    <!--});-->
+<!--</script>-->
 
 
 

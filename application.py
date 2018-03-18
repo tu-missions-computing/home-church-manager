@@ -47,14 +47,16 @@ def after(exception):
 
 # Initialize test users -- we can no longer do this in the db because of the password hashing
 def init_test_user():
-    if db.find_user('john@example.com') is None:
-        password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(1, pw_hash, 1)
-    if db.find_user('admin@example.com') is None:
-        password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(7, pw_hash, 2)
+    return
+    # if db.find_user('john@example.com') is None:
+    #     print (db.find_user('john@example.com'))
+    #     password = 'password'
+    #     pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+    #     db.create_user(1, pw_hash, 1)
+    # if db.find_user('admin@example.com') is None:
+    #     password = 'password'
+    #     pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+    #     db.create_user(2, pw_hash, 2)
 
 
 ########################## INDEX + MAP + Dashboard##############################################
@@ -397,7 +399,14 @@ def login():
     login_form = LoginForm()
 
     if login_form.validate_on_submit() and login_form.validate():
-        if authenticate(login_form.email.data, login_form.password.data):
+        user = db.find_user(login_form.email.data)
+        if user:
+            member_id = user['member_id']
+            is_active = db.has_active_role(member_id)
+        else:
+            is_active = False
+
+        if authenticate(login_form.email.data, login_form.password.data) and is_active:
             # Credentials authenticated.
             # Create the user object, let Flask-Login know, and redirect to the home page
             current_user = User(login_form.email.data)
@@ -436,32 +445,47 @@ def user_profile(user_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
+    countMembers = 0
     homegroup = db.find_homegroup(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
+    countMembers = db.number_of_members_in_homegroup(homegroup_id)
+    mydate = datetime.datetime.now()
+    month_string = mydate.strftime("%B").upper()
+    now = datetime.datetime.now()
+    month = now.month
+    hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(month, homegroup_id))) + '%'
+    number_meetings = db.number_of_meetings_held(homegroup_id)
     if not attendance_count:
         if (current_user.role == "admin"):
             flash("No attendance data found for this Home Group", category="warning")
-            return redirect(url_for('get_homegroups', homegroup_id = homegroup_id))
+            return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
-            return render_template('homegroup.html', currentHomegroup=homegroup,
+            return render_template('homegroup.html',   countMembers = countMembers, currentHomegroup=homegroup,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
     member_attendance = []
+    dates = db.get_last_3_dates(homegroup_id)
     for member in members:
         attendance = db.get_member_attendance(homegroup_id, member['member_id'])
         list = []
         if attendance:
             name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
             list.append(name)
-            for item in attendance:
-                list.append(item['attendance'])
+            for date in dates:
+                hasDate = False
+                for item in attendance:
+                    if date['date'] == item['date'] and item['attendance']:
+                        list.append(item['attendance'])
+                        hasDate = True
+                if hasDate == False:
+                    list.append(False)
                 list_length = len(list)
             if (list_length < 4):
                 for i in range(0, (4 - list_length)):
                     list.append(False)
             member_attendance.append(list)
-            dates = db.get_last_3_dates(homegroup_id)
+
         else:
 
             list.append(member['first_name'] + " " + member['last_name'])
@@ -470,7 +494,7 @@ def homegroup(homegroup_id):
             member_attendance.append(list)
 
 
-    return render_template('homegroup.html', currentHomegroup=homegroup,
+    return render_template('homegroup.html', numMeetings = number_meetings, attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
 
@@ -522,7 +546,6 @@ def system_notify_member(member_id, num_misses):
 
 @app.route('/homegroup/data/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
-@requires_roles('admin')
 def homegroup_data(homegroup_id):
     attendance = db.get_homegroup_attendance_records(homegroup_id)
     hgname = db.find_homegroup(homegroup_id)['name']
@@ -610,8 +633,8 @@ def edit_attendance(homegroup_id, meeting_id):
                             notify = False
                     if len(attendancedates) <3:
                         notify = False
-                    if notify == True:
-                        system_notify_member(member['id'], 3)
+                    #if notify == True:
+                        #system_notify_member(member['id'], 3)
 
         return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
@@ -830,7 +853,7 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField('Name', [Length(min=2, max=30, message="Name is a required field")])
+    name = StringField('Name', [Length(min=2, max=50 , message="Name is a required field")])
     description = TextAreaField('Description', [InputRequired(message="Please enter a description")])
     location = StringField('Address', [InputRequired(message="Please enter valid Address")])
     latitude = StringField('Latitude')
@@ -844,7 +867,7 @@ class CreateHomeGroupForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
-    homegroup_member_data = db.get_top_n_homegroup_member_counts('10')
+    homegroup_member_data = db.get_top_n_homegroup_member_counts('5')
     gender = db.gender_report()
     active_homegroups = db.number_of_active_homegroups()
     members = db.number_of_members_attending_homegroups()
@@ -854,7 +877,9 @@ def admin_home():
     homegroup_leaders = db.number_of_homegroup_leaders()
     homegroups = db.number_of_homegroups()
     print (attendance_rate)
-    return render_template('admin_home.html',attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
+    mydate = datetime.datetime.now()
+    month_string = mydate.strftime("%B").upper()
+    return render_template('admin_home.html',currentMonth = month_string, attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
 
 
 # create homegroup

@@ -1,14 +1,14 @@
 <section class="cover text-center">
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}Edit Home Group{% endblock %}
+    {% block title %}Edit Home Group{% endblock %}
 
-{% block content %}
-    <style>
-    </style>
-    <div class="container">
-            <div class="main-login main-center">
-                <h2 class="title-text">Edit Home Group</h2>
+    {% block content %}
+        <style>
+        </style>
+        <div class="container">
+            <div class="main-center">
+                <h2 class="title-text animated stretchLeft">Edit Home Group</h2>
                 <hr>
                 <form id="form-area" class="" method="post" action="#">
 
@@ -39,10 +39,10 @@
                     </div>
 
 
-                    <div  class='btn btn-primary btn-lg btn-block'
+                    <div class='btn btn-primary btn-lg btn-block'
                          style="display: block; width: 100%; font-family: 'Questrial', sans-serif;" id="findLocation">
                         Find Location
-                </div>
+                    </div>
 
 
                     <iframe style="display: none" id="mapFrame" width=100% height="300px"
@@ -74,30 +74,31 @@
                 </form>
             </div>
 
-    </div>
+        </div>
         </section>
-<script type="text/javascript">
+        <script type="text/javascript">
 
-function stopRKey(evt) {
-  var evt = (evt) ? evt : ((event) ? event : null);
-  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-  if ((evt.keyCode == 13) && (node.type=="text"))  {
-      document.getElementById("findLocation").click();
-      return false;}
-}
+            function stopRKey(evt) {
+                var evt = (evt) ? evt : ((event) ? event : null);
+                var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+                if ((evt.keyCode == 13) && (node.type == "text")) {
+                    document.getElementById("findLocation").click();
+                    return false;
+                }
+            }
 
-document.onkeypress = stopRKey;
+            document.onkeypress = stopRKey;
 
-</script>
+        </script>
 
-{% endblock %}
+    {% endblock %}
 
 <script>
-    $('#form-area').on('keyup keypress', function(e) {
-  var keyCode = e.keyCode || e.which;
-  if (keyCode === 13) {
-    e.preventDefault();
-    return false;
-  }
-});
+    $('#form-area').on('keyup keypress', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 </script>

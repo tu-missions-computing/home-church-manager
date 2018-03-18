@@ -1,18 +1,17 @@
 <section class="cover text-center">
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}Log In{% endblock %}
+    {% block title %}Log In{% endblock %}
 
-{% block content %}
-    <style>
-        body, html {
-            height: 100%;
+    {% block content %}
+        <style>
+            body, html {
+                height: 100%;
 
-        }
-    </style>
-    <div class="container">
-            <div class="main-login main-center">
-                <h1 class="title-text">Log In</h1>
+            }
+        </style>
+        <div class="container main-login main-center">
+                <h1 class="title-text animated stretchLeft">Log In</h1>
                 <hr>
 
                 <form method="POST">
@@ -32,7 +31,6 @@
                     {% endif %}
                     <p>{{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
                 </form>
-            </div>
         </div>
-    </section>
-{% endblock %}
+        </section>
+    {% endblock %}
