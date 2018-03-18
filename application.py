@@ -1,28 +1,24 @@
 from functools import wraps
 
 import os
+import datetime
+
 from flask import Flask, session, render_template, request, flash, redirect, url_for, jsonify, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FloatField, RadioField, SubmitField, IntegerField, TextAreaField
-from wtforms import StringField, PasswordField, SubmitField, SelectField, FloatField, PasswordField, BooleanField, \
-    ValidationError
-from wtforms.validators import Email, Length, DataRequired, NumberRange, InputRequired, EqualTo
-from wtforms.validators import Length
-from wtforms import validators
+from wtforms import RadioField, TextAreaField, StringField, SubmitField, SelectField, PasswordField
+from wtforms.validators import Email, Length, DataRequired, InputRequired
+
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 import flask_excel as excel
 from openpyxl import Workbook
 from openpyxl.compat import range
-from openpyxl.utils import get_column_letter
-import io
 
+from flask.ext.babel import Babel, gettext as _, ngettext
 
 import db
 from mail_settings import config_email
-import datetime
-
 
 app = Flask(__name__)
 config_email(app)
@@ -31,10 +27,13 @@ mail = Mail(app)
 
 bcrypt = Bcrypt(app)
 login_mgr = LoginManager()
-login_mgr = LoginManager(app)
-
+login_mgr = LoginManager(app)       # FIXME: Do we need both of these constructors?
 
 excel.init_excel(app)
+
+babel = Babel(app)
+app.config['BABEL_DEFAULT_LOCALE'] = 'es'
+
 
 @app.before_request
 def before():
@@ -46,7 +45,7 @@ def after(exception):
     db.close_db_connection()
 
 
-# this initializes some test users -- we can no longer do this in the db because of the password hashing
+# Initialize test users -- we can no longer do this in the db because of the password hashing
 def init_test_user():
     if db.find_user('john@example.com') is None:
         password = 'password'
@@ -71,22 +70,16 @@ def index():
     #     ['verbovelocity@gmail.com'])
     # msg.body = "This is the email body"
     # mail.send(msg)
-    init_test_user()
-
+    init_test_user()            # FIXME: Should this be in the production code?
     return render_template('index.html')
 
 
 @app.route('/downloads/<path:filename>')
 def download_file(filename):
-    return send_from_directory(os.getcwd(),
-                               filename, as_attachment=True)
+    return send_from_directory(os.getcwd(), filename, as_attachment=True)
 
 
-
-
-
-
-# this displays the dashboard depending on user role
+# Display the dashboard depending on user role
 @app.route('/dashboard')
 def dashboard():
     email = current_user.email
@@ -99,27 +92,31 @@ def dashboard():
     return redirect(url_for('index'))
 
 
-# displays the map of all the homegroups
+# Display the map of all the homegroups
 @app.route('/map')
 def map():
     homegroups = db.get_all_homegroup_info()
     print(homegroups)
     return render_template('map.html', homegroups=homegroups)
 
-# displays the faq page
+
+# Display the FAQ page
 @app.route('/faq')
 def faq():
     return render_template('faq.html')
 
-# displays the homegroup leader faq page
+
+# Display the homegroup leader FAQ page
 @app.route('/faq/homegroup_leader')
 def faq_homegroup_leader():
     return render_template('faq_homegroup_leader.html')
 
-# displays the admin faq page
+
+# Display the admin faq page
 @app.route('/faq/admin')
 def faq_admin():
     return render_template('faq_admin.html')
+
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
@@ -127,7 +124,8 @@ class ContactForm(FlaskForm):
     message = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send Email')
 
-# displays the contact page
+
+# Display the contact page
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     recipient_list=[]
@@ -135,16 +133,16 @@ def contact():
     if contact_form.validate_on_submit():
         name = contact_form.name.data
         email = contact_form.email.data
-        recipient_list.append('verbovelocity@gmail.com')
+        recipient_list.append('verbovelocity@gmail.com')        # FIXME: Keep using this address?
         message = contact_form.message.data
         email_html = render_template('contact_email.html', name=name, email=email, message=message)
         msg = Message(
-            'Message Received',
+            _('Message Received'),
             sender=email,
             recipients=recipient_list,
             html=email_html)
         mail.send(msg)
-        flash('Email Sent!', category="success")
+        flash(_('Email Sent!'), category="success")
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
@@ -156,10 +154,10 @@ def requires_roles(*roles):
         @wraps(f)
         def wrapped(*args, **kwargs):
             if not hasattr(current_user, 'role'):
-                flash('User does not have sufficient privileges ', category="danger")
+                flash(_('User does not have sufficient privileges'), category="danger")
                 return redirect(url_for('index'))
             elif current_user.role not in roles:
-                flash('User does not have sufficient privileges ', category="danger")
+                flash(_('User does not have sufficient privileges'), category="danger")
                 return redirect(url_for('index'))
             return f(*args, **kwargs)
 
@@ -169,16 +167,15 @@ def requires_roles(*roles):
 
 
 class UserForm(FlaskForm):
-
-    password = PasswordField('Temporary Password', validators=[DataRequired()])
-    role = SelectField('Change Role', choices=[], coerce=int)
-    homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
-    submit = SubmitField('Create User')
+    password = PasswordField(_('Temporary Password'), validators=[DataRequired()])
+    role = SelectField(_('Change Role'), choices=[], coerce=int)
+    homegroups = SelectField(_('Choose Homegroup'), choices=[], coerce=int)
+    submit = SubmitField(_('Create User'))
 
 class RoleForm(FlaskForm):
-    role = SelectField('Change Role', choices=[], coerce=int)
-    homegroups = SelectField('Choose Homegroup', choices=[], coerce=int)
-    submit = SubmitField('New Role')
+    role = SelectField(_('Change Role'), choices=[], coerce=int)
+    homegroups = SelectField(_('Choose Homegroup'), choices=[], coerce=int)
+    submit = SubmitField(_('New Role'))
 
 
 # Creates a new user and hashes their password in the database
@@ -203,14 +200,14 @@ def create_user(member_id):
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         if (db.has_active_role(member_id)):
-            flash("User already has account", category="danger")
+            flash(_("User already has account"), category="danger")
             return redirect(url_for('get_roles'))
         db.create_user(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
-            'User account created for Verbo Velocity',
-            sender='verbovelocity@gmail.com',
+            _('User account created for Verbo Velocity'),
+            sender='verbovelocity@gmail.com',       # FIXME: Appears multiple times
             recipients=email_list,
             html=email_html)
         mail.send(msg)
@@ -218,12 +215,12 @@ def create_user(member_id):
             homegroupId = user_form.homegroups.data
             db.add_leader_to_homegroup(member_id, homegroupId)
 
-        flash('User Created', category="success")
+        flash(_('User Created'), category="success")
         return redirect(url_for('get_roles'))
     return render_template('create_user.html', form=user_form, email = email)
 
 
-# shows role page
+# Show role page
 @app.route('/roles')
 @login_required
 @requires_roles('admin')
@@ -688,10 +685,10 @@ def select_location():
 ########################## MEMBER (Home Group Leader) ##############################################
 
 class CreateMemberForm(FlaskForm):
-    first_name = StringField('First Name', [validators.Length(min=2, max=30, message="First name is a required field")])
-    last_name = StringField('Last Name', [validators.Length(min=2, max=30, message="Last name is a required field")])
-    email = StringField('Email', [validators.Email("Please enter valid email")])
-    phone_number = StringField('Phone Number', [validators.InputRequired(message="Please enter valid phone number")])
+    first_name = StringField('First Name', [Length(min=2, max=30, message="First name is a required field")])
+    last_name = StringField('Last Name', [Length(min=2, max=30, message="Last name is a required field")])
+    email = StringField('Email', [Email("Please enter valid email")])
+    phone_number = StringField('Phone Number', [InputRequired(message="Please enter valid phone number")])
     gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
     baptism_status = SelectField('Baptized?', choices=[('True', 'Yes'), ('False', 'No')])
     marital_status = SelectField('Married?', choices=[('True', 'Yes'), ('False', 'No')])
@@ -833,15 +830,15 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField('Name', [validators.Length(min=2, max=30, message="Name is a required field")])
-    description = TextAreaField('Description', [validators.InputRequired(message="Please enter a description")])
-    location = StringField('Address', [validators.InputRequired(message="Please enter valid Address")])
+    name = StringField('Name', [Length(min=2, max=30, message="Name is a required field")])
+    description = TextAreaField('Description', [InputRequired(message="Please enter a description")])
+    location = StringField('Address', [InputRequired(message="Please enter valid Address")])
     latitude = StringField('Latitude')
     longitude = StringField('Longitude')
     submit = SubmitField('Save Home Group')
 
 
-# displays admin home page
+# Display admin home page
 @app.route('/admin')
 @login_required
 @requires_roles('admin')
