@@ -1,0 +1,36 @@
+<section class="cover text-center">
+    {% extends 'base.html' %}
+
+    {% block title %}Log In{% endblock %}
+
+    {% block content %}
+        <style>
+            body, html {
+                height: 100%;
+
+            }
+        </style>
+        <div class="container main-login main-center">
+                <h1 class="title-text animated stretchLeft">Log In</h1>
+                <hr>
+
+                <form method="POST">
+                    {{ form.csrf_token }}
+
+                    <p class="form-label">{{ form.email.label }}{{ form.email(class='form-control') }}</p>
+                    {% if form.email.errors %}
+                        <div class="alert alert-warning">
+                            Please enter a valid E-mail
+                        </div>
+                    {% endif %}
+                    <p class="form-label">{{ form.password.label }}{{ form.password(class="form-control") }}</p><br>
+                    {% if form.password.errors %}
+                        <div class="alert alert-warning">
+                            Please enter a valid Password
+                        </div>
+                    {% endif %}
+                    <p>{{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
+                </form>
+        </div>
+        </section>
+    {% endblock %}
