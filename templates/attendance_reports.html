@@ -1,9 +1,9 @@
-<section class="cover text-center">
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block title %}Attendance Reports{% endblock %}
+{% block title %}Attendance Reports{% endblock %}
 
-    {% block content %}
+{% block content %}
+    <section class="cover text-center">
         <div class="main-center">
             <h1 class="title-text animated stretchLeft">Attendance Reports</h1>
             <hr>
@@ -13,7 +13,7 @@
                         <a href="{{ url_for('attendance', homegroup_id = currentHomegroup) }}"
                            class="btn btn-success welcome">
                             <i class="fa fa-plus"></i>&nbsp;
-                            New Attendance Report
+                            {{ _('New Attendance Report') }}
                         </a>
                     </div>
 
@@ -22,36 +22,32 @@
             <table class="table table-striped table-bordered table-hover results">
                 <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Action</th>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Time') }}</th>
+                    <th>{{ _('Action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for record in records %}
                     <tr>
-
                         <td>{{ record.date }}</td>
                         <td>{{ record.time }}</td>
                         <td>
                             <a href="{{ url_for('edit_attendance', homegroup_id = currentHomegroup, meeting_id = record.meeting_id) }}">
                                 <button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span>
-                                    Edit
+                                    {{ _('Edit') }}
                                 </button>
                             </a>
-
                         </td>
-
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">No Info</td>
+                        <td colspan="4">{{ _('No Information') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-        </section>
-
-    {% endblock %}
+    </section>
+{% endblock %}
 

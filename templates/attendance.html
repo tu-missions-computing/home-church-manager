@@ -1,11 +1,9 @@
-<section class="cover text-center">
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block title %}Attendance Report{% endblock %}
+{% block title %}{{ _('Attendance Report') }}{% endblock %}
 
-    {% block content %}
-
-
+{% block content %}
+    <section class="cover text-center">
         <div class="container">
             <div class="main-center">
                 <h1 class="title-text animated stretchLeft">Attendance Report</h1>
@@ -13,7 +11,7 @@
                 <div class="row">
                     <div class="col form-group">
                         <a href="{{ url_for('get_attendance_dates', homegroup_id = currentHomegroup) }}">
-                            <button class="btn btn-primary"> View Attendance History</button>
+                            <button class="btn btn-primary">{{ _('View Attendance History') }}</button>
                         </a>
                     </div>
                 </div>
@@ -23,12 +21,14 @@
                             <div class="container">
                             <span class="row">
                                 <span class="col-6">
-                                    <h4><span class="label label-default" style="float:left">Date</span></h4>
+                                    <h4><span class="label label-default" style="float:left">{{ _('Date') }}</span></h4>
                                 </span>
                                 <span class="col-6">
-                                    <h4><span class="label label-default" style="float:left">Time</span></h4>
+                                    <h4><span class="label label-default" style="float:left">{{ _('Time') }}</span></h4>
                                 </span>
                             </span>
+
+{# FIXME: Markup here looks like it may be unbalanced #}
 
                                 <span class="row">
                                   <span class="col-6">
@@ -41,36 +41,32 @@
                                 </span>
                             </span>
                                 <span class="col form-group">
-                        <input type="submit" class="btn btn-info" value="Take Attendance" style="margin-top:10%">
+                        <input type="submit" class="btn btn-info" value="{{ _('Take Attendance')}}" style="margin-top:10%">
                     </span>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
-
         </div>
+    </section>
 
-        </section>
-        <script>
+    <script>
+        Date.prototype.toDateInputValue = (function () {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0, 10);
+        });
+        Date.prototype.toTimeInputValue = (function () {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            console.log(local.toJSON());
 
+            return local.toJSON().slice(11, 16);
+        });
 
-            Date.prototype.toDateInputValue = (function () {
-                var local = new Date(this);
-                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-                return local.toJSON().slice(0, 10);
-            });
-            Date.prototype.toTimeInputValue = (function () {
-                var local = new Date(this);
-                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-                console.log(local.toJSON());
+        document.getElementById('datePicker').value = new Date().toDateInputValue();
+        document.getElementById('timePicker').value = new Date().toTimeInputValue();
 
-                return local.toJSON().slice(11, 16);
-            });
-
-            document.getElementById('datePicker').value = new Date().toDateInputValue();
-            document.getElementById('timePicker').value = new Date().toTimeInputValue();
-
-        </script>
-    {% endblock %}
+    </script>
+{% endblock %}

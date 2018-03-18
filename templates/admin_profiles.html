@@ -2,9 +2,8 @@
 
 {% block title %}_('Admin Profiles'){% endblock %}
 {% block content %}
-
     <div class="container-fluid">
-        <h1>{{_('Admin Profiles')}}</h1>
+        <h1>{{ _('Admin Profiles') }}</h1>
         <div class="row">
             <div class="col form-group pull-right">
                 <div class="inner-addon right-addon">
@@ -45,10 +44,10 @@
     <table class="table table-striped table-bordered table-hover results">
         <thead>
         <tr>
-            <th>{{_('First Name')}}</th>
-            <th>{{_('Last Name')}}</th>
+            <th>{{ _('First Name') }}</th>
+            <th>{{ _('Last Name') }}</th>
             {% if showInactive==True %}
-                <th>{{_('Inactive?')}}</th>
+                <th>{{ _('Inactive?') }}</th>
             {% endif %}
             <th></th>
         </tr>

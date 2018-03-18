@@ -1,10 +1,9 @@
-<section class="cover text-center">
+{% extends 'base.html' %}
 
-    {% extends 'base.html' %}
+{% block title %}{{ _('Assign New Role') }}{% endblock %}
 
-    {% block title %}Assign New Role{% endblock %}
-
-    {% block content %}
+{% block content %}
+    <section class="cover text-center">
         <style>
             body, html {
                 height: 100%;
@@ -14,17 +13,14 @@
         <div class="container">
             <div class="row">
                 <div class="main-center">
-                    <h2 class="title-text animated stretchLeft"> Assign Role</h2>
+                    <h2 class="title-text animated stretchLeft">{{ _('Assign Role') }}</h2>
                     <hr>
                     <form method="POST" role="form" data-toggle="validator">
-
                         <div class="form-group">
                             {{ form.csrf_token }}
-
-                            <h3><b>Email:</b> {{ email }}</h3>
+                            <h3><b>{{ _('Email') }}:</b> {{ email }}</h3>
 
                         </div>
-
                         <div class="form-group">
                             <p class="form-label">{{ form.role.label }}{{ form.role(class="form-control") }}</p>
                         </div>
@@ -37,7 +33,6 @@
                         <div class="form-group ">
                             <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}</p>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -45,7 +40,6 @@
 
         <script>
             document.getElementById('role').onchange = function () {
-
                 var role_id = document.getElementById('role');
                 var role = role_id.options[role_id.selectedIndex].text;
                 if (role == 'homegroup_leader') {
@@ -54,7 +48,6 @@
                     document.getElementById('homegroups').style.visibility = 'hidden';
                 }
             }
-
         </script>
-        </section>
-    {% endblock %}
+    </section>
+{% endblock %}

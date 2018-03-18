@@ -42,7 +42,6 @@
 
     <!-- CSS Styling-->
     <style>
-
         body, wrapper {
             min-height: 100vh;
         }
@@ -159,8 +158,8 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
-<section>
 
+<section>
     <wrapper class="d-flex flex-column">
         <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5);">
             <div class="container">
@@ -170,7 +169,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:300; font-size:30px"
-                   href="{{ url_for('index') }}">VERBO VELOCITY</a>
+                   href="{{ url_for('index') }}">{{ _('VERBO VELOCITY') }}</a>
 
                 <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
                     <ul class="navbar-nav mt-2 mt-md-0">
@@ -178,79 +177,84 @@
                             <li class="dropdown nav-item">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                    Welcome, {{ current_user.name }} <span class="caret"></span></a>
+                                    {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
                                     <a class="dropdown-item"
-                                       href="{{ url_for('user_profile', user_id = current_user.member_id) }}">Profile
-                                        Settings</a>
+                                       href="{{ url_for('user_profile', user_id = current_user.member_id) }}">
+                                        {{ _('Profile Settings') }}</a>
                                     <a class="dropdown-item"
-                                       href="{{ url_for('update_user', user_id = current_user.member_id) }}"> Update
-                                        Password</a>
+                                       href="{{ url_for('update_user', user_id = current_user.member_id) }}">
+                                        {{ _('Update Password') }}</a>
                                 </div>
                             </li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item">
                                 <a class="nav-link"
-                                   href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">Members</a>
+                                   href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">
+                                    {{ _('Members') }}
+                                </a>
                             </li>
                         {% endif %}
                         {% if current_user.role == 'admin' %}
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">Home
-                                Groups</a>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">
+                                {{ _('Home Groups') }}</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">Members</a>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">
+                                {{ _('Members') }}</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">System Roles</a>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">
+                                {{ _('System Roles') }}</a>
                             </li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
-                            <li class="nav-item"><a class="nav-link"
-                                                    href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">Attendance</a>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">
+                                    {{ _('Attendance') }}</a>
                             </li>
                         {% endif %}
 
                         {% if current_user.role == 'homegroup_leader' %}
-                            <li class="nav-item"><a class="nav-link"
-                                                    href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">Edit
-                                Home Group</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">
+                                    {{ _('Edit Home Group') }}</a></li>
                         {% endif %}
 
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">FAQ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">{{ _('FAQ') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">{{ _('Contact') }}</a>
+                        </li>
                         {% if current_user.name %}
-                            <li class="nav-item" style="padding-top:5px;padding-left:5px;"><a
-                                    class="nav-link btn btn-outline-white btn-outline" href="/logout"><b><i
-                                    class="fa fa-user"></i>&nbsp; Log Out</b></a></li>
+                            <li class="nav-item" style="padding-top:5px;padding-left:5px;">
+                                <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
+                                    <b><i class="fa fa-user"></i>{{ _('Log Out') }}</b>
+                                </a>
+                            </li>
                         {% else %}
-
-                            <li class="nav-item" style="padding-top:5px; padding-left:5px;"><a
-                                    class="nav-link btn btn-outline-white btn-outline" href="/login"><b><i
-                                    class="fa fa-user"></i>&nbsp; Log In</b></a></li>
+                            <li class="nav-item" style="padding-top:5px; padding-left:5px;">
+                                <a class="nav-link btn btn-outline-white btn-outline" href="/login">
+                                    <b><i class="fa fa-user"></i>{{ _('Log In') }}</b>
+                                </a>
+                            </li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
 
-
-
-
-
         {% block content %}
             <main class="container-fluid py-3">
             </main>
         {% endblock %}
 
-
         <!-- /#page-content-wrapper -->
-
         <footer>
             <div class="container-fluid w-10" style="background: rgba(0, 0, 0, 0.5);">
                 <div class="row">
                     <div class="col-4" style="padding:0;">
-                        <div style="padding-top:6%;"> &copy; Copyright 2018, Verbo Church</div>
+                        <div style="padding-top:6%;">&copy; {{ _('Copyright 2018, Verbo Church') }}</div>
                     </div>
                     <div class="col-4" style="padding:0;">
                         <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;"><b>Verbo Iglesia
@@ -265,6 +269,9 @@
                 <div class="row ">
                     <div class="col"></div>
                     <div class="col"></div>
+
+                    {# FIXME: We are going to want to turn off Google translate. #}
+
                     <div class="col" style="float:right; color:white;">
                         <div id="google_translate_element"></div>
                         <script type="text/javascript">

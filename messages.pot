@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-18 18:28-0400\n"
+"POT-Creation-Date: 2018-03-18 18:51-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,28 +61,109 @@ msgstr ""
 msgid "User Created"
 msgstr ""
 
-#: templates/admin_profiles.html:7
+#: templates/admin_home.html:3
+msgid "Home"
+msgstr ""
+
+#: templates/admin_home.html:14
+msgid "Admin Dashboard"
+msgstr ""
+
+#: templates/admin_home.html:22
+msgid "HOME GROUPS"
+msgstr ""
+
+#: templates/admin_home.html:23 templates/admin_home.html:28
+#: templates/admin_home.html:43
+msgid "TOTAL NUMBER"
+msgstr ""
+
+#: templates/admin_home.html:27
+msgid "ACTIVE GROUPS"
+msgstr ""
+
+#: templates/admin_home.html:32
+msgid "VERBO MEMBERS"
+msgstr ""
+
+#: templates/admin_home.html:33
+msgid "ATTENDING HOME GROUPS"
+msgstr ""
+
+#: templates/admin_home.html:37
+msgid "ATTENDANCE RATE"
+msgstr ""
+
+#: templates/admin_home.html:38
+msgid "IN THE MONTH OF"
+msgstr ""
+
+#: templates/admin_home.html:42
+msgid "GROUP LEADERS"
+msgstr ""
+
+#: templates/admin_home.html:47
+msgid "Download Attendance Data"
+msgstr ""
+
+#: templates/admin_home.html:80
+msgid "Home Group"
+msgstr ""
+
+#: templates/admin_home.html:96 templates/advanced_search.html:18
+msgid "Gender"
+msgstr ""
+
+#: templates/admin_home.html:122
+msgid "Top 5 Home Groups"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Member Count"
+msgstr ""
+
+#: templates/admin_home.html:143
+msgid "Total People"
+msgstr ""
+
+#: templates/admin_home.html:162
+msgid "Total Attendance Report"
+msgstr ""
+
+#: templates/admin_home.html:165
+msgid "Monthly"
+msgstr ""
+
+#: templates/admin_home.html:169
+msgid "# of people"
+msgstr ""
+
+#: templates/admin_home.html:194
+msgid "Home Group Gender Report"
+msgstr ""
+
+#: templates/admin_home.html:225 templates/base.html:202
+msgid "Home Groups"
+msgstr ""
+
+#: templates/admin_profiles.html:6
 msgid "Admin Profiles"
 msgstr ""
 
-#: templates/admin_profiles.html:48 templates/advanced_search.html:133
+#: templates/admin_profiles.html:47 templates/advanced_search.html:133
 msgid "First Name"
 msgstr ""
 
-#: templates/admin_profiles.html:49 templates/advanced_search.html:134
+#: templates/admin_profiles.html:48 templates/advanced_search.html:134
 msgid "Last Name"
 msgstr ""
 
-#: templates/admin_profiles.html:51
+#: templates/admin_profiles.html:50
 msgid "Inactive?"
 msgstr ""
 
-#: templates/advanced_search.html:9
+#: templates/advanced_search.html:9 templates/all_members.html:60
 msgid "Advanced Search"
-msgstr ""
-
-#: templates/advanced_search.html:18
-msgid "Gender"
 msgstr ""
 
 #: templates/advanced_search.html:25
@@ -149,7 +230,8 @@ msgstr ""
 msgid "Search Results"
 msgstr ""
 
-#: templates/advanced_search.html:118
+#: templates/advanced_search.html:118 templates/all_members.html:53
+#: templates/base.html:227
 msgid "Contact"
 msgstr ""
 
@@ -157,7 +239,131 @@ msgstr ""
 msgid "Show Inactive Members"
 msgstr ""
 
-#: templates/advanced_search.html:136
+#: templates/advanced_search.html:136 templates/all_members.html:87
 msgid "Active?"
+msgstr ""
+
+#: templates/all_members.html:3
+msgid "All Members"
+msgstr ""
+
+#: templates/all_members.html:19
+msgid "Add Member"
+msgstr ""
+
+#: templates/all_members.html:25
+msgid "Add"
+msgstr ""
+
+#: templates/all_members.html:45
+msgid "Contact All Members"
+msgstr ""
+
+#: templates/all_members.html:85
+msgid "Name"
+msgstr ""
+
+#: templates/all_members.html:104
+msgid "Remove"
+msgstr ""
+
+#: templates/all_members.html:145
+msgid "Confirm"
+msgstr ""
+
+#: templates/assign_role.html:3
+msgid "Assign New Role"
+msgstr ""
+
+#: templates/assign_role.html:16
+msgid "Assign Role"
+msgstr ""
+
+#: templates/assign_role.html:21
+msgid "Email"
+msgstr ""
+
+#: templates/attendance.html:3
+msgid "Attendance Report"
+msgstr ""
+
+#: templates/attendance.html:14
+msgid "View Attendance History"
+msgstr ""
+
+#: templates/attendance.html:24 templates/attendance_reports.html:25
+msgid "Date"
+msgstr ""
+
+#: templates/attendance.html:27 templates/attendance_reports.html:26
+msgid "Time"
+msgstr ""
+
+#: templates/attendance.html:44
+msgid "Take Attendance"
+msgstr ""
+
+#: templates/attendance_reports.html:16
+msgid "New Attendance Report"
+msgstr ""
+
+#: templates/attendance_reports.html:27
+msgid "Action"
+msgstr ""
+
+#: templates/attendance_reports.html:38
+msgid "Edit"
+msgstr ""
+
+#: templates/attendance_reports.html:45
+msgid "No Information"
+msgstr ""
+
+#: templates/base.html:172
+msgid "VERBO VELOCITY"
+msgstr ""
+
+#: templates/base.html:180
+msgid "Welcome,"
+msgstr ""
+
+#: templates/base.html:185
+msgid "Profile Settings"
+msgstr ""
+
+#: templates/base.html:188
+msgid "Update Password"
+msgstr ""
+
+#: templates/base.html:196 templates/base.html:205
+msgid "Members"
+msgstr ""
+
+#: templates/base.html:208
+msgid "System Roles"
+msgstr ""
+
+#: templates/base.html:215
+msgid "Attendance"
+msgstr ""
+
+#: templates/base.html:223
+msgid "Edit Home Group"
+msgstr ""
+
+#: templates/base.html:226
+msgid "FAQ"
+msgstr ""
+
+#: templates/base.html:232
+msgid "Log Out"
+msgstr ""
+
+#: templates/base.html:238
+msgid "Log In"
+msgstr ""
+
+#: templates/base.html:257
+msgid "Copyright 2018, Verbo Church"
 msgstr ""
 
