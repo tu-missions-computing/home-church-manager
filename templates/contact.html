@@ -1,11 +1,10 @@
-<section class="cover text-center">
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
+{% block title %}{{ _('Contact') }}{% endblock %}
 
-    {% block title %}Contact{% endblock %}
-
-    {% block content %}
-    <div class="container">
+{% block content %}
+    <section class="cover text-center">
+        <div class="container">
             <div class="main-center">
                 <h2 class="title-text animated stretchLeft"> Contact Our Team</h2>
                 <hr>
@@ -13,40 +12,47 @@
 
                     <div class="form-group">
                         {{ form.csrf_token }}
-                        <p class="form-label"> {{ form.name.label }} {{ form.name(class_='form-control', placeholder="Name") }}</p>
+                        <p class="form-label">
+                            {{ form.name.label }}
+                            {{ form.name(class_='form-control', placeholder=_("Name")) }}</p>
                         {% if form.name.errors %}
                             <div class="alert alert-warning">
-                                Please enter first and last name
+                                {{ _('Please enter first and last name') }}
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="form-group">
-                        <p class="form-label"> {{ form.email.label(for="inputEmail", class_="control-label") }} {{ form.email(class_='form-control', type="email", id="inputEmail", placeholder="Email", dataerror="Email address is invalid") }}</p>
+                        <p class="form-label">
+                            {{ form.email.label(for="inputEmail", class_="control-label") }}
+                            {{ form.email(class_='form-control', type="email", id="inputEmail",
+                               placeholder=_("Email"), dataerror=_("Email address is invalid")) }}
+                        </p>
                         {% if form.email.errors %}
                             <div class="alert alert-warning">
-                                Invalid Email Address
+                                {{ _('Invalid Email Address') }}
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="form-group">
-                        <p class="form-label"> {{ form.message.label }} {{ form.message(class_='form-control', placeholder="Message") }}</p>
+                        <p class="form-label">
+                            {{ form.message.label }}
+                            {{ form.message(class_='form-control', placeholder=_("Message")) }}</p>
                         {% if form.message.errors %}
                             <div class="alert alert-warning">
-                                Please enter message
+                                {{ _('Please enter message') }}
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="form-group ">
-                        <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%;") }}</p>
+                        <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block',
+                                    style="display: block; width: 100%;") }}
+                        </p>
                     </div>
-
                 </form>
             </div>
-    </div>
-
-
-        </section>
-    {% endblock %}
+        </div>
+    </section>
+{% endblock %}

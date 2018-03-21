@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-18 18:51-0400\n"
+"POT-Creation-Date: 2018-03-21 16:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,7 +231,7 @@ msgid "Search Results"
 msgstr ""
 
 #: templates/advanced_search.html:118 templates/all_members.html:53
-#: templates/base.html:227
+#: templates/base.html:227 templates/contact.html:3
 msgid "Contact"
 msgstr ""
 
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Contact All Members"
 msgstr ""
 
-#: templates/all_members.html:85
+#: templates/all_members.html:85 templates/contact.html:17
 msgid "Name"
 msgstr ""
 
@@ -279,7 +279,8 @@ msgstr ""
 msgid "Assign Role"
 msgstr ""
 
-#: templates/assign_role.html:21
+#: templates/assign_role.html:21 templates/contact.html:29
+#: templates/contact_email.html:4
 msgid "Email"
 msgstr ""
 
@@ -365,5 +366,57 @@ msgstr ""
 
 #: templates/base.html:257
 msgid "Copyright 2018, Verbo Church"
+msgstr ""
+
+#: templates/contact.html:20
+msgid "Please enter first and last name"
+msgstr ""
+
+#: templates/contact.html:29
+msgid "Email address is invalid"
+msgstr ""
+
+#: templates/contact.html:33
+msgid "Invalid Email Address"
+msgstr ""
+
+#: templates/contact.html:41 templates/contact_email.html:5
+msgid "Message"
+msgstr ""
+
+#: templates/contact.html:44
+msgid "Please enter message"
+msgstr ""
+
+#: templates/contact_email.html:3
+msgid "You received an email from"
+msgstr ""
+
+#: templates/create_homegroup.html:10
+msgid "Create New Home Group"
+msgstr ""
+
+#: templates/create_homegroup.html:19
+msgid "Enter a Name"
+msgstr ""
+
+#: templates/create_homegroup.html:28
+msgid "Add a Description"
+msgstr ""
+
+#: templates/create_homegroup.html:37
+msgid "Add a Location"
+msgstr ""
+
+#: templates/create_homegroup.html:44
+msgid "Find Location"
+msgstr ""
+
+#: templates/create_homegroup.html:59
+msgid "Add a Latitude"
+msgstr ""
+
+#: templates/create_homegroup.html:68
+msgid "Add a Longitude"
 msgstr ""
 

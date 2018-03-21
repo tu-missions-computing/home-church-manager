@@ -1,16 +1,20 @@
-<section class="cover text-center">
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block title %}FAQ{% endblock %}
+{% block title %}FAQ{% endblock %}
 
-    {% block content %}
+{#
+## FIXME: The simplest way to hande this page may be to have a completely separate FAQ page for different languages.
+#}
+
+{% block content %}
+    {# FIXME: Why is a section wrapping the body tag?? #}
+    <section class="cover text-center">
         <body class="faq">
 
         <div class="main-login faq-box">
             <p class="animated stretchLeft title-text" style="text-align:center;">Frequently Asked Questions</p>
             <hr>
             {% if current_user.role == 'homegroup_leader' %}
-
                 <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
                 <p class="answer">Click on the "Members" tab on the navigation bar, and then click "Add Member" at the
                     top of the page.</p><br>
@@ -30,7 +34,6 @@
                 <p class="answer">Click on the "Members" tab. On the top right, click the "Contact Members" button,
                     compose, and send your
                     email.</p>
-
             {% endif %}
             {% if current_user.role == 'admin' %}
                 <h3 class="header-text"><b>How do I add a person to a home group?</b></h3>
@@ -66,7 +69,8 @@
                         Since then we have seen the Lord take a small group of new believers and g
                         row it into a thriving congregation of over 2,000,
                         with many effective ministries impacting the city and region.
-                        Learn more about our ministries on <a class="link-color" href="http://www.verbocuenca.org/" target="_blank">our main site</a>.
+                        Learn more about our ministries on <a class="link-color" href="http://www.verbocuenca.org/"
+                                                              target="_blank">our main site</a>.
 
                     </p>
 
@@ -77,23 +81,26 @@
                         Click <a class="link-color" href="{{ url_for( 'index' ) }}" target="_blank">here</a>
                         to access the map.
                     </p>
-                     <h3 class="header-text"><b>Why can't I login?</b></h3>
-                    <p class="answer"> Login accounts are provided for admin and home group leaders. If you are an admin or home group leader who is having trouble logging in
-                        visit <a class="link-color" href="{{ url_for( 'contact' ) }}">the Contact</a> page and leave a message.
+                    <h3 class="header-text"><b>Why can't I login?</b></h3>
+                    <p class="answer"> Login accounts are provided for admin and home group leaders. If you are an admin
+                        or home group leader who is having trouble logging in
+                        visit <a class="link-color" href="{{ url_for( 'contact' ) }}">the Contact</a> page and leave a
+                        message.
 
                     </p>
-                     <h3 class="header-text"><b>How do I switch languages?</b></h3>
-                    <p class="answer">There is a Google translate option that allows you to switch to the language of your choice under the navigation bar.
-
+                    <h3 class="header-text"><b>How do I switch languages?</b></h3>
+                    <p class="answer">There is a Google translate option that allows you to switch to the language of
+                        your choice under the navigation bar.
                     </p>
-
-
                 {% endif %}
             {% endif %}
             <hr>
-            <h4 style="text-align:center">Other questions? <a href="{{ url_for('contact') }}"
-                                                              target="_top">Contact Our Support Team</a></h4>
+            <h4 style="text-align:center">{{ _('Other questions?') }}
+                <a href="{{ url_for('contact') }}" target="_top">
+                    {{ _('Contact Our Support Team') }}
+                </a>
+            </h4>
         </div>
         </body>
-        </section>
-    {% endblock %}
+    </section>
+{% endblock %}
