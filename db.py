@@ -5,20 +5,13 @@ from datetime import date, datetime
 from flask import g
 import os
 
-# Connect to the database.
+from psql_settings import data_source
+
 def connect_db():
-    # To connect to an arbitrary database server, define PG_HOST to its host name.
-    # Otherwise, use default host.
-    pg_host = os.environ.get('PG_HOST', "faraday.cse.taylor.edu")
-    connection = psycopg2.connect(host=pg_host, dbname="verbo", user="verbo", password="cuenca")
-
+    """Connect to the database."""
+    connection = psycopg2.connect(**data_source)
     dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    # cursor = connection.cursor()
     g.connection = connection
-    # print('connection = %s' % connection)
-    # print('cursor = %s' % cursor)
-
-    # TODO: Don't store the database password here.
     return dict_cur
 
 
