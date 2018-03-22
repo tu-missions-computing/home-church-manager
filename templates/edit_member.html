@@ -27,7 +27,11 @@
                         {% endif %}
                     </div>
                     <div class="form-group">
-                        <p class="form-label"> {{ form.email.label(for="inputEmail", class_="control-label") }} {{ form.email(class_='form-control', type="email", id="inputEmail", placeholder="Email", dataerror="Bruh, that email address is invalid") }}</p>
+                        <p class="form-label">
+                            {{ form.email.label(for="inputEmail", class_="control-label") }}
+                            {{ form.email(class_='form-control', type="email", id="inputEmail",
+                                  placeholder=_("Email"), dataerror=_("Invalid email address")) }}
+                        </p>
                         {% if form.email.errors %}
                             <div class="alert alert-warning">
                                 {{ _('Invalid Email Address') }}
@@ -35,7 +39,10 @@
                         {% endif %}
                     </div>
                     <div class="form-group">
-                        <p class="form-label"> {{ form.phone_number.label }} {{ form.phone_number(class_='form-control', placeholder="ex: 224-656-8205") }}</p>
+                        <p class="form-label">
+                            {{ form.phone_number.label }}
+                            {{ form.phone_number(class_='form-control', placeholder=_("ex: 224-656-8205")) }}
+                        </p>
                         {% if form.phone_number.errors %}
                             <div class="alert alert-warning">
                                 {{ _('Invalid Phone Number') }}
