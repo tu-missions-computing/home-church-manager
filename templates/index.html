@@ -1,72 +1,57 @@
-{% extends 'base.html' %}
+{# FIXME: This tag should not be here, but when I move it into the content block, the map gets too narrow. #}
+<section class="cover text-center">
 
-{% block title %}{{ _('Home Group Locator') }}{% endblock %}
+    {% extends 'base.html' %}
 
-{% block content %}
-    {# This creates the sun loader on the index page #}
-    <style>
-        .no-js #loader {
-            display: none;
-        }
+    {% block title %}Home Group Locator{% endblock %}
 
-        .js #loader {
-            display: block;
-            position: absolute;
-            left: 100px;
-            top: 0;
-        }
+    {% block more_style %}
+        <style>
+            .no-js #loader {
+                display: none;
+            }
 
-        .se-pre-con {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url(/static/sun.gif) center no-repeat white;
-        }
+            .js #loader {
+                display: block;
+                position: absolute;
+                left: 100px;
+                top: 0;
+            }
 
-        .main-center {
-            max-width: 1300px;
-        }
-    </style>
+            .se-pre-con {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url(/static/sun.gif) center no-repeat white;
+            }
 
-    <script>
-        $(window).on("load", function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");
-            {#                var verbobox = document.getElementById("verbobox");#}
-            {#                verbobox.classList.add("animated");#}
-            {#                verbobox.classList.add("expandOpen");#}
-            {#                var verbotext = document.getElementById("verbotext");#}
-            {#                verbotext.classList.add("animated");#}
-            {#                verbotext.classList.add("pullUp");#}
-            {#                var homegrouptext = document.getElementById("homegrouptext");#}
-            {#                homegrouptext.classList.add("animated");#}
-            {#                homegrouptext.classList.add("pullDown");#}
-        });
+            .main-center {
+                max-width: 1300px;
+            }
+        </style>
+    {% endblock %}
 
-        // function resize_iframe(){
-        //     document.getElementById('mapIframe').style.height = document.body.scrollHeight  / 1.75 + 'px';
-        // }
+    {% block content %}
+        {# This creates the sun loader on the index page #}
+        <script>
+            $(window).on("load", function () {
+                // Animate loader off screen
+                $(".se-pre-con").fadeOut("slow");
+            });
 
-        function map_zip() {
-            var iframe = document.getElementById('mapIframe');
-            iframe.src = iframe.src;
-        }
+            function map_zip() {
+                var iframe = document.getElementById('mapIframe');
+                iframe.src = iframe.src;
+            }
+        </script>
 
-        {#            window.onresize = function () {#}
-        {#                resize_iframe();#}
-        {#            }#}
-        {#            window.onload = function () {#}
-        {#                resize_iframe();#}
-        {#            }#}
-    </script>
-    <section class="cover text-center">
         <div class="container">
             <div class="row">
                 <div class="verbobox draw" id="verbobox">
-                    <div class="verbotext" id="verbotext">VERBO CRISTIANA</div>
+                    <div class="verbotext" id="verbotext">{{ _('VERBO CRISTIANA') }}</div>
                     <div class="homegrouptext" id="homegrouptext">{{ _('HOME GROUP FINDER') }}</div>
                 </div>
                 <br><br>
@@ -84,8 +69,6 @@
                 <h2 id="bottom" class="title-text">{{ _('Find a Home Group') }}</h2>
                 <div class="row">
                     <div class="col-12">
-                        <!--{#            <input type="text"  id="zip" class = "form-control" placeholder = "Enter Zip Code or Address"></input>#}-->
-                        <!--{#            <button class="btn btn-info" onclick="map_zip()"> Search </button><br><br>#}-->
                         <div class="input-group mapsearch">
                             <input type="text" id="zip" class="search form-control"
                                    placeholder="{{ _('Enter Zip Code or Address') }}">
@@ -94,14 +77,14 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
                 <div class="row" style="margin-top:7.5%">
                     <iframe id="mapIframe" height="75%" width="100%" class="embed-responsive-item" src="../../map">
                     </iframe>
                 </div>
             </div>
-            <br>
         </div>
-    </section>
-{% endblock %}
+        </section>
+    {% endblock %}
 

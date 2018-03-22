@@ -3,10 +3,10 @@
 {% block title %}{{ _('Home') }}{% endblock %}
 
 {% block content %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <section class="cover text-center">
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/data.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <div class="container" style="background-color:white;color:black; margin-top:1.5%">
             <div class="row">
                 <div class="col-12">
@@ -43,18 +43,14 @@
                     </div>
                     <a href="{{ url_for('all_homegroup_data') }}" class="btn btn-primary btn-lg btn-block"
                        style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i
-                            class="fa fa-download" aria-hidden="true"></i>{{ _('Download Attendance Data') }}</a>
-
+                            class="fa fa-download" aria-hidden="true"></i>
+                        {{ _('Download Attendance Data') }}
+                    </a>
                 </div>
                 <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:.75%">
-
-                    <!--active_homegroups = db.number_of_active_homegroups()-->
-                    <!--members = db.number_of_members_attending_homegroups()-->
-                    <!--homegroup_leaders = db.number_of_homegroup_leaders()-->
-                    <!--homegroups = db.number_of_homegroups()-->
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                            <div id="container" class="graph-styling" style="float:left;margin-right:0;"></div>
+                            <div id="top-five" class="graph-styling" style="float:left;margin-right:0;"></div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
                             <div id="line-chart" class="graph-styling" style="float:right%;margin-right:0;"></div>
@@ -72,11 +68,13 @@
             </div>
         </div>
     </section>
+
+    {# Hidden data tables for Highcharts components #}
     <table id="datatable" class="graph-styling" hidden>
         <thead>
         <tr>
             <th></th>
-            <th>{{ _('Home Group') }}</th>
+            <th>Home Group</th>
         </tr>
         </thead>
         <tbody>
@@ -88,11 +86,12 @@
         {% endfor %}
         </tbody>
     </table>
+
     <table id="genderTable" hidden>
         <thead>
         <tr>
             <th></th>
-            <th>{{ _('Gender') }}</th>
+            <th>Gender</th>
         </tr>
         </thead>
         <tbody>
@@ -102,44 +101,16 @@
                 <td>{{ g.membercount }}</td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
 
-    <script>
-        Highcharts.setOptions({
-            colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
-        });
-
-        Highcharts.chart('container', {
-            data: {
-                table: 'datatable'
-            },
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: {{_('Top 5 Home Groups')}}
-            },
-            yAxis: {
-                allowDecimals: false,
-                title: {
-                    text: {{_('Member Count')}}
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        this.point.y + ' ' + this.point.name.toLowerCase();
-                }
-
-            }
-        });
-    </script>
     <table id="attendanceReport" hidden>
         <thead>
         <tr>
             <th></th>
-            <th>{{ _('Total People') }}</th>
+
+            <th>Total People</th>
         </tr>
         </thead>
         <tbody>
@@ -153,19 +124,47 @@
     </table>
 
     <script>
+        Highcharts.setOptions({
+            colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
+        });
+
+        Highcharts.chart('top-five', {
+            data: {
+                table: 'datatable'
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: "{{ _('Top 5 Home Groups') }}"
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: "{{ _('Member Count') }}"
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        this.point.y + ' ' + this.point.name.toLowerCase();
+                }
+            }
+        });
+
         Highcharts.chart('line-chart', {
             chart: {
                 type: 'line'
             },
             title: {
-                text: {{_('Total Attendance Report')}}
+                text: "{{ _('Total Attendance Report') }}"
             },
             subtitle: {
-                text: {{_('Monthly')}}
+                text: "{{ _('Monthly') }}"
             },
             yAxis: {
                 title: {
-                    text: {{_('# of people')}}
+                    text: "{{ _('# of people') }}"
                 }
             },
             data: {
@@ -178,8 +177,7 @@
                     },
                     enableMouseTracking: false
                 }
-            },
-
+            }
         });
 
         Highcharts.chart('gender', {
@@ -190,7 +188,7 @@
                 type: 'pie'
             },
             title: {
-                text: {{_('Home Group Gender Report')}}
+                text: "{{ _('Home Group Gender Report') }}"
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -221,7 +219,7 @@
                 type: 'pie'
             },
             title: {
-                text: {{_('Home Groups')}}
+                text: "{{ _('Home Groups') }}"
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -241,7 +239,7 @@
             },
             data: {
                 table: 'datatable'
-            },
+            }
         });
     </script>
 {% endblock %}

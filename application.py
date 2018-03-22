@@ -15,7 +15,8 @@ import flask_excel as excel
 from openpyxl import Workbook
 from openpyxl.compat import range
 
-from flask.ext.babel import Babel, gettext as _, ngettext
+from flask.ext.babel import Babel, gettext, ngettext
+_ = gettext
 
 import db
 from mail_settings import config_email
@@ -121,10 +122,10 @@ def faq_admin():
 
 
 class ContactForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    email = StringField('E-mail Address', validators=[DataRequired()])
-    message = TextAreaField('Message', validators=[DataRequired()])
-    submit = SubmitField('Send Email')
+    name = StringField(_('Name'), validators=[DataRequired()])
+    email = StringField(_('Email Address'), validators=[DataRequired()])
+    message = TextAreaField(_('Message'), validators=[DataRequired()])
+    submit = SubmitField(_('Send Email'))
 
 
 # Display the contact page
@@ -237,7 +238,7 @@ def get_roles():
 def assign_new_role(member_id):
     current_user = db.find_user(session['username'])['member_id']
     if (str(member_id) == str(current_user)):
-        flash("You cannot edit your own role - please contact a system administrator", category="warning")
+        flash(_("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
     allRoles = db.find_roles()
     roleList = []
@@ -261,7 +262,7 @@ def assign_new_role(member_id):
             homegroupId = user_form.homegroups.data
             db.add_leader_to_homegroup(member_id, homegroupId)
 
-        flash('Role Created', category="success")
+        flash(_('Role Created'), category="success")
         return redirect(url_for('get_roles'))
     return render_template('assign_role.html', form=user_form, email = email)
 
@@ -271,7 +272,7 @@ def assign_new_role(member_id):
 def edit_role(member_id, role_id):
     current_user = db.find_user(session['username'])['member_id']
     if (str(member_id) == str(current_user)):
-        flash("You cannot edit your own role - please contact a system administrator", category="warning")
+        flash(_("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
     is_active = db.role_is_active(member_id, role_id)
     active = '1'
@@ -289,19 +290,11 @@ def deactivate_hgleader(member_id, homegroup_id):
     return redirect(url_for('get_roles'))
 
 
-# @app.route('/admin/create/<member_id>')
-# @login_required
-# @requires_roles('admin')
-# def create_admin(member_id):
-#     db.create_role(member_id)
-#     return redirect(url_for('get_roles' ))
-
-
 class UpdateUserForm(FlaskForm):
-    old_password = PasswordField('Current Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Update Password')
+    old_password = PasswordField(_('Current Password'), validators=[DataRequired()])
+    new_password = PasswordField(_('New Password'), validators=[DataRequired()])
+    confirm_password = PasswordField(_('Confirm Password'), validators=[DataRequired()])
+    submit = SubmitField(_('Update Password'))
 
 
 #this updates user passwords
@@ -320,19 +313,19 @@ def update_user(user_id):
                 password = new_password
                 pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
                 db.update_user(user_id, pw_hash, member['role_id'])
-                flash('Password updated', category="success")
+                flash(_('Password updated'), category="success")
                 return redirect(url_for('index'))
             else:
-                flash('New Password and Confirmation Password Do Not Match', category="danger")
+                flash(_('New password and confirmation password do not match'), category="danger")
                 return redirect(url_for('update_user', user_id = user_id))
         else:
-            flash('Entered in wrong current password', category="danger")
+            flash(_('Entered wrong current password'), category="danger")
             return redirect(url_for('update_user', user_id =  user_id))
     return render_template('update_user.html', form=user_form, email=email)
 
 
 class User(object):
-    """Class for the currently logged-in user (if there is one). Only stores the user's e-mail."""
+    """Class for the currently logged-in user (if there is one). Only stores the user's email."""
 
     def __init__(self, email):
         self.email = email
@@ -386,9 +379,9 @@ def authenticate(email, password):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('E-mail Address', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Log In')
+    email = StringField(_('Email Address'), validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
+    submit = SubmitField(_('Log In'))
 
 
 # logs the user in, creates a new session, and creates a current user which is of the class "User"
@@ -416,7 +409,7 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             # Authentication failed.
-            flash('Invalid email address or password', category="danger")
+            flash(_('Invalid email address or password'), category="danger")
             return redirect(url_for('login'))
 
     return render_template('login.html', form=login_form)
@@ -457,7 +450,7 @@ def homegroup(homegroup_id):
     number_meetings = db.number_of_meetings_held(homegroup_id)
     if not attendance_count:
         if (current_user.role == "admin"):
-            flash("No attendance data found for this Home Group", category="warning")
+            flash(_("No attendance data for this Home Group"), category="warning")
             return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
             return render_template('homegroup.html',   countMembers = countMembers, currentHomegroup=homegroup,
@@ -501,8 +494,8 @@ def homegroup(homegroup_id):
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
-    radio = RadioField('Attendance', choices=["y", "n"])
-    submit = SubmitField('Submit')
+    radio = RadioField(_('Attendance'), choices=["y", "n"])
+    submit = SubmitField(_('Submit'))
 
 
 # this is the default attendance page (allows you to select date/time then generate an attendance report)
@@ -536,7 +529,7 @@ def system_notify_member(member_id, num_misses):
     leader_name = leader['first_name'] + ' ' + leader['last_name']
     email_html = render_template('notify_member_email.html', num_misses = num_misses, leader_name = leader_name, leader_phone = leader_phone, leader_email = leader_email )
     msg = Message(
-        'System Reminder: Missing meetings',
+        _('System Reminder: Missing meetings'),
         sender='verbovelocity@gmail.com',
         recipients=email_list,
         html=email_html)
@@ -550,9 +543,9 @@ def homegroup_data(homegroup_id):
     attendance = db.get_homegroup_attendance_records(homegroup_id)
     hgname = db.find_homegroup(homegroup_id)['name']
     wb = Workbook()
-    dest_filename = hgname + '-attendance' + '.xlsx'
+    dest_filename = hgname + '-' + gettext('attendance') + '.xlsx'
     ws1 = wb.active
-    ws1.title = "Attendance"
+    ws1.title = gettext("Attendance")
     row_num = 2
     for row in attendance:
         col_num = 1
@@ -574,9 +567,9 @@ def all_homegroup_data():
     attendance = db.get_all_homegroup_attendance_records()
     hgname = "all-homegroup"
     wb = Workbook()
-    dest_filename = hgname + '-attendance' + '.xlsx'
+    dest_filename = hgname + '-' + gettext('attendance') + '.xlsx'
     ws1 = wb.active
-    ws1.title = "Attendance"
+    ws1.title = gettext("Attendance")
     row_num = 2
     for row in attendance:
         col_num = 1
@@ -596,7 +589,7 @@ def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
 
 
 class EditAttendanceForm(FlaskForm):
-    submit = SubmitField('Save')
+    submit = SubmitField(_('Save'))
 
 # This allows you to edit homegroup attendance
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>',  methods=['GET', 'POST'])
@@ -612,22 +605,22 @@ def edit_attendance(homegroup_id, meeting_id):
     for member in members_in_attendance:
         if (member['attendance'] == 1):
             edit_or_new = 'edit'
-    print("Edit/New: " + edit_or_new)
+    # print("Edit/New: " + edit_or_new)
     if att_form.validate_on_submit():
         for member in members_in_attendance:
             input_name =  'member_' + str(member['member_id'] )
             if input_name in request.form:
-                print(member['first_name'] + " in attendance")
+                #print(member['first_name'] + " in attendance")
                 updateAttendance(homegroup_id, member['member_id'], meeting_id, '1')
             else:
                 updateAttendance(homegroup_id, member['member_id'], meeting_id, '0')
                 if(edit_or_new == 'new'):
-                    print(member['first_name'] + " not in attendance")
+                    #print(member['first_name'] + " not in attendance")
                     attendancedates = db.system_attendance_alert(homegroup_id, member['id'], 3)
                     notify = True
                     for date in attendancedates:
-                        print('meeting ' + str(date['meeting_id']))
-                        print('attendance: ' + str(date['attendance']))
+                        #print('meeting ' + str(date['meeting_id']))
+                        #print('attendance: ' + str(date['attendance']))
 
                         if date['attendance'] == 1:
                             notify = False
@@ -691,7 +684,7 @@ def edit_homegroup(homegroup_id):
         longitude = hg_form.longitude.data
         rowcount = db.edit_homegroup(homegroup_id, name, location, description, latitude, longitude)
         if (rowcount == 1):
-            flash("Home Group updated!", category="success")
+            flash(_("Home Group updated"), category="success")
             if (current_user.role == 'admin'):
                 return redirect(url_for('get_homegroups'))
             return redirect(url_for('homegroup', homegroup_id=homegroup_id))
@@ -708,14 +701,14 @@ def select_location():
 ########################## MEMBER (Home Group Leader) ##############################################
 
 class CreateMemberForm(FlaskForm):
-    first_name = StringField('First Name', [Length(min=2, max=30, message="First name is a required field")])
-    last_name = StringField('Last Name', [Length(min=2, max=30, message="Last name is a required field")])
-    email = StringField('Email', [Email("Please enter valid email")])
-    phone_number = StringField('Phone Number', [InputRequired(message="Please enter valid phone number")])
-    gender = SelectField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
-    baptism_status = SelectField('Baptized?', choices=[('True', 'Yes'), ('False', 'No')])
-    marital_status = SelectField('Married?', choices=[('True', 'Yes'), ('False', 'No')])
-    submit = SubmitField('Save Member')
+    first_name = StringField(_('First Name'), [Length(min=2, max=30, message=_("First name is a required field"))])
+    last_name = StringField(_('Last Name'), [Length(min=2, max=30, message=_("Last name is a required field"))])
+    email = StringField(_('Email'), [Email(_("Please enter valid email"))])
+    phone_number = StringField(_('Phone Number'), [InputRequired(message=_("Please enter valid phone number"))])
+    gender = SelectField(_('Gender'), choices=[('M', _('Male')), ('F', _('Female'))])
+    baptism_status = SelectField(_('Baptized?'), choices=[('True', _('Yes')), ('False', _('No'))])
+    marital_status = SelectField(_('Married?'), choices=[('True', _('Yes')), ('False', _('No'))])
+    submit = SubmitField(_('Save Member'))
 
 @app.route('/homegroup/member/new/<homegroup_id>')
 @login_required
@@ -741,7 +734,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
     if new == 'Y':
         db.add_member_to_homegroup(homegroup_id, member_id)
     member = db.find_member(member_id)
-    flash ("Member {} added to homegroup".format(member['first_name']  + " " + member['last_name']), category="success")
+    flash (_("Member {} added to homegroup").format(member['first_name']  + " " + member['last_name']), category="success")
     return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
@@ -767,7 +760,7 @@ def create_new_member_for_homegroup(homegroup_id):
             row = db.recent_member()
             member_id = row['id']
             db.add_member_to_homegroup(homegroup_id, member_id)
-            flash("Member {} Created!".format(member.first_name.data, member.last_name.data), category="success")
+            flash(_("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
             return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
     return render_template('create_member.html', form=member, homegroup_id=homegroup_id)
@@ -797,9 +790,9 @@ def get_homegroup_members(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def edit_member(member_id):
     if (int(current_user.member_id )== int(member_id)):
-        heading_text = 'Edit My Info'
+        heading_text = _('Edit My Info')
     else:
-        heading_text = 'Edit Member'
+        heading_text = _('Edit Member')
     row = db.find_member(member_id)
     member_form = CreateMemberForm(first_name=row['first_name'],
                                    last_name=row['last_name'],
@@ -828,7 +821,7 @@ def edit_member(member_id):
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, join_date)
         if (rowcount == 1):
-            flash("Member {} Updated!".format(member_form.first_name.data), category="success")
+            flash(_("Member {} Updated").format(member_form.first_name.data), category="success")
             if (current_user.role == 'admin'):
                 return redirect(url_for('all_members'))
             else:
@@ -845,7 +838,7 @@ def edit_member(member_id):
 def remove_member(homegroup_id, member_id):
     rowcount = db.remove_member(homegroup_id, member_id)
     if rowcount == 1:
-        flash("Member Removed!", category="success")
+        flash(_("Member Removed"), category="success")
     return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
 
@@ -853,12 +846,12 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField('Name', [Length(min=2, max=50 , message="Name is a required field")])
-    description = TextAreaField('Description', [InputRequired(message="Please enter a description")])
-    location = StringField('Address', [InputRequired(message="Please enter valid Address")])
-    latitude = StringField('Latitude')
-    longitude = StringField('Longitude')
-    submit = SubmitField('Save Home Group')
+    name = StringField(_('Name'), [Length(min=2, max=50 , message=_("Name is a required field"))])
+    description = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
+    location = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
+    latitude = StringField(_('Latitude'))
+    longitude = StringField(_('Longitude'))
+    submit = SubmitField(_('Save Home Group'))
 
 
 # Display admin home page
@@ -898,7 +891,7 @@ def create_homegroup():
         rowcount = db.create_homegroup(name, location, description, latitude, longitude)
 
         if rowcount == 1:
-            flash("Homegroup {} Created!".format(new_homegroup.name.data), category="success")
+            flash(_("Homegroup {} Created").format(new_homegroup.name.data), category="success")
             return redirect(url_for('get_homegroups'))
 
     return render_template('create_homegroup.html', form=new_homegroup)
@@ -922,7 +915,7 @@ def deactivate_homegroup(homegroup_id):
 
     # if the member is not active
     if not db.find_homegroup(homegroup_id)['is_active']:
-        flash("Homegroup Deactivated!", category="success")
+        flash(_("Homegroup Deactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
 
@@ -934,7 +927,7 @@ def reactivate_homegroup(homegroup_id):
     rowcount = db.reactivate_homegroup(homegroup_id)
     # if the member is not active
     if db.find_homegroup(homegroup_id)['is_active']:
-        flash("Homegroup Reactivated!", category="success")
+        flash(_("Homegroup Reactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
 
@@ -978,7 +971,7 @@ def create_member():
                                     marital_status, join_date)
         print(rowcount)
         if rowcount == 1:
-            flash("Member {} Created!".format(member.first_name.data), category="success")
+            flash(_("Member {} Created").format(member.first_name.data), category="success")
             return redirect(url_for('all_members'))
 
     return render_template('create_member.html', form=member)
@@ -994,7 +987,7 @@ def deactivate_member(member_id):
     print(db.find_member(member_id)['is_active'])
     # if the member is not active
     if db.find_member(member_id)['is_active'] == '0':
-        flash("Member Deactivated!", category="success")
+        flash(_("Member Deactivated"), category="success")
     return redirect(url_for('all_members'))
 
 
@@ -1005,7 +998,7 @@ def deactivate_member(member_id):
 def reactivate_member(member_id):
     rowcount = db.reactivate_member(member_id)
     if db.find_member(member_id)['is_active'] == '1':
-        flash("Member Reactivated!", category="success")
+        flash(_("Member Reactivated"), category="success")
     return redirect(url_for('all_members'))
 
 
@@ -1014,7 +1007,10 @@ def reactivate_member(member_id):
 @login_required
 @requires_roles('admin')
 def advanced_search():
-    return render_template('advanced_search.html', members=db.get_all_members(), inactiveMembers=db.get_all_inactive_members(), showInactive=False)
+    return render_template('advanced_search.html',
+                           members=db.get_all_members(),
+                           inactiveMembers=db.get_all_inactive_members(),
+                           showInactive=False)
 
 
 #### Admin - Admin ###########
@@ -1024,13 +1020,13 @@ def advanced_search():
 @login_required
 @requires_roles('admin')
 def all_admin():
-    return render_template('admin_profiles.html', admin=db.get_all_admin(),
-                           inactiveAdmin=db.get_all_inactive_admin(), showInactive=False)
+    return render_template('admin_profiles.html',
+                           admin=db.get_all_admin(),
+                           inactiveAdmin=db.get_all_inactive_admin(),
+                           showInactive=False)
 
 
 
 # Make this the last line in the file!
 if __name__ == '__main__':
     app.run(debug=True)
-
-
