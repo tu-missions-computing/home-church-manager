@@ -15,7 +15,7 @@ import flask_excel as excel
 from openpyxl import Workbook
 from openpyxl.compat import range
 
-from flask.ext.babel import Babel, gettext, ngettext
+from flask_babel import Babel, gettext, ngettext
 _ = gettext
 
 import db
