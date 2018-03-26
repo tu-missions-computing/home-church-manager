@@ -1,4 +1,4 @@
-# Home Church Manager (Verbo Velocity)
+# Home Church Manager
 
 Developed By: Nysha Chen, Ryley Hoekert, Christine Urban, Krista Hapner, & Ellen Sokolowski
 
@@ -18,7 +18,7 @@ Developed By: Nysha Chen, Ryley Hoekert, Christine Urban, Krista Hapner, & Ellen
         )
 
 2. Run create_db.sql and init_db.sql to create and initialize the database
-3. Log in to the verbovelocity@gmail.com account. **The password will be emailed to you.**
+3. Log in to the iHogar@gmail.com account. **The password will be emailed to you.**
 
 ## Regular Visitor
 
@@ -39,7 +39,7 @@ to take you to our contact page.
 **Contact**
 
 This tab on the navigation bar will take you to a form where you can fill out a message. After clicking "Send",
-check the verbovelocity@gmail.com account to see the message pop up in the inbox.
+check the iHogar@gmail.com account to see the message pop up in the inbox.
 
 ## Admnistrator
 
@@ -193,7 +193,7 @@ This can be downloaded in several formats.
 
 See above for instructions
 
-Thank you for using Verbo Velocity! If you have any questions, please contact the developers:
+Thank you for using Home Church Manager! If you have any questions, please contact the developers:
 * Krista Hapner (`krista_hapner@taylor.edu`)
 * Nysha Chen (`nysha_chen@taylor.edu`)
 * Ryley Hoekert (`ryley_hoekert@taylor.edu`)
