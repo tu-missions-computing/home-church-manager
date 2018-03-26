@@ -452,6 +452,7 @@ def homegroup(homegroup_id):
             return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
             return render_template('homegroup.html',   countMembers = countMembers, currentHomegroup=homegroup,
+                                   numMeetings=number_meetings,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
    # member_attendance = db.homegroup_member_attendance(homegroup_id)
     members = db.get_homegroup_members(homegroup_id)
