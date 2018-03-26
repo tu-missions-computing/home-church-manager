@@ -160,7 +160,7 @@
 
 <section>
     <wrapper class="d-flex flex-column">
-        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5);">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5); ">
             <div class="container">
                 <button style="cursor:pointer" class="navbar-toggler float-right" type="button" data-toggle="collapse"
                         data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false"
@@ -168,9 +168,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:300; font-size:30px"
-                   href="{{ url_for('index') }}">{{ _('VERBO VELOCITY') }}</a>
+                   href="{{ url_for('index') }}">{{ _('ARCO') }}</a>
 
-                <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1">
+                <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1" >
                     <ul class="navbar-nav mt-2 mt-md-0">
                         {% if current_user.name %}
                             <li class="dropdown nav-item">
@@ -188,6 +188,7 @@
                                 </div>
                             </li>
                         {% endif %}
+
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item">
                                 <a class="nav-link"
