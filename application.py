@@ -1,7 +1,6 @@
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 from functools import wraps
 
@@ -71,9 +70,9 @@ def index():
     # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
     # msg = Message(
     #     'Hello',
-    #     sender='verbovelocity@gmail.com',
+    #     sender='iHogar@gmail.com',
     #     recipients=
-    #     ['verbovelocity@gmail.com'])
+    #     ['iHogar@gmail.com'])
     # msg.body = "This is the email body"
     # mail.send(msg)
     init_test_user()            # FIXME: Should this be in the production code?
@@ -139,7 +138,7 @@ def contact():
     if contact_form.validate_on_submit():
         name = contact_form.name.data
         email = contact_form.email.data
-        recipient_list.append('verbovelocity@gmail.com')        # FIXME: Keep using this address?
+        recipient_list.append('iHogar@gmail.com')        # FIXME: Keep using this address?
         message = contact_form.message.data
         email_html = render_template('contact_email.html', name=name, email=email, message=message)
         msg = Message(
@@ -212,8 +211,8 @@ def create_user(member_id):
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
-            _('User account created for Verbo Velocity'),
-            sender='verbovelocity@gmail.com',       # FIXME: Appears multiple times
+            _('User account created'),
+            sender='iHogar@gmail.com',       # FIXME: Appears multiple times
             recipients=email_list,
             html=email_html)
         mail.send(msg)
@@ -534,7 +533,7 @@ def system_notify_member(member_id, num_misses):
     email_html = render_template('notify_member_email.html', num_misses = num_misses, leader_name = leader_name, leader_phone = leader_phone, leader_email = leader_email )
     msg = Message(
         _('System Reminder: Missing meetings'),
-        sender='verbovelocity@gmail.com',
+        sender='iHogar@gmail.com',
         recipients=email_list,
         html=email_html)
     mail.send(msg)
