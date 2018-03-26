@@ -190,7 +190,7 @@ def get_all_members_not_in_homegroup(homegroup_id):
     homegroup_member.is_active = '1'
     )
     '''
-    g.db.execute(query, ( homegroup_id))
+    g.db.execute(query, ( homegroup_id,))
     return g.db.fetchall()
 
 # finds all the inactive homegroup members
