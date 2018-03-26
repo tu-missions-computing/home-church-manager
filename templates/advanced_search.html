@@ -4,6 +4,22 @@
 {% block title %} Advanced Search {% endblock %}
 
 {% block content %}
+
+     <script type="text/javascript">
+         function contactEmail() {
+            var data = [];
+            var table = $(".results");
+            table.find('tr').each(function (i) {
+            var $tds = $(this).find('td'),
+            email = $tds.eq(2).text();
+            if ((email) && ($tds.is(":visible"))){
+                data.push(email );
+            }
+    });
+          window.location.href = 'mailto:' + data;
+
+         }
+     </script>
         <div class="container">
             <div class="main-container main-center">
                 <h1 class="title-text animated stretchLeft">{{ _('Advanced Search') }}</h1>
@@ -113,7 +129,7 @@
             <div class="row">
                 <div class="col">
                     <div id="element2" class="float-left">
-                        <a id="contact-button" href="mailto:{{ emailList }}" class="btn btn-primary">
+                        <a id="contact-button"  onclick="contactEmail()"  class="btn btn-primary">
                             <span class="fa fa-envelope"></span>
                             {{ _('Contact') }}
                         </a>
@@ -132,6 +148,7 @@
                 <tr>
                     <th>{{ _('First Name') }}</th>
                     <th>{{ _('Last Name') }}</th>
+
                     <th></th>
                     <th class="content">{{ _('Active?') }}</th>
                 </tr>
@@ -141,6 +158,7 @@
                     <tr>
                         <td>{{ member.first_name }}</td>
                         <td>{{ member.last_name }}</td>
+                        <td class ="emailData" hidden> {{member.email }}</td>
                         <td class="genderData" hidden>{{ member.gender }}</td>
                         <td class="baptismData" hidden>{{ member.baptism_status }}</td>
                         <td class="ageData" hidden>{{ member.age }}</td>
