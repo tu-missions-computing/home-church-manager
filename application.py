@@ -40,6 +40,11 @@ babel = Babel(app)
 app.config['BABEL_DEFAULT_LOCALE'] = 'es'
 
 
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(['es', 'en'])
+
+
 @app.before_request
 def before():
     db.open_db_connection()
