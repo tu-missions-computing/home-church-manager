@@ -399,7 +399,7 @@ def get_last_3_dates(homegroup_id):
             join meeting on meeting.id = attendance.meeting_id
         where homegroup_id = %s
         order by date desc limit 3'''
-    g.db.execute(query, (homegroup_id))
+    g.db.execute(query, (homegroup_id,))
     return g.db.fetchall()
 
 
