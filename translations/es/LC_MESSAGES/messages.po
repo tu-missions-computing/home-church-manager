@@ -24,162 +24,162 @@ msgstr ""
 #: templates/notify_member_email.html:13
 #: templates/view_attendance_report.html:19
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: application.py:128 application.py:384
 msgid "Email Address"
-msgstr ""
+msgstr "Correo Electrónico"
 
 #: application.py:129 templates/contact.html:41 templates/contact_email.html:5
 msgid "Message"
-msgstr ""
+msgstr "Mensaje"
 
 #: application.py:130
 msgid "Send Email"
-msgstr ""
+msgstr "Enviar Correo Electrónico"
 
 #: application.py:145
 msgid "Message Received"
-msgstr ""
+msgstr "Mensaje Recibido"
 
 #: application.py:150
 msgid "Email Sent!"
-msgstr ""
+msgstr "Correo Electrónico Enviado"
 
 #: application.py:162 application.py:165
 msgid "User does not have sufficient privileges"
-msgstr ""
+msgstr "El usuario no tiene este privilegio"
 
 #: application.py:175
 msgid "Temporary Password"
-msgstr ""
+msgstr "Contraseña Temporal"
 
 #: application.py:176 application.py:181
 msgid "Change Role"
-msgstr ""
+msgstr "Cambiar el Rol"
 
 #: application.py:177 application.py:182
 msgid "Choose Homegroup"
-msgstr ""
+msgstr "Elegir Iglesia de Hogar"
 
 #: application.py:178
 msgid "Create User"
-msgstr ""
+msgstr "Crear Usuario"
 
 #: application.py:183
 msgid "New Role"
-msgstr ""
+msgstr "Nuevo Rol"
 
 #: application.py:208
 msgid "User already has account"
-msgstr ""
+msgstr "El usuario ya tiene una cuenta"
 
 #: application.py:214 templates/user_account_email.html:3
 msgid "User account created"
-msgstr ""
+msgstr "Cuenta de usuario creada"
 
 #: application.py:223
 msgid "User Created"
-msgstr ""
+msgstr "Usuario Creado"
 
 #: application.py:243 application.py:277
 msgid "You cannot edit your own role - please contact a system administrator"
-msgstr ""
+msgstr "No puede editar su propia función. Póngase en contacto con un administrador de sistema."
 
 #: application.py:267
 msgid "Role Created"
-msgstr ""
+msgstr "Rol Creado"
 
 #: application.py:296
 msgid "Current Password"
-msgstr ""
+msgstr "Contraseña Actual"
 
 #: application.py:297
 msgid "New Password"
-msgstr ""
+msgstr "Nueva Contraseña"
 
 #: application.py:298
 msgid "Confirm Password"
-msgstr ""
+msgstr "Confirmar Contraseña"
 
 #: application.py:299 templates/base.html:193 templates/update_user.html:4
 #: templates/update_user.html:9
 msgid "Update Password"
-msgstr ""
+msgstr "Actualizar Contraseña"
 
 #: application.py:318
 msgid "Password updated"
-msgstr ""
+msgstr "Contraseña Actualizada"
 
 #: application.py:321
 msgid "New password and confirmation password do not match"
-msgstr ""
+msgstr "La nueva contraseña y la contraseña de confirmación no coinciden"
 
 #: application.py:324
 msgid "Entered wrong current password"
-msgstr ""
+msgstr "Introdujo la contraseña actual incorrecta"
 
 #: application.py:385
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: application.py:386 templates/base.html:244 templates/login.html:4
 #: templates/login.html:14
 msgid "Log In"
-msgstr ""
+msgstr "Iniciar"
 
 #: application.py:414
 msgid "Invalid email address or password"
-msgstr ""
+msgstr "Dirección de correo electrónico o contraseña no válidos"
 
 #: application.py:455
 msgid "No attendance data for this Home Group"
-msgstr ""
+msgstr "No hay datos de asistencia para este grupo de inicio"
 
 #: application.py:500 application.py:551 application.py:575
 #: templates/base.html:221 templates/edit_attendance.html:21
 #: templates/homegroup.html:65 templates/view_attendance.html:10
 #: templates/view_attendance_report.html:20
 msgid "Attendance"
-msgstr ""
+msgstr "Asistencia"
 
 #: application.py:501
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: application.py:535
 msgid "System Reminder: Missing meetings"
-msgstr ""
+msgstr "Recordatorio del sistema: reuniones faltantes"
 
 #: application.py:549 application.py:573
 msgid "attendance"
-msgstr ""
+msgstr "Asistencia"
 
 #: application.py:595
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: application.py:690
 msgid "Home Group updated"
-msgstr ""
+msgstr "Iglesia de Hogar actualizada"
 
 #: application.py:707 templates/admin_profiles.html:47
 #: templates/advanced_search.html:133 templates/create_member.html:19
 msgid "First Name"
-msgstr ""
+msgstr "Nombre"
 
 #: application.py:707
 msgid "First name is a required field"
-msgstr ""
+msgstr "El nombre es un campo obligatorio"
 
 #: application.py:708 templates/admin_profiles.html:48
 #: templates/advanced_search.html:134 templates/create_member.html:31
 msgid "Last Name"
-msgstr ""
+msgstr "Apellido"
 
 #: application.py:708
 msgid "Last name is a required field"
-msgstr ""
+msgstr "El apellido es un campo obligatorio"
 
 #: application.py:709 templates/assign_role.html:24 templates/contact.html:29
 #: templates/contact_email.html:4 templates/create_user.html:16
@@ -187,263 +187,263 @@ msgstr ""
 #: templates/notify_member_email.html:15 templates/update_user.html:11
 #: templates/user_account_email.html:4
 msgid "Email"
-msgstr ""
+msgstr "Correo Electrónico"
 
 #: application.py:709
 msgid "Please enter valid email"
-msgstr ""
+msgstr "Por favor introduzca un correo electrónico válido"
 
 #: application.py:710
 msgid "Phone Number"
-msgstr ""
+msgstr "Número de Teléfono"
 
 #: application.py:710
 msgid "Please enter valid phone number"
-msgstr ""
+msgstr "Por favor ingrese un número de teléfono válido"
 
 #: application.py:711 templates/advanced_search.html:18
 msgid "Gender"
-msgstr ""
+msgstr "Género"
 
 #: application.py:711 templates/advanced_search.html:25
 msgid "Male"
-msgstr ""
+msgstr "Masculino"
 
 #: application.py:711 templates/advanced_search.html:26
 msgid "Female"
-msgstr ""
+msgstr "Feminino"
 
 #: application.py:712
 msgid "Baptized?"
-msgstr ""
+msgstr "Bautizado?"
 
 #: application.py:712 application.py:713
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: application.py:712 application.py:713
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: application.py:713
 msgid "Married?"
-msgstr ""
+msgstr "Casado?"
 
 #: application.py:714
 msgid "Save Member"
-msgstr ""
+msgstr "Guardar Miembro"
 
 #: application.py:740
 msgid "Member {} added to homegroup"
-msgstr ""
+msgstr "Miembro {} agregado a la iglesia de hogar"
 
 #: application.py:766 application.py:978
 msgid "Member {} Created"
-msgstr ""
+msgstr "Miembro {} Creado"
 
 #: application.py:797
 msgid "Edit My Info"
-msgstr ""
+msgstr "Editar mi Información"
 
 #: application.py:799
 msgid "Edit Member"
-msgstr ""
+msgstr "Editar Miembro"
 
 #: application.py:828
 msgid "Member {} Updated"
-msgstr ""
+msgstr "Miembro {} Actualizado"
 
 #: application.py:845
 msgid "Member Removed"
-msgstr ""
+msgstr "Miembro Eliminado"
 
 #: application.py:853
 msgid "Name is a required field"
-msgstr ""
+msgstr "El nombre es un campo obligatorio"
 
 #: application.py:854
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: application.py:854
 msgid "Please enter a description"
-msgstr ""
+msgstr "Por favor ingrese una descripción"
 
 #: application.py:855
 msgid "Address"
-msgstr ""
+msgstr "Dirección"
 
 #: application.py:855
 msgid "Please enter valid Address"
-msgstr ""
+msgstr "Por favor ingrese una dirección válida"
 
 #: application.py:856
 msgid "Latitude"
-msgstr ""
+msgstr "Latitud"
 
 #: application.py:857
 msgid "Longitude"
-msgstr ""
+msgstr "Longitud"
 
 #: application.py:858
 msgid "Save Home Group"
-msgstr ""
+msgstr "Guardar grupo en el hogar"
 
 #: application.py:898
 msgid "Homegroup {} Created"
-msgstr ""
+msgstr "Grupo en el Hogar {} Creado"
 
 #: application.py:922
 msgid "Homegroup Deactivated"
-msgstr ""
+msgstr "Grupo en el Hogar Desactivado"
 
 #: application.py:934
 msgid "Homegroup Reactivated"
-msgstr ""
+msgstr "Grupo en el Hogar Reactivado"
 
 #: application.py:994
 msgid "Member Deactivated"
-msgstr ""
+msgstr "Miembro Desactivado"
 
 #: application.py:1005
 msgid "Member Reactivated"
-msgstr ""
+msgstr "Miembro Reactivado"
 
 #: templates/admin_home.html:4 templates/homegroup.html:4
 msgid "Home"
-msgstr ""
+msgstr "Hogar"
 
 #: templates/admin_home.html:14
 msgid "Admin Dashboard"
-msgstr ""
+msgstr "Tablero de Administración"
 
 #: templates/admin_home.html:22
 msgid "HOME GROUPS"
-msgstr ""
+msgstr "Iglesia de Hogar"
 
 #: templates/admin_home.html:23 templates/admin_home.html:28
 #: templates/admin_home.html:43
 msgid "TOTAL NUMBER"
-msgstr ""
+msgstr "NUMERO TOTAL"
 
 #: templates/admin_home.html:27
 msgid "ACTIVE GROUPS"
-msgstr ""
+msgstr "GRUPOS ACTIVOS"
 
 #: templates/admin_home.html:32
 msgid "ARCO MEMBERS"
-msgstr ""
+msgstr "MIEMBROS DE ARCO"
 
 #: templates/admin_home.html:33
 msgid "ATTENDING HOME GROUPS"
-msgstr ""
+msgstr "ASISTIENDO A IGLESIA DE HOGAR"
 
 #: templates/admin_home.html:37 templates/homegroup.html:37
 msgid "ATTENDANCE RATE"
-msgstr ""
+msgstr "TASA DE ASISTENCIA"
 
 #: templates/admin_home.html:38 templates/homegroup.html:38
 msgid "IN THE MONTH OF"
-msgstr ""
+msgstr "EN EL MES DE"
 
 #: templates/admin_home.html:42
 msgid "GROUP LEADERS"
-msgstr ""
+msgstr "LÍDERES DE GRUPO"
 
 #: templates/admin_home.html:48 templates/homegroup.html:44
 msgid "Download Attendance Data"
-msgstr ""
+msgstr "Descargar los datos de asistencia"
 
 #: templates/admin_home.html:140
 msgid "Top 5 Home Groups"
-msgstr ""
+msgstr "Los 5 mejores grupos de casa"
 
 #: templates/admin_home.html:145
 msgid "Member Count"
-msgstr ""
+msgstr "Cuenta de Miembro"
 
 #: templates/admin_home.html:161
 msgid "Total Attendance Report"
-msgstr ""
+msgstr "Informe de Asistencia Total"
 
 #: templates/admin_home.html:164
 msgid "Monthly"
-msgstr ""
+msgstr "Mensual"
 
 #: templates/admin_home.html:168
 msgid "# of people"
-msgstr ""
+msgstr "# de la gente"
 
 #: templates/admin_home.html:192
 msgid "Home Group Gender Report"
-msgstr ""
+msgstr "Informe de Género del Iglesia de Hogar"
 
 #: templates/admin_home.html:223 templates/base.html:208
 msgid "Home Groups"
-msgstr ""
+msgstr "Iglesia de Hogares"
 
 #: templates/admin_profiles.html:6
 msgid "Admin Profiles"
-msgstr ""
+msgstr "Perfiles de Administrador"
 
 #: templates/admin_profiles.html:11 templates/advanced_search.html:98
 #: templates/all_members.html:30 templates/homegroup_list.html:125
 #: templates/homegroup_members.html:36 templates/member_search.html:31
 #: templates/roles.html:14 templates/view_attendance.html:64
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: templates/admin_profiles.html:50
 msgid "Inactive?"
-msgstr ""
+msgstr "Inactivo?"
 
 #: templates/advanced_search.html:9 templates/all_members.html:58
 msgid "Advanced Search"
-msgstr ""
+msgstr "Búsqueda Avanzada"
 
 #: templates/advanced_search.html:38
 msgid "Age"
-msgstr ""
+msgstr "Años"
 
 #: templates/advanced_search.html:45
 msgid "Children"
-msgstr ""
+msgstr "Niños"
 
 #: templates/advanced_search.html:46
 msgid "Youth"
-msgstr ""
+msgstr "Juventud"
 
 #: templates/advanced_search.html:47
 msgid "Teen"
-msgstr ""
+msgstr "Adolescente"
 
 #: templates/advanced_search.html:48
 msgid "Young Adult"
-msgstr ""
+msgstr "Adulto Joven"
 
 #: templates/advanced_search.html:49
 msgid "Adult"
-msgstr ""
+msgstr "Adulto"
 
 #: templates/advanced_search.html:50
 msgid "Senior"
-msgstr ""
+msgstr "Mayor"
 
 #: templates/advanced_search.html:62
 msgid "Marital Status"
-msgstr ""
+msgstr "Estado Civil"
 
 #: templates/advanced_search.html:69
 msgid "Married"
-msgstr ""
+msgstr "Casado"
 
 #: templates/advanced_search.html:70
 msgid "Not Married"
-msgstr ""
+msgstr "No Casado"
 
 #: templates/advanced_search.html:83
 msgid "Baptism Status"
-msgstr ""
+msgstr "Estado de Bautismo"
 
 #: templates/advanced_search.html:90
 msgid "Baptized"
@@ -451,311 +451,311 @@ msgstr ""
 
 #: templates/advanced_search.html:91
 msgid "Not Baptized"
-msgstr ""
+msgstr "Bautizado"
 
 #: templates/advanced_search.html:108
 msgid "Search Results"
-msgstr ""
+msgstr "Resultados de la Búsqueda"
 
 #: templates/advanced_search.html:118 templates/all_members.html:51
 #: templates/base.html:233 templates/contact.html:4
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #: templates/advanced_search.html:123
 msgid "Show Inactive Members"
-msgstr ""
+msgstr "Mostrar Miembros Inactivos"
 
 #: templates/advanced_search.html:136 templates/all_members.html:85
 msgid "Active?"
-msgstr ""
+msgstr "Activo?"
 
 #: templates/all_members.html:4
 msgid "All Members"
-msgstr ""
+msgstr "Todos los Miembros"
 
 #: templates/all_members.html:17 templates/homegroup_members.html:25
 msgid "Add Member"
-msgstr ""
+msgstr "Añadir Miembro"
 
 #: templates/all_members.html:23 templates/member_search.html:63
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: templates/all_members.html:43
 msgid "Contact All Members"
-msgstr ""
+msgstr "Contactar a Todos los Miembros"
 
 #: templates/all_members.html:102 templates/homegroup_members.html:75
 msgid "Remove"
-msgstr ""
+msgstr "Retirar"
 
 #: templates/all_members.html:143 templates/homegroup_members.html:100
 #: templates/roles.html:90 templates/roles.html:99
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: templates/assign_role.html:4
 msgid "Assign New Role"
-msgstr ""
+msgstr "Asignar un Nuevo Rol"
 
 #: templates/assign_role.html:19
 msgid "Assign Role"
-msgstr ""
+msgstr "Asignar Rol"
 
 #: templates/attendance.html:4 templates/edit_attendance.html:4
 #: templates/view_attendance_report.html:4
 #: templates/view_attendance_report.html:14
 msgid "Attendance Report"
-msgstr ""
+msgstr "Reporte de Asistencia"
 
 #: templates/attendance.html:14
 msgid "View Attendance History"
-msgstr ""
+msgstr "Ver el Historial de Asistencia"
 
 #: templates/attendance.html:24 templates/attendance_reports.html:25
 #: templates/view_attendance.html:18 templates/view_attendance.html:72
 #: templates/view_attendance_report.html:15
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #: templates/attendance.html:27 templates/attendance_reports.html:26
 #: templates/view_attendance_report.html:16
 msgid "Time"
-msgstr ""
+msgstr "Hora"
 
 #: templates/attendance.html:44
 msgid "Take Attendance"
-msgstr ""
+msgstr "Tomar la Asistencia"
 
 #: templates/attendance_reports.html:16
 msgid "New Attendance Report"
-msgstr ""
+msgstr "Nuevo Informe de Asistencia"
 
 #: templates/attendance_reports.html:27 templates/homegroup_members.html:50
 #: templates/member_search.html:42 templates/view_attendance.html:74
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: templates/attendance_reports.html:38
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: templates/attendance_reports.html:45
 msgid "No Information"
-msgstr ""
+msgstr "Sin Información"
 
 #: templates/base.html:176
 msgid "ARCO"
-msgstr ""
+msgstr "ARCO"
 
 #: templates/base.html:185
 msgid "Welcome,"
-msgstr ""
+msgstr "Bienvenido,"
 
 #: templates/base.html:190
 msgid "Profile Settings"
-msgstr ""
+msgstr "Configuración de Perfil"
 
 #: templates/base.html:202 templates/base.html:211
 msgid "Members"
-msgstr ""
+msgstr "Miembros"
 
 #: templates/base.html:214 templates/roles.html:4 templates/roles.html:9
 msgid "System Roles"
-msgstr ""
+msgstr "Roles del Sistema"
 
 #: templates/base.html:229 templates/edit_homegroup.html:4
 #: templates/edit_homegroup.html:9
 msgid "Edit Home Group"
-msgstr ""
+msgstr "Editar Iglesia de Hogar"
 
 #: templates/base.html:232
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: templates/base.html:238
 msgid "Log Out"
-msgstr ""
+msgstr "Cerrar Sesión"
 
 #: templates/base.html:263
 msgid "Copyright 2018, Arco Church"
-msgstr ""
+msgstr "Derechos de Autor 2018, Arco Iglesia"
 
 #: templates/contact.html:9 templates/faq.html:100
 msgid "Contact Our Team"
-msgstr ""
+msgstr "Contacta a Nuestro Equipo"
 
 #: templates/contact.html:20
 msgid "Please enter first and last name"
-msgstr ""
+msgstr "Por favor, introduzca su nombre y apellido"
 
 #: templates/contact.html:29
 msgid "Email address is invalid"
-msgstr ""
+msgstr "Dirección de correo electrónico es inválida"
 
 #: templates/contact.html:33 templates/create_member.html:48
 #: templates/edit_member.html:37
 msgid "Invalid Email Address"
-msgstr ""
+msgstr "Dirección de correo electrónico no válida"
 
 #: templates/contact.html:44
 msgid "Please enter message"
-msgstr ""
+msgstr "Por favor ingrese el mensaje"
 
 #: templates/contact_email.html:3
 msgid "You received an email from"
-msgstr ""
+msgstr "Has recibido un correo electrónico de"
 
 #: templates/create_homegroup.html:4 templates/create_homegroup.html:11
 msgid "Create New Home Group"
-msgstr ""
+msgstr "Crear Nuevo Iglesia de Hogar"
 
 #: templates/create_homegroup.html:20 templates/edit_homegroup.html:20
 msgid "Enter a Name"
-msgstr ""
+msgstr "Ingresa un Nombre"
 
 #: templates/create_homegroup.html:29 templates/edit_homegroup.html:29
 msgid "Add a Description"
-msgstr ""
+msgstr "Agregar una Descripción"
 
 #: templates/create_homegroup.html:38 templates/edit_homegroup.html:38
 msgid "Add a Location"
-msgstr ""
+msgstr "Agrega un Lugar"
 
 #: templates/create_homegroup.html:46 templates/edit_homegroup.html:45
 msgid "Find Location"
-msgstr ""
+msgstr "Encontrar Ubicacion"
 
 #: templates/create_homegroup.html:64 templates/edit_homegroup.html:62
 msgid "Add a Latitude"
-msgstr ""
+msgstr "Agregar una Latitud"
 
 #: templates/create_homegroup.html:73 templates/edit_homegroup.html:71
 msgid "Add a Longitude"
-msgstr ""
+msgstr "Agregar una Longitud"
 
 #: templates/create_member.html:4 templates/create_member.html:11
 #: templates/member_search.html:25
 msgid "Create New Member"
-msgstr ""
+msgstr "Crear Nuevo Miembro"
 
 #: templates/create_member.html:24 templates/edit_member.html:17
 msgid "Invalid First Name"
-msgstr ""
+msgstr "Nombre Inválido"
 
 #: templates/create_member.html:35 templates/edit_member.html:25
 msgid "Invalid Last Name"
-msgstr ""
+msgstr "Apellido Invalido"
 
 #: templates/create_member.html:43
 msgid "ex: email@gmail.com"
-msgstr ""
+msgstr "ex: email@gmail.com"
 
 #: templates/create_member.html:44 templates/edit_member.html:33
 msgid "Invalid email address"
-msgstr ""
+msgstr "Dirección de Correo Electrónico no Válida"
 
 #: templates/create_member.html:55 templates/edit_member.html:44
 msgid "ex: 224-656-8205"
-msgstr ""
+msgstr "ex: 224-656-8205"
 
 #: templates/create_member.html:59 templates/edit_member.html:48
 msgid "Invalid Phone Number"
-msgstr ""
+msgstr "Numero de telefono invalido"
 
 #: templates/create_member.html:75
 msgid "Birthday"
-msgstr ""
+msgstr "Cumpleaños"
 
 #: templates/create_member.html:102 templates/edit_member.html:93
 msgid "Join Date"
-msgstr ""
+msgstr "Fecha de Ingreso"
 
 #: templates/create_user.html:4
 msgid "Create User Account"
-msgstr ""
+msgstr "Crear Cuenta de Usuario"
 
 #: templates/create_user.html:25
 msgid "Must Enter Valid Password"
-msgstr ""
+msgstr "Debe Ingresar una Contraseña Válida"
 
 #: templates/edit_attendance.html:48 templates/member_search.html:69
 #: templates/view_attendance.html:94 templates/view_attendance_report.html:37
 msgid "No Info"
-msgstr ""
+msgstr "Sin Información"
 
 #: templates/edit_member.html:64
 msgid "Birthdays"
-msgstr ""
+msgstr "Cumpleaños"
 
 #: templates/faq.html:98
 msgid "Other questions?"
-msgstr ""
+msgstr "Otras preguntas?"
 
 #: templates/homegroup.html:13
 msgid "Dashboard"
-msgstr ""
+msgstr "Tablero"
 
 #: templates/homegroup.html:23
 msgid "MEMBERS"
-msgstr ""
+msgstr "MIEMBROS"
 
 #: templates/homegroup.html:25
 msgid "ATTENDING HOME GROUP"
-msgstr ""
+msgstr "ASISTIENDO A IGLESIA DE HUGAR"
 
 #: templates/homegroup.html:30
 msgid "Number of Meetings"
-msgstr ""
+msgstr "Cantidad de Reuniones"
 
 #: templates/homegroup.html:32
 msgid "ATTENDING"
-msgstr ""
+msgstr "ASISTIENDO"
 
 #: templates/homegroup.html:53
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "DESCRIPCIÓN"
 
 #: templates/homegroup.html:57
 msgid "LOCATION"
-msgstr ""
+msgstr "UBICACIÓN"
 
 #: templates/homegroup.html:66
 msgid "3 Most Recent Meetings"
-msgstr ""
+msgstr "3 Reuniones Más Recientes"
 
 #: templates/homegroup.html:124
 msgid "Home Group Attendance"
-msgstr ""
+msgstr "Asistencia en el hogar"
 
 #: templates/homegroup_members.html:4
 msgid "Home Group Members"
-msgstr ""
+msgstr "Miembros del Grupo de Inicio"
 
 #: templates/homegroup_members.html:29
 msgid "Email Group"
-msgstr ""
+msgstr "Grupo de Correo Electrónico"
 
 #: templates/homegroup_members.html:60
 msgid "Leader"
-msgstr ""
+msgstr "Líder"
 
 #: templates/homegroup_members.html:104 templates/roles.html:103
 msgid "Close"
-msgstr ""
+msgstr "Cerca"
 
 #: templates/index.html:53
 msgid "ARCO IGLESIA"
-msgstr ""
+msgstr "ARCO IGLESIA"
 
 #: templates/index.html:54
 msgid "HOME GROUP FINDER"
-msgstr ""
+msgstr "BUSCADOR DE GRUPO EN CASA"
 
 #: templates/index.html:62
 msgid "FIND A HOME GROUP"
-msgstr ""
+msgstr "BUSCA UN GRUPO INICIO"
 
 #: templates/index.html:68
 msgid "Find a Home Group"
