@@ -771,7 +771,8 @@ def create_new_member_for_homegroup(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup(homegroup_id)
-    print (current_homegroup)
+    print (homegroup_id)
+
     homegroup_members = db.get_homegroup_members(homegroup_id)
     list = []
     for member in homegroup_members:
