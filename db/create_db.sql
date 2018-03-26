@@ -80,3 +80,7 @@ CREATE TABLE attendance (
   FOREIGN KEY (meeting_id) REFERENCES meeting (id),
   PRIMARY KEY (homegroup_id, member_id, meeting_id)
 );
+
+ALTER SEQUENCE member_id_seq RESTART WITH 101;
+ALTER SEQUENCE homegroup_id_seq RESTART WITH 101;
+ALTER SEQUENCE role_id_seq RESTART WITH 101;
