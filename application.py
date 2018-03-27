@@ -1,7 +1,3 @@
-# import sys
-# reload(sys)
-# sys.setdefaultencoding('utf8')
-
 from functools import wraps
 
 import os
@@ -310,7 +306,6 @@ def update_user(user_id):
     member = db.find_user_info(user_id)
     email = member['email']
     user_form = UpdateUserForm(email=member['email'])
-    print (member)
     if user_form.validate_on_submit():
         old_password = user_form.old_password.data
         new_password = user_form.new_password.data
@@ -395,7 +390,7 @@ class LoginForm(FlaskForm):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # temporary
-    init_test_user()
+    #init_test_user()
     login_form = LoginForm()
 
     if login_form.validate_on_submit() and login_form.validate():
@@ -708,13 +703,16 @@ def select_location():
 ########################## MEMBER (Home Group Leader) ##############################################
 
 class CreateMemberForm(FlaskForm):
+
     first_name = StringField(lazy_gettext('First Name'), [Length(min=2, max=30, message=lazy_gettext("First name is a required field"))])
     last_name = StringField(lazy_gettext('Last Name'), [Length(min=2, max=30, message=lazy_gettext("Last name is a required field"))])
     email = StringField(lazy_gettext('Email'), [Email(lazy_gettext("Please enter valid email"))])
     phone_number = StringField(lazy_gettext('Phone Number'), [InputRequired(message=lazy_gettext("Please enter valid phone number"))])
     gender = SelectField(lazy_gettext('Gender'), choices=[('M', lazy_gettext('Male')), ('F', lazy_gettext('Female'))])
     baptism_status = SelectField(lazy_gettext('Baptized?'), choices=[('True', lazy_gettext('Yes')), ('False', lazy_gettext('No'))])
-    marital_status = SelectField(lazy_gettext('Married?'), choices=[('True', lazy_gettext('Yes')), ('False', lazy_gettext('No'))])
+    is_a_parent = SelectField(lazy_gettext('Do you have children?'), choices=[('True', lazy_gettext('Yes')), ('False', lazy_gettext('No'))])
+    how_did_you_find_out = SelectField(lazy_gettext('How did you find out about the homegroup?'), choices=[], coerce=int)
+    marital_status = SelectField(lazy_gettext('Marital Status'), choices=[], coerce=int)
     submit = SubmitField(lazy_gettext('Save Member'))
 
 @app.route('/homegroup/member/new/<homegroup_id>')
@@ -751,6 +749,16 @@ def add_member_to_homegroup(homegroup_id, member_id):
 @requires_roles('homegroup_leader', 'admin')
 def create_new_member_for_homegroup(homegroup_id):
     member = CreateMemberForm()
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_you_find_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member.how_did_you_find_out.choices = methodList
     if request.method == "POST" and member.validate():
         first_name = member.first_name.data
         last_name = member.last_name.data
@@ -759,10 +767,11 @@ def create_new_member_for_homegroup(homegroup_id):
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
-        marital_status = member.marital_status.data
+        marital_status_id = member.marital_status.data
+        how_did_you_find_out_id = member.how_did_you_find_out.data
+        is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    marital_status, join_date)
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
         if rowcount == 1:
             row = db.recent_member()
             member_id = row['id']
@@ -800,17 +809,35 @@ def edit_member(member_id):
     if (int(current_user.member_id )== int(member_id)):
         heading_text = lazy_gettext('Edit My Info')
     else:
+
         heading_text = lazy_gettext('Edit Member')
+
     row = db.find_member(member_id)
+
+
     member_form = CreateMemberForm(first_name=row['first_name'],
                                    last_name=row['last_name'],
                                    email=row['email'],
                                    phone_number=row['phone_number'],
                                    gender=row['gender'],
                                    baptism_status=row['baptism_status'],
-                                   marital_status=row['marital_status'])
+                                   is_a_parent = row['is_a_parent'],
+                                   how_did_you_find_out = row['how_did_you_find_out_id'],
+                                   marital_status=row['marital_status_id'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
+
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_you_find_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member_form.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member_form.how_did_you_find_out.choices = methodList
+
 
 
     ## to do add validators back!!! and member_form.validate()
@@ -823,11 +850,13 @@ def edit_member(member_id):
         birthday = request.form['Birthday']
         baptism_status = member_form.baptism_status.data
         marital_status = member_form.marital_status.data
+        how_did_you_find_out = member_form.how_did_you_find_out.data
+        is_a_parent = member_form.is_a_parent.data
         join_date = request.form['JoinDate']
 
 
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
-                                  baptism_status, marital_status, join_date)
+                                  baptism_status, marital_status, how_did_you_find_out, is_a_parent,  join_date)
         if (rowcount == 1):
             flash(lazy_gettext("Member {} Updated").format(member_form.first_name.data), category="success")
             if (current_user.role == 'admin'):
@@ -963,7 +992,16 @@ def all_members():
 @requires_roles('admin')
 def create_member():
     member = CreateMemberForm()
-    #TODO add validators back!! and member.validate()
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_you_find_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member.how_did_you_find_out.choices = methodList
     if request.method == "POST" :
         first_name = member.first_name.data
         last_name = member.last_name.data
@@ -972,11 +1010,12 @@ def create_member():
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
-        marital_status = member.marital_status.data
+        marital_status_id = member.marital_status.data
+        how_did_you_find_out_id = member.how_did_you_find_out.data
+        is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
 
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    marital_status, join_date)
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
         print(rowcount)
         if rowcount == 1:
             flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
