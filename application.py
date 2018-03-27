@@ -493,6 +493,24 @@ def homegroup(homegroup_id):
     return render_template('homegroup.html', numMeetings = number_meetings, attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
+## this returns further analytics for homegroups ###
+@app.route('/homegroup_analytics')
+@login_required
+@requires_roles('admin')
+def homegroup_analytics():
+    year = datetime.datetime.now().strftime("%Y")
+    analytics = db.homegroup_analytics(year)
+    minors = db.number_of_minors(year)
+    analyticsList = ['','','','','','','','','','','','']
+    minorsList = ['','','','','','','','','','','','']
+    for row in analytics:
+        index = int(row['month']) -1
+        analyticsList[index] = int(row['count'])
+    for row in minors:
+        index = int(row['month']) - 1
+        minorsList[index] = int(row['count'])
+
+    return render_template('homegroup_analytics.html', year = year, minorsList = minorsList, analytics = analyticsList)
 
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
@@ -775,6 +793,7 @@ def create_new_member_for_homegroup(homegroup_id):
             row = db.recent_member()
             member_id = row['id']
             db.add_member_to_homegroup(homegroup_id, member_id)
+            flash(_("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
             flash(_("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
             return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 

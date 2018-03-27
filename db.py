@@ -32,6 +32,12 @@ def close_db_connection():
 #################################### member ########################################
 
 
+#returns someone's birthday
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+
 # creates a new member role
 def create_user(member_id, password, role_id):
     query = '''
@@ -477,6 +483,28 @@ def get_attendance(homegroup_id, meeting_id):
                 WHERE homegroup_id = %s and meeting_id = %s '''
     g.db.execute(query, (homegroup_id, meeting_id))
     return g.db.fetchall()
+
+
+## homegroup analytics ###
+
+def homegroup_analytics(year):
+    query = '''
+     select  EXTRACT(MONTH FROM TO_DATE(join_date, 'MM-DD-YYYY')) as "month", count(distinct member_id)
+ from homegroup_member
+ where EXTRACT(year FROM TO_DATE(join_date, 'MM-DD-YYYY'))  = %s and is_active = '1'
+ group by month
+    '''
+    g.db.execute(query, (year,))
+    return g.db.fetchall()
+
+def number_of_minors(year):
+    query = '''select EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) as "month", count(distinct (member_id))
+FROM member JOIN homegroup_member on homegroup_member.member_id = member.id
+WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) <= 18 and EXTRACT(year FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s and homegroup_member.is_active = '1'
+group by month'''
+    g.db.execute(query,(year,))
+    return g.db.fetchall()
+
 
 
 # finds date information from a meeting id
