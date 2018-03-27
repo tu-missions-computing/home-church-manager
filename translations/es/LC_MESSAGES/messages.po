@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-27 15:38-0500\n"
+"POT-Creation-Date: 2018-03-27 16:40-0500\n"
 "PO-Revision-Date: 2018-03-26 14:33-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -20,9 +20,9 @@ msgstr ""
 
 #: application.py:132 application.py:857 templates/all_members.html:83
 #: templates/contact.html:17 templates/edit_attendance.html:20
-#: templates/homegroup_members.html:49 templates/member_search.html:40
-#: templates/notify_member_email.html:13
-#: templates/view_attendance_report.html:19
+#: templates/homegroup_list.html:142 templates/homegroup_members.html:49
+#: templates/member_search.html:40 templates/notify_member_email.html:13
+#: templates/roles.html:27 templates/view_attendance_report.html:19
 msgid "Name"
 msgstr "Nombre"
 
@@ -76,7 +76,7 @@ msgstr "El usuario ya tiene una cuenta"
 
 #: application.py:219
 msgid "User account created for Verbo Velocity"
-msgstr ""
+msgstr "Cuenta de usuario creada para Iglesia Arco"
 
 #: application.py:228
 msgid "User Created"
@@ -84,9 +84,7 @@ msgstr "Usuario Creado"
 
 #: application.py:248 application.py:282
 msgid "You cannot edit your own role - please contact a system administrator"
-msgstr ""
-"No puede editar su propia función. Póngase en contacto con un "
-"administrador de sistema."
+msgstr "No puede editar su propia función. Póngase en contacto con un administrador de sistema."
 
 #: application.py:272
 msgid "Role Created"
@@ -140,8 +138,8 @@ msgstr "No hay datos de asistencia para este iglesia de hogar"
 
 #: application.py:505 application.py:556 application.py:580
 #: templates/base.html:221 templates/edit_attendance.html:21
-#: templates/homegroup.html:65 templates/view_attendance.html:10
-#: templates/view_attendance_report.html:20
+#: templates/homegroup.html:65 templates/homegroup_list.html:165
+#: templates/view_attendance.html:10 templates/view_attendance_report.html:20
 msgid "Attendance"
 msgstr "Asistencia"
 
@@ -203,7 +201,8 @@ msgstr "Número de Teléfono"
 msgid "Please enter valid phone number"
 msgstr "Por favor ingrese un número de teléfono válido"
 
-#: application.py:715 templates/advanced_search.html:34
+#: application.py:715 templates/admin_home.html:95
+#: templates/advanced_search.html:34
 msgid "Gender"
 msgstr "Género"
 
@@ -356,6 +355,14 @@ msgstr "LÍDERES DE GRUPO"
 msgid "Download Attendance Data"
 msgstr "Descargar los datos de asistencia"
 
+#: templates/admin_home.html:78
+msgid "Home Group"
+msgstr "Iglesia de Hogar"
+
+#: templates/admin_home.html:114
+msgid "Total People"
+msgstr "Total de Personas"
+
 #: templates/admin_home.html:140
 msgid "Top 5 Home Groups"
 msgstr "Los 5 Mejores Iglesia de Hogar"
@@ -395,9 +402,46 @@ msgstr "Perfiles de Administrador"
 msgid "Search"
 msgstr "Buscar"
 
+#: templates/admin_profiles.html:15 templates/advanced_search.html:139
+#: templates/all_members.html:67
+msgid "Show Inactive Members"
+msgstr "Mostrar Miembros Inactivos"
+
+#: templates/admin_profiles.html:31
+msgid "Add Admin"
+msgstr "Agregar Administrador"
+
+#: templates/admin_profiles.html:37 templates/advanced_search.html:134
+#: templates/all_members.html:51 templates/base.html:233
+#: templates/contact.html:4
+msgid "Contact"
+msgstr "Contacto"
+
 #: templates/admin_profiles.html:50
 msgid "Inactive?"
 msgstr "¿Inactivo?"
+
+#: templates/admin_profiles.html:66 templates/advanced_search.html:174
+#: templates/all_members.html:102 templates/homegroup_list.html:173
+#: templates/homegroup_members.html:75
+msgid "Remove"
+msgstr "Retirar"
+
+#: templates/admin_profiles.html:69
+msgid "Demote"
+msgstr "Eliminar"
+
+#: templates/admin_profiles.html:84 templates/advanced_search.html:170
+#: templates/advanced_search.html:193 templates/all_members.html:95
+#: templates/all_members.html:116 templates/attendance_reports.html:38
+#: templates/homegroup_list.html:157 templates/homegroup_members.html:66
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/admin_profiles.html:88 templates/all_members.html:120
+#: templates/homegroup_list.html:188
+msgid "Reactivate"
+msgstr "Reactivar"
 
 #: templates/advanced_search.html:25 templates/all_members.html:58
 msgid "Advanced Search"
@@ -459,20 +503,12 @@ msgstr "No Bautizado"
 msgid "Search Results"
 msgstr "Resultados de Búsqueda"
 
-#: templates/advanced_search.html:134 templates/all_members.html:51
-#: templates/base.html:233 templates/contact.html:4
-msgid "Contact"
-msgstr "Contacto"
-
-#: templates/advanced_search.html:139
-msgid "Show Inactive Members"
-msgstr "Mostrar Miembros Inactivos"
-
 #: templates/advanced_search.html:153 templates/all_members.html:85
+#: templates/homegroup_list.html:145
 msgid "Active?"
 msgstr "¿Activo?"
 
-#: templates/all_members.html:4
+#: templates/all_members.html:4 templates/all_members.html:9
 msgid "All Members"
 msgstr "Todos los Miembros"
 
@@ -488,14 +524,16 @@ msgstr "Añadir"
 msgid "Contact All Members"
 msgstr "Contactar a Todos"
 
-#: templates/all_members.html:102 templates/homegroup_members.html:75
-msgid "Remove"
-msgstr "Retirar"
-
-#: templates/all_members.html:143 templates/homegroup_members.html:100
+#: templates/all_members.html:132 templates/all_members.html:143
+#: templates/homegroup_list.html:213 templates/homegroup_members.html:100
 #: templates/roles.html:90 templates/roles.html:99
 msgid "Confirm"
 msgstr "Confirmar"
+
+#: templates/all_members.html:146 templates/homegroup_members.html:104
+#: templates/roles.html:103
+msgid "Close"
+msgstr "Cerca"
 
 #: templates/assign_role.html:4
 msgid "Assign New Role"
@@ -505,8 +543,8 @@ msgstr "Asignar un Nuevo Rol"
 msgid "Assign Role"
 msgstr "Asignar Rol"
 
-#: templates/attendance.html:4 templates/edit_attendance.html:4
-#: templates/view_attendance_report.html:4
+#: templates/attendance.html:4 templates/attendance.html:9
+#: templates/edit_attendance.html:4 templates/view_attendance_report.html:4
 #: templates/view_attendance_report.html:14
 msgid "Attendance Report"
 msgstr "Reporte de Asistencia"
@@ -539,10 +577,6 @@ msgstr "Nuevo Informe de Asistencia"
 msgid "Action"
 msgstr "Acción"
 
-#: templates/attendance_reports.html:38
-msgid "Edit"
-msgstr "Editar"
-
 #: templates/attendance_reports.html:45
 msgid "No Information"
 msgstr "Sin Información"
@@ -555,11 +589,16 @@ msgstr "ARCO"
 msgid "Welcome,"
 msgstr "Bienvenido,"
 
+#: templates/base.html:187 templates/homegroup.html:13
+msgid "Dashboard"
+msgstr "Tablero"
+
 #: templates/base.html:190
 msgid "Profile Settings"
 msgstr "Configuración de Perfil"
 
 #: templates/base.html:202 templates/base.html:211
+#: templates/homegroup_list.html:161
 msgid "Members"
 msgstr "Miembros"
 
@@ -695,10 +734,6 @@ msgstr "Fechas de Nacimiento"
 msgid "Other questions?"
 msgstr "¿Otras preguntas?"
 
-#: templates/homegroup.html:13
-msgid "Dashboard"
-msgstr "Tablero"
-
 #: templates/homegroup.html:23
 msgid "MEMBERS"
 msgstr "MIEMBROS"
@@ -731,6 +766,22 @@ msgstr "3 Reuniones Más Recientes"
 msgid "Home Group Attendance"
 msgstr "Asistencia de Iglesia de Hogar"
 
+#: templates/homegroup_list.html:114
+msgid "All Home Groups"
+msgstr "Todos los Iglesias de Hogar"
+
+#: templates/homegroup_list.html:120
+msgid "Add Home Group"
+msgstr "Agregar Iglesia de Hogar"
+
+#: templates/homegroup_list.html:133
+msgid "Show Inactive Home Groups"
+msgstr "Mostrar Iglesias de Hogar inactivos"
+
+#: templates/homegroup_list.html:143
+msgid "Location"
+msgstr "Ubicación"
+
 #: templates/homegroup_members.html:4
 msgid "Home Group Members"
 msgstr "Miembros de Iglesia de Hogar"
@@ -742,10 +793,6 @@ msgstr "Mandar Correo Electrónico a Grupo"
 #: templates/homegroup_members.html:60
 msgid "Leader"
 msgstr "Líder"
-
-#: templates/homegroup_members.html:104 templates/roles.html:103
-msgid "Close"
-msgstr "Cerca"
 
 #: templates/index.html:53
 msgid "ARCO IGLESIA"
@@ -774,6 +821,10 @@ msgstr "Por favor introduzca una dirección de correo electrónico válida"
 #: templates/login.html:36
 msgid "Please enter a valid Password"
 msgstr "Por favor introduce una contraseña válida"
+
+#: templates/map.html:6
+msgid "Info windows"
+msgstr "Ventanas de información"
 
 #: templates/member_search.html:4 templates/member_search.html:16
 msgid "Add Home Group Member"
@@ -817,7 +868,35 @@ msgstr "Esperamos verte de nuevo!"
 
 #: templates/roles.html:28
 msgid "Account Type"
-msgstr ""
+msgstr "Tipo de Cuenta"
+
+#: templates/roles.html:40
+msgid "Admin"
+msgstr "Administración"
+
+#: templates/roles.html:44 templates/roles.html:52
+msgid "Deactivate Role"
+msgstr "Desactivar Rol"
+
+#: templates/roles.html:48
+msgid "Home Group Leader"
+msgstr "Líder de Iglesia de Hogar"
+
+#: templates/roles.html:58 templates/roles.html:68
+msgid "Assign new role"
+msgstr "Asignar un nuevo rol"
+
+#: templates/roles.html:65
+msgid "Inactive User"
+msgstr "Usuario Inactivo"
+
+#: templates/roles.html:73
+msgid "Create Account"
+msgstr "Crear una Cuenta"
+
+#: templates/select_location.html:4
+msgid "Geocoding service"
+msgstr "Servicio de geocodificación"
 
 #: templates/user_account_email.html:3
 msgid "User account created"

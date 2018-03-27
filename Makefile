@@ -2,7 +2,7 @@
 .PHONY: extract init compile update
 
 extract:
-	pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
+	pybabel -v extract -F babel.cfg -k lazy_gettext -o messages.pot .
 
 
 compile:

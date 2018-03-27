@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-27 15:38-0500\n"
+"POT-Creation-Date: 2018-03-27 16:40-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,9 +19,9 @@ msgstr ""
 
 #: application.py:132 application.py:857 templates/all_members.html:83
 #: templates/contact.html:17 templates/edit_attendance.html:20
-#: templates/homegroup_members.html:49 templates/member_search.html:40
-#: templates/notify_member_email.html:13
-#: templates/view_attendance_report.html:19
+#: templates/homegroup_list.html:142 templates/homegroup_members.html:49
+#: templates/member_search.html:40 templates/notify_member_email.html:13
+#: templates/roles.html:27 templates/view_attendance_report.html:19
 msgid "Name"
 msgstr ""
 
@@ -137,8 +137,8 @@ msgstr ""
 
 #: application.py:505 application.py:556 application.py:580
 #: templates/base.html:221 templates/edit_attendance.html:21
-#: templates/homegroup.html:65 templates/view_attendance.html:10
-#: templates/view_attendance_report.html:20
+#: templates/homegroup.html:65 templates/homegroup_list.html:165
+#: templates/view_attendance.html:10 templates/view_attendance_report.html:20
 msgid "Attendance"
 msgstr ""
 
@@ -200,7 +200,8 @@ msgstr ""
 msgid "Please enter valid phone number"
 msgstr ""
 
-#: application.py:715 templates/advanced_search.html:34
+#: application.py:715 templates/admin_home.html:95
+#: templates/advanced_search.html:34
 msgid "Gender"
 msgstr ""
 
@@ -353,6 +354,14 @@ msgstr ""
 msgid "Download Attendance Data"
 msgstr ""
 
+#: templates/admin_home.html:78
+msgid "Home Group"
+msgstr ""
+
+#: templates/admin_home.html:114
+msgid "Total People"
+msgstr ""
+
 #: templates/admin_home.html:140
 msgid "Top 5 Home Groups"
 msgstr ""
@@ -392,8 +401,45 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+#: templates/admin_profiles.html:15 templates/advanced_search.html:139
+#: templates/all_members.html:67
+msgid "Show Inactive Members"
+msgstr ""
+
+#: templates/admin_profiles.html:31
+msgid "Add Admin"
+msgstr ""
+
+#: templates/admin_profiles.html:37 templates/advanced_search.html:134
+#: templates/all_members.html:51 templates/base.html:233
+#: templates/contact.html:4
+msgid "Contact"
+msgstr ""
+
 #: templates/admin_profiles.html:50
 msgid "Inactive?"
+msgstr ""
+
+#: templates/admin_profiles.html:66 templates/advanced_search.html:174
+#: templates/all_members.html:102 templates/homegroup_list.html:173
+#: templates/homegroup_members.html:75
+msgid "Remove"
+msgstr ""
+
+#: templates/admin_profiles.html:69
+msgid "Demote"
+msgstr ""
+
+#: templates/admin_profiles.html:84 templates/advanced_search.html:170
+#: templates/advanced_search.html:193 templates/all_members.html:95
+#: templates/all_members.html:116 templates/attendance_reports.html:38
+#: templates/homegroup_list.html:157 templates/homegroup_members.html:66
+msgid "Edit"
+msgstr ""
+
+#: templates/admin_profiles.html:88 templates/all_members.html:120
+#: templates/homegroup_list.html:188
+msgid "Reactivate"
 msgstr ""
 
 #: templates/advanced_search.html:25 templates/all_members.html:58
@@ -456,20 +502,12 @@ msgstr ""
 msgid "Search Results"
 msgstr ""
 
-#: templates/advanced_search.html:134 templates/all_members.html:51
-#: templates/base.html:233 templates/contact.html:4
-msgid "Contact"
-msgstr ""
-
-#: templates/advanced_search.html:139
-msgid "Show Inactive Members"
-msgstr ""
-
 #: templates/advanced_search.html:153 templates/all_members.html:85
+#: templates/homegroup_list.html:145
 msgid "Active?"
 msgstr ""
 
-#: templates/all_members.html:4
+#: templates/all_members.html:4 templates/all_members.html:9
 msgid "All Members"
 msgstr ""
 
@@ -485,13 +523,15 @@ msgstr ""
 msgid "Contact All Members"
 msgstr ""
 
-#: templates/all_members.html:102 templates/homegroup_members.html:75
-msgid "Remove"
-msgstr ""
-
-#: templates/all_members.html:143 templates/homegroup_members.html:100
+#: templates/all_members.html:132 templates/all_members.html:143
+#: templates/homegroup_list.html:213 templates/homegroup_members.html:100
 #: templates/roles.html:90 templates/roles.html:99
 msgid "Confirm"
+msgstr ""
+
+#: templates/all_members.html:146 templates/homegroup_members.html:104
+#: templates/roles.html:103
+msgid "Close"
 msgstr ""
 
 #: templates/assign_role.html:4
@@ -502,8 +542,8 @@ msgstr ""
 msgid "Assign Role"
 msgstr ""
 
-#: templates/attendance.html:4 templates/edit_attendance.html:4
-#: templates/view_attendance_report.html:4
+#: templates/attendance.html:4 templates/attendance.html:9
+#: templates/edit_attendance.html:4 templates/view_attendance_report.html:4
 #: templates/view_attendance_report.html:14
 msgid "Attendance Report"
 msgstr ""
@@ -536,10 +576,6 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: templates/attendance_reports.html:38
-msgid "Edit"
-msgstr ""
-
 #: templates/attendance_reports.html:45
 msgid "No Information"
 msgstr ""
@@ -552,11 +588,16 @@ msgstr ""
 msgid "Welcome,"
 msgstr ""
 
+#: templates/base.html:187 templates/homegroup.html:13
+msgid "Dashboard"
+msgstr ""
+
 #: templates/base.html:190
 msgid "Profile Settings"
 msgstr ""
 
 #: templates/base.html:202 templates/base.html:211
+#: templates/homegroup_list.html:161
 msgid "Members"
 msgstr ""
 
@@ -692,10 +733,6 @@ msgstr ""
 msgid "Other questions?"
 msgstr ""
 
-#: templates/homegroup.html:13
-msgid "Dashboard"
-msgstr ""
-
 #: templates/homegroup.html:23
 msgid "MEMBERS"
 msgstr ""
@@ -728,6 +765,22 @@ msgstr ""
 msgid "Home Group Attendance"
 msgstr ""
 
+#: templates/homegroup_list.html:114
+msgid "All Home Groups"
+msgstr ""
+
+#: templates/homegroup_list.html:120
+msgid "Add Home Group"
+msgstr ""
+
+#: templates/homegroup_list.html:133
+msgid "Show Inactive Home Groups"
+msgstr ""
+
+#: templates/homegroup_list.html:143
+msgid "Location"
+msgstr ""
+
 #: templates/homegroup_members.html:4
 msgid "Home Group Members"
 msgstr ""
@@ -738,10 +791,6 @@ msgstr ""
 
 #: templates/homegroup_members.html:60
 msgid "Leader"
-msgstr ""
-
-#: templates/homegroup_members.html:104 templates/roles.html:103
-msgid "Close"
 msgstr ""
 
 #: templates/index.html:53
@@ -770,6 +819,10 @@ msgstr ""
 
 #: templates/login.html:36
 msgid "Please enter a valid Password"
+msgstr ""
+
+#: templates/map.html:6
+msgid "Info windows"
 msgstr ""
 
 #: templates/member_search.html:4 templates/member_search.html:16
@@ -814,6 +867,34 @@ msgstr ""
 
 #: templates/roles.html:28
 msgid "Account Type"
+msgstr ""
+
+#: templates/roles.html:40
+msgid "Admin"
+msgstr ""
+
+#: templates/roles.html:44 templates/roles.html:52
+msgid "Deactivate Role"
+msgstr ""
+
+#: templates/roles.html:48
+msgid "Home Group Leader"
+msgstr ""
+
+#: templates/roles.html:58 templates/roles.html:68
+msgid "Assign new role"
+msgstr ""
+
+#: templates/roles.html:65
+msgid "Inactive User"
+msgstr ""
+
+#: templates/roles.html:73
+msgid "Create Account"
+msgstr ""
+
+#: templates/select_location.html:4
+msgid "Geocoding service"
 msgstr ""
 
 #: templates/user_account_email.html:3
