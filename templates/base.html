@@ -6,23 +6,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name=“viewport” content=“width=device-width, initial-scale=1">
-
     <title>{% block title %}My Title{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-
 
     <script type="text/javascript" src="/static/javascript.js"></script>
     <script type="text/javascript">
@@ -32,12 +26,12 @@
             });
         }, 4000);
     </script>
-
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/animations.css">
     <link rel="stylesheet" href="/static/background.css">
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
     {# Extra styling #}
     {% block more_style %}{% endblock %}
@@ -135,9 +129,6 @@
             }
         }
 
-        .navbar-inverse .navbar-nav .nav-link {
-            color: white;
-        }
 
         .nav-link{
             color: white !important;
@@ -165,21 +156,22 @@
 
 <section>
     <wrapper class="d-flex flex-column">
-        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: rgba(0, 0, 0, 0.5); ">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
             <div class="container">
+
                 <button style="cursor:pointer" class="navbar-toggler float-right" type="button" data-toggle="collapse"
                         data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false"
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:800; font-size:30px"
-                   href="{{ url_for('index') }}">{{ _('ARCO') }}</a>
+                   href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png" width="150px"></a>
 
                 <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1" >
 
-                    <ul class="nav" style="color:white;">
+                    <ul class="nav">
                         {% if current_user.name %}
-                            <li class="active dropdown nav-item" style="color:white;">
+                            <li class="active dropdown nav-item">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                                     {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
@@ -235,13 +227,12 @@
                         {% if current_user.name %}
                             <li class="nav-item" style="padding-top:5px;padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
-                                    <b><i class="fa fa-user"> </i>{{ _('Log Out') }}</b>
+                                    <b><i class="fa fa-user"> &nbsp;</i>{{ _('Log Out') }}</b>
                                 </a>
                             </li>
                         {% else %}
-                            <li class="nav-item" style="padding-top:5px; padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/login">
-                                    <b><i class="fa fa-user"> </i>{{ _('Log In') }}</b>
+                                    <b><i class="fa fa-user">&nbsp;</i>{{ _('Log In') }}</b>
                                 </a>
                             </li>
                         {% endif %}
@@ -257,19 +248,20 @@
 
         <!-- /#page-content-wrapper -->
         <footer>
-            <div class="container-fluid w-10" style="background: rgba(0, 0, 0, 0.5);">
+            <hr>
+            <div class="container-fluid w-10">
                 <div class="row">
                     <div class="col-4" style="padding:0;">
-                        <div style="padding-top:6%;">&copy; {{ _('Copyright 2018, Verbo Church') }}</div>
+                        <div style="padding-top:6%;">&copy; {{ _('Copyright 2018, Arco Church') }}</div>
                     </div>
                     <div class="col-4" style="padding:0;">
-                        <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;"><b>Verbo Iglesia
+                        <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;"><b>Arco Iglesia
                             Cristiana</b> <br> Av.10 de Agosto y Av. Loja <br>
                             Cuenca, Ecuador
                         </div>
                     </div>
                     <div class="col-4" style="padding:0; padding-top:1%; background-size: contain;">
-                        <img src="/static/VerboMinistriesL.png" alt="Verbo Ministries Logo" class="verbologo"/>
+                        <img src="/static/arco-final2.png" alt="Arco Ministries Logo" class="logo"/>
                     </div>
                 </div>
                 <div class="row ">
@@ -278,19 +270,19 @@
 
                     {# FIXME: We are going to want to turn off Google translate. #}
 
-                    <div class="col" style="float:right; color:white;">
-                        <div id="google_translate_element"></div>
-                        <script type="text/javascript">
-                            function googleTranslateElementInit() {
-                                new google.translate.TranslateElement({
-                                    pageLanguage: 'en',
-                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                                }, 'google_translate_element');
-                            }
-                        </script>
-                        <script type="text/javascript"
-                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                    </div>
+{#                    <div class="col" style="float:right; color:white;">#}
+{#                        <div id="google_translate_element"></div>#}
+{#                        <script type="text/javascript">#}
+{#                            function googleTranslateElementInit() {#}
+{#                                new google.translate.TranslateElement({#}
+{#                                    pageLanguage: 'en',#}
+{#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
+{#                                }, 'google_translate_element');#}
+{#                            }#}
+{#                        </script>#}
+{#                        <script type="text/javascript"#}
+{#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+{#                    </div>#}
                 </div>
             </div>
         </footer>
