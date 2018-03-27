@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="col form-group pull-right">
-                Show Inactive Members
+                {{ _('Show Inactive Members') }}
                 {% if showInactive %}
                     <a class="checkboxy" onclick="{% set showInactive = False %}"
                        href="{{ url_for('all_admin', admin = admin, inactiveAdmin = inactiveAdmin) }}">
@@ -28,13 +28,13 @@
             <div class="col form-group pull-left">
                 <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-plus"></span>
-                    Add Admin
+                    {{ _('Add Admin') }}
                 </a>
             </div>
             <div class="col form-group pull-left">
                 <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-envelope"></span>
-                    Contact
+                    {{ _('Contact') }}
                 </a>
             </div>
         </div>
@@ -63,10 +63,10 @@
                     </a>
                     <a href="{{ url_for('deactivate_member', member_id = eachAdmin.id) }}"
                        class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-trash"></span> Remove
+                        <span class="glyphicon glyphicon-trash"></span> {{ _('Remove') }}
                     </a>
                     <a href="#" class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-down"></span> Demote
+                        <span class="glyphicon glyphicon-down"></span> {{ _('Demote') }}
                     </a>
                 </td>
             </tr>
@@ -81,11 +81,11 @@
                 </td>
                 <td>
                     <a href="{{ url_for('edit_member', member_id = inactiveAdmin.id) }}" class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                        <span class="glyphicon glyphicon-pencil"></span> {{ _('Edit') }}
                     </a>
                     <a href="{{ url_for('reactivate_member', member_id = inactiveAdmin.id) }}"
                        class="btn btn-success btn-sm">
-                        <span class="glyphicon glyphicon-plus"></span> Reactivate
+                        <span class="glyphicon glyphicon-plus"></span> {{ _('Reactivate') }}
                     </a>
                 </td>
             {% endfor %}
