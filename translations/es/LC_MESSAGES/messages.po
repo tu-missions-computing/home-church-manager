@@ -311,7 +311,7 @@ msgstr "Miembro Reactivado"
 
 #: templates/admin_home.html:4 templates/homegroup.html:4
 msgid "Home"
-msgstr "Hogar"
+msgstr "Inicio"
 
 #: templates/admin_home.html:14
 msgid "Admin Dashboard"
@@ -336,7 +336,7 @@ msgstr "MIEMBROS DE ARCO"
 
 #: templates/admin_home.html:33
 msgid "ATTENDING HOME GROUPS"
-msgstr "ASISTIENDO A IGLESIA DE HOGAR"
+msgstr "ASISTIENDO IGLESIA DE HOGAR"
 
 #: templates/admin_home.html:37 templates/homegroup.html:37
 msgid "ATTENDANCE RATE"
@@ -372,15 +372,15 @@ msgstr "Mensual"
 
 #: templates/admin_home.html:168
 msgid "# of people"
-msgstr "# de la gente"
+msgstr "# de gente"
 
 #: templates/admin_home.html:192
 msgid "Home Group Gender Report"
-msgstr "Informe de Género del Iglesia de Hogar"
+msgstr "Informe de Género de la Iglesia de Hogar"
 
 #: templates/admin_home.html:223 templates/base.html:208
 msgid "Home Groups"
-msgstr "Iglesia de Hogares"
+msgstr "Iglesias de Hogar"
 
 #: templates/admin_profiles.html:6
 msgid "Admin Profiles"
@@ -403,7 +403,7 @@ msgstr "Búsqueda Avanzada"
 
 #: templates/advanced_search.html:38
 msgid "Age"
-msgstr "Años"
+msgstr "Edad"
 
 #: templates/advanced_search.html:45
 msgid "Children"
@@ -411,7 +411,7 @@ msgstr "Niños"
 
 #: templates/advanced_search.html:46
 msgid "Youth"
-msgstr "Juventud"
+msgstr "Joven"
 
 #: templates/advanced_search.html:47
 msgid "Teen"
@@ -427,7 +427,7 @@ msgstr "Adulto"
 
 #: templates/advanced_search.html:50
 msgid "Senior"
-msgstr "Mayor"
+msgstr "Tercera Edad"
 
 #: templates/advanced_search.html:62
 msgid "Marital Status"
@@ -447,15 +447,15 @@ msgstr "Estado de Bautismo"
 
 #: templates/advanced_search.html:90
 msgid "Baptized"
-msgstr ""
+msgstr "Bautizado"
 
 #: templates/advanced_search.html:91
 msgid "Not Baptized"
-msgstr "Bautizado"
+msgstr "No Bautizado"
 
 #: templates/advanced_search.html:108
 msgid "Search Results"
-msgstr "Resultados de la Búsqueda"
+msgstr "Resultados de Búsqueda"
 
 #: templates/advanced_search.html:118 templates/all_members.html:51
 #: templates/base.html:233 templates/contact.html:4
@@ -526,7 +526,7 @@ msgstr "Hora"
 
 #: templates/attendance.html:44
 msgid "Take Attendance"
-msgstr "Tomar la Asistencia"
+msgstr "Tomar Asistencia"
 
 #: templates/attendance_reports.html:16
 msgid "New Attendance Report"
@@ -572,7 +572,7 @@ msgstr "Editar Iglesia de Hogar"
 
 #: templates/base.html:232
 msgid "FAQ"
-msgstr "FAQ"
+msgstr "Preguntas Mas Frequentes"
 
 #: templates/base.html:238
 msgid "Log Out"
@@ -580,7 +580,7 @@ msgstr "Cerrar Sesión"
 
 #: templates/base.html:263
 msgid "Copyright 2018, Arco Church"
-msgstr "Derechos de Autor 2018, Arco Iglesia"
+msgstr "Derechos de Autor 2018, Iglesia Arco"
 
 #: templates/contact.html:9 templates/faq.html:100
 msgid "Contact Our Team"
@@ -621,7 +621,7 @@ msgstr "Agregar una Descripción"
 
 #: templates/create_homegroup.html:38 templates/edit_homegroup.html:38
 msgid "Add a Location"
-msgstr "Agrega un Lugar"
+msgstr "Agrega Ubicacion"
 
 #: templates/create_homegroup.html:46 templates/edit_homegroup.html:45
 msgid "Find Location"
@@ -658,7 +658,7 @@ msgstr "Dirección de Correo Electrónico no Válida"
 
 #: templates/create_member.html:55 templates/edit_member.html:44
 msgid "ex: 224-656-8205"
-msgstr "ex: 224-656-8205"
+msgstr "ex: 099-656-8205"
 
 #: templates/create_member.html:59 templates/edit_member.html:48
 msgid "Invalid Phone Number"
@@ -666,7 +666,7 @@ msgstr "Numero de telefono invalido"
 
 #: templates/create_member.html:75
 msgid "Birthday"
-msgstr "Cumpleaños"
+msgstr "Fecha de Nacimiento"
 
 #: templates/create_member.html:102 templates/edit_member.html:93
 msgid "Join Date"
@@ -687,7 +687,7 @@ msgstr "Sin Información"
 
 #: templates/edit_member.html:64
 msgid "Birthdays"
-msgstr "Cumpleaños"
+msgstr "Fechas de Nacimiento"
 
 #: templates/faq.html:98
 msgid "Other questions?"
@@ -703,7 +703,7 @@ msgstr "MIEMBROS"
 
 #: templates/homegroup.html:25
 msgid "ATTENDING HOME GROUP"
-msgstr "ASISTIENDO A IGLESIA DE HUGAR"
+msgstr "ASISTIENDO A IGLESIA DE HOGAR"
 
 #: templates/homegroup.html:30
 msgid "Number of Meetings"
@@ -727,15 +727,15 @@ msgstr "3 Reuniones Más Recientes"
 
 #: templates/homegroup.html:124
 msgid "Home Group Attendance"
-msgstr "Asistencia en el Iglesia de Hogar"
+msgstr "Asistencia de Iglesia de Hogar"
 
 #: templates/homegroup_members.html:4
 msgid "Home Group Members"
-msgstr "Miembros del Iglesia de Hogar"
+msgstr "Miembros de Iglesia de Hogar"
 
 #: templates/homegroup_members.html:29
 msgid "Email Group"
-msgstr "Grupo de Correo Electrónico"
+msgstr "Mandar Correo Electrónico a Grupo"
 
 #: templates/homegroup_members.html:60
 msgid "Leader"
@@ -747,15 +747,15 @@ msgstr "Cerca"
 
 #: templates/index.html:53
 msgid "ARCO IGLESIA"
-msgstr "ARCO IGLESIA"
+msgstr "IGLESIA ARCO"
 
 #: templates/index.html:54
 msgid "HOME GROUP FINDER"
-msgstr "BUSCADOR DE IGLESIA DE HOGAR"
+msgstr "ENCUENTRA UNA IGLESIA DE HOGAR"
 
 #: templates/index.html:62
 msgid "FIND A HOME GROUP"
-msgstr "BUSCA UN IGLESIA DE HOGAR"
+msgstr "BUSCA UNA IGLESIA DE HOGAR"
 
 #: templates/index.html:68
 msgid "Find a Home Group"
@@ -763,7 +763,7 @@ msgstr "Encuentra un Iglesia de Hogar"
 
 #: templates/index.html:73
 msgid "Enter Zip Code or Address"
-msgstr "Ingrese el código postal o la dirección"
+msgstr "Ingrese la dirección"
 
 #: templates/login.html:26
 msgid "Please enter a valid email"
@@ -835,5 +835,5 @@ msgstr "Ver"
 
 #: templates/view_attendance_report.html:10
 msgid "Back"
-msgstr "Espalda"
+msgstr "Atras"
 
