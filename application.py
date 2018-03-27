@@ -709,7 +709,9 @@ class CreateMemberForm(FlaskForm):
     phone_number = StringField(_('Phone Number'), [InputRequired(message=_("Please enter valid phone number"))])
     gender = SelectField(_('Gender'), choices=[('M', _('Male')), ('F', _('Female'))])
     baptism_status = SelectField(_('Baptized?'), choices=[('True', _('Yes')), ('False', _('No'))])
-    marital_status = SelectField(_('Married?'), choices=[('True', _('Yes')), ('False', _('No'))])
+    is_a_parent = SelectField(_('Do you have children?'), choices=[('True', _('Yes')), ('False', _('No'))])
+    how_did_you_find_out = SelectField(_('How did you find out about the homegroup?'), choices=[], coerce=int)
+    married = SelectField(_('Marital Status'), choices=[], coerce=int)
     submit = SubmitField(_('Save Member'))
 
 @app.route('/homegroup/member/new/<homegroup_id>')
@@ -746,6 +748,16 @@ def add_member_to_homegroup(homegroup_id, member_id):
 @requires_roles('homegroup_leader', 'admin')
 def create_new_member_for_homegroup(homegroup_id):
     member = CreateMemberForm()
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member.how_did_you_find_out.choices = methodList
     if request.method == "POST" and member.validate():
         first_name = member.first_name.data
         last_name = member.last_name.data
@@ -754,10 +766,11 @@ def create_new_member_for_homegroup(homegroup_id):
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
-        marital_status = member.marital_status.data
+        marital_status_id = member.marital_status.data
+        how_did_you_find_out_id = member.how_did_you_find_out.data
+        is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    marital_status, join_date)
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
         if rowcount == 1:
             row = db.recent_member()
             member_id = row['id']
@@ -958,7 +971,16 @@ def all_members():
 @requires_roles('admin')
 def create_member():
     member = CreateMemberForm()
-    #TODO add validators back!! and member.validate()
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member.how_did_you_find_out.choices = methodList
     if request.method == "POST" :
         first_name = member.first_name.data
         last_name = member.last_name.data
@@ -967,11 +989,12 @@ def create_member():
         gender = member.gender.data
         birthday = request.form['Birthday']
         baptism_status = member.baptism_status.data
-        marital_status = member.marital_status.data
+        marital_status_id = member.marital_status.data
+        how_did_you_find_out_id = member.how_did_you_find_out.data
+        is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
 
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
-                                    marital_status, join_date)
+        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
         print(rowcount)
         if rowcount == 1:
             flash(_("Member {} Created").format(member.first_name.data), category="success")

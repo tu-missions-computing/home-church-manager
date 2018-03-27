@@ -105,6 +105,20 @@ def update_role(id, role_id, is_active):
     return g.db.rowcount
 
 
+#retrieves all the marital status
+def get_marital_status():
+    query = ''' select * from marital_status '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+# retrieves all the methods of finding out about the homegroups/church
+def get_how_did_you_find_out():
+    query = ''' select * from how_did_you_find_out '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+
+
 # updates the user role from admin role view based on selection
 def assign_new_role(id, role_id):
     query = '''
@@ -238,13 +252,13 @@ def edit_member(member_id, first_name, last_name, email, phone_number, gender, b
 
 
 # creates a new member
-def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
+def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date):
     query = '''
-    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active)
-    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, '1')
+    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date, is_active)
+    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '1')
     '''
     g.db.execute(query, (first_name,  last_name, email, phone_number,  gender,  birthday,
-                                   baptism_status,  marital_status,  join_date))
+                                   baptism_status,  marital_status_id, how_did_you_find_out_id,  is_a_parent,   join_date))
     g.connection.commit()
 
 
