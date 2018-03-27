@@ -98,6 +98,25 @@
                         <div class="row">
                             <div class="col">
                                 <p class="form-label">
+                                    {{ form.how_did_you_find_out.label }}
+                                    {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="form-label">
+                                    {{ form.is_a_parent.label }}
+                                    {{ form.is_a_parent(class_='large-form-control form-control') }}
+                                </p>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col">
+                                <p class="form-label">
                                     {# FIXME: Refer to form object? #}
                                     <label>{{ _('Join Date') }}</label>
                                     <input type="date" id="datePicker"

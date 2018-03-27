@@ -80,13 +80,29 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">
-                            <p class="form-label">
-                                {{ form.marital_status.label }}
-                                {{ form.marital_status(class_='form-control large-form-control') }}
-                            </p>
+                            <div class="col">
+                                <p class="form-label">
+                                    {{ form.marital_status.label }}
+                                    {{ form.marital_status(class_='large-form-control form-control') }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="form-label">
+                                    {{ form.how_did_you_find_out.label }}
+                                    {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="form-label">
+                                    {{ form.is_a_parent.label }}
+                                    {{ form.is_a_parent(class_='large-form-control form-control') }}
+                                </p>
+                            </div>
+                        </div>
                     <div class="row">
                         <div class="col">
                             <p class="form-label">

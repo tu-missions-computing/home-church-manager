@@ -105,6 +105,20 @@ def update_role(id, role_id, is_active):
     return g.db.rowcount
 
 
+#retrieves all the marital status
+def get_marital_status():
+    query = ''' select * from marital_status '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+# retrieves all the methods of finding out about the homegroups/church
+def get_how_did_you_find_out():
+    query = ''' select * from how_did_you_find_out '''
+    g.db.execute(query)
+    return g.db.fetchall()
+
+
+
 # updates the user role from admin role view based on selection
 def assign_new_role(id, role_id):
     query = '''
@@ -225,26 +239,26 @@ def get_all_inactive_members():
     return add_age_to_member_rows(g.db.fetchall())
 
 # edits member info
-def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
+def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, how_did_you_find_out, is_a_parent,  join_date):
     member_id = int(member_id)
 
     query = '''
-    UPDATE member SET first_name = %s, last_name = %s, email = %s, phone_number = %s, gender = %s, birthday = %s, baptism_status = %s, marital_status = %s, join_date = %s
+    UPDATE member SET first_name = %s, last_name = %s, email = %s, phone_number = %s, gender = %s, birthday = %s, baptism_status = %s, marital_status_id = %s, how_did_you_find_out_id = %s, is_a_parent = %s,  join_date = %s
     WHERE id = %s
     '''
-    g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, member_id))
+    g.db.execute(query, (first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, how_did_you_find_out, is_a_parent, join_date, member_id))
     g.connection.commit()
     return g.db.rowcount
 
 
 # creates a new member
-def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date):
+def create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date):
     query = '''
-    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status, join_date, is_active)
-    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, '1')
+    INSERT INTO member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date, is_active)
+    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '1')
     '''
     g.db.execute(query, (first_name,  last_name, email, phone_number,  gender,  birthday,
-                                   baptism_status,  marital_status,  join_date))
+                                   baptism_status,  marital_status_id, how_did_you_find_out_id,  is_a_parent,   join_date))
     g.connection.commit()
 
 
@@ -297,11 +311,12 @@ def deactivate_hgleader_role(member_id):
 
 # adds a member to a homegroup
 def add_member_to_homegroup(homegroup_id, member_id):
-
+    now = datetime.now()
+    date = now.strftime("%m-%d-%Y")
     query = '''
-    INSERT INTO homegroup_member values(%s, %s, '1')
+    INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) values(%s, %s, %s, '1')
     '''
-    g.db.execute(query, ( homegroup_id, member_id))
+    g.db.execute(query, ( homegroup_id, member_id, date))
     g.connection.commit()
     return g.db.rowcount
 
@@ -503,11 +518,13 @@ def find_homegroup(homegroup_id):
 
 # creates a new homegroup
 def create_homegroup(name, location, description, latitude, longitude):
+    now = datetime.now()
+    date = now.strftime("%m-%d-%Y")
     query = '''
-        INSERT INTO homegroup(name, location, description, latitude, longitude, is_active)
-        VALUES(%s, %s, %s, %s, %s, '1')
+        INSERT INTO homegroup(name, location, description, latitude, longitude,creation_date, is_active)
+        VALUES(%s, %s, %s, %s, %s, %s,  '1')
         '''
-    g.db.execute(query, ( name, location, description, latitude, longitude))
+    g.db.execute(query, ( name, location, description, latitude, longitude, date,))
     g.connection.commit()
     return g.db.rowcount
 
