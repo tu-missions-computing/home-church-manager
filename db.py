@@ -311,7 +311,7 @@ def deactivate_hgleader_role(member_id):
 
 # adds a member to a homegroup
 def add_member_to_homegroup(homegroup_id, member_id):
-    now = datetime.datetime.now()
+    now = datetime.now()
     date = now.strftime("%m-%d-%Y")
     query = '''
     INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) values(%s, %s, %s, '1')
@@ -518,13 +518,13 @@ def find_homegroup(homegroup_id):
 
 # creates a new homegroup
 def create_homegroup(name, location, description, latitude, longitude):
-    now = datetime.datetime.now()
+    now = datetime.now()
     date = now.strftime("%m-%d-%Y")
     query = '''
         INSERT INTO homegroup(name, location, description, latitude, longitude,creation_date, is_active)
         VALUES(%s, %s, %s, %s, %s, %s,  '1')
         '''
-    g.db.execute(query, ( name, location, description, latitude, longitude, date))
+    g.db.execute(query, ( name, location, description, latitude, longitude, date,))
     g.connection.commit()
     return g.db.rowcount
 
