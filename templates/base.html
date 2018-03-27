@@ -127,7 +127,7 @@
                                    aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                                     {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
-                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
+                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}"> {{ _('Dashboard') }}</a>
                                     <a class="dropdown-item"
                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">
                                         {{ _('Profile Settings') }}</a>

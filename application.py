@@ -15,7 +15,7 @@ import flask_excel as excel
 from openpyxl import Workbook
 from openpyxl.compat import range
 
-from flask_babel import Babel, gettext, ngettext
+from flask_babel import Babel, gettext, lazy_gettext
 _ = gettext
 
 import db
@@ -125,10 +125,10 @@ def faq_admin():
 
 
 class ContactForm(FlaskForm):
-    name = StringField(_('Name'), validators=[DataRequired()])
-    email = StringField(_('Email Address'), validators=[DataRequired()])
-    message = TextAreaField(_('Message'), validators=[DataRequired()])
-    submit = SubmitField(_('Send Email'))
+    name = StringField(lazy_gettext('Name'), validators=[DataRequired()])
+    email = StringField(lazy_gettext('Email Address'), validators=[DataRequired()])
+    message = TextAreaField(lazy_gettext('Message'), validators=[DataRequired()])
+    submit = SubmitField(lazy_gettext('Send Email'))
 
 
 # Display the contact page
@@ -143,12 +143,12 @@ def contact():
         message = contact_form.message.data
         email_html = render_template('contact_email.html', name=name, email=email, message=message)
         msg = Message(
-            _('Message Received'),
+            lazy_gettext('Message Received'),
             sender=email,
             recipients=recipient_list,
             html=email_html)
         mail.send(msg)
-        flash(_('Email Sent!'), category="success")
+        flash(lazy_gettext('Email Sent!'), category="success")
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
@@ -160,10 +160,10 @@ def requires_roles(*roles):
         @wraps(f)
         def wrapped(*args, **kwargs):
             if not hasattr(current_user, 'role'):
-                flash(_('User does not have sufficient privileges'), category="danger")
+                flash(lazy_gettext('User does not have sufficient privileges'), category="danger")
                 return redirect(url_for('index'))
             elif current_user.role not in roles:
-                flash(_('User does not have sufficient privileges'), category="danger")
+                flash(lazy_gettext('User does not have sufficient privileges'), category="danger")
                 return redirect(url_for('index'))
             return f(*args, **kwargs)
 
@@ -173,15 +173,15 @@ def requires_roles(*roles):
 
 
 class UserForm(FlaskForm):
-    password = PasswordField(_('Temporary Password'), validators=[DataRequired()])
-    role = SelectField(_('Change Role'), choices=[], coerce=int)
-    homegroups = SelectField(_('Choose Homegroup'), choices=[], coerce=int)
-    submit = SubmitField(_('Create User'))
+    password = PasswordField(lazy_gettext('Temporary Password'), validators=[DataRequired()])
+    role = SelectField(lazy_gettext('Change Role'), choices=[], coerce=int)
+    homegroups = SelectField(lazy_gettext('Choose Homegroup'), choices=[], coerce=int)
+    submit = SubmitField(lazy_gettext('Create User'))
 
 class RoleForm(FlaskForm):
-    role = SelectField(_('Change Role'), choices=[], coerce=int)
-    homegroups = SelectField(_('Choose Homegroup'), choices=[], coerce=int)
-    submit = SubmitField(_('New Role'))
+    role = SelectField(lazy_gettext('Change Role'), choices=[], coerce=int)
+    homegroups = SelectField(lazy_gettext('Choose Homegroup'), choices=[], coerce=int)
+    submit = SubmitField(lazy_gettext('New Role'))
 
 
 # Creates a new user and hashes their password in the database
@@ -206,13 +206,13 @@ def create_user(member_id):
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         if (db.has_active_role(member_id)):
-            flash(_("User already has account"), category="danger")
+            flash(lazy_gettext("User already has account"), category="danger")
             return redirect(url_for('get_roles'))
         db.create_user(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
-            _('User account created for Verbo Velocity'),
+            lazy_gettext('User account created for Verbo Velocity'),
             sender='verbovelocity@gmail.com',       # FIXME: Appears multiple times
             recipients=email_list,
             html=email_html)
@@ -221,7 +221,7 @@ def create_user(member_id):
             homegroupId = user_form.homegroups.data
             db.add_leader_to_homegroup(member_id, homegroupId)
 
-        flash(_('User Created'), category="success")
+        flash(lazy_gettext('User Created'), category="success")
         return redirect(url_for('get_roles'))
     return render_template('create_user.html', form=user_form, email = email)
 
@@ -241,7 +241,7 @@ def get_roles():
 def assign_new_role(member_id):
     current_user = db.find_user(session['username'])['member_id']
     if (str(member_id) == str(current_user)):
-        flash(_("You cannot edit your own role - please contact a system administrator"), category="warning")
+        flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
     allRoles = db.find_roles()
     roleList = []
@@ -265,7 +265,7 @@ def assign_new_role(member_id):
             homegroupId = user_form.homegroups.data
             db.add_leader_to_homegroup(member_id, homegroupId)
 
-        flash(_('Role Created'), category="success")
+        flash(lazy_gettext('Role Created'), category="success")
         return redirect(url_for('get_roles'))
     return render_template('assign_role.html', form=user_form, email = email)
 
@@ -275,7 +275,7 @@ def assign_new_role(member_id):
 def edit_role(member_id, role_id):
     current_user = db.find_user(session['username'])['member_id']
     if (str(member_id) == str(current_user)):
-        flash(_("You cannot edit your own role - please contact a system administrator"), category="warning")
+        flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
     is_active = db.role_is_active(member_id, role_id)
     active = '1'
@@ -294,10 +294,10 @@ def deactivate_hgleader(member_id, homegroup_id):
 
 
 class UpdateUserForm(FlaskForm):
-    old_password = PasswordField(_('Current Password'), validators=[DataRequired()])
-    new_password = PasswordField(_('New Password'), validators=[DataRequired()])
-    confirm_password = PasswordField(_('Confirm Password'), validators=[DataRequired()])
-    submit = SubmitField(_('Update Password'))
+    old_password = PasswordField(lazy_gettext('Current Password'), validators=[DataRequired()])
+    new_password = PasswordField(lazy_gettext('New Password'), validators=[DataRequired()])
+    confirm_password = PasswordField(lazy_gettext('Confirm Password'), validators=[DataRequired()])
+    submit = SubmitField(lazy_gettext('Update Password'))
 
 
 #this updates user passwords
@@ -315,13 +315,13 @@ def update_user(user_id):
                 password = new_password
                 pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
                 db.update_user(user_id, pw_hash, member['role_id'])
-                flash(_('Password updated'), category="success")
+                flash(lazy_gettext('Password updated'), category="success")
                 return redirect(url_for('index'))
             else:
-                flash(_('New password and confirmation password do not match'), category="danger")
+                flash(lazy_gettext('New password and confirmation password do not match'), category="danger")
                 return redirect(url_for('update_user', user_id = user_id))
         else:
-            flash(_('Entered wrong current password'), category="danger")
+            flash(lazy_gettext('Entered wrong current password'), category="danger")
             return redirect(url_for('update_user', user_id =  user_id))
     return render_template('update_user.html', form=user_form, email=email)
 
@@ -381,9 +381,9 @@ def authenticate(email, password):
 
 
 class LoginForm(FlaskForm):
-    email = StringField(_('Email Address'), validators=[DataRequired()])
-    password = PasswordField(_('Password'), validators=[DataRequired()])
-    submit = SubmitField(_('Log In'))
+    email = StringField(lazy_gettext('Email Address'), validators=[DataRequired()])
+    password = PasswordField(lazy_gettext('Password'), validators=[DataRequired()])
+    submit = SubmitField(lazy_gettext('Log In'))
 
 
 # logs the user in, creates a new session, and creates a current user which is of the class "User"
@@ -411,7 +411,7 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             # Authentication failed.
-            flash(_('Invalid email address or password'), category="danger")
+            flash(lazy_gettext('Invalid email address or password'), category="danger")
             return redirect(url_for('login'))
 
     return render_template('login.html', form=login_form)
@@ -452,7 +452,7 @@ def homegroup(homegroup_id):
     number_meetings = db.number_of_meetings_held(homegroup_id)
     if not attendance_count:
         if (current_user.role == "admin"):
-            flash(_("No attendance data for this Home Group"), category="warning")
+            flash(lazy_gettext("No attendance data for this Home Group"), category="warning")
             return redirect(url_for('get_homegroups',countMembers = countMembers, homegroup_id = homegroup_id))
         else:
             return render_template('homegroup.html',   countMembers = countMembers, currentHomegroup=homegroup,
@@ -497,8 +497,8 @@ def homegroup(homegroup_id):
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
-    radio = RadioField(_('Attendance'), choices=["y", "n"])
-    submit = SubmitField(_('Submit'))
+    radio = RadioField(lazy_gettext('Attendance'), choices=["y", "n"])
+    submit = SubmitField(lazy_gettext('Submit'))
 
 
 # this is the default attendance page (allows you to select date/time then generate an attendance report)
@@ -532,7 +532,7 @@ def system_notify_member(member_id, num_misses):
     leader_name = leader['first_name'] + ' ' + leader['last_name']
     email_html = render_template('notify_member_email.html', num_misses = num_misses, leader_name = leader_name, leader_phone = leader_phone, leader_email = leader_email )
     msg = Message(
-        _('System Reminder: Missing meetings'),
+        lazy_gettext('System Reminder: Missing meetings'),
         sender='verbovelocity@gmail.com',
         recipients=email_list,
         html=email_html)
@@ -592,7 +592,7 @@ def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
 
 
 class EditAttendanceForm(FlaskForm):
-    submit = SubmitField(_('Save'))
+    submit = SubmitField(lazy_gettext('Save'))
 
 # This allows you to edit homegroup attendance
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>',  methods=['GET', 'POST'])
@@ -686,7 +686,7 @@ def edit_homegroup(homegroup_id):
         longitude = hg_form.longitude.data
         rowcount = db.edit_homegroup(homegroup_id, name, location, description, latitude, longitude)
         if (rowcount == 1):
-            flash(_("Home Group updated"), category="success")
+            flash(lazy_gettext("Home Group updated"), category="success")
             if (current_user.role == 'admin'):
                 return redirect(url_for('get_homegroups'))
             return redirect(url_for('homegroup', homegroup_id=homegroup_id))
@@ -703,16 +703,17 @@ def select_location():
 ########################## MEMBER (Home Group Leader) ##############################################
 
 class CreateMemberForm(FlaskForm):
-    first_name = StringField(_('First Name'), [Length(min=2, max=30, message=_("First name is a required field"))])
-    last_name = StringField(_('Last Name'), [Length(min=2, max=30, message=_("Last name is a required field"))])
-    email = StringField(_('Email'), [Email(_("Please enter valid email"))])
-    phone_number = StringField(_('Phone Number'), [InputRequired(message=_("Please enter valid phone number"))])
-    gender = SelectField(_('Gender'), choices=[('M', _('Male')), ('F', _('Female'))])
-    baptism_status = SelectField(_('Baptized?'), choices=[('True', _('Yes')), ('False', _('No'))])
-    is_a_parent = SelectField(_('Do you have children?'), choices=[('True', _('Yes')), ('False', _('No'))])
-    how_did_you_find_out = SelectField(_('How did you find out about the homegroup?'), choices=[], coerce=int)
-    marital_status = SelectField(_('Marital Status'), choices=[], coerce=int)
-    submit = SubmitField(_('Save Member'))
+
+    first_name = StringField(lazy_gettext('First Name'), [Length(min=2, max=30, message=lazy_gettext("First name is a required field"))])
+    last_name = StringField(lazy_gettext('Last Name'), [Length(min=2, max=30, message=lazy_gettext("Last name is a required field"))])
+    email = StringField(lazy_gettext('Email'), [Email(lazy_gettext("Please enter valid email"))])
+    phone_number = StringField(lazy_gettext('Phone Number'), [InputRequired(message=lazy_gettext("Please enter valid phone number"))])
+    gender = SelectField(lazy_gettext('Gender'), choices=[('M', lazy_gettext('Male')), ('F', lazy_gettext('Female'))])
+    baptism_status = SelectField(lazy_gettext('Baptized?'), choices=[('True', lazy_gettext('Yes')), ('False', lazy_gettext('No'))])
+    is_a_parent = SelectField(lazy_gettext('Do you have children?'), choices=[('True', lazy_gettext('Yes')), ('False', lazy_gettext('No'))])
+    how_did_you_find_out = SelectField(lazy_gettext('How did you find out about the homegroup?'), choices=[], coerce=int)
+    marital_status = SelectField(lazy_gettext('Marital Status'), choices=[], coerce=int)
+    submit = SubmitField(lazy_gettext('Save Member'))
 
 @app.route('/homegroup/member/new/<homegroup_id>')
 @login_required
@@ -738,7 +739,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
     if new == 'Y':
         db.add_member_to_homegroup(homegroup_id, member_id)
     member = db.find_member(member_id)
-    flash (_("Member {} added to homegroup").format(member['first_name']  + " " + member['last_name']), category="success")
+    flash (lazy_gettext("Member {} added to homegroup").format(member['first_name']  + " " + member['last_name']), category="success")
     return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
@@ -775,7 +776,7 @@ def create_new_member_for_homegroup(homegroup_id):
             row = db.recent_member()
             member_id = row['id']
             db.add_member_to_homegroup(homegroup_id, member_id)
-            flash(_("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
+            flash(lazy_gettext("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
             return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
     return render_template('create_member.html', form=member, homegroup_id=homegroup_id)
@@ -806,9 +807,10 @@ def get_homegroup_members(homegroup_id):
 @requires_roles('homegroup_leader', 'admin')
 def edit_member(member_id):
     if (int(current_user.member_id )== int(member_id)):
-        heading_text = _('Edit My Info')
+        heading_text = lazy_gettext('Edit My Info')
     else:
-        heading_text = _('Edit Member')
+
+        heading_text = lazy_gettext('Edit Member')
 
     row = db.find_member(member_id)
 
@@ -856,7 +858,7 @@ def edit_member(member_id):
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, how_did_you_find_out, is_a_parent,  join_date)
         if (rowcount == 1):
-            flash(_("Member {} Updated").format(member_form.first_name.data), category="success")
+            flash(lazy_gettext("Member {} Updated").format(member_form.first_name.data), category="success")
             if (current_user.role == 'admin'):
                 return redirect(url_for('all_members'))
             else:
@@ -873,7 +875,7 @@ def edit_member(member_id):
 def remove_member(homegroup_id, member_id):
     rowcount = db.remove_member(homegroup_id, member_id)
     if rowcount == 1:
-        flash(_("Member Removed"), category="success")
+        flash(lazy_gettext("Member Removed"), category="success")
     return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
 
@@ -881,12 +883,12 @@ def remove_member(homegroup_id, member_id):
 
 #### Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
-    name = StringField(_('Name'), [Length(min=2, max=50 , message=_("Name is a required field"))])
-    description = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
-    location = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
-    latitude = StringField(_('Latitude'))
-    longitude = StringField(_('Longitude'))
-    submit = SubmitField(_('Save Home Group'))
+    name = StringField(lazy_gettext('Name'), [Length(min=2, max=50 , message=lazy_gettext("Name is a required field"))])
+    description = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
+    location = StringField(lazy_gettext('Address'), [InputRequired(message=lazy_gettext("Please enter valid Address"))])
+    latitude = StringField(lazy_gettext('Latitude'))
+    longitude = StringField(lazy_gettext('Longitude'))
+    submit = SubmitField(lazy_gettext('Save Home Group'))
 
 
 # Display admin home page
@@ -926,7 +928,7 @@ def create_homegroup():
         rowcount = db.create_homegroup(name, location, description, latitude, longitude)
 
         if rowcount == 1:
-            flash(_("Homegroup {} Created").format(new_homegroup.name.data), category="success")
+            flash(lazy_gettext("Homegroup {} Created").format(new_homegroup.name.data), category="success")
             return redirect(url_for('get_homegroups'))
 
     return render_template('create_homegroup.html', form=new_homegroup)
@@ -950,7 +952,7 @@ def deactivate_homegroup(homegroup_id):
 
     # if the member is not active
     if not db.find_homegroup(homegroup_id)['is_active']:
-        flash(_("Homegroup Deactivated"), category="success")
+        flash(lazy_gettext("Homegroup Deactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
 
@@ -962,7 +964,7 @@ def reactivate_homegroup(homegroup_id):
     rowcount = db.reactivate_homegroup(homegroup_id)
     # if the member is not active
     if db.find_homegroup(homegroup_id)['is_active']:
-        flash(_("Homegroup Reactivated"), category="success")
+        flash(lazy_gettext("Homegroup Reactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
 
@@ -1016,7 +1018,7 @@ def create_member():
         rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
         print(rowcount)
         if rowcount == 1:
-            flash(_("Member {} Created").format(member.first_name.data), category="success")
+            flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
             return redirect(url_for('all_members'))
 
     return render_template('create_member.html', form=member)
@@ -1032,7 +1034,7 @@ def deactivate_member(member_id):
     print(db.find_member(member_id)['is_active'])
     # if the member is not active
     if db.find_member(member_id)['is_active'] == '0':
-        flash(_("Member Deactivated"), category="success")
+        flash(lazy_gettext("Member Deactivated"), category="success")
     return redirect(url_for('all_members'))
 
 
@@ -1043,7 +1045,7 @@ def deactivate_member(member_id):
 def reactivate_member(member_id):
     rowcount = db.reactivate_member(member_id)
     if db.find_member(member_id)['is_active'] == '1':
-        flash(_("Member Reactivated"), category="success")
+        flash(lazy_gettext("Member Reactivated"), category="success")
     return redirect(url_for('all_members'))
 
 

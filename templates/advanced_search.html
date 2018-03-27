@@ -167,11 +167,11 @@
                         <td>
                             <a href="{{ url_for('edit_member', member_id = member.id) }}"
                                class="btn btn-info btn-sm">
-                                <span class="fa fa-pencil"></span> Edit
+                                <span class="fa fa-pencil"></span> {{ _('Edit') }}
                             </a>
                             <a href="{{ url_for('deactivate_member', member_id = member.id) }}"
                                class="btn btn-danger btn-sm">
-                                <span class="fa fa-trash"></span> Remove
+                                <span class="fa fa-trash"></span> {{ _('Remove') }}
                             </a>
                         </td>
                         <td class="content"><i style="color:#87B87C" class="fa fa-check-square-o"></i></td>
@@ -190,7 +190,7 @@
                     <td class="content">
                         <a href="{{ url_for('edit_member', member_id = inactiveMember.id) }}"
                            class="btn btn-info btn-sm ">
-                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                            <span class="glyphicon glyphicon-pencil"></span> {{ _('Edit') }}
                         </a>
                         <a href="{{ url_for('reactivate_member', member_id = inactiveMember.id) }}"
                            class="btn btn-success btn-sm">
