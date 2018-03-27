@@ -2,10 +2,8 @@
 .PHONY: extract init compile update
 
 extract:
-	pybabel extract -F babel.cfg -o messages.pot .
+	pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
 
-init:
-	pybabel init -i messages.pot -d translations -l es
 
 compile:
 	pybabel compile -d translations

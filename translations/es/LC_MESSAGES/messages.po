@@ -84,7 +84,9 @@ msgstr "Usuario Creado"
 
 #: application.py:243 application.py:277
 msgid "You cannot edit your own role - please contact a system administrator"
-msgstr "No puede editar su propia función. Póngase en contacto con un administrador de sistema."
+msgstr ""
+"No puede editar su propia función. Póngase en contacto con un "
+"administrador de sistema."
 
 #: application.py:267
 msgid "Role Created"
@@ -484,7 +486,7 @@ msgstr "Añadir"
 
 #: templates/all_members.html:43
 msgid "Contact All Members"
-msgstr "Contactar a Todos los Miembros"
+msgstr "Contactar a Todos"
 
 #: templates/all_members.html:102 templates/homegroup_members.html:75
 msgid "Remove"
