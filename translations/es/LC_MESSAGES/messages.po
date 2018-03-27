@@ -134,7 +134,7 @@ msgstr "Dirección de correo electrónico o contraseña no válidos"
 
 #: application.py:455
 msgid "No attendance data for this Home Group"
-msgstr "No hay datos de asistencia para este grupo de inicio"
+msgstr "No hay datos de asistencia para este iglesia de hogar"
 
 #: application.py:500 application.py:551 application.py:575
 #: templates/base.html:221 templates/edit_attendance.html:21
@@ -215,7 +215,7 @@ msgstr "Feminino"
 
 #: application.py:712
 msgid "Baptized?"
-msgstr "Bautizado?"
+msgstr "¿Bautizado?"
 
 #: application.py:712 application.py:713
 msgid "Yes"
@@ -227,7 +227,7 @@ msgstr "No"
 
 #: application.py:713
 msgid "Married?"
-msgstr "Casado?"
+msgstr "¿Casado?"
 
 #: application.py:714
 msgid "Save Member"
@@ -287,19 +287,19 @@ msgstr "Longitud"
 
 #: application.py:858
 msgid "Save Home Group"
-msgstr "Guardar grupo en el hogar"
+msgstr "Guardar Iglesia de Hogar"
 
 #: application.py:898
 msgid "Homegroup {} Created"
-msgstr "Grupo en el Hogar {} Creado"
+msgstr "Iglesia de Hogar {} Creado"
 
 #: application.py:922
 msgid "Homegroup Deactivated"
-msgstr "Grupo en el Hogar Desactivado"
+msgstr "Iglesia de Hogar Desactivado"
 
 #: application.py:934
 msgid "Homegroup Reactivated"
-msgstr "Grupo en el Hogar Reactivado"
+msgstr "Iglesia de Hogar Reactivado"
 
 #: application.py:994
 msgid "Member Deactivated"
@@ -319,7 +319,7 @@ msgstr "Tablero de Administración"
 
 #: templates/admin_home.html:22
 msgid "HOME GROUPS"
-msgstr "Iglesia de Hogar"
+msgstr "IGLESIA DE HOGAR"
 
 #: templates/admin_home.html:23 templates/admin_home.html:28
 #: templates/admin_home.html:43
@@ -356,7 +356,7 @@ msgstr "Descargar los datos de asistencia"
 
 #: templates/admin_home.html:140
 msgid "Top 5 Home Groups"
-msgstr "Los 5 mejores grupos de casa"
+msgstr "Los 5 Mejores Iglesia de Hogar"
 
 #: templates/admin_home.html:145
 msgid "Member Count"
@@ -395,7 +395,7 @@ msgstr "Buscar"
 
 #: templates/admin_profiles.html:50
 msgid "Inactive?"
-msgstr "Inactivo?"
+msgstr "¿Inactivo?"
 
 #: templates/advanced_search.html:9 templates/all_members.html:58
 msgid "Advanced Search"
@@ -468,7 +468,7 @@ msgstr "Mostrar Miembros Inactivos"
 
 #: templates/advanced_search.html:136 templates/all_members.html:85
 msgid "Active?"
-msgstr "Activo?"
+msgstr "¿Activo?"
 
 #: templates/all_members.html:4
 msgid "All Members"
@@ -691,7 +691,7 @@ msgstr "Cumpleaños"
 
 #: templates/faq.html:98
 msgid "Other questions?"
-msgstr "Otras preguntas?"
+msgstr "¿Otras preguntas?"
 
 #: templates/homegroup.html:13
 msgid "Dashboard"
@@ -727,11 +727,11 @@ msgstr "3 Reuniones Más Recientes"
 
 #: templates/homegroup.html:124
 msgid "Home Group Attendance"
-msgstr "Asistencia en el hogar"
+msgstr "Asistencia en el Iglesia de Hogar"
 
 #: templates/homegroup_members.html:4
 msgid "Home Group Members"
-msgstr "Miembros del Grupo de Inicio"
+msgstr "Miembros del Iglesia de Hogar"
 
 #: templates/homegroup_members.html:29
 msgid "Email Group"
@@ -751,89 +751,89 @@ msgstr "ARCO IGLESIA"
 
 #: templates/index.html:54
 msgid "HOME GROUP FINDER"
-msgstr "BUSCADOR DE GRUPO EN CASA"
+msgstr "BUSCADOR DE IGLESIA DE HOGAR"
 
 #: templates/index.html:62
 msgid "FIND A HOME GROUP"
-msgstr "BUSCA UN GRUPO INICIO"
+msgstr "BUSCA UN IGLESIA DE HOGAR"
 
 #: templates/index.html:68
 msgid "Find a Home Group"
-msgstr ""
+msgstr "Encuentra un Iglesia de Hogar"
 
 #: templates/index.html:73
 msgid "Enter Zip Code or Address"
-msgstr ""
+msgstr "Ingrese el código postal o la dirección"
 
 #: templates/login.html:26
 msgid "Please enter a valid email"
-msgstr ""
+msgstr "Por favor introduzca una dirección de correo electrónico válida"
 
 #: templates/login.html:36
 msgid "Please enter a valid Password"
-msgstr ""
+msgstr "Por favor introduce una contraseña válida"
 
 #: templates/member_search.html:4 templates/member_search.html:16
 msgid "Add Home Group Member"
-msgstr ""
+msgstr "Agregar Miembro del Iglesia de Hogar"
 
 #: templates/member_search.html:55
 msgid "Add to Home Group"
-msgstr ""
+msgstr "Agregar al Iglesia de Hogar"
 
 #: templates/notify_member_email.html:3
 msgid "Hello from Arco"
-msgstr ""
+msgstr "Hola desde Arco"
 
 #: templates/notify_member_email.html:4
 msgid "We miss you!"
-msgstr ""
+msgstr "¡Te extrañamos!"
 
 #: templates/notify_member_email.html:5
 msgid "We have noticed you have missed"
-msgstr ""
+msgstr "Hemos notado que te has perdido"
 
 #: templates/notify_member_email.html:7
 msgid "consecutive meetings"
-msgstr ""
+msgstr "reuniones consecutivas"
 
 #: templates/notify_member_email.html:9
 msgid "Would you like to contact your home group leader?"
-msgstr ""
+msgstr "¿Le gustaría contactar al líder de su grupo de origen?"
 
 #: templates/notify_member_email.html:10
 msgid "Home Group Leader Info"
-msgstr ""
+msgstr "Iglesia de Hogar Líder Información"
 
 #: templates/notify_member_email.html:14
 msgid "Phone"
-msgstr ""
+msgstr "Teléfono"
 
 #: templates/notify_member_email.html:23
 msgid "We hope to see you again!"
-msgstr ""
+msgstr "Esperamos verte de nuevo!"
 
 #: templates/user_account_email.html:5
 msgid "Temporary password"
-msgstr ""
+msgstr "Contraseña temporal"
 
 #: templates/user_account_email.html:8
 msgid "Click here to change your password"
-msgstr ""
+msgstr "Presione aquí para cambiar su contraseña"
 
 #: templates/view_attendance.html:3 templates/view_attendance.html:58
 msgid "Attendance Reports"
-msgstr ""
+msgstr "Informes de Asistencia"
 
 #: templates/view_attendance.html:73
 msgid "Attendees"
-msgstr ""
+msgstr "Asistentes"
 
 #: templates/view_attendance.html:87
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: templates/view_attendance_report.html:10
 msgid "Back"
-msgstr ""
+msgstr "Espalda"
 
