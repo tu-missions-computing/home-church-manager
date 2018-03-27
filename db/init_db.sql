@@ -1,22 +1,4 @@
 
-
-CREATE TABLE member (
-  id             SERIAL PRIMARY KEY,
-  first_name     TEXT,
-  last_name      TEXT,
-  email          TEXT UNIQUE,
-  phone_number   TEXT,
-  gender         TEXT,
-  birthday       TEXT,
-  baptism_status BOOLEAN,
-  marital_status TEXT,
-  how_did_you_find_out TEXT,
-  is_a_parent BOOLEAN,
-  join_date      TEXT,
-  is_active      BOOLEAN
-);
-
-
 INSERT INTO marital_status(marital_status_name) values ('Soltero');
 INSERT INTO marital_status(marital_status_name) values ('Casado');
 INSERT INTO marital_status(marital_status_name) values ('Divorciado');

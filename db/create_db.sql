@@ -3,14 +3,15 @@ DROP TABLE IF EXISTS homegroup_leader;
 DROP TABLE IF EXISTS homegroup_member;
 DROP TABLE IF EXISTS attendance;
 DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS marital_status;
+DROP TABLE IF EXISTS how_did_you_find_out;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS homegroup;
 DROP TABLE IF EXISTS meeting;
 
-CREATE TABLE martial_status (
+CREATE TABLE marital_status (
   id SERIAL PRIMARY KEY,
   marital_status_name TEXT
-
 );
 
 CREATE TABLE how_did_you_find_out (
