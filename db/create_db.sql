@@ -59,6 +59,7 @@ CREATE TABLE homegroup (
   description TEXT,
   latitude    REAL,
   longitude   REAL,
+  creation_date TEXT,
   is_active   BOOLEAN
 );
 
@@ -74,6 +75,7 @@ CREATE TABLE homegroup_leader (
 CREATE TABLE homegroup_member (
   homegroup_id INTEGER,
   member_id    INTEGER,
+  join_date TEXT,
   is_active    BOOLEAN,
   FOREIGN KEY (member_id) REFERENCES member (id),
   FOREIGN KEY (homegroup_id) REFERENCES homegroup (id),

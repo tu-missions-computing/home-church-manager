@@ -305,7 +305,6 @@ def update_user(user_id):
     member = db.find_user_info(user_id)
     email = member['email']
     user_form = UpdateUserForm(email=member['email'])
-    print (member)
     if user_form.validate_on_submit():
         old_password = user_form.old_password.data
         new_password = user_form.new_password.data
@@ -390,7 +389,7 @@ class LoginForm(FlaskForm):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # temporary
-    init_test_user()
+    #init_test_user()
     login_form = LoginForm()
 
     if login_form.validate_on_submit() and login_form.validate():
@@ -711,7 +710,7 @@ class CreateMemberForm(FlaskForm):
     baptism_status = SelectField(_('Baptized?'), choices=[('True', _('Yes')), ('False', _('No'))])
     is_a_parent = SelectField(_('Do you have children?'), choices=[('True', _('Yes')), ('False', _('No'))])
     how_did_you_find_out = SelectField(_('How did you find out about the homegroup?'), choices=[], coerce=int)
-    married = SelectField(_('Marital Status'), choices=[], coerce=int)
+    marital_status = SelectField(_('Marital Status'), choices=[], coerce=int)
     submit = SubmitField(_('Save Member'))
 
 @app.route('/homegroup/member/new/<homegroup_id>')
@@ -749,7 +748,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
 def create_new_member_for_homegroup(homegroup_id):
     member = CreateMemberForm()
     marital_status = db.get_marital_status()
-    how_did_you_find_out = db.get_how_did_out()
+    how_did_you_find_out = db.get_how_did_you_find_out()
     statusList = []
     methodList = []
     for status in marital_status:
@@ -809,16 +808,33 @@ def edit_member(member_id):
         heading_text = _('Edit My Info')
     else:
         heading_text = _('Edit Member')
+
     row = db.find_member(member_id)
+
+
     member_form = CreateMemberForm(first_name=row['first_name'],
                                    last_name=row['last_name'],
                                    email=row['email'],
                                    phone_number=row['phone_number'],
                                    gender=row['gender'],
                                    baptism_status=row['baptism_status'],
-                                   marital_status=row['marital_status'])
+                                   is_a_parent = row['is_a_parent'],
+                                   how_did_you_find_out = row['how_did_you_find_out_id'],
+                                   marital_status=row['marital_status_id'])
     birthday_form = row['birthday']
     join_date_form = row['join_date']
+
+    marital_status = db.get_marital_status()
+    how_did_you_find_out = db.get_how_did_you_find_out()
+    statusList = []
+    methodList = []
+    for status in marital_status:
+        statusList.append((status["id"], status["marital_status_name"]))
+    member_form.marital_status.choices = statusList
+    for method in how_did_you_find_out:
+        methodList.append((method["id"], method["how_did_you_find_out_name"]))
+    member_form.how_did_you_find_out.choices = methodList
+
 
 
     ## to do add validators back!!! and member_form.validate()
@@ -831,11 +847,13 @@ def edit_member(member_id):
         birthday = request.form['Birthday']
         baptism_status = member_form.baptism_status.data
         marital_status = member_form.marital_status.data
+        how_did_you_find_out = member_form.how_did_you_find_out.data
+        is_a_parent = member_form.is_a_parent.data
         join_date = request.form['JoinDate']
 
 
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
-                                  baptism_status, marital_status, join_date)
+                                  baptism_status, marital_status, how_did_you_find_out, is_a_parent,  join_date)
         if (rowcount == 1):
             flash(_("Member {} Updated").format(member_form.first_name.data), category="success")
             if (current_user.role == 'admin'):
@@ -972,7 +990,7 @@ def all_members():
 def create_member():
     member = CreateMemberForm()
     marital_status = db.get_marital_status()
-    how_did_you_find_out = db.get_how_did_out()
+    how_did_you_find_out = db.get_how_did_you_find_out()
     statusList = []
     methodList = []
     for status in marital_status:
