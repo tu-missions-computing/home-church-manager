@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-21 23:50-0400\n"
+"POT-Creation-Date: 2018-03-26 14:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,170 +17,170 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: application.py:125 application.py:849 templates/all_members.html:83
-#: templates/contact.html:17 templates/edit_attendance.html:19
+#: application.py:127 application.py:853 templates/all_members.html:83
+#: templates/contact.html:17 templates/edit_attendance.html:20
 #: templates/homegroup_members.html:49 templates/member_search.html:40
 #: templates/notify_member_email.html:13
 #: templates/view_attendance_report.html:19
 msgid "Name"
 msgstr ""
 
-#: application.py:126 application.py:382
+#: application.py:128 application.py:384
 msgid "Email Address"
 msgstr ""
 
-#: application.py:127 templates/contact.html:41 templates/contact_email.html:5
+#: application.py:129 templates/contact.html:41 templates/contact_email.html:5
 msgid "Message"
 msgstr ""
 
-#: application.py:128
+#: application.py:130
 msgid "Send Email"
 msgstr ""
 
-#: application.py:143
+#: application.py:145
 msgid "Message Received"
 msgstr ""
 
-#: application.py:148
+#: application.py:150
 msgid "Email Sent!"
 msgstr ""
 
-#: application.py:160 application.py:163
+#: application.py:162 application.py:165
 msgid "User does not have sufficient privileges"
 msgstr ""
 
-#: application.py:173
+#: application.py:175
 msgid "Temporary Password"
 msgstr ""
 
-#: application.py:174 application.py:179
+#: application.py:176 application.py:181
 msgid "Change Role"
 msgstr ""
 
-#: application.py:175 application.py:180
+#: application.py:177 application.py:182
 msgid "Choose Homegroup"
 msgstr ""
 
-#: application.py:176
+#: application.py:178
 msgid "Create User"
 msgstr ""
 
-#: application.py:181
+#: application.py:183
 msgid "New Role"
 msgstr ""
 
-#: application.py:206
+#: application.py:208
 msgid "User already has account"
 msgstr ""
 
-#: application.py:212
-msgid "User account created for Verbo Velocity"
+#: application.py:214 templates/user_account_email.html:3
+msgid "User account created"
 msgstr ""
 
-#: application.py:221
+#: application.py:223
 msgid "User Created"
 msgstr ""
 
-#: application.py:241 application.py:275
+#: application.py:243 application.py:277
 msgid "You cannot edit your own role - please contact a system administrator"
 msgstr ""
 
-#: application.py:265
+#: application.py:267
 msgid "Role Created"
 msgstr ""
 
-#: application.py:294
+#: application.py:296
 msgid "Current Password"
 msgstr ""
 
-#: application.py:295
+#: application.py:297
 msgid "New Password"
 msgstr ""
 
-#: application.py:296
+#: application.py:298
 msgid "Confirm Password"
 msgstr ""
 
-#: application.py:297 templates/base.html:188 templates/update_user.html:3
+#: application.py:299 templates/base.html:193 templates/update_user.html:4
 #: templates/update_user.html:9
 msgid "Update Password"
 msgstr ""
 
-#: application.py:316
+#: application.py:318
 msgid "Password updated"
 msgstr ""
 
-#: application.py:319
+#: application.py:321
 msgid "New password and confirmation password do not match"
 msgstr ""
 
-#: application.py:322
+#: application.py:324
 msgid "Entered wrong current password"
 msgstr ""
 
-#: application.py:383
+#: application.py:385
 msgid "Password"
 msgstr ""
 
-#: application.py:384 templates/base.html:238 templates/login.html:3
-#: templates/login.html:13
+#: application.py:386 templates/base.html:244 templates/login.html:4
+#: templates/login.html:14
 msgid "Log In"
 msgstr ""
 
-#: application.py:412
+#: application.py:414
 msgid "Invalid email address or password"
 msgstr ""
 
-#: application.py:453
+#: application.py:455
 msgid "No attendance data for this Home Group"
 msgstr ""
 
-#: application.py:497 application.py:548 application.py:572
-#: templates/base.html:215 templates/edit_attendance.html:20
-#: templates/homegroup.html:66 templates/view_attendance.html:10
+#: application.py:500 application.py:551 application.py:575
+#: templates/base.html:221 templates/edit_attendance.html:21
+#: templates/homegroup.html:65 templates/view_attendance.html:10
 #: templates/view_attendance_report.html:20
 msgid "Attendance"
 msgstr ""
 
-#: application.py:498
+#: application.py:501
 msgid "Submit"
 msgstr ""
 
-#: application.py:532
+#: application.py:535
 msgid "System Reminder: Missing meetings"
 msgstr ""
 
-#: application.py:546 application.py:570
+#: application.py:549 application.py:573
 msgid "attendance"
 msgstr ""
 
-#: application.py:592
+#: application.py:595
 msgid "Save"
 msgstr ""
 
-#: application.py:687
-msgid "Home Group updated!"
+#: application.py:690
+msgid "Home Group updated"
 msgstr ""
 
-#: application.py:704 templates/admin_profiles.html:47
+#: application.py:707 templates/admin_profiles.html:47
 #: templates/advanced_search.html:133 templates/create_member.html:19
 msgid "First Name"
 msgstr ""
 
-#: application.py:704
+#: application.py:707
 msgid "First name is a required field"
 msgstr ""
 
-#: application.py:705 templates/admin_profiles.html:48
+#: application.py:708 templates/admin_profiles.html:48
 #: templates/advanced_search.html:134 templates/create_member.html:31
 msgid "Last Name"
 msgstr ""
 
-#: application.py:705
+#: application.py:708
 msgid "Last name is a required field"
 msgstr ""
 
-#: application.py:706 templates/assign_role.html:24 templates/contact.html:29
+#: application.py:709 templates/assign_role.html:24 templates/contact.html:29
 #: templates/contact_email.html:4 templates/create_user.html:16
 #: templates/edit_member.html:33 templates/member_search.html:41
 #: templates/notify_member_email.html:15 templates/update_user.html:11
@@ -188,196 +188,196 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: application.py:706
+#: application.py:709
 msgid "Please enter valid email"
 msgstr ""
 
-#: application.py:707
+#: application.py:710
 msgid "Phone Number"
 msgstr ""
 
-#: application.py:707
+#: application.py:710
 msgid "Please enter valid phone number"
 msgstr ""
 
-#: application.py:708 templates/advanced_search.html:18
+#: application.py:711 templates/advanced_search.html:18
 msgid "Gender"
 msgstr ""
 
-#: application.py:708 templates/advanced_search.html:25
+#: application.py:711 templates/advanced_search.html:25
 msgid "Male"
 msgstr ""
 
-#: application.py:708 templates/advanced_search.html:26
+#: application.py:711 templates/advanced_search.html:26
 msgid "Female"
 msgstr ""
 
-#: application.py:709
+#: application.py:712
 msgid "Baptized?"
 msgstr ""
 
-#: application.py:709 application.py:710
+#: application.py:712 application.py:713
 msgid "Yes"
 msgstr ""
 
-#: application.py:709 application.py:710
+#: application.py:712 application.py:713
 msgid "No"
 msgstr ""
 
-#: application.py:710
+#: application.py:713
 msgid "Married?"
 msgstr ""
 
-#: application.py:711
+#: application.py:714
 msgid "Save Member"
 msgstr ""
 
-#: application.py:737
+#: application.py:740
 msgid "Member {} added to homegroup"
 msgstr ""
 
-#: application.py:763 application.py:974
+#: application.py:766 application.py:978
 msgid "Member {} Created"
 msgstr ""
 
-#: application.py:793
+#: application.py:797
 msgid "Edit My Info"
 msgstr ""
 
-#: application.py:795
+#: application.py:799
 msgid "Edit Member"
 msgstr ""
 
-#: application.py:824
+#: application.py:828
 msgid "Member {} Updated"
 msgstr ""
 
-#: application.py:841
+#: application.py:845
 msgid "Member Removed"
 msgstr ""
 
-#: application.py:849
+#: application.py:853
 msgid "Name is a required field"
 msgstr ""
 
-#: application.py:850
+#: application.py:854
 msgid "Description"
 msgstr ""
 
-#: application.py:850
+#: application.py:854
 msgid "Please enter a description"
 msgstr ""
 
-#: application.py:851
+#: application.py:855
 msgid "Address"
 msgstr ""
 
-#: application.py:851
+#: application.py:855
 msgid "Please enter valid Address"
 msgstr ""
 
-#: application.py:852
+#: application.py:856
 msgid "Latitude"
 msgstr ""
 
-#: application.py:853
+#: application.py:857
 msgid "Longitude"
 msgstr ""
 
-#: application.py:854
+#: application.py:858
 msgid "Save Home Group"
 msgstr ""
 
-#: application.py:894
+#: application.py:898
 msgid "Homegroup {} Created"
 msgstr ""
 
-#: application.py:918
+#: application.py:922
 msgid "Homegroup Deactivated"
 msgstr ""
 
-#: application.py:930
+#: application.py:934
 msgid "Homegroup Reactivated"
 msgstr ""
 
-#: application.py:990
+#: application.py:994
 msgid "Member Deactivated"
 msgstr ""
 
-#: application.py:1001
+#: application.py:1005
 msgid "Member Reactivated"
 msgstr ""
 
-#: templates/admin_home.html:3 templates/homegroup.html:3
+#: templates/admin_home.html:4 templates/homegroup.html:4
 msgid "Home"
 msgstr ""
 
-#: templates/admin_home.html:13
+#: templates/admin_home.html:14
 msgid "Admin Dashboard"
 msgstr ""
 
-#: templates/admin_home.html:21
+#: templates/admin_home.html:22
 msgid "HOME GROUPS"
 msgstr ""
 
-#: templates/admin_home.html:22 templates/admin_home.html:27
-#: templates/admin_home.html:42
+#: templates/admin_home.html:23 templates/admin_home.html:28
+#: templates/admin_home.html:43
 msgid "TOTAL NUMBER"
 msgstr ""
 
-#: templates/admin_home.html:26
+#: templates/admin_home.html:27
 msgid "ACTIVE GROUPS"
 msgstr ""
 
-#: templates/admin_home.html:31
-msgid "VERBO MEMBERS"
+#: templates/admin_home.html:32
+msgid "ARCO MEMBERS"
 msgstr ""
 
-#: templates/admin_home.html:32
+#: templates/admin_home.html:33
 msgid "ATTENDING HOME GROUPS"
 msgstr ""
 
-#: templates/admin_home.html:36 templates/homegroup.html:38
+#: templates/admin_home.html:37 templates/homegroup.html:37
 msgid "ATTENDANCE RATE"
 msgstr ""
 
-#: templates/admin_home.html:37 templates/homegroup.html:39
+#: templates/admin_home.html:38 templates/homegroup.html:38
 msgid "IN THE MONTH OF"
 msgstr ""
 
-#: templates/admin_home.html:41
+#: templates/admin_home.html:42
 msgid "GROUP LEADERS"
 msgstr ""
 
-#: templates/admin_home.html:47 templates/homegroup.html:45
+#: templates/admin_home.html:48 templates/homegroup.html:44
 msgid "Download Attendance Data"
 msgstr ""
 
-#: templates/admin_home.html:139
+#: templates/admin_home.html:140
 msgid "Top 5 Home Groups"
 msgstr ""
 
-#: templates/admin_home.html:144
+#: templates/admin_home.html:145
 msgid "Member Count"
 msgstr ""
 
-#: templates/admin_home.html:160
+#: templates/admin_home.html:161
 msgid "Total Attendance Report"
 msgstr ""
 
-#: templates/admin_home.html:163
+#: templates/admin_home.html:164
 msgid "Monthly"
 msgstr ""
 
-#: templates/admin_home.html:167
+#: templates/admin_home.html:168
 msgid "# of people"
 msgstr ""
 
-#: templates/admin_home.html:191
+#: templates/admin_home.html:192
 msgid "Home Group Gender Report"
 msgstr ""
 
-#: templates/admin_home.html:222 templates/base.html:202
+#: templates/admin_home.html:223 templates/base.html:208
 msgid "Home Groups"
 msgstr ""
 
@@ -388,7 +388,7 @@ msgstr ""
 #: templates/admin_profiles.html:11 templates/advanced_search.html:98
 #: templates/all_members.html:30 templates/homegroup_list.html:125
 #: templates/homegroup_members.html:36 templates/member_search.html:31
-#: templates/roles.html:13 templates/view_attendance.html:64
+#: templates/roles.html:14 templates/view_attendance.html:64
 msgid "Search"
 msgstr ""
 
@@ -457,7 +457,7 @@ msgid "Search Results"
 msgstr ""
 
 #: templates/advanced_search.html:118 templates/all_members.html:51
-#: templates/base.html:227 templates/contact.html:3
+#: templates/base.html:233 templates/contact.html:4
 msgid "Contact"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgstr ""
 msgid "Active?"
 msgstr ""
 
-#: templates/all_members.html:3
+#: templates/all_members.html:4
 msgid "All Members"
 msgstr ""
 
@@ -490,11 +490,11 @@ msgid "Remove"
 msgstr ""
 
 #: templates/all_members.html:143 templates/homegroup_members.html:100
-#: templates/roles.html:89 templates/roles.html:98
+#: templates/roles.html:90 templates/roles.html:99
 msgid "Confirm"
 msgstr ""
 
-#: templates/assign_role.html:3
+#: templates/assign_role.html:4
 msgid "Assign New Role"
 msgstr ""
 
@@ -502,8 +502,8 @@ msgstr ""
 msgid "Assign Role"
 msgstr ""
 
-#: templates/attendance.html:3 templates/edit_attendance.html:3
-#: templates/view_attendance_report.html:3
+#: templates/attendance.html:4 templates/edit_attendance.html:4
+#: templates/view_attendance_report.html:4
 #: templates/view_attendance_report.html:14
 msgid "Attendance Report"
 msgstr ""
@@ -544,41 +544,41 @@ msgstr ""
 msgid "No Information"
 msgstr ""
 
-#: templates/base.html:172
-msgid "VERBO VELOCITY"
-msgstr ""
-
-#: templates/base.html:180
-msgid "Welcome,"
+#: templates/base.html:176
+msgid "ARCO"
 msgstr ""
 
 #: templates/base.html:185
+msgid "Welcome,"
+msgstr ""
+
+#: templates/base.html:190
 msgid "Profile Settings"
 msgstr ""
 
-#: templates/base.html:196 templates/base.html:205
+#: templates/base.html:202 templates/base.html:211
 msgid "Members"
 msgstr ""
 
-#: templates/base.html:208 templates/roles.html:3 templates/roles.html:8
+#: templates/base.html:214 templates/roles.html:4 templates/roles.html:9
 msgid "System Roles"
 msgstr ""
 
-#: templates/base.html:223 templates/edit_homegroup.html:3
-#: templates/edit_homegroup.html:11
+#: templates/base.html:229 templates/edit_homegroup.html:4
+#: templates/edit_homegroup.html:9
 msgid "Edit Home Group"
 msgstr ""
 
-#: templates/base.html:226
+#: templates/base.html:232
 msgid "FAQ"
 msgstr ""
 
-#: templates/base.html:232
+#: templates/base.html:238
 msgid "Log Out"
 msgstr ""
 
-#: templates/base.html:257
-msgid "Copyright 2018, Verbo Church"
+#: templates/base.html:263
+msgid "Copyright 2018, Arco Church"
 msgstr ""
 
 #: templates/contact.html:9 templates/faq.html:100
@@ -606,35 +606,35 @@ msgstr ""
 msgid "You received an email from"
 msgstr ""
 
-#: templates/create_homegroup.html:3 templates/create_homegroup.html:10
+#: templates/create_homegroup.html:4 templates/create_homegroup.html:11
 msgid "Create New Home Group"
 msgstr ""
 
-#: templates/create_homegroup.html:19 templates/edit_homegroup.html:22
+#: templates/create_homegroup.html:20 templates/edit_homegroup.html:20
 msgid "Enter a Name"
 msgstr ""
 
-#: templates/create_homegroup.html:28 templates/edit_homegroup.html:31
+#: templates/create_homegroup.html:29 templates/edit_homegroup.html:29
 msgid "Add a Description"
 msgstr ""
 
-#: templates/create_homegroup.html:37 templates/edit_homegroup.html:40
+#: templates/create_homegroup.html:38 templates/edit_homegroup.html:38
 msgid "Add a Location"
 msgstr ""
 
-#: templates/create_homegroup.html:45 templates/edit_homegroup.html:47
+#: templates/create_homegroup.html:46 templates/edit_homegroup.html:45
 msgid "Find Location"
 msgstr ""
 
-#: templates/create_homegroup.html:63 templates/edit_homegroup.html:64
+#: templates/create_homegroup.html:64 templates/edit_homegroup.html:62
 msgid "Add a Latitude"
 msgstr ""
 
-#: templates/create_homegroup.html:72 templates/edit_homegroup.html:73
+#: templates/create_homegroup.html:73 templates/edit_homegroup.html:71
 msgid "Add a Longitude"
 msgstr ""
 
-#: templates/create_member.html:3 templates/create_member.html:11
+#: templates/create_member.html:4 templates/create_member.html:11
 #: templates/member_search.html:25
 msgid "Create New Member"
 msgstr ""
@@ -671,7 +671,7 @@ msgstr ""
 msgid "Join Date"
 msgstr ""
 
-#: templates/create_user.html:3
+#: templates/create_user.html:4
 msgid "Create User Account"
 msgstr ""
 
@@ -679,7 +679,7 @@ msgstr ""
 msgid "Must Enter Valid Password"
 msgstr ""
 
-#: templates/edit_attendance.html:47 templates/member_search.html:69
+#: templates/edit_attendance.html:48 templates/member_search.html:69
 #: templates/view_attendance.html:94 templates/view_attendance_report.html:37
 msgid "No Info"
 msgstr ""
@@ -692,43 +692,43 @@ msgstr ""
 msgid "Other questions?"
 msgstr ""
 
-#: templates/homegroup.html:14
+#: templates/homegroup.html:13
 msgid "Dashboard"
 msgstr ""
 
-#: templates/homegroup.html:24
+#: templates/homegroup.html:23
 msgid "MEMBERS"
 msgstr ""
 
-#: templates/homegroup.html:26
+#: templates/homegroup.html:25
 msgid "ATTENDING HOME GROUP"
 msgstr ""
 
-#: templates/homegroup.html:31
+#: templates/homegroup.html:30
 msgid "Number of Meetings"
 msgstr ""
 
-#: templates/homegroup.html:33
+#: templates/homegroup.html:32
 msgid "ATTENDING"
 msgstr ""
 
-#: templates/homegroup.html:54
+#: templates/homegroup.html:53
 msgid "DESCRIPTION"
 msgstr ""
 
-#: templates/homegroup.html:58
+#: templates/homegroup.html:57
 msgid "LOCATION"
 msgstr ""
 
-#: templates/homegroup.html:67
+#: templates/homegroup.html:66
 msgid "3 Most Recent Meetings"
 msgstr ""
 
-#: templates/homegroup.html:125
+#: templates/homegroup.html:124
 msgid "Home Group Attendance"
 msgstr ""
 
-#: templates/homegroup_members.html:3
+#: templates/homegroup_members.html:4
 msgid "Home Group Members"
 msgstr ""
 
@@ -740,39 +740,39 @@ msgstr ""
 msgid "Leader"
 msgstr ""
 
-#: templates/homegroup_members.html:104 templates/roles.html:102
+#: templates/homegroup_members.html:104 templates/roles.html:103
 msgid "Close"
 msgstr ""
 
-#: templates/index.html:54
-msgid "VERBO CRISTIANA"
+#: templates/index.html:53
+msgid "ARCO IGLESIA"
 msgstr ""
 
-#: templates/index.html:55
+#: templates/index.html:54
 msgid "HOME GROUP FINDER"
 msgstr ""
 
-#: templates/index.html:63
+#: templates/index.html:62
 msgid "FIND A HOME GROUP"
 msgstr ""
 
-#: templates/index.html:69
+#: templates/index.html:68
 msgid "Find a Home Group"
 msgstr ""
 
-#: templates/index.html:74
+#: templates/index.html:73
 msgid "Enter Zip Code or Address"
 msgstr ""
 
-#: templates/login.html:25
+#: templates/login.html:26
 msgid "Please enter a valid email"
 msgstr ""
 
-#: templates/login.html:35
+#: templates/login.html:36
 msgid "Please enter a valid Password"
 msgstr ""
 
-#: templates/member_search.html:3 templates/member_search.html:16
+#: templates/member_search.html:4 templates/member_search.html:16
 msgid "Add Home Group Member"
 msgstr ""
 
@@ -781,7 +781,7 @@ msgid "Add to Home Group"
 msgstr ""
 
 #: templates/notify_member_email.html:3
-msgid "Hello from Verbo"
+msgid "Hello from Arco"
 msgstr ""
 
 #: templates/notify_member_email.html:4
@@ -810,10 +810,6 @@ msgstr ""
 
 #: templates/notify_member_email.html:23
 msgid "We hope to see you again!"
-msgstr ""
-
-#: templates/user_account_email.html:3
-msgid "User Account Created for Verbo Velocity"
 msgstr ""
 
 #: templates/user_account_email.html:5

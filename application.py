@@ -36,6 +36,11 @@ babel = Babel(app)
 app.config['BABEL_DEFAULT_LOCALE'] = 'es'
 
 
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(['es', 'en'])
+
+
 @app.before_request
 def before():
     db.open_db_connection()
@@ -595,16 +600,15 @@ class EditAttendanceForm(FlaskForm):
 @login_required
 @requires_roles('homegroup_leader','admin')
 def edit_attendance(homegroup_id, meeting_id):
-    print(meeting_id)
     att_form = EditAttendanceForm()
     members_in_attendance = db.get_attendance(homegroup_id, meeting_id)
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
     edit_or_new = 'new'
+    print (members_in_attendance)
     for member in members_in_attendance:
         if (member['attendance'] == 1):
             edit_or_new = 'edit'
-    # print("Edit/New: " + edit_or_new)
     if att_form.validate_on_submit():
         for member in members_in_attendance:
             input_name =  'member_' + str(member['member_id'] )

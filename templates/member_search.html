@@ -47,6 +47,7 @@
                         <tr>
                             <td>{{ member.first_name }} {{ member.last_name }}</td>
                             <td>{{ member.email }}</td>
+
                             <td>
                                 <div class="hidden-sm-down">
                                     <a href="{{ url_for('add_member_to_homegroup', homegroup_id = homegroup_id, member_id = member.id  ) }}"
