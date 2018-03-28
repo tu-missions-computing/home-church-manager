@@ -777,13 +777,17 @@ def create_new_member_for_homegroup(homegroup_id):
         how_did_you_find_out_id = member.how_did_you_find_out.data
         is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
-        if rowcount == 1:
-            row = db.recent_member()
-            member_id = row['id']
-            db.add_member_to_homegroup(homegroup_id, member_id)
-            flash(lazy_gettext("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
-            return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
+        if (db.find_member_info(email)):
+            flash("Person with this email already exists", category="danger")
+            return render_template('create_member.html', form=member)
+        else:
+            rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
+            if rowcount == 1:
+                row = db.recent_member()
+                member_id = row['id']
+                db.add_member_to_homegroup(homegroup_id, member_id)
+                flash(lazy_gettext("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
+                return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
     return render_template('create_member.html', form=member, homegroup_id=homegroup_id)
 
@@ -1021,11 +1025,18 @@ def create_member():
         is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
 
-        rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
-        print(rowcount)
-        if rowcount == 1:
-            flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
-            return redirect(url_for('all_members'))
+        if (db.find_member_info(email)):
+            flash("Person with this email already exists", category="danger")
+            return render_template('create_member.html', form=member)
+
+        else:
+            rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
+                                        marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
+            print(rowcount)
+            if rowcount == 1:
+                flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
+                return redirect(url_for('all_members'))
+
 
     return render_template('create_member.html', form=member)
 
