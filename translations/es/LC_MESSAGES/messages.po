@@ -232,7 +232,7 @@ msgstr "¿Tiene hijos?"
 
 #: application.py:714
 msgid "How did you find out about the homegroup?"
-msgstr "¿Cómo se enteró sobre el grupo en el hogar?"
+msgstr "¿Cómo se enteró sobre la iglesia de hogar?"
 
 #: application.py:715 templates/advanced_search.html:78
 msgid "Marital Status"
