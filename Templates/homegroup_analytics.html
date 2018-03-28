@@ -29,45 +29,34 @@
 
                                 </tr>
                                 <tbody>
-       <tr>
+      <tr>
                                     <td> Total Members</td>
+                                       {% for data in totalMembersList %}
+                                          <td>{{data}}</td>
+                                       {% endfor %}
+                                    </tr>
+       <tr>
+                                    <td> Members Attending a Home Group</td>
+                                       {% for data in attendingMembersList %}
+                                          <td>{{data}}</td>
+                                       {% endfor %}
+                                    </tr>
+       <tr>
+                                    <td> Total New Members</td>
                                        {% for data in analytics %}
                                           <td>{{data}}</td>
                                        {% endfor %}
                                     </tr>
        <tr>
-                                    <td> New Members</td>
-                                        <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                        <td></td>
-                                    </tr>
-        <tr>
-                                    <td> Returning Members</td>
-                                        <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                        <td></td>
+                                    <td><span style="padding-left:10px; font-style:italic;">Adult Members</span> </td>
+                                       {% for data in newMembersList %}
+                                          <td>{{data}}</td>
+                                       {% endfor %}
                                     </tr>
 
+
                                     <tr>
-                                    <td> Minors</td>
+                                        <td> <span style="padding-left:10px; font-style:italic;">Minor Members </span></td>
                                         {% for minor in minorsList %}
                                           <td>{{minor}}</td>
                                        {% endfor %}

@@ -512,6 +512,52 @@ def homegroup_analytics():
 
     return render_template('homegroup_analytics.html', year = year, minorsList = minorsList, analytics = analyticsList)
 
+# this is the homegroup main page / dashboard
+@app.route('/homegroup_split/<homegroup_id>')
+@login_required
+@requires_roles('admin')
+def homegroup_split(homegroup_id):
+    new_homegroup = CreateHomeGroupSplitForm()
+
+    return render_template('homegroup_split.html', form = new_homegroup)
+
+
+
+
+## this returns further analytics for homegroups ###
+@app.route('/homegroup_analytics')
+@login_required
+@requires_roles('admin')
+def homegroup_analytics():
+    year = datetime.datetime.now().strftime("%Y")
+    analytics = db.homegroup_analytics(year)
+    minors = db.number_of_minors(year)
+    new_members = db.number_of_new_members(year)
+    attending_members = db.members_attending_a_homegroup(year)
+    total_members = db.total_members(year)
+    analyticsList = ['','','','','','','','','','','','']
+    minorsList = ['','','','','','','','','','','','']
+    newMembersList = ['','','','','','','','','','','','']
+    attendingMembersList = ['','','','','','','','','','','','']
+    totalMembersList = ['','','','','','','','','','','','']
+    for row in analytics:
+        index = int(row['month']) -1
+        analyticsList[index] = int(row['count'])
+    for row in minors:
+        index = int(row['month']) - 1
+        minorsList[index] = int(row['count'])
+    for row in new_members:
+        index = int(row['month']) - 1
+        newMembersList[index] = int(row['count'])
+    for row in attending_members:
+        index = int(row['month']) - 1
+        attendingMembersList[index] = int(row['count'])
+    for row in total_members:
+        index = int(row['month']) - 1
+        totalMembersList[index] = int(row['count'])
+
+    return render_template('homegroup_analytics.html', totalMembersList = totalMembersList, attendingMembersList = attendingMembersList, year = year,newMembersList = newMembersList, minorsList = minorsList, analytics = analyticsList)
+
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
@@ -906,6 +952,21 @@ class CreateHomeGroupForm(FlaskForm):
     latitude = StringField(_('Latitude'))
     longitude = StringField(_('Longitude'))
     submit = SubmitField(_('Save Home Group'))
+
+
+
+class CreateHomeGroupSplitForm(FlaskForm):
+    name1 = StringField(_('Name'), [Length(min=2, max=50 , message=_("Name is a required field"))])
+    description1 = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
+    location1 = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
+    latitude1 = StringField(_('Latitude'))
+    longitude1 = StringField(_('Longitude'))
+    name2 = StringField(_('Name'), [Length(min=2, max=50, message=_("Name is a required field"))])
+    description2 = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
+    location2 = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
+    latitude2 = StringField(_('Latitude'))
+    longitude2 = StringField(_('Longitude'))
+    submit = SubmitField(_('Create Home Groups'))
 
 
 # Display admin home page

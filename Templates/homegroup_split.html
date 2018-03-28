@@ -1,0 +1,142 @@
+<section class="cover text-center">
+{% extends "base.html" %}
+
+{% block title %}Home Group Analytics{% endblock %}
+
+{% block content %}
+    <div class="container" style="background-color:white;color:black; margin-top:1.5%">
+      <table class="table table-striped table-bordered table-hover results">
+          <form class="" method="post" action="#">
+
+                        <div class="form-group">
+                            {{ form.csrf_token }}
+                            <p class="form-label"> {{ form.name1.label }} {{ form.name1(class_='form-control') }}</p>
+                            {% if form.name1.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Enter a Name') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <p class="form-label"> {{ form.description1.label }} {{ form.description1(class_='form-control') }}</p>
+                            {% if form.description1.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Description') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <p class="form-label"> {{ form.location1.label }} {{ form.location1(class_='form-control') }}</p>
+                            {% if form.location1.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Location') }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+
+                        <div class='btn btn-primary btn-lg btn-block'
+                             style="display: block; width: 100%; font-family: 'Questrial', sans-serif;" id="findLocation">
+                            {{  _('Find Location') }}
+                        </div>
+
+
+                        <iframe style="display: none" id="mapFrame" width=100% height="300px"
+                                src="../../homegroup/select_location">
+                        </iframe>
+                        <br>
+                        <div class="form-group ">
+                            <p>
+                                {{ form.submit(class_='btn btn-primary btn-lg btn-block',
+                                               style="display: none; width: 100%; font-family: 'Questrial', sans-serif;") }}
+                            </p>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <p> {{ form.latitude1.label }} {{ form.latitude1(class_='form-control') }}</p>
+                            {% if form.latitude1.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Latitude') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group" style="display: none">
+                            <p> {{ form.longitude1.label }} {{ form.longitude1(class_='form-control') }}</p>
+                            {% if form.longitude1.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Longitude') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+              <!-- 2nd homegroup -->
+
+
+                            <p class="form-label"> {{ form.name2.label }} {{ form.name2(class_='form-control') }}</p>
+                            {% if form.name2.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Enter a Name') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <p class="form-label"> {{ form.description2.label }} {{ form.description2(class_='form-control') }}</p>
+                            {% if form.description2.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Description') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <p class="form-label"> {{ form.location2.label }} {{ form.location2(class_='form-control') }}</p>
+                            {% if form.location2.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Location') }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <br>
+
+                        <div class='btn btn-primary btn-lg btn-block'
+                             style="display: block; width: 100%; font-family: 'Questrial', sans-serif;" id="findLocation2">
+                            {{  _('Find Location') }}
+                        </div>
+
+
+                        <iframe style="display: none" id="mapFrame2" width=100% height="300px"
+                                src="../../homegroup/select_location2">
+                        </iframe>
+                        <br>
+                        <div class="form-group ">
+                            <p>
+                                {{ form.submit(class_='btn btn-primary btn-lg btn-block',
+                                               style="display: none; width: 100%; font-family: 'Questrial', sans-serif;") }}
+                            </p>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            <p> {{ form.latitude2.label }} {{ form.latitude2(class_='form-control') }}</p>
+                            {% if form.latitude2.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Latitude') }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group" style="display: none">
+                            <p> {{ form.longitude2.label }} {{ form.longitude2(class_='form-control') }}</p>
+                            {% if form.longitude2.errors %}
+                                <div class="alert alert-warning">
+                                    {{  _('Add a Longitude') }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </form>
+
+
+    </div></div>
+
+{% endblock %}
