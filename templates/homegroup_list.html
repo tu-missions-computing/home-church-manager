@@ -68,6 +68,11 @@
                                     <span class="fa fa-trash"></span> {{ _('Remove') }}
                                 </a>
 
+                                <a href="{{ url_for('homegroup_split', homegroup_id = homegroup.id) }}"
+                                   class="btn btn-success btn-sm">
+                                    <span class="fa fa-clone"></span> Split
+                                </a>
+
                             </td>
                             <td class="content"><span style="color:#87B87C" class="fa fa-check-square-o"></span></td>
                         </tr>

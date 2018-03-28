@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-28 11:58-0500\n"
+"POT-Creation-Date: 2018-03-28 15:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: application.py:130 application.py:896 templates/all_members.html:83
+#: application.py:130 application.py:905 templates/all_members.html:83
 #: templates/contact.html:17 templates/edit_attendance.html:20
 #: templates/homegroup_list.html:37 templates/homegroup_members.html:49
 #: templates/member_search.html:40 templates/notify_member_email.html:13
@@ -69,19 +69,19 @@ msgstr ""
 msgid "New Role"
 msgstr ""
 
-#: application.py:211
+#: application.py:208
 msgid "User already has account"
 msgstr ""
 
-#: application.py:217
+#: application.py:214
 msgid "User account created for Verbo Velocity"
 msgstr ""
 
-#: application.py:226
+#: application.py:223
 msgid "User Created"
 msgstr ""
 
-#: application.py:246 application.py:284
+#: application.py:254 application.py:284
 msgid "You cannot edit your own role - please contact a system administrator"
 msgstr ""
 
@@ -241,83 +241,83 @@ msgstr ""
 msgid "Save Member"
 msgstr ""
 
-#: application.py:748
+#: application.py:756
 msgid "Member {} added to homegroup"
 msgstr ""
 
-#: application.py:781 application.py:1029
+#: application.py:790 application.py:1038
 msgid "Person with this email already exists"
 msgstr ""
 
-#: application.py:789 application.py:1037
+#: application.py:798 application.py:1046
 msgid "Member {} Created"
 msgstr ""
 
-#: application.py:820
+#: application.py:829
 msgid "Edit My Info"
 msgstr ""
 
-#: application.py:823
+#: application.py:832
 msgid "Edit Member"
 msgstr ""
 
-#: application.py:871
+#: application.py:880
 msgid "Member {} Updated"
 msgstr ""
 
-#: application.py:888
+#: application.py:897
 msgid "Member Removed"
 msgstr ""
 
-#: application.py:896
+#: application.py:905
 msgid "Name is a required field"
 msgstr ""
 
-#: application.py:897
+#: application.py:906
 msgid "Description"
 msgstr ""
 
-#: application.py:897
+#: application.py:906
 msgid "Please enter a description"
 msgstr ""
 
-#: application.py:898
+#: application.py:907
 msgid "Address"
 msgstr ""
 
-#: application.py:898
+#: application.py:907
 msgid "Please enter valid Address"
 msgstr ""
 
-#: application.py:899
+#: application.py:908
 msgid "Latitude"
 msgstr ""
 
-#: application.py:900
+#: application.py:909
 msgid "Longitude"
 msgstr ""
 
-#: application.py:901
+#: application.py:910
 msgid "Save Home Group"
 msgstr ""
 
-#: application.py:941
+#: application.py:950
 msgid "Homegroup {} Created"
 msgstr ""
 
-#: application.py:965
+#: application.py:974
 msgid "Homegroup Deactivated"
 msgstr ""
 
-#: application.py:977
+#: application.py:986
 msgid "Homegroup Reactivated"
 msgstr ""
 
-#: application.py:1054
+#: application.py:1063
 msgid "Member Deactivated"
 msgstr ""
 
-#: application.py:1065
+#: application.py:1074
 msgid "Member Reactivated"
 msgstr ""
 
@@ -370,8 +370,56 @@ msgstr ""
 msgid "Home Group"
 msgstr ""
 
-#: templates/admin_home.html:114
+#: templates/admin_home.html:113
 msgid "Total People"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jan"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Feb"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Mar"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Apr"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "May"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jun"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jul"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Aug"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Sep"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Oct"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Nov"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Dec"
 msgstr ""
 
 #: templates/admin_home.html:140

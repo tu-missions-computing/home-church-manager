@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}My Title{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
             integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
@@ -37,17 +39,21 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
     <script>
+
         Highcharts.setOptions({
             colors: ['#f19125', '#eaeaea', '#3f4358'],
             lang: {
-                downloadPNG: 'TRANSLATE ME PNG'
+                downloadPNG: 'Descargar PNG',
+                downloadPDF: 'Descargar PDF',
+                downloadSVG: 'Descargar SVG',
+                printChart: 'Tabla de Impresión'
+
             }
         });
     </script>
 
     {# Extra styling #}
     {% block more_style %}{% endblock %}
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS Styling-->
     <style>
         body, wrapper {
@@ -66,6 +72,7 @@
         .navbar {
             min-height: 100px;
         }
+
 
         footer {
             margin-top: 2%;
@@ -104,8 +111,7 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for  category, message in get_flashed_messages(with_categories=true) %}
-            <div style="width:40%; text-align: center; position:absolute;left:0; right:0;top:5px;margin-left:auto; margin-right:auto; z-index:1"
-                 class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -117,18 +123,20 @@
 
 <section>
     <wrapper class="d-flex flex-column">
-        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:800; font-size:30px"
-                   href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png" width="150px"></a>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
+        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
+        <div class="d-flex flex-row justify-content-between">
+             <div class="p-3">
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+        </div>
+            <div class="p-3">
+            <a class="navbar-brand" href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png" width="150px"></a></div>
+
+        </div>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
                         {% if current_user.name %}
                             <li class="active dropdown nav-item">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -164,6 +172,9 @@
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">
                                 {{ _('System Roles') }}</a>
                             </li>
+                         <li class="nav-item"><a class="nav-link" href="{{ url_for('homegroup_analytics') }}">
+                                {{ _('Analytics') }}</a>
+                            </li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item">
@@ -186,19 +197,18 @@
                         {% if current_user.name %}
                             <li class="nav-item" style="padding-top:5px;padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
-                                    <b><i class="fa fa-user"> </i>{{ _('Log Out') }}</b>
+                                    <b><i class="fa fa-user"></i>&nbsp;{{ _('Log Out') }}</b>
                                 </a>
                             </li>
                         {% else %}
                             <li class="nav-item" style="padding-top:5px; padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/login">
-                                    <b><i class="fa fa-user"> </i>{{ _('Log In') }}</b>
+                                    <b><i class="fa fa-user"></i>&nbsp;{{ _('Log In') }}</b>
                                 </a>
                             </li>
                         {% endif %}
                     </ul>
                 </div>
-            </div>
         </nav>
 
         {% block content %}
@@ -229,22 +239,6 @@
                 <div class="row ">
                     <div class="col"></div>
                     <div class="col"></div>
-
-                    {# FIXME: We are going to want to turn off Google translate. #}
-
-                    {#                    <div class="col" style="float:right; color:white;">#}
-                    {#                        <div id="google_translate_element"></div>#}
-                    {#                        <script type="text/javascript">#}
-                    {#                            function googleTranslateElementInit() {#}
-                    {#                                new google.translate.TranslateElement({#}
-                    {#                                    pageLanguage: 'en',#}
-                    {#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
-                    {#                                }, 'google_translate_element');#}
-                    {#                            }#}
-                    {#                        </script>#}
-                    {#                        <script type="text/javascript"#}
-                    {#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-                    {#                    </div>#}
                 </div>
             </div>
         </footer>
