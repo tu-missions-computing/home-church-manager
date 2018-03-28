@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-27 21:37-0500\n"
+"POT-Creation-Date: 2018-03-28 10:39-0500\n"
 "PO-Revision-Date: 2018-03-26 14:33-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -70,6 +70,10 @@ msgstr "Crear Usuario"
 msgid "New Role"
 msgstr "Nuevo Rol"
 
+#: application.py:194
+msgid "role"
+msgstr "rol"
+
 #: application.py:209
 msgid "User already has account"
 msgstr "El usuario ya tiene una cuenta"
@@ -84,7 +88,9 @@ msgstr "Usuario Creado"
 
 #: application.py:244 application.py:278
 msgid "You cannot edit your own role - please contact a system administrator"
-msgstr "No puede editar su propia función. Póngase en contacto con un administrador de sistema."
+msgstr ""
+"No puede editar su propia función. Póngase en contacto con un "
+"administrador de sistema."
 
 #: application.py:268
 msgid "Role Created"
@@ -102,7 +108,7 @@ msgstr "Nueva Contraseña"
 msgid "Confirm Password"
 msgstr "Confirmar Contraseña"
 
-#: application.py:300 templates/base.html:136 templates/update_user.html:4
+#: application.py:300 templates/base.html:129 templates/update_user.html:4
 #: templates/update_user.html:9
 msgid "Update Password"
 msgstr "Actualizar Contraseña"
@@ -123,8 +129,8 @@ msgstr "Introdujo la contraseña actual incorrecta"
 msgid "Password"
 msgstr "Contraseña"
 
-#: application.py:386 templates/base.html:186 templates/login.html:4
-#: templates/login.html:14
+#: application.py:386 templates/base.html:179 templates/login.html:4
+#: templates/login.html:10
 msgid "Log In"
 msgstr "Iniciar"
 
@@ -137,7 +143,7 @@ msgid "No attendance data for this Home Group"
 msgstr "No hay datos de asistencia para este iglesia de hogar"
 
 #: application.py:500 application.py:551 application.py:575
-#: templates/base.html:164 templates/edit_attendance.html:21
+#: templates/base.html:157 templates/edit_attendance.html:21
 #: templates/homegroup.html:65 templates/homegroup_list.html:60
 #: templates/view_attendance.html:10 templates/view_attendance_report.html:20
 msgid "Attendance"
@@ -395,7 +401,7 @@ msgstr "# de gente"
 msgid "Home Group Gender Report"
 msgstr "Informe de Género de la Iglesia de Hogar"
 
-#: templates/admin_home.html:223 templates/base.html:151
+#: templates/admin_home.html:223 templates/base.html:144
 msgid "Home Groups"
 msgstr "Iglesias de Hogar"
 
@@ -420,7 +426,7 @@ msgid "Add Admin"
 msgstr "Agregar Administrador"
 
 #: templates/admin_profiles.html:37 templates/advanced_search.html:134
-#: templates/all_members.html:51 templates/base.html:176
+#: templates/all_members.html:51 templates/base.html:169
 #: templates/contact.html:4
 msgid "Contact"
 msgstr "Contacto"
@@ -441,7 +447,7 @@ msgstr "Eliminar"
 
 #: templates/admin_profiles.html:84 templates/advanced_search.html:170
 #: templates/advanced_search.html:193 templates/all_members.html:95
-#: templates/all_members.html:116 templates/attendance_reports.html:38
+#: templates/all_members.html:116 templates/attendance_reports.html:39
 #: templates/homegroup_list.html:52 templates/homegroup_members.html:66
 msgid "Edit"
 msgstr "Editar"
@@ -587,45 +593,45 @@ msgstr "Nuevo Informe de Asistencia"
 msgid "Action"
 msgstr "Acción"
 
-#: templates/attendance_reports.html:45
+#: templates/attendance_reports.html:46
 msgid "No Information"
 msgstr "Sin Información"
 
-#: templates/base.html:128
+#: templates/base.html:121
 msgid "Welcome,"
 msgstr "Bienvenido,"
 
-#: templates/base.html:130 templates/homegroup.html:13
+#: templates/base.html:123 templates/homegroup.html:13
 msgid "Dashboard"
 msgstr "Tablero"
 
-#: templates/base.html:133
+#: templates/base.html:126
 msgid "Profile Settings"
 msgstr "Configuración de Perfil"
 
-#: templates/base.html:145 templates/base.html:154
+#: templates/base.html:138 templates/base.html:147
 #: templates/homegroup_list.html:56
 msgid "Members"
 msgstr "Miembros"
 
-#: templates/base.html:157 templates/roles.html:4 templates/roles.html:9
+#: templates/base.html:150 templates/roles.html:4 templates/roles.html:9
 msgid "System Roles"
 msgstr "Roles del Sistema"
 
-#: templates/base.html:172 templates/edit_homegroup.html:4
+#: templates/base.html:165 templates/edit_homegroup.html:4
 #: templates/edit_homegroup.html:9
 msgid "Edit Home Group"
 msgstr "Editar Iglesia de Hogar"
 
-#: templates/base.html:175
+#: templates/base.html:168
 msgid "FAQ"
 msgstr "Preguntas Mas Frequentes"
 
-#: templates/base.html:181
+#: templates/base.html:174
 msgid "Log Out"
 msgstr "Cerrar Sesión"
 
-#: templates/base.html:205
+#: templates/base.html:198
 msgid "Copyright 2018, Arco Church"
 msgstr "Derechos de Autor 2018, Iglesia Arco"
 
@@ -719,7 +725,7 @@ msgstr "Fecha de Nacimiento"
 msgid "Join Date"
 msgstr "Fecha de Ingreso"
 
-#: templates/create_user.html:4
+#: templates/create_user.html:4 templates/create_user.html:10
 msgid "Create User Account"
 msgstr "Crear Cuenta de Usuario"
 
@@ -816,19 +822,19 @@ msgstr "ENCUENTRA UNA IGLESIA DE HOGAR"
 msgid "FIND A HOME GROUP"
 msgstr "BUSCA UNA IGLESIA DE HOGAR"
 
-#: templates/index.html:65
+#: templates/index.html:67
 msgid "Find a Home Group"
 msgstr "Encuentra una Iglesia de Hogar"
 
-#: templates/index.html:70
+#: templates/index.html:72
 msgid "Enter Zip Code or Address"
 msgstr "Ingrese la dirección"
 
-#: templates/login.html:26
+#: templates/login.html:22
 msgid "Please enter a valid email"
 msgstr "Por favor introduzca una dirección de correo electrónico válida"
 
-#: templates/login.html:36
+#: templates/login.html:32
 msgid "Please enter a valid Password"
 msgstr "Por favor introduce una contraseña válida"
 
@@ -862,7 +868,7 @@ msgstr "reuniones consecutivas"
 
 #: templates/notify_member_email.html:9
 msgid "Would you like to contact your home group leader?"
-msgstr "¿Le gustaría contactar al líder de su grupo de origen?"
+msgstr "¿Le gustaría contactar al líder de su iglesia de hogar?"
 
 #: templates/notify_member_email.html:10
 msgid "Home Group Leader Info"

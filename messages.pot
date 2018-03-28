@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-27 21:37-0500\n"
+"POT-Creation-Date: 2018-03-28 10:39-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,6 +69,10 @@ msgstr ""
 msgid "New Role"
 msgstr ""
 
+#: application.py:194
+msgid "role"
+msgstr ""
+
 #: application.py:209
 msgid "User already has account"
 msgstr ""
@@ -101,7 +105,7 @@ msgstr ""
 msgid "Confirm Password"
 msgstr ""
 
-#: application.py:300 templates/base.html:136 templates/update_user.html:4
+#: application.py:300 templates/base.html:129 templates/update_user.html:4
 #: templates/update_user.html:9
 msgid "Update Password"
 msgstr ""
@@ -122,8 +126,8 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: application.py:386 templates/base.html:186 templates/login.html:4
-#: templates/login.html:14
+#: application.py:386 templates/base.html:179 templates/login.html:4
+#: templates/login.html:10
 msgid "Log In"
 msgstr ""
 
@@ -136,7 +140,7 @@ msgid "No attendance data for this Home Group"
 msgstr ""
 
 #: application.py:500 application.py:551 application.py:575
-#: templates/base.html:164 templates/edit_attendance.html:21
+#: templates/base.html:157 templates/edit_attendance.html:21
 #: templates/homegroup.html:65 templates/homegroup_list.html:60
 #: templates/view_attendance.html:10 templates/view_attendance_report.html:20
 msgid "Attendance"
@@ -394,7 +398,7 @@ msgstr ""
 msgid "Home Group Gender Report"
 msgstr ""
 
-#: templates/admin_home.html:223 templates/base.html:151
+#: templates/admin_home.html:223 templates/base.html:144
 msgid "Home Groups"
 msgstr ""
 
@@ -419,7 +423,7 @@ msgid "Add Admin"
 msgstr ""
 
 #: templates/admin_profiles.html:37 templates/advanced_search.html:134
-#: templates/all_members.html:51 templates/base.html:176
+#: templates/all_members.html:51 templates/base.html:169
 #: templates/contact.html:4
 msgid "Contact"
 msgstr ""
@@ -440,7 +444,7 @@ msgstr ""
 
 #: templates/admin_profiles.html:84 templates/advanced_search.html:170
 #: templates/advanced_search.html:193 templates/all_members.html:95
-#: templates/all_members.html:116 templates/attendance_reports.html:38
+#: templates/all_members.html:116 templates/attendance_reports.html:39
 #: templates/homegroup_list.html:52 templates/homegroup_members.html:66
 msgid "Edit"
 msgstr ""
@@ -586,45 +590,45 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: templates/attendance_reports.html:45
+#: templates/attendance_reports.html:46
 msgid "No Information"
 msgstr ""
 
-#: templates/base.html:128
+#: templates/base.html:121
 msgid "Welcome,"
 msgstr ""
 
-#: templates/base.html:130 templates/homegroup.html:13
+#: templates/base.html:123 templates/homegroup.html:13
 msgid "Dashboard"
 msgstr ""
 
-#: templates/base.html:133
+#: templates/base.html:126
 msgid "Profile Settings"
 msgstr ""
 
-#: templates/base.html:145 templates/base.html:154
+#: templates/base.html:138 templates/base.html:147
 #: templates/homegroup_list.html:56
 msgid "Members"
 msgstr ""
 
-#: templates/base.html:157 templates/roles.html:4 templates/roles.html:9
+#: templates/base.html:150 templates/roles.html:4 templates/roles.html:9
 msgid "System Roles"
 msgstr ""
 
-#: templates/base.html:172 templates/edit_homegroup.html:4
+#: templates/base.html:165 templates/edit_homegroup.html:4
 #: templates/edit_homegroup.html:9
 msgid "Edit Home Group"
 msgstr ""
 
-#: templates/base.html:175
+#: templates/base.html:168
 msgid "FAQ"
 msgstr ""
 
-#: templates/base.html:181
+#: templates/base.html:174
 msgid "Log Out"
 msgstr ""
 
-#: templates/base.html:205
+#: templates/base.html:198
 msgid "Copyright 2018, Arco Church"
 msgstr ""
 
@@ -718,7 +722,7 @@ msgstr ""
 msgid "Join Date"
 msgstr ""
 
-#: templates/create_user.html:4
+#: templates/create_user.html:4 templates/create_user.html:10
 msgid "Create User Account"
 msgstr ""
 
@@ -815,19 +819,19 @@ msgstr ""
 msgid "FIND A HOME GROUP"
 msgstr ""
 
-#: templates/index.html:65
+#: templates/index.html:67
 msgid "Find a Home Group"
 msgstr ""
 
-#: templates/index.html:70
+#: templates/index.html:72
 msgid "Enter Zip Code or Address"
 msgstr ""
 
-#: templates/login.html:26
+#: templates/login.html:22
 msgid "Please enter a valid email"
 msgstr ""
 
-#: templates/login.html:36
+#: templates/login.html:32
 msgid "Please enter a valid Password"
 msgstr ""
 
