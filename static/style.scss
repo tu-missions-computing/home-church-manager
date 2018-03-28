@@ -2,7 +2,9 @@
 
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
-
+	.attendance{
+		width:95%;
+	}
 	.alert{
 			width: 90%;
 		}
@@ -73,6 +75,9 @@
 
         //SMALL DEVICES
         @include media-breakpoint-up(sm) {
+		.attendance{
+			width:95%;
+		}
 			.alert{
 			width: 90%;
 		}
@@ -141,6 +146,9 @@
 
         // MID SIZED DEVICES
         @include media-breakpoint-up(md) {
+	.attendance{
+		width:50%;
+	}
 			.alert{
 			width: 50%;
 		}
@@ -200,7 +208,10 @@
 		}
         //LARGE DEVICES
         @include media-breakpoint-up(lg) {
-		.alert{
+	.attendance{
+		width:50%;
+	}
+			.alert{
 			width: 50%;
 		}
 			.searchbar{
@@ -258,6 +269,9 @@
 		}
         // EXTRA LARGE DEVICES
         @include media-breakpoint-up(xl) {
+	.attendance{
+		width:35%;
+	}
 			.alert{
 			width: 50%;
 		}

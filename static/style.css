@@ -8524,8 +8524,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   }
 }
 
-.navbar-brand {
-  float: right;
+.attendance {
+  width: 90%;
 }
 
 .alert {
@@ -8609,8 +8609,8 @@ footer {
 }
 
 @media (min-width: 576px) {
-  .navbar-brand {
-    float: right;
+  .attendance {
+    width: 90%;
   }
 
   .alert {
@@ -8690,8 +8690,8 @@ footer {
   }
 }
 @media (min-width: 768px) {
-  .navbar-brand {
-    float: left;
+  .attendance {
+    width: 50%;
   }
 
   .alert {
@@ -8761,8 +8761,8 @@ footer {
   }
 }
 @media (min-width: 992px) {
-  .navbar-brand {
-    float: left;
+  .attendance {
+    width: 50%;
   }
 
   .alert {
@@ -8832,8 +8832,8 @@ footer {
   }
 }
 @media (min-width: 1200px) {
-  .navbar-brand {
-    float: left;
+  .attendance {
+    width: 35%;
   }
 
   .alert {
