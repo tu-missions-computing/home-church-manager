@@ -22,18 +22,19 @@
     		padding-right:0;
 			max-width: 100%;
 		}
-		.verbotext{
+		.arcoheader{
          		 font-size:200%;
       		}
 
 		.homegrouptext{
-        	font-size:150%;}
+        	font-size:100%;}
 
 		.cover {
    			background-size: 250% !important;
 		}
-		    .verbobox {
+		    .arcobox {
              height: 75px;
+				width: 75%;
 			margin-top:30%;}
 
 		 .findahomegroupbtn{
@@ -47,6 +48,12 @@
 
 		.header-text{
 			font-size:115%;
+		}
+
+		.mapbox{
+			padding-left:0 !important;
+			padding-right:0 !important;
+
 		}
 		}
 
@@ -74,19 +81,21 @@
 				max-width: 100%;
 			}
 
-			.verbotext{
+			.arcoheader{
          		 font-size:300%;
       		}
 			.homegrouptext{
-        	font-size:200%;}
+        	font-size:100%;}
 
 			.cover {
    			background-size: 250% !important;
 			}
 
-			.verbobox {
+			.arcobox {
              height: 75px;
-			margin-top:30%}
+				width: 75%;
+			margin-top:30%;
+			}
 
 			.findahomegroupbtn{
 			 width:100%;
@@ -98,6 +107,11 @@
 		}
 			.header-text{
 			font-size:115%;
+		}
+			.mapbox{
+			padding-left:0 !important;
+			padding-right:0 !important;
+
 		}
 		}
 
@@ -123,17 +137,17 @@
 				padding-right:2.5%;
 				max-width: 85%;
 			}
-			.verbotext{
+			.arcoheader{
           font-size:300%;
       }
 			.homegrouptext{
-        	font-size:200%;}
+        	font-size:125%;}
 
 			.cover {
    			background-size: 150% !important;
 			}
 
-			.verbobox {
+			.arcobox {
              height: 100px;
 			 margin-top: 10%;}
 
@@ -177,17 +191,17 @@
 				padding-right:2.5%;
 				max-width: 85%;
 		}
-			.verbotext{
+			.arcoheader{
           font-size:300%;
       }
 			.homegrouptext{
-        	font-size:250%;}
+        	font-size:150%;}
 
 			.cover {
 				background-size: 100% !important;
 			}
 
-			.verbobox {
+			.arcobox {
              height: 100px;
 			 margin-top: 10%;}
 
@@ -223,17 +237,17 @@
 				padding-right:2.5%;
 				max-width: 85%;
 		}
-			.verbotext {
+			.arcoheader {
 				 font-size: 300%;
 			 }
 		.homegrouptext{
-        	font-size:250%;}
+        	font-size:150%;}
 
 		.cover {
    			background-size: 100% !important;
 			}
 
-			.verbobox {
+			.arcobox {
              height: 100px;
 			 margin-top: 10%;}
 
