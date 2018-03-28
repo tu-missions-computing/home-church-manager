@@ -92,7 +92,7 @@ a{
     background: #f19125 url("arco-background.png");
     background-size: cover;
 	background-repeat: no-repeat;
-    min-height: 50rem;
+    /*min-height: 50rem;*/
     height: auto;
     border-radius: 0;
     color: #fff;

@@ -56,13 +56,19 @@
     {% block more_style %}{% endblock %}
     <!-- CSS Styling-->
     <style>
-        body, wrapper {
+           body, wrapper {
             min-height: 100vh;
         }
-
         main {
             flex: 1;
         }
+    html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
 
         .nav-link {
             color: white !important;
@@ -105,7 +111,8 @@
 </head>
 
 {#<body>#}
-<body class="d-flex flex-column">
+{#<body class="d-flex flex-column">#}
+<body>
 <div class="se-pre-con"></div>
 
 {% with messages = get_flashed_messages() %}
@@ -217,8 +224,8 @@
         {% endblock %}
 
         <!-- /#page-content-wrapper -->
-        <footer>
-            <div class="container-fluid w-10">
+         <footer class="footer">
+      <div class="container">
                 <div class="row">
                     <div class="col-4" style="padding:0;">
                         <div style="padding-top:6%;">&copy; {{ _('Copyright 2018, Arco Church') }}</div>
