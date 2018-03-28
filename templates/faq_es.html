@@ -3,18 +3,67 @@
 
 {% block title %}FAQ{% endblock %}
 
-{#
-## FIXME: The simplest way to hande this page may be to have a completely separate FAQ page for different languages.
-#}
-
 {% block content %}
     {# FIXME: Why is a section wrapping the body tag?? #}
         <body class="faq">
 
         <div class="main-login faq-box">
-            <h1>SPANISH VERSION</h1>
-        </div>
+            <p class="animated stretchLeft title-text" style="text-align:center;">{{ _('Frequently Asked Questions') }}</p>
+            <hr>
+            {% if current_user.role == 'homegroup_leader' %}
+                <h3 class="header-text"><b>¿Cómo agrego una persona a una iglesia de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña "Miembros" en la barra de navegación, y luego haga clic en "Agregar miembro" en la parte superior de la página.</p><br>
+                <h3 class="header-text"><b>¿Cómo tomo la asistencia?</b></h3>
+                <p class="answer">Haga clic en la pestaña "Asistencia" en la barra de navegación. Seleccione la fecha y hora actual y haga clic en "Asistir". Haga clic en las casillas de verificación junto al nombre de una persona si están presentes. Déjalos en blanco si faltan.
+                </p><br>
+                <h3 class="header-text"><b>¿Cómo edito / veo los informes de asistencia pasadas?</b></h3>
+                <p class="answer">En la página "Asistencia", haga clic en "Ver historial de asistencia". Haga clic en "Editar" para el informe que le gustaría ver.
+</p><br>
+                <h3 class="header-text"><b>¿Cómo edito la información de mi iglesia de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña "Editar iglesia de hogar" y edite la información de su iglesia de hogar con el formulario.</p><br>
+                <h3 class="header-text"><b>¿Cómo envío un correo electrónico a mi iglesia de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña "Miembros". En la esquina superior derecha, haz clic en el botón "Contacto de miembros", redacta y envía tu correo electrónico.</p>
+            {% endif %}
+            {% if current_user.role == 'admin' %}
+                <h3 class="header-text"><b>¿Cómo agrego una persona a una iglesia de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña “Iglesias de Hogar" en la barra de navegación. Seleccione el botón "Miembros" de la iglesia de hogar deseado. Haga clic en "Agregar miembro" en la parte superior de la página.</p><br>
+                <h3 class="header-text"><b>¿Cómo elimino un iglesia de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña "iglesia de hogar". Seleccione el botón "Eliminar" de la iglesia de hogar deseada. Esto desactivará temporalmente la iglesia de hogar. Para reactivar una iglesia de hogar, haga clic en "Mostrar iglesias de hogar inactivos" en la parte superior de la página. Seleccione "Reactivar" en la iglesia de hogar deseada.</p><br>
+                <h3 class="header-text"><b>¿Cómo veo todos los miembros de todas las iglesias de hogar?</b></h3>
+                <p class="answer">Haga clic en la pestaña "Miembros". Aquí puede editar, crear o eliminar un miembro.</p><br>
+                <h3 class="header-text"><b>¿Cómo busco por clasificaciones demográficas de miembro?</b></h3>
+                <p class="answer">En la página "Miembros", haga clic en el botón "Búsqueda avanzada" en la parte superior. Haga clic en los criterios por los que desea filtrar y desplácese hacia abajo para ver los resultados. Esto mostrará una lista de miembros que cumplen los criterios deseados. Desde aquí, puede enviarles un correo electrónico a estos miembros o descargar un informe de los miembros.</p><br>
+                <h3 class="header-text"><b>¿Cómo agrego líderes de iglesia de hogar o administrador?</b></h3>
+                <p class="answer">Ve a la pestaña "Roles". Encuentre al usuario que desea que sea un líder o administrador de la iglesia de hogar. Si aún no tienen una cuenta, presione crear cuenta. Si ya tienen una cuenta, presiona "Asignar nuevo rol" para darles un nuevo rol. Si ya tienen una función, puede desactivar la función anterior y asignar una nueva. </p>
+            {% endif %}
+            {% if current_user.role != 'admin' %}
+                {% if current_user.role != 'homegroup_leader' %}
+                    <h3 class="header-text"><b>¿Que es Arco?</b></h3>
+                    <p class="answer"> Arco Church began in 1987.
+                        Since then we have seen the Lord take a small group of new believers and g
+                        row it into a thriving congregation of over 2,000,
+                        with many effective ministries impacting the city and region.
+                        Learn more about our ministries on La Iglesia Arco comenzó en 1987. Desde entonces hemos visto al Señor tomar un pequeño grupo de nuevos creyentes y convertirlo en una congregación próspera de más de 1700 personas, con muchos ministerios efectivos que impactan la ciudad y la región. Aprenda más sobre nuestros ministerios en <a class="link-color" href="http://www.arcocuenca.org/"
+                                                              target="_blank">nuestra pagina</a>.
 
+                    </p>
+
+                    <h3 class="header-text"><b>¿Cómo me uno a una iglesia de hogar?</b></h3>
+                    <p class="answer"> Echa un vistazo al mapa en la página de inicio y encuentra iglesia de hogar cerca de ti escribiendo tu dirección. Póngase en contacto con el líder de la iglesia de hogar para obtener más información. Haga clic <a class="link-color" href="{{ url_for('index') }}" target="_blank"> aquí </a> para acceder al mapa.
+                    </p>
+                    <h3 class="header-text"><b>¿Por qué no puedo iniciar la sesión?</b></h3>
+                    < class="answer"> Las cuentas de inicio de sesión se proporcionan para el administrador y los líderes de iglesia de hogar. Si es un administrador o un líder de iglesia de hogar que tiene problemas para iniciar sesión, visite <a class="link-color" href="{{ url_for( 'contact' ) }}"> la página de contacto </a> y deje un mensaje.
+
+
+                {% endif %}
+            {% endif %}
+            <hr>
+            <h4 style="text-align:center">{{ _('Other questions?') }}
+                <a href="{{ url_for('contact') }}" target="_top">
+                    {{ _('Contact Our Team') }}
+                </a>
+            </h4>
+        </div>
         </body>
     </section>
 {% endblock %}

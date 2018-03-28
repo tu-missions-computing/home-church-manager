@@ -8524,6 +8524,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   }
 }
 
+.dashboard-stats {
+  height: 185px;
+  width: 90%;
+}
+
 .searchbar {
   width: 85%;
 }
@@ -8550,20 +8555,21 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   max-width: 100%;
 }
 
-.verbotext {
+.arcoheader {
   font-size: 200%;
 }
 
 .homegrouptext {
-  font-size: 150%;
+  font-size: 100%;
 }
 
 .cover {
   background-size: 250% !important;
 }
 
-.verbobox {
+.arcobox {
   height: 75px;
+  width: 75%;
   margin-top: 30%;
 }
 
@@ -8581,7 +8587,21 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   font-size: 115%;
 }
 
+.mapbox {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.btn {
+  font-size: 8pt !important;
+}
+
 @media (min-width: 576px) {
+  .dashboard-stats {
+    height: 185px;
+    width: 90%;
+  }
+
   .searchbar {
     width: 85%;
   }
@@ -8608,20 +8628,21 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 100%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 200%;
+    font-size: 100%;
   }
 
   .cover {
     background-size: 250% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 75px;
+    width: 75%;
     margin-top: 30%;
   }
 
@@ -8637,6 +8658,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
   .header-text {
     font-size: 115%;
+  }
+
+  .mapbox {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 @media (min-width: 768px) {
@@ -8666,21 +8692,22 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 200%;
+    font-size: 125%;
   }
 
   .cover {
     background-size: 150% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 100px;
     margin-top: 10%;
+    width: 45%;
   }
 
   .findahomegroupbtn {
@@ -8695,6 +8722,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
   .header-text {
     font-size: 125%;
+  }
+
+  .mapbox {
+    width: 85% !important;
   }
 }
 @media (min-width: 992px) {
@@ -8724,21 +8755,22 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 250%;
+    font-size: 150%;
   }
 
   .cover {
     background-size: 100% !important;
   }
 
-  .verbobox {
-    height: 100px;
+  .arcobox {
+    height: 80px;
     margin-top: 10%;
+    width: 45%;
   }
 
   .findahomegroupbtn {
@@ -8753,6 +8785,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
   .header-text {
     font-size: 125%;
+  }
+
+  .mapbox {
+    width: 85% !important;
   }
 }
 @media (min-width: 1200px) {
@@ -8778,21 +8814,22 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 250%;
+    font-size: 150%;
   }
 
   .cover {
     background-size: 100% !important;
   }
 
-  .verbobox {
-    height: 100px;
+  .arcobox {
+    height: 80px;
     margin-top: 10%;
+    width: 45%;
   }
 
   .findahomegroupbtn {
@@ -8807,5 +8844,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
   .header-text {
     font-size: 115%;
+  }
+
+  .mapbox {
+    width: 85% !important;
   }
 }
