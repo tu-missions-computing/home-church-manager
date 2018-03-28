@@ -8524,6 +8524,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   }
 }
 
+footer {
+  font-size: 12pt;
+}
+
 .dashboard-stats {
   height: 185px;
   width: 90%;
@@ -8597,6 +8601,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 }
 
 @media (min-width: 576px) {
+  footer {
+    font-size: 12pt;
+  }
+
   .dashboard-stats {
     height: 185px;
     width: 90%;
