@@ -149,6 +149,9 @@
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">
                                 {{ _('System Roles') }}</a>
                             </li>
+                         <li class="nav-item"><a class="nav-link" href="{{ url_for('homegroup_analytics') }}">
+                                {{ _('Analytics') }}</a>
+                            </li>
                         {% endif %}
                         {% if current_user.role == 'homegroup_leader' %}
                             <li class="nav-item">
