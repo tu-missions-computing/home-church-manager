@@ -190,14 +190,11 @@ class RoleForm(FlaskForm):
 @app.route('/user/create/<member_id>', methods=['GET', 'POST'])
 def create_user(member_id):
     allRoles = db.find_roles()
-    roleList = []
     email_list = []
-    for role in allRoles:
-        roleList.append((role["id"], role["role"]))
     member = db.find_member(member_id)
     email = member['email']
     user_form = UserForm()
-    user_form.role.choices = roleList
+    user_form.role.choices = make_role_list()
     homegroups = db.get_all_homegroups()
     homegroup_list = []
     for homegroup in homegroups:
@@ -237,6 +234,17 @@ def get_roles():
     return render_template('roles.html', member_roles = member_roles)
 
 
+def make_role_list():
+    roleList = []
+    allRoles = db.find_roles()
+    for role in allRoles:
+        # FIXME: Massive translation hack; need to get localized version from DB
+        label = 'Líder de Iglesia de Hogar'
+        if role["role"] == 'admin':
+            label = 'Administrador'
+        roleList.append((role["id"], label))
+    return roleList
+
 
 # Creates a new role for the user that already exists
 @app.route('/roles/new_role/<member_id>', methods=['GET', 'POST'])
@@ -245,19 +253,11 @@ def assign_new_role(member_id):
     if (str(member_id) == str(current_user)):
         flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
-    allRoles = db.find_roles()
-    roleList = []
     email_list = []
-    for role in allRoles:
-        # FIXME: Massive translation hack; need to get localized version from DB
-        label = 'Líder de Iglesia de Hogar'
-        if role["role"] == 'admin':
-            label = 'Administrador'
-        roleList.append((role["id"], label))
     member = db.find_member(member_id)
     email = member['email']
     user_form = RoleForm()
-    user_form.role.choices = roleList
+    user_form.role.choices = make_role_list()
     homegroups = db.get_all_homegroups()
     homegroup_list = []
     for homegroup in homegroups:
