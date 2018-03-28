@@ -8697,7 +8697,7 @@ footer {
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
-    max-width: 85%;
+    width: 85%;
   }
 
   .arcoheader {
@@ -8760,7 +8760,7 @@ footer {
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
-    max-width: 85%;
+    width: 85%;
   }
 
   .arcoheader {
@@ -8819,7 +8819,7 @@ footer {
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
-    max-width: 85%;
+    width: 85%;
   }
 
   .arcoheader {
