@@ -4,8 +4,7 @@
 {% block title %}{{ _('System Roles') }}{% endblock %}
 {% block content %}
 
-        <div class="container">
-            <div class="main-center">
+        <div class="container main-center">
                 <h2 class="title-text animated stretchLeft">{{ _('System Roles') }}</h2>
                 <hr>
                 <div class="row">
@@ -16,7 +15,7 @@
                                 <i class="fa fa-search"></i>
                             </span>
                         </div>
-                    </div>
+
                 </div>
 
                 <span class="counter pull-right"></span>
@@ -26,9 +25,6 @@
                     <tr>
                         <th>{{ _('Name') }}</th>
                         <th>{{ _('Account Type') }}</th>
-                        <th></th>
-
-
                     </tr>
                     </thead>
                     <tbody>
@@ -37,40 +33,41 @@
                             <td> {{ member.first_name }} {{ member.last_name }}</td>
                             {% if member.roleActive %}
                                 {% if member.role == 'admin' %}
-                                    <td> {{ _('Admin') }}</td>
-                                    <td>
+                                    <td> {{ _('Admin') }} <br><br>
+
                                         <a href="{{ url_for('edit_role', member_id = member.id, role_id = member.role_id) }}"
                                            class="btn btn-danger btn-sm">
-                                            <span class="glyphicon glyphicon-minus"></span> {{ _('Deactivate Role') }} </a>
+                                             {{ _('Deactivate Role') }} </a>
                                     </td>
                                 {% else %}
                                     {% if member.role == 'homegroup_leader' and member.homegroup_id  and member.hgLeaderActive %}
-                                        <td> {{ _('Home Group Leader') }}<br> ({{ member.hgName }})</td>
-                                        <td>
+                                        <td> {{ _('Home Group Leader') }}<br> ({{ member.hgName }}) <br><br>
+
                                             <a href="{{ url_for('deactivate_hgleader', member_id = member.id, homegroup_id = member.homegroup_id) }}"
                                                class="btn btn-danger btn-sm">
-                                                <span class="glyphicon glyphicon-minus"></span> {{ _('Deactivate Role') }} </a>
+                                                {{ _('Deactivate Role') }} </a>
                                         </td>
                                     {% else %}
-                                        <td>Inactive User</td>
-                                        <td><a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                        <td>Inactive User <br><br>
+                                        <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
                                                class="btn btn-info btn-sm">
-                                            <span class="glyphicon glyphicon-plus"></span> {{ _('Assign new role') }}</a></td>
+                                             {{ _('Assign new role') }}</a></td>
                                     {% endif %}
                                 {% endif %}
 
 
                             {% else %}
                                 {% if member.role_id %}
-                                    <td>{{ _('Inactive User') }}</td>
-                                    <td><a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                    <td>{{ _('Inactive User') }} <br><br>
+                                   <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
                                            class="btn btn-info btn-sm">
-                                        <span class="glyphicon glyphicon-plus"></span> {{ _('Assign new role') }}</a></td>
+                                     {{ _('Assign new role') }}</a></td>
                                 {% else %}
-                                    <td> &mdash;</td>
-                                    <td><a href="{{ url_for('create_user', member_id = member.id) }}"
+                                    <td> &mdash; <br><br>
+
+                                    <a href="{{ url_for('create_user', member_id = member.id) }}"
                                            class="btn btn-warning btn-sm">
-                                        <span class="glyphicon glyphicon-plus"></span> {{ _('Create Account') }}</a></td>
+                                        {{ _('Create Account') }}</a></td>
                                 {% endif %}
                             {% endif %}
                         </tr>
