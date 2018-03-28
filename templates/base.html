@@ -32,6 +32,19 @@
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script>
+        Highcharts.setOptions({
+            colors: ['#f19125', '#eaeaea', '#3f4358'],
+            lang: {
+                downloadPNG: 'TRANSLATE ME PNG'
+            }
+        });
+    </script>
+
     {# Extra styling #}
     {% block more_style %}{% endblock %}
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -40,26 +53,27 @@
         body, wrapper {
             min-height: 100vh;
         }
+
         main {
             flex: 1;
         }
 
-        .nav-link{
+        .nav-link {
             color: white !important;
             font-size: 10pt;
         }
-        .navbar{
-            min-height:100px;
+
+        .navbar {
+            min-height: 100px;
         }
 
         footer {
-            margin-top:2%;
+            margin-top: 2%;
             padding-top: 1%;
-            background-color:#303030 ;
+            background-color: #303030;
             bottom: 0;
             width: 100%;
         }
-
 
         @keyframes icon-hover-before {
             0% {
@@ -78,7 +92,6 @@
                 transform: rotate(-45deg) scale(1.2, 1.2);
             }
         }
-
 
 
     </style>
@@ -106,20 +119,22 @@
     <wrapper class="d-flex flex-column">
         <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
             <div class="container">
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                  </button>
+                </button>
                 <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:800; font-size:30px"
                    href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png" width="150px"></a>
 
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
                         {% if current_user.name %}
                             <li class="active dropdown nav-item">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                                     {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="{{ url_for('dashboard') }}"> {{ _('Dashboard') }}</a>
                                     <a class="dropdown-item"
                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">
@@ -217,19 +232,19 @@
 
                     {# FIXME: We are going to want to turn off Google translate. #}
 
-{#                    <div class="col" style="float:right; color:white;">#}
-{#                        <div id="google_translate_element"></div>#}
-{#                        <script type="text/javascript">#}
-{#                            function googleTranslateElementInit() {#}
-{#                                new google.translate.TranslateElement({#}
-{#                                    pageLanguage: 'en',#}
-{#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
-{#                                }, 'google_translate_element');#}
-{#                            }#}
-{#                        </script>#}
-{#                        <script type="text/javascript"#}
-{#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-{#                    </div>#}
+                    {#                    <div class="col" style="float:right; color:white;">#}
+                    {#                        <div id="google_translate_element"></div>#}
+                    {#                        <script type="text/javascript">#}
+                    {#                            function googleTranslateElementInit() {#}
+                    {#                                new google.translate.TranslateElement({#}
+                    {#                                    pageLanguage: 'en',#}
+                    {#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
+                    {#                                }, 'google_translate_element');#}
+                    {#                            }#}
+                    {#                        </script>#}
+                    {#                        <script type="text/javascript"#}
+                    {#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </footer>
