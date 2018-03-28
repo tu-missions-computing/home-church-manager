@@ -743,9 +743,18 @@ def add_member_to_homegroup(homegroup_id, member_id):
             db.reactive_homegroup_member(homegroup_id, member_id)
     print(new)
     if new == 'Y':
-        db.add_member_to_homegroup(homegroup_id, member_id)
-    member = db.find_member(member_id)
-    flash (lazy_gettext("Member {} added to homegroup").format(member['first_name']  + " " + member['last_name']), category="success")
+        memberhomegroup = db.member_already_in_homegroup(member_id)
+        if (memberhomegroup):
+            leader = db.find_homegroup_leader(memberhomegroup['homegroup_id'])
+
+            flash("Member is in another Home Group, contact {} to remove member".format(leader['first_name']  + " " + leader['last_name'] + " " +  leader['phone_number']), "danger")
+            members = db.get_all_members_not_in_homegroup(homegroup_id)
+            return render_template('member_search.html', all_members=members, homegroup_id=homegroup_id)
+        else:
+            db.add_member_to_homegroup(homegroup_id, member_id)
+            member = db.find_member(member_id)
+            flash (lazy_gettext("Member {} added to homegroup").format(member['first_name']  + " " + member['last_name']), category="success")
+
     return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
