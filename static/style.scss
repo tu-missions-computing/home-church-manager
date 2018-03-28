@@ -149,7 +149,8 @@
 
 			.arcobox {
              height: 100px;
-			 margin-top: 10%;}
+			 margin-top: 10%;
+			width: 45%;}
 
 			.findahomegroupbtn{
 			 width:50%;
@@ -165,6 +166,9 @@
 			.header-text{
 			font-size:125%;
 		}
+			.mapbox{
+				width:85% !important;
+			}
 
 		}
         //LARGE DEVICES
@@ -202,8 +206,9 @@
 			}
 
 			.arcobox {
-             height: 100px;
-			 margin-top: 10%;}
+             height: 80px;
+			 margin-top: 10%;
+			width: 45%;}
 
 			.findahomegroupbtn{
 			 width:45%;
@@ -216,6 +221,9 @@
 			.header-text{
 			font-size:125%;
 		}
+			.mapbox{
+				width:85% !important;
+			}
 
 		}
         // EXTRA LARGE DEVICES
@@ -236,6 +244,7 @@
 				padding-left:2.5%;
 				padding-right:2.5%;
 				max-width: 85%;
+
 		}
 			.arcoheader {
 				 font-size: 300%;
@@ -248,8 +257,10 @@
 			}
 
 			.arcobox {
-             height: 100px;
-			 margin-top: 10%;}
+             height: 80px;
+			 margin-top: 10%;
+				width: 45%;
+			}
 
 			.findahomegroupbtn{
 			 width:45%;
@@ -262,6 +273,9 @@
 			.header-text{
 			font-size:115%;
 		}
+			.mapbox{
+				width:85% !important;
+			}
 		}
 
 
