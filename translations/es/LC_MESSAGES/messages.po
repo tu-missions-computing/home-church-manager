@@ -802,7 +802,7 @@ msgstr "Miembros de Iglesia de Hogar"
 
 #: templates/homegroup_members.html:29
 msgid "Email Group"
-msgstr "Mandar Correo Electrónico a Grupo"
+msgstr "Contactar a Todos"
 
 #: templates/homegroup_members.html:60
 msgid "Leader"
