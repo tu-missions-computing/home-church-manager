@@ -27,9 +27,6 @@
                 background: url(/static/sun.gif) center no-repeat white;
             }
 
-            .main-center {
-                max-width: 1300px;
-            }
         </style>
     {% endblock %}
 
@@ -49,8 +46,8 @@
 
         <div class="container">
             <div class="row">
-                <div class="verbobox draw" id="verbobox">
-                    <div class="verbotext" id="verbotext">{{ _('ARCO IGLESIA') }}</div>
+                <div class="arcobox draw" id="arcobox">
+                    <div class="arcoheader">{{ _('ARCO IGLESIA') }}</div>
                     <div class="homegrouptext" id="homegrouptext">{{ _('HOME GROUP FINDER') }}</div>
                 </div>
                 <br><br>
@@ -64,7 +61,9 @@
                     </a>
                 </div>
             </div>
-            <div class="container larger-container" style="padding:3.5%;">
+        </div>
+
+            <div class="larger-container mapbox" style="padding:3.5%;">
                 <h2 id="bottom" class="title-text">{{ _('Find a Home Group') }}</h2>
                 <div class="row">
                     <div class="col-12">
@@ -79,7 +78,7 @@
 
                 </div>
                 <div class="row" style="margin-top:7.5%">
-                    <iframe id="mapIframe" height="75%" width="100%" class="embed-responsive-item" src="../../map">
+                    <iframe id="mapIframe" height="50%" width="100%" class="embed-responsive-item" src="../../map">
                     </iframe>
                 </div>
             </div>

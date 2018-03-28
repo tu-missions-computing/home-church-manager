@@ -4,10 +4,6 @@
 {% block title %}{{ _('Home') }}{% endblock %}
 
 {% block content %}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
         <div class="container" style="background-color:white;color:black; margin-top:1.5%">
             <div class="row">
                 <div class="col-12">
@@ -75,7 +71,7 @@
         <thead>
         <tr>
             <th></th>
-            <th>Home Group</th>
+            <th>{{ _('Home Group') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -92,7 +88,7 @@
         <thead>
         <tr>
             <th></th>
-            <th>Gender</th>
+            <th>{{ _('Gender') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -105,13 +101,12 @@
 
         </tbody>
     </table>
-
     <table id="attendanceReport" hidden>
         <thead>
         <tr>
             <th></th>
 
-            <th>Total People</th>
+            <th>{{ _('Total People') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -125,10 +120,6 @@
     </table>
 
     <script>
-        Highcharts.setOptions({
-            colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
-        });
-
         Highcharts.chart('top-five', {
             data: {
                 table: 'datatable'

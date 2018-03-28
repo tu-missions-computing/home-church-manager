@@ -5,11 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name=“viewport” content=“width=device-width, initial-scale=1">
     <title>{% block title %}My Title{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
             integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
@@ -27,15 +23,36 @@
         }, 4000);
     </script>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="stylesheet" href="/static/animations.css">
+    {#  Stylesheet #}
     <link rel="stylesheet" href="/static/background.css">
+    {# Bootstrap SASS Media Breakpoints#}
+    <link rel="stylesheet" href="/static/style.css">
+    {# Animations #}
+    <link rel="stylesheet" href="/static/animations.css">
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script>
+
+        Highcharts.setOptions({
+            colors: ['#f19125', '#eaeaea', '#3f4358'],
+            lang: {
+                downloadPNG: 'Descargar PNG',
+                downloadPDF: 'Descargar PDF',
+                downloadSVG: 'Descargar SVG',
+                printChart: 'Tabla de Impresión'
+
+            }
+        });
+    </script>
 
     {# Extra styling #}
     {% block more_style %}{% endblock %}
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS Styling-->
     <style>
         body, wrapper {
@@ -46,69 +63,21 @@
             flex: 1;
         }
 
-
-        .custom-btn {
-            padding: 10px 25px;
-            background: transparent;
-            outline: none !important;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            display: inline-block;
-
+        .nav-link {
+            color: white !important;
+            font-size: 10pt;
         }
 
-        /**** BTN No. 12 ****/
-        .btn-12 {
-            z-index: 1;
-            background: white;
-            color: black;
-        }
-
-        .btn-12:after {
-            position: absolute;
-            content: "";
-            width: 100%;
-            height: 0;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-            background: #F0F0F0;
-            transition: all 0.3s ease;
-        }
-
-        .btn-12:hover {
-            color: black;
-        }
-
-        .btn-12:hover:after {
-            top: 0;
-            height: 100%;
-        }
-
-        .btn-12:active {
-            top: 2px;
+        .navbar {
+            min-height: 100px;
         }
 
         footer {
-            padding-top: 5%;
-        }
-
-        .toggle-button {
-            position: relative;
-            display: inline-block;
-            color: #fff;
-        }
-
-        .toggle-button label {
-            display: inline-block;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .toggle-button input {
-            display: none;
+            margin-top: 2%;
+            padding-top: 1%;
+            background-color: #303030;
+            bottom: 0;
+            width: 100%;
         }
 
         @keyframes icon-hover-before {
@@ -130,14 +99,11 @@
         }
 
 
-        .nav-link{
-            color: white !important;
-        }
-
     </style>
 </head>
 
-<body>
+{#<body>#}
+<body class="d-flex flex-column">
 <div class="se-pre-con"></div>
 
 {% with messages = get_flashed_messages() %}
@@ -158,25 +124,23 @@
     <wrapper class="d-flex flex-column">
         <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
             <div class="container">
-
-                <button style="cursor:pointer" class="navbar-toggler float-right" type="button" data-toggle="collapse"
-                        data-target="#navbarToggler-1" aria-controls="navbarToggler-1" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" style="padding-left:1px; padding-top:10px; font-weight:800; font-size:30px"
                    href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png" width="150px"></a>
 
-                <div class="collapse navbar-collapse pull-xs-right justify-content-end" id="navbarToggler-1" >
-
-                    <ul class="nav">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
                         {% if current_user.name %}
                             <li class="active dropdown nav-item">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                                     {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
-                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}"> Dashboard</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="{{ url_for('dashboard') }}"> {{ _('Dashboard') }}</a>
                                     <a class="dropdown-item"
                                        href="{{ url_for('user_profile', user_id = current_user.member_id) }}">
                                         {{ _('Profile Settings') }}</a>
@@ -227,12 +191,13 @@
                         {% if current_user.name %}
                             <li class="nav-item" style="padding-top:5px;padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
-                                    <b><i class="fa fa-user"> &nbsp;</i>{{ _('Log Out') }}</b>
+                                    <b><i class="fa fa-user"> </i>{{ _('Log Out') }}</b>
                                 </a>
                             </li>
                         {% else %}
+                            <li class="nav-item" style="padding-top:5px; padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/login">
-                                    <b><i class="fa fa-user">&nbsp;</i>{{ _('Log In') }}</b>
+                                    <b><i class="fa fa-user"> </i>{{ _('Log In') }}</b>
                                 </a>
                             </li>
                         {% endif %}
@@ -248,7 +213,6 @@
 
         <!-- /#page-content-wrapper -->
         <footer>
-            <hr>
             <div class="container-fluid w-10">
                 <div class="row">
                     <div class="col-4" style="padding:0;">
@@ -262,7 +226,7 @@
                             Cuenca, Ecuador
                         </div>
                     </div>
-                    <div class="col-4" style="padding:0; padding-top:1%; background-size: contain;">
+                    <div class="col-4" style="padding:0; background-size: contain;">
                         <img src="/static/arco-final2.png" alt="Arco Ministries Logo" class="logo"/>
 
                     </div>
@@ -273,19 +237,19 @@
 
                     {# FIXME: We are going to want to turn off Google translate. #}
 
-{#                    <div class="col" style="float:right; color:white;">#}
-{#                        <div id="google_translate_element"></div>#}
-{#                        <script type="text/javascript">#}
-{#                            function googleTranslateElementInit() {#}
-{#                                new google.translate.TranslateElement({#}
-{#                                    pageLanguage: 'en',#}
-{#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
-{#                                }, 'google_translate_element');#}
-{#                            }#}
-{#                        </script>#}
-{#                        <script type="text/javascript"#}
-{#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
-{#                    </div>#}
+                    {#                    <div class="col" style="float:right; color:white;">#}
+                    {#                        <div id="google_translate_element"></div>#}
+                    {#                        <script type="text/javascript">#}
+                    {#                            function googleTranslateElementInit() {#}
+                    {#                                new google.translate.TranslateElement({#}
+                    {#                                    pageLanguage: 'en',#}
+                    {#                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE#}
+                    {#                                }, 'google_translate_element');#}
+                    {#                            }#}
+                    {#                        </script>#}
+                    {#                        <script type="text/javascript"#}
+                    {#                                src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </footer>

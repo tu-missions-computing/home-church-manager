@@ -4,9 +4,6 @@
 {% block title %}{{ currentHomegroup.name }} {{ _('Home') }}{% endblock %}
 
 {% block content %}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <div class="container" style="background-color:white;color:black; margin-top:1.5%">
             <div class="row">
                 <div class="col-12">
@@ -80,26 +77,26 @@
                                         </td>
 
                                         {% if member[1] %}
-                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                            <td style="color:#f19125;"><i class="fa fa-check-circle fa-2x"
                                                                           aria-hidden="true"></i></td>
                                         {% else %}
-                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                            <td style="color:#3f4358"><i class="fa fa-times-circle fa-2x"
                                                                          aria-hidden="true"></i></td>
                                         {% endif %}
 
                                         {% if member[2] %}
-                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                            <td style="color:#f19125;"><i class="fa fa-check-circle fa-2x"
                                                                           aria-hidden="true"></i></td>
                                         {% else %}
-                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                            <td style="color:#3f4358"><i class="fa fa-times-circle fa-2x"
                                                                          aria-hidden="true"></i></td>
                                         {% endif %}
 
                                         {% if member[3] %}
-                                            <td style="color:#2B75A0;"><i class="fa fa-check-circle fa-2x"
+                                            <td style="color:#f19125;"><i class="fa fa-check-circle fa-2x"
                                                                           aria-hidden="true"></i></td>
                                         {% else %}
-                                            <td style="color:#E76245"><i class="fa fa-times-circle fa-2x"
+                                            <td style="color:#3f4358"><i class="fa fa-times-circle fa-2x"
                                                                          aria-hidden="true"></i></td>
                                         {% endif %}
                                     </tr>
@@ -136,9 +133,9 @@
         </table>
 
         <script>
-            Highcharts.setOptions({
-                colors: ['#E76245', '#2B75A0', '#453F3B', '#7D7C7C', '#93A78D']
-            });
+             Highcharts.setOptions({
+            colors: ['#f19125', '#eaeaea', '#3f4358']
+             });
 
             Highcharts.chart('line-chart', {
                 chart: {

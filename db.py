@@ -83,7 +83,18 @@ def get_all_member_roles():
 
 # finds member based on an email
 def find_user(email):
-    g.db.execute('''SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s and member_role.is_active = '1' ''', (email,))
+    query="""
+SELECT member.id, member_role.member_id,
+  first_name, last_name, email, phone_number, gender, birthday,
+  baptism_status, marital_status_id, how_did_you_find_out_id,
+  is_a_parent, join_date, member.is_active,
+  password, role_id, role
+FROM member
+  JOIN member_role ON member.id = member_role.member_id
+  JOIN role ON member_role.role_id = role.id
+WHERE member.email = %s AND member_role.is_active = TRUE
+    """
+    g.db.execute(query, (email,))
     return g.db.fetchone()
 
 def find_user_info(id):
@@ -445,6 +456,15 @@ def find_member_homegroup(member_id):
        SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
        where member_id = %s
        ''', (member_id,))
+    return g.db.fetchone()
+
+#find if already has a homegroup
+def member_already_in_homegroup(member_id):
+    g.db.execute('''
+          SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+      
+          where member_id = %s and homegroup_member.is_active = '1'
+          ''', (member_id,))
     return g.db.fetchone()
 
 

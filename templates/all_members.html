@@ -4,9 +4,9 @@
 {% block title %}{{ _('All Members') }}{% endblock %}
 
 {% block content %}
-        <div class="container">
-            <div class="main-center">
-                <h1 class="title-text animated stretchLeft">All Members</h1>
+        <div class="larger-container">
+
+                <h1 class="title-text animated stretchLeft">{{ _('All Members') }}</h1>
                 <hr>
                 <div class="row">
                     <div class="form-group col-6 float-left ">
@@ -64,7 +64,7 @@
                     <div class="col-7">
                         <div class="row" style="margin: 0 auto">
                             <div class="col-9" style="padding:0">
-                                <span style="font-size:14px; padding-right:5px">Show Inactive Members</span>
+                                <span style="font-size:14px; padding-right:5px">{{ _('Show Inactive Members') }}</span>
                             </div>
                             <div class="col-3" style="padding:0">
                                 <input id="checkbox1" type="checkbox" checked>
@@ -92,7 +92,7 @@
                             <td>
                                 <a href="{{ url_for('edit_member', member_id = member.id) }}"
                                    class="btn btn-info btn-sm">
-                                    <span class="fa fa-pencil"></span> Edit
+                                    <span class="fa fa-pencil"></span> {{ _('Edit') }}
                                 </a>
                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#confirmModal"
@@ -113,11 +113,11 @@
                         <td class="content">
                             <a href="{{ url_for('edit_member', member_id = inactiveMember.id) }}"
                                class="btn btn-info btn-sm">
-                                <span class="fa fa-pencil"></span> Edit
+                                <span class="fa fa-pencil"></span> {{ _('Edit') }}
                             </a>
                             <a href="{{ url_for('reactivate_member', member_id = inactiveMember.id) }}"
                                class="btn btn-success btn-sm">
-                                <span class="fa fa-plus"></span> Reactivate
+                                <span class="fa fa-plus"></span> {{ _('Reactivate') }}
                             </a>
                         </td>
                         <td class="content"><span style="color:red" class="fa fa-times"></span></td>
@@ -129,7 +129,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
+                                    <h5 class="modal-title" id="exampleModalLongTitle">{{ _('Confirm') }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -143,14 +143,14 @@
                                             {{ _('Confirm') }}
                                         </button>
                                     </a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ _('Close') }}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     </tbody>
                 </table>
-            </div>
+
         </div>
     </section>
 
