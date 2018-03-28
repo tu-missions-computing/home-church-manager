@@ -916,6 +916,11 @@ class CreateHomeGroupForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
+    print(attendance_count)
+    print(attendance_count[0]["month"])
+    print("lazy_gettext("+ attendance_count[0]["month"] +")")
+    for i in range(0, len(attendance_count)):
+        attendance_count[i]["month"]=lazy_gettext(attendance_count[i]["month"])
     homegroup_member_data = db.get_top_n_homegroup_member_counts('5')
     gender = db.gender_report()
     active_homegroups = db.number_of_active_homegroups()
