@@ -109,7 +109,7 @@ def map():
 # Display the FAQ page
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('faq_es.html')
 
 
 # Display the homegroup leader FAQ page
