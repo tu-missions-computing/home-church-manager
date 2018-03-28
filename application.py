@@ -500,6 +500,96 @@ def homegroup(homegroup_id):
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
 
 
+# this is the homegroup main page / dashboard
+@app.route('/homegroup_split/<homegroup_id>',methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def homegroup_split(homegroup_id):
+    new_homegroup = CreateHomeGroupSplitForm()
+
+    if request.method == "POST" and new_homegroup.validate():
+        name = new_homegroup.name.data
+        location = new_homegroup.location.data
+        description = new_homegroup.description.data
+        latitude = new_homegroup.latitude.data
+        longitude = new_homegroup.longitude.data
+
+        rowcount = db.create_homegroup(name, location, description, latitude, longitude)
+        homegroup1 = db.recent_homegroup()['id']
+        name2 = new_homegroup.name2.data
+        location2 = new_homegroup.location2.data
+        description2 = new_homegroup.description2.data
+        latitude2 = new_homegroup.latitude2.data
+        longitude2 = new_homegroup.longitude2.data
+        rowcount = db.create_homegroup(name2, location2, description2, latitude2, longitude2)
+        homegroup2 = db.recent_homegroup()['id']
+        if rowcount == 1:
+
+            return redirect(url_for('homegroup_split_members', homegroup_id = homegroup_id, homegroup_id1 = homegroup1, homegroup_id2 = homegroup2))
+
+    return render_template('homegroup_split.html', form = new_homegroup)
+
+
+
+# this is the homegroup main page / dashboard
+@app.route('/split_member/<member_id>/<homegroup_id>/<homegroup_id1>/<homegroup_id2>/<group>',methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
+    db.remove_member(homegroup_id, member_id)
+    if (group == 'one'):
+        db.add_member_to_homegroup(homegroup_id1, member_id)
+    if (group == 'two'):
+        db.add_member_to_homegroup(homegroup_id2, member_id)
+    return redirect(url_for('homegroup_split_members', homegroup_id=homegroup_id, homegroup_id1=homegroup_id1,
+                            homegroup_id2=homegroup_id2))
+
+# adds members to split group
+@app.route('/homegroup_split_members/<homegroup_id>/<homegroup_id1>/<homegroup_id2>', methods=['GET', 'POST'])
+@login_required
+@requires_roles('admin')
+def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
+    members = db.get_homegroup_members(homegroup_id)
+    currentHomegroup = homegroup_id
+    homegroup_to_be_split = db.find_homegroup(homegroup_id)
+    homegroup1 = db.find_homegroup(homegroup_id1)
+    homegroup2 = db.find_homegroup(homegroup_id2)
+    return render_template('homegroup_split_members.html', homegroup_to_be_split = homegroup_to_be_split, homegroup1 = homegroup1, homegroup2 = homegroup2, currentHomegroup = currentHomegroup, old_members = members, homegroup_id1 =homegroup_id1, homegroup_id2 = homegroup_id2)
+
+## this returns further analytics for homegroups ###
+@app.route('/homegroup_analytics')
+@login_required
+@requires_roles('admin')
+def homegroup_analytics():
+    year = datetime.datetime.now().strftime("%Y")
+    analytics = db.homegroup_analytics(year)
+    minors = db.number_of_minors(year)
+    new_members = db.number_of_new_members(year)
+    attending_members = db.members_attending_a_homegroup(year)
+    total_members = db.total_members(year)
+    analyticsList = ['','','','','','','','','','','','']
+    minorsList = ['','','','','','','','','','','','']
+    newMembersList = ['','','','','','','','','','','','']
+    attendingMembersList = ['','','','','','','','','','','','']
+    totalMembersList = ['','','','','','','','','','','','']
+    for row in analytics:
+        index = int(row['month']) -1
+        analyticsList[index] = int(row['count'])
+    for row in minors:
+        index = int(row['month']) - 1
+        minorsList[index] = int(row['count'])
+    for row in new_members:
+        index = int(row['month']) - 1
+        newMembersList[index] = int(row['count'])
+    for row in attending_members:
+        index = int(row['month']) - 1
+        attendingMembersList[index] = int(row['count'])
+    for row in total_members:
+        index = int(row['month']) - 1
+        totalMembersList[index] = int(row['count'])
+
+    return render_template('homegroup_analytics.html', totalMembersList = totalMembersList, attendingMembersList = attendingMembersList, year = year,newMembersList = newMembersList, minorsList = minorsList, analytics = analyticsList)
+
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
@@ -704,6 +794,10 @@ def edit_homegroup(homegroup_id):
 @app.route('/homegroup/select_location')
 def select_location():
     return render_template('select_location.html')
+# this is the iframe that is in the creating/editing homegroup -- allows you to type in address and finds location
+@app.route('/homegroup/select_location2')
+def select_location2():
+    return render_template('select_location2.html')
 
 
 ########################## MEMBER (Home Group Leader) ##############################################
@@ -786,6 +880,7 @@ def create_new_member_for_homegroup(homegroup_id):
         how_did_you_find_out_id = member.how_did_you_find_out.data
         is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
+
         if (db.find_member_info(email)):
             flash(lazy_gettext("Person with this email already exists"), category="danger")
             return render_template('create_member.html', form=member)
@@ -797,6 +892,7 @@ def create_new_member_for_homegroup(homegroup_id):
                 db.add_member_to_homegroup(homegroup_id, member_id)
                 flash(lazy_gettext("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
                 return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
+
 
     return render_template('create_member.html', form=member, homegroup_id=homegroup_id)
 
@@ -908,6 +1004,21 @@ class CreateHomeGroupForm(FlaskForm):
     latitude = StringField(lazy_gettext('Latitude'))
     longitude = StringField(lazy_gettext('Longitude'))
     submit = SubmitField(lazy_gettext('Save Home Group'))
+
+
+
+class CreateHomeGroupSplitForm(FlaskForm):
+    name = StringField(_('Name'), [Length(min=2, max=50 , message=_("Name is a required field"))])
+    description = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
+    location = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
+    latitude = StringField(_('Latitude'))
+    longitude = StringField(_('Longitude'))
+    name2 = StringField(_('Name'), [Length(min=2, max=50, message=_("Name is a required field"))])
+    description2 = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
+    location2 = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
+    latitude2 = StringField(_('Latitude'))
+    longitude2 = StringField(_('Longitude'))
+    submit1 = SubmitField(_('Create Home Groups'))
 
 
 # Display admin home page
