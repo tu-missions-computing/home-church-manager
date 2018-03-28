@@ -78,7 +78,7 @@ def get_all_member_roles():
 # finds member based on an email
 def find_user(email):
     query="""
-SELECT member.id,
+SELECT member.id, member_role.member_id,
   first_name, last_name, email, phone_number, gender, birthday,
   baptism_status, marital_status_id, how_did_you_find_out_id,
   is_a_parent, join_date, member.is_active,
