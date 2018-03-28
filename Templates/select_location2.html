@@ -46,10 +46,10 @@
         });
         var geocoder = new google.maps.Geocoder();
 
-        parent.document.getElementById('findLocation').addEventListener('click', function () {
-            parent.document.getElementById('submit').style.display = 'block';
-            parent.document.getElementById('mapFrame').style.display = 'block';
-            parent.document.getElementById('findLocation').style.display = 'none';
+        parent.document.getElementById('findLocation2').addEventListener('click', function () {
+            parent.document.getElementById('submit1').style.display = 'block';
+            parent.document.getElementById('mapFrame2').style.display = 'block';
+            parent.document.getElementById('findLocation2').style.display = 'none';
             geocodeAddress(geocoder, map);
         });
 
@@ -57,7 +57,7 @@
 
 
     function geocodeAddress(geocoder, resultsMap) {
-        var address = parent.document.getElementById('location').value;
+        var address = parent.document.getElementById('location2').value;
         geocoder.geocode({'address': address}, function (results, status) {
             if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
@@ -67,8 +67,8 @@
                     map: resultsMap,
                     position: results[0].geometry.location
                 });
-                parent.document.getElementById('latitude').value = (results[0].geometry.location.lat() );
-                parent.document.getElementById('longitude').value = (results[0].geometry.location.lng() );
+                parent.document.getElementById('latitude2').value = (results[0].geometry.location.lat() );
+                parent.document.getElementById('longitude2').value = (results[0].geometry.location.lng() );
 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);

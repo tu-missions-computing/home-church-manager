@@ -364,7 +364,7 @@ def reactivate_member(member_id):
 # finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):
     query = '''
-        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_leader.is_active as "hgLeader" FROM member
+        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_member.is_active as "activeMember",  homegroup_leader.is_active as "hgLeader" FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         left outer join homegroup_leader on homegroup_leader.member_id = member.id and homegroup_leader.homegroup_id = homegroup.id
