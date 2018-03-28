@@ -110,7 +110,8 @@ def map():
 @app.route('/faq')
 def faq():
     locale = get_locale()
-    return render_template('faq_{}.html'.format(locale))
+    faq_file_name = 'faq_{}.html'.format(locale)
+    return render_template(faq_file_name)
 
 
 # Display the homegroup leader FAQ page
