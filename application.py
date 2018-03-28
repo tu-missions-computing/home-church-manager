@@ -249,7 +249,11 @@ def assign_new_role(member_id):
     roleList = []
     email_list = []
     for role in allRoles:
-        roleList.append((role["id"], role["role"]))
+        # FIXME: Massive translation hack; need to get localized version from DB
+        label = 'Líder de Iglesia de Hogar'
+        if role["role"] == 'admin':
+            label = 'Administrador'
+        roleList.append((role["id"], label))
     member = db.find_member(member_id)
     email = member['email']
     user_form = RoleForm()
