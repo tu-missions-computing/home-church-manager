@@ -8587,6 +8587,10 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   padding-right: 0 !important;
 }
 
+.btn {
+  font-size: 8pt !important;
+}
+
 @media (min-width: 576px) {
   .searchbar {
     width: 85%;
