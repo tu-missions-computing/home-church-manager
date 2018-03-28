@@ -2,6 +2,10 @@
 
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
+		.dashboard-stats{
+			height:185px;
+			width:90%;
+		}
 		.searchbar{
 			width:85%;
 		}
@@ -62,6 +66,10 @@
 
         //SMALL DEVICES
         @include media-breakpoint-up(sm) {
+			.dashboard-stats{
+			height:185px;
+			width:90%;
+		}
 			.searchbar{
 			width:85%;
 			}
