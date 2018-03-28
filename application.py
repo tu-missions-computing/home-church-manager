@@ -778,7 +778,7 @@ def create_new_member_for_homegroup(homegroup_id):
         is_a_parent = member.is_a_parent.data
         join_date = request.form['JoinDate']
         if (db.find_member_info(email)):
-            flash("Person with this email already exists", category="danger")
+            flash(lazy_gettext("Person with this email already exists"), category="danger")
             return render_template('create_member.html', form=member)
         else:
             rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
@@ -1026,7 +1026,7 @@ def create_member():
         join_date = request.form['JoinDate']
 
         if (db.find_member_info(email)):
-            flash("Person with this email already exists", category="danger")
+            flash(lazy_gettext("Person with this email already exists"), category="danger")
             return render_template('create_member.html', form=member)
 
         else:
