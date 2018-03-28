@@ -4,11 +4,7 @@
 {% block title %}{{ _('Log In') }}{% endblock %}
 
 {% block content %}
-    <style>
-        body, html {
-            height: 100%;
-        }
-    </style>
+
 
         <div class="container main-login main-center">
             <h1 class="title-text animated stretchLeft">{{ _('Log In') }}</h1>
@@ -37,7 +33,7 @@
                     </div>
                 {% endif %}
                 <p>{{ form.submit(class_='btn btn-primary btn-lg btn-block',
-                                  style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}
+                                  style="display: block; width: 100%;") }}
                 </p>
             </form>
         </div>

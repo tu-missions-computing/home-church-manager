@@ -8550,20 +8550,21 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   max-width: 100%;
 }
 
-.verbotext {
+.arcoheader {
   font-size: 200%;
 }
 
 .homegrouptext {
-  font-size: 150%;
+  font-size: 100%;
 }
 
 .cover {
   background-size: 250% !important;
 }
 
-.verbobox {
+.arcobox {
   height: 75px;
+  width: 75%;
   margin-top: 30%;
 }
 
@@ -8579,6 +8580,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .header-text {
   font-size: 115%;
+}
+
+.mapbox {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 @media (min-width: 576px) {
@@ -8608,20 +8614,21 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 100%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 200%;
+    font-size: 100%;
   }
 
   .cover {
     background-size: 250% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 75px;
+    width: 75%;
     margin-top: 30%;
   }
 
@@ -8637,6 +8644,11 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
   .header-text {
     font-size: 115%;
+  }
+
+  .mapbox {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 @media (min-width: 768px) {
@@ -8666,19 +8678,19 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 200%;
+    font-size: 125%;
   }
 
   .cover {
     background-size: 150% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 100px;
     margin-top: 10%;
   }
@@ -8724,19 +8736,19 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 250%;
+    font-size: 150%;
   }
 
   .cover {
     background-size: 100% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 100px;
     margin-top: 10%;
   }
@@ -8778,19 +8790,19 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     max-width: 85%;
   }
 
-  .verbotext {
+  .arcoheader {
     font-size: 300%;
   }
 
   .homegrouptext {
-    font-size: 250%;
+    font-size: 150%;
   }
 
   .cover {
     background-size: 100% !important;
   }
 
-  .verbobox {
+  .arcobox {
     height: 100px;
     margin-top: 10%;
   }
