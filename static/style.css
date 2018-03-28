@@ -8525,7 +8525,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 }
 
 footer {
-  font-size: 12pt;
+  font-size: 8pt;
 }
 
 .dashboard-stats {
@@ -8538,7 +8538,7 @@ footer {
 }
 
 .logo {
-  width: 30%;
+  width: 50%;
 }
 
 .main-center {
@@ -8602,7 +8602,7 @@ footer {
 
 @media (min-width: 576px) {
   footer {
-    font-size: 12pt;
+    font-size: 8pt;
   }
 
   .dashboard-stats {
@@ -8615,7 +8615,7 @@ footer {
   }
 
   .logo {
-    width: 30%;
+    width: 35%;
   }
 
   .main-center {

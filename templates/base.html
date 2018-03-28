@@ -38,12 +38,12 @@
     <!-- CSS Styling-->
     <style>
         body, wrapper {
-            min-height: 100vh !important;
+            min-height: 100vh;
         }
-
         main {
             flex: 1;
         }
+
         .nav-link{
             color: white !important;
             font-size: 10pt;
@@ -56,6 +56,10 @@
             margin-top:2%;
             padding-top: 1%;
             background-color:#303030 ;
+             position: fixed;
+              bottom: 0;
+              width: 100%;
+              /* Set the fixed height of the footer here */
         }
 
 
@@ -171,12 +175,13 @@
                         {% if current_user.name %}
                             <li class="nav-item" style="padding-top:5px;padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
-                                    <b><i class="fa fa-user"> &nbsp;</i>{{ _('Log Out') }}</b>
+                                    <b><i class="fa fa-user"> </i>{{ _('Log Out') }}</b>
                                 </a>
                             </li>
                         {% else %}
+                            <li class="nav-item" style="padding-top:5px; padding-left:5px;">
                                 <a class="nav-link btn btn-outline-white btn-outline" href="/login">
-                                    <b><i class="fa fa-user">&nbsp;</i>{{ _('Log In') }}</b>
+                                    <b><i class="fa fa-user"> </i>{{ _('Log In') }}</b>
                                 </a>
                             </li>
                         {% endif %}

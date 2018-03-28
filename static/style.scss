@@ -3,7 +3,7 @@
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
 		footer{
-			font-size: 12pt;
+			font-size: 8pt;
 		}
 		.dashboard-stats{
 			height:185px;
@@ -13,7 +13,7 @@
 			width:85%;
 		}
 		.logo{
-			width: 30%;
+			width: 50%;
 		}
 		.main-center{
 			width:95%;
@@ -70,7 +70,7 @@
         //SMALL DEVICES
         @include media-breakpoint-up(sm) {
 			footer{
-			font-size: 12pt;
+			font-size: 8pt;
 		}
 			.dashboard-stats{
 			height:185px;
@@ -80,7 +80,7 @@
 			width:85%;
 			}
 			.logo{
-			width: 30%;
+			width: 35%;
 			}
 			.main-center{
 			width:95%;
