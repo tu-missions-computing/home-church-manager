@@ -4,9 +4,9 @@
 <p><b>{{ _('Email') }}:</b> {{ email }} </p>
 <p><b>{{ _('Temporary password') }}:</b> {{ password }}</p>
 {# FIXME: MASSIVE URL HACK #}
-<a href="{{ 'https://verbo.brazilsouth.cloudapp.azure.com/' + url_for('update_user', user_id=user_id) }}">
+<a href="{{ 'https://verbo.brazilsouth.cloudapp.azure.com' + url_for('update_user', user_id=user_id) }}">
     <p>
-        {{ _('Click here to change your password') }}:
+        {{ _('Click here to change your password') }}
     </p>
 </a>
 </body>

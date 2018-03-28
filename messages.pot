@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-28 10:39-0500\n"
+"POT-Creation-Date: 2018-03-28 15:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: application.py:128 application.py:886 templates/all_members.html:83
+#: application.py:130 application.py:905 templates/all_members.html:83
 #: templates/contact.html:17 templates/edit_attendance.html:20
 #: templates/homegroup_list.html:37 templates/homegroup_members.html:49
 #: templates/member_search.html:40 templates/notify_member_email.html:13
@@ -25,166 +25,162 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: application.py:129 application.py:384
+#: application.py:131 application.py:390
 msgid "Email Address"
 msgstr ""
 
-#: application.py:130 templates/contact.html:41 templates/contact_email.html:5
+#: application.py:132 templates/contact.html:41 templates/contact_email.html:5
 msgid "Message"
 msgstr ""
 
-#: application.py:131
+#: application.py:133
 msgid "Send Email"
 msgstr ""
 
-#: application.py:146
+#: application.py:148
 msgid "Message Received"
 msgstr ""
 
-#: application.py:151
+#: application.py:153
 msgid "Email Sent!"
 msgstr ""
 
-#: application.py:163 application.py:166
+#: application.py:165 application.py:168
 msgid "User does not have sufficient privileges"
 msgstr ""
 
-#: application.py:176
+#: application.py:178
 msgid "Temporary Password"
 msgstr ""
 
-#: application.py:177 application.py:182
+#: application.py:179 application.py:184
 msgid "Change Role"
 msgstr ""
 
-#: application.py:178 application.py:183
+#: application.py:180 application.py:185
 msgid "Choose Homegroup"
 msgstr ""
 
-#: application.py:179
+#: application.py:181
 msgid "Create User"
 msgstr ""
 
-#: application.py:184
+#: application.py:186
 msgid "New Role"
 msgstr ""
 
-#: application.py:194
-msgid "role"
-msgstr ""
-
-#: application.py:209
+#: application.py:208
 msgid "User already has account"
 msgstr ""
 
-#: application.py:215
+#: application.py:214
 msgid "User account created for Verbo Velocity"
 msgstr ""
 
-#: application.py:224
+#: application.py:223
 msgid "User Created"
 msgstr ""
 
-#: application.py:244 application.py:278
+#: application.py:254 application.py:284
 msgid "You cannot edit your own role - please contact a system administrator"
 msgstr ""
 
-#: application.py:268
+#: application.py:274
 msgid "Role Created"
 msgstr ""
 
-#: application.py:297
+#: application.py:303
 msgid "Current Password"
 msgstr ""
 
-#: application.py:298
+#: application.py:304
 msgid "New Password"
 msgstr ""
 
-#: application.py:299
+#: application.py:305
 msgid "Confirm Password"
 msgstr ""
 
-#: application.py:300 templates/base.html:129 templates/update_user.html:4
+#: application.py:306 templates/base.html:129 templates/update_user.html:4
 #: templates/update_user.html:9
 msgid "Update Password"
 msgstr ""
 
-#: application.py:318
+#: application.py:324
 msgid "Password updated"
 msgstr ""
 
-#: application.py:321
+#: application.py:327
 msgid "New password and confirmation password do not match"
 msgstr ""
 
-#: application.py:324
+#: application.py:330
 msgid "Entered wrong current password"
 msgstr ""
 
-#: application.py:385
+#: application.py:391
 msgid "Password"
 msgstr ""
 
-#: application.py:386 templates/base.html:179 templates/login.html:4
+#: application.py:392 templates/base.html:180 templates/login.html:4
 #: templates/login.html:10
 msgid "Log In"
 msgstr ""
 
-#: application.py:414
+#: application.py:420
 msgid "Invalid email address or password"
 msgstr ""
 
-#: application.py:455
+#: application.py:461
 msgid "No attendance data for this Home Group"
 msgstr ""
 
-#: application.py:500 application.py:551 application.py:575
+#: application.py:506 application.py:557 application.py:581
 #: templates/base.html:157 templates/edit_attendance.html:21
 #: templates/homegroup.html:65 templates/homegroup_list.html:60
 #: templates/view_attendance.html:10 templates/view_attendance_report.html:20
 msgid "Attendance"
 msgstr ""
 
-#: application.py:501
+#: application.py:507
 msgid "Submit"
 msgstr ""
 
-#: application.py:535
+#: application.py:541
 msgid "System Reminder: Missing meetings"
 msgstr ""
 
-#: application.py:549 application.py:573
+#: application.py:555 application.py:579
 msgid "attendance"
 msgstr ""
 
-#: application.py:595
+#: application.py:601
 msgid "Save"
 msgstr ""
 
-#: application.py:689
+#: application.py:695
 msgid "Home Group updated"
 msgstr ""
 
-#: application.py:707 templates/admin_profiles.html:47
+#: application.py:713 templates/admin_profiles.html:47
 #: templates/advanced_search.html:149 templates/create_member.html:19
 msgid "First Name"
 msgstr ""
 
-#: application.py:707
+#: application.py:713
 msgid "First name is a required field"
 msgstr ""
 
-#: application.py:708 templates/admin_profiles.html:48
+#: application.py:714 templates/admin_profiles.html:48
 #: templates/advanced_search.html:150 templates/create_member.html:31
 msgid "Last Name"
 msgstr ""
 
-#: application.py:708
+#: application.py:714
 msgid "Last name is a required field"
 msgstr ""
 
-#: application.py:709 templates/assign_role.html:15 templates/contact.html:29
+#: application.py:715 templates/assign_role.html:15 templates/contact.html:29
 #: templates/contact_email.html:4 templates/create_user.html:16
 #: templates/edit_member.html:33 templates/member_search.html:41
 #: templates/notify_member_email.html:15 templates/update_user.html:11
@@ -192,132 +188,136 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: application.py:709
+#: application.py:715
 msgid "Please enter valid email"
 msgstr ""
 
-#: application.py:710
+#: application.py:716
 msgid "Phone Number"
 msgstr ""
 
-#: application.py:710
+#: application.py:716
 msgid "Please enter valid phone number"
 msgstr ""
 
-#: application.py:711 templates/admin_home.html:95
+#: application.py:717 templates/admin_home.html:95
 #: templates/advanced_search.html:34
 msgid "Gender"
 msgstr ""
 
-#: application.py:711 templates/advanced_search.html:41
+#: application.py:717 templates/advanced_search.html:41
 msgid "Male"
 msgstr ""
 
-#: application.py:711 templates/advanced_search.html:42
+#: application.py:717 templates/advanced_search.html:42
 msgid "Female"
 msgstr ""
 
-#: application.py:712
+#: application.py:718
 msgid "Baptized?"
 msgstr ""
 
-#: application.py:712 application.py:713
+#: application.py:718 application.py:719
 msgid "Yes"
 msgstr ""
 
-#: application.py:712 application.py:713
+#: application.py:718 application.py:719
 msgid "No"
 msgstr ""
 
-#: application.py:713
+#: application.py:719
 msgid "Do you have children?"
 msgstr ""
 
-#: application.py:714
+#: application.py:720
 msgid "How did you find out about the homegroup?"
 msgstr ""
 
-#: application.py:715 templates/advanced_search.html:78
+#: application.py:721 templates/advanced_search.html:78
 msgid "Marital Status"
 msgstr ""
 
-#: application.py:716
+#: application.py:722
 msgid "Save Member"
 msgstr ""
 
-#: application.py:742
+#: application.py:756
 msgid "Member {} added to homegroup"
 msgstr ""
 
-#: application.py:779 application.py:1021
+#: application.py:790 application.py:1038
+msgid "Person with this email already exists"
+msgstr ""
+
+#: application.py:798 application.py:1046
 msgid "Member {} Created"
 msgstr ""
 
-#: application.py:810
+#: application.py:829
 msgid "Edit My Info"
 msgstr ""
 
-#: application.py:813
+#: application.py:832
 msgid "Edit Member"
 msgstr ""
 
-#: application.py:861
+#: application.py:880
 msgid "Member {} Updated"
 msgstr ""
 
-#: application.py:878
+#: application.py:897
 msgid "Member Removed"
 msgstr ""
 
-#: application.py:886
+#: application.py:905
 msgid "Name is a required field"
 msgstr ""
 
-#: application.py:887
+#: application.py:906
 msgid "Description"
 msgstr ""
 
-#: application.py:887
+#: application.py:906
 msgid "Please enter a description"
 msgstr ""
 
-#: application.py:888
+#: application.py:907
 msgid "Address"
 msgstr ""
 
-#: application.py:888
+#: application.py:907
 msgid "Please enter valid Address"
 msgstr ""
 
-#: application.py:889
+#: application.py:908
 msgid "Latitude"
 msgstr ""
 
-#: application.py:890
+#: application.py:909
 msgid "Longitude"
 msgstr ""
 
-#: application.py:891
+#: application.py:910
 msgid "Save Home Group"
 msgstr ""
 
-#: application.py:931
+#: application.py:950
 msgid "Homegroup {} Created"
 msgstr ""
 
-#: application.py:955
+#: application.py:974
 msgid "Homegroup Deactivated"
 msgstr ""
 
-#: application.py:967
+#: application.py:986
 msgid "Homegroup Reactivated"
 msgstr ""
 
-#: application.py:1037
+#: application.py:1063
 msgid "Member Deactivated"
 msgstr ""
 
-#: application.py:1048
+#: application.py:1074
 msgid "Member Reactivated"
 msgstr ""
 
@@ -370,8 +370,56 @@ msgstr ""
 msgid "Home Group"
 msgstr ""
 
-#: templates/admin_home.html:114
+#: templates/admin_home.html:113
 msgid "Total People"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jan"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Feb"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Mar"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Apr"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "May"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jun"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Jul"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Aug"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Sep"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Oct"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Nov"
+msgstr ""
+
+#: templates/admin_home.html:127
+msgid "Dec"
 msgstr ""
 
 #: templates/admin_home.html:140
@@ -533,12 +581,12 @@ msgstr ""
 
 #: templates/all_members.html:132 templates/all_members.html:143
 #: templates/homegroup_list.html:108 templates/homegroup_members.html:100
-#: templates/roles.html:90 templates/roles.html:99
+#: templates/roles.html:88 templates/roles.html:97
 msgid "Confirm"
 msgstr ""
 
 #: templates/all_members.html:146 templates/homegroup_members.html:104
-#: templates/roles.html:103
+#: templates/roles.html:101
 msgid "Close"
 msgstr ""
 
@@ -628,7 +676,7 @@ msgstr ""
 msgid "Log Out"
 msgstr ""
 
-#: templates/base.html:198
+#: templates/base.html:199
 msgid "Copyright 2018, Arco Church"
 msgstr ""
 
@@ -883,27 +931,27 @@ msgstr ""
 msgid "Account Type"
 msgstr ""
 
-#: templates/roles.html:40
+#: templates/roles.html:37
 msgid "Admin"
 msgstr ""
 
-#: templates/roles.html:44 templates/roles.html:52
+#: templates/roles.html:41 templates/roles.html:49
 msgid "Deactivate Role"
 msgstr ""
 
-#: templates/roles.html:48
+#: templates/roles.html:45
 msgid "Home Group Leader"
 msgstr ""
 
-#: templates/roles.html:58 templates/roles.html:68
+#: templates/roles.html:55 templates/roles.html:65
 msgid "Assign new role"
 msgstr ""
 
-#: templates/roles.html:65
+#: templates/roles.html:62
 msgid "Inactive User"
 msgstr ""
 
-#: templates/roles.html:73
+#: templates/roles.html:71
 msgid "Create Account"
 msgstr ""
 
@@ -919,7 +967,7 @@ msgstr ""
 msgid "Temporary password"
 msgstr ""
 
-#: templates/user_account_email.html:8
+#: templates/user_account_email.html:9
 msgid "Click here to change your password"
 msgstr ""
 

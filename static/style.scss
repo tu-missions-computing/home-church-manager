@@ -2,6 +2,10 @@
 
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
+
+	.alert{
+			width: 90%;
+		}
 		footer{
 			font-size: 8pt;
 		}
@@ -27,7 +31,7 @@
 		.larger-container{
 			padding-left:0;
     		padding-right:0;
-			max-width: 100%;
+			width: 100%;
 		}
 		.arcoheader{
          		 font-size:200%;
@@ -69,6 +73,9 @@
 
         //SMALL DEVICES
         @include media-breakpoint-up(sm) {
+			.alert{
+			width: 90%;
+		}
 			footer{
 			font-size: 8pt;
 		}
@@ -95,7 +102,7 @@
 			.larger-container{
 				padding-left:0;
 				padding-right:0;
-				max-width: 100%;
+				width: 100%;
 			}
 
 			.arcoheader{
@@ -134,7 +141,10 @@
 
         // MID SIZED DEVICES
         @include media-breakpoint-up(md) {
-		.searchbar{
+			.alert{
+			width: 50%;
+		}
+			.searchbar{
 			width:50%;
 		}
 			.logo{
@@ -190,6 +200,9 @@
 		}
         //LARGE DEVICES
         @include media-breakpoint-up(lg) {
+		.alert{
+			width: 50%;
+		}
 			.searchbar{
 			width:50%;
 			}
@@ -245,6 +258,9 @@
 		}
         // EXTRA LARGE DEVICES
         @include media-breakpoint-up(xl) {
+			.alert{
+			width: 50%;
+		}
 			.searchbar{
 			width:50%;
 		}

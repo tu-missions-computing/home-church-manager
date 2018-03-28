@@ -32,6 +32,12 @@ def close_db_connection():
 #################################### member ########################################
 
 
+#returns someone's birthday
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+
 # creates a new member role
 def create_user(member_id, password, role_id):
     query = '''
@@ -77,7 +83,18 @@ def get_all_member_roles():
 
 # finds member based on an email
 def find_user(email):
-    g.db.execute('''SELECT * from member join member_role on member.id = member_role.member_id join role on member_role.role_id = role.id WHERE member.email = %s and member_role.is_active = '1' ''', (email,))
+    query="""
+SELECT member.id, member_role.member_id,
+  first_name, last_name, email, phone_number, gender, birthday,
+  baptism_status, marital_status_id, how_did_you_find_out_id,
+  is_a_parent, join_date, member.is_active,
+  password, role_id, role
+FROM member
+  JOIN member_role ON member.id = member_role.member_id
+  JOIN role ON member_role.role_id = role.id
+WHERE member.email = %s AND member_role.is_active = TRUE
+    """
+    g.db.execute(query, (email,))
     return g.db.fetchone()
 
 def find_user_info(id):
@@ -358,7 +375,7 @@ def reactivate_member(member_id):
 # finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):
     query = '''
-        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_leader.is_active as "hgLeader" FROM member
+        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_member.is_active as "activeMember",  homegroup_leader.is_active as "hgLeader" FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
         left outer join homegroup_leader on homegroup_leader.member_id = member.id and homegroup_leader.homegroup_id = homegroup.id
@@ -441,6 +458,15 @@ def find_member_homegroup(member_id):
        ''', (member_id,))
     return g.db.fetchone()
 
+#find if already has a homegroup
+def member_already_in_homegroup(member_id):
+    g.db.execute('''
+          SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+      
+          where member_id = %s and homegroup_member.is_active = '1'
+          ''', (member_id,))
+    return g.db.fetchone()
+
 
 
 
@@ -478,6 +504,55 @@ def get_attendance(homegroup_id, meeting_id):
     g.db.execute(query, (homegroup_id, meeting_id))
     return g.db.fetchall()
 
+
+## homegroup analytics ###
+
+def homegroup_analytics(year):
+    query = '''
+     select  EXTRACT(MONTH FROM TO_DATE(join_date, 'MM-DD-YYYY')) as "month", count(distinct member_id)
+ from homegroup_member
+ where EXTRACT(year FROM TO_DATE(join_date, 'MM-DD-YYYY'))  = %s and is_active = '1'
+ group by month
+    '''
+    g.db.execute(query, (year,))
+    return g.db.fetchall()
+
+def number_of_minors(year):
+    query = '''select EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) as "month", count(distinct (member_id))
+FROM member JOIN homegroup_member on homegroup_member.member_id = member.id
+WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) < 18 and EXTRACT(year FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s and homegroup_member.is_active = '1'
+group by month'''
+    g.db.execute(query,(year,))
+    return g.db.fetchall()
+
+def number_of_new_members(year):
+    query = '''select EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) as "month", count(distinct (member_id))
+    FROM member JOIN homegroup_member on homegroup_member.member_id = member.id
+    WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) >= 18 and EXTRACT(year FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s and homegroup_member.is_active = '1'
+    group by month'''
+    g.db.execute(query, (year,))
+    return g.db.fetchall()
+
+def members_attending_a_homegroup(year):
+    query = '''select EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) as "month", count (distinct attendance.member_id)
+from attendance
+join meeting on meeting.id = attendance.meeting_id
+where attendance = true and EXTRACT(year FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
+group by month
+'''
+    g.db.execute(query, (year,))
+    return g.db.fetchall()
+
+
+def total_members(year):
+    query = '''select EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) as "month", count (distinct attendance.member_id)
+from attendance
+join meeting on meeting.id = attendance.meeting_id
+where EXTRACT(year FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
+group by month
+'''
+    g.db.execute(query, (year,))
+    return g.db.fetchall()
 
 # finds date information from a meeting id
 def find_date(meeting_id):
