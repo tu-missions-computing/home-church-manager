@@ -441,6 +441,15 @@ def find_member_homegroup(member_id):
        ''', (member_id,))
     return g.db.fetchone()
 
+#find if already has a homegroup
+def member_already_in_homegroup(member_id):
+    g.db.execute('''
+          SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+      
+          where member_id = %s and homegroup_member.is_active = '1'
+          ''', (member_id,))
+    return g.db.fetchone()
+
 
 
 
