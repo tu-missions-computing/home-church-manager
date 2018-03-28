@@ -57,9 +57,9 @@ function searchGuts() {
 
     var jobCount = $('.results tbody tr:visible').length;
     if (jobCount == 1) {
-        $('.counter').text(jobCount + ' item');
+        $('.counter').text(jobCount + ' artículo');
     } else {
-        $('.counter').text(jobCount + ' items');
+        $('.counter').text(jobCount + ' artículos');
     }
 
     if (jobCount == '0') {
