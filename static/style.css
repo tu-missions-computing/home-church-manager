@@ -8524,8 +8524,12 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   }
 }
 
+.analytics-container-container {
+  width: 100%;
+}
+
 .attendance {
-  width: 90%;
+  width: 95%;
 }
 
 .alert {
@@ -8609,12 +8613,12 @@ footer {
 }
 
 @media (min-width: 576px) {
-  .attendance {
-    width: 90%;
+  .analytics-container-container {
+    width: 100%;
   }
 
-  .alert {
-    width: 90%;
+  .attendance {
+    width: 95%;
   }
 
   footer {
@@ -8690,6 +8694,12 @@ footer {
   }
 }
 @media (min-width: 768px) {
+  .analytics-container-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    width: 95%;
+  }
+
   .attendance {
     width: 50%;
   }
@@ -8789,6 +8799,12 @@ footer {
     width: 50%;
   }
 
+  .analytics-container-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    width: 95%;
+  }
+
   .larger-container {
     padding-left: 2.5%;
     padding-right: 2.5%;
@@ -8832,6 +8848,12 @@ footer {
   }
 }
 @media (min-width: 1200px) {
+  .analytics-container-container {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    width: 95%;
+  }
+
   .attendance {
     width: 35%;
   }
