@@ -109,7 +109,7 @@ def map():
 # Display the FAQ page
 @app.route('/faq')
 def faq():
-    locale = get_locale()
+    locale = get_locale() or 'es'
     faq_file_name = 'faq_{}.html'.format(locale)
     return render_template(faq_file_name)
 

@@ -25,8 +25,8 @@ class HomeChurch(object):
         return "<HomeChurch {} {}>".format(self.id, self.name)
 
     def sql_insert(self):
-        stmt = """INSERT INTO public.homegroup(id, name, location, description, is_active)
-   VALUES(%(id)s, '%(name)s', '%(location)s', '%(sector)s', TRUE);"""
+        stmt = """INSERT INTO public.homegroup(id, name, location, description, latitude, longitude, is_active)
+                  VALUES(%(id)s, '%(name)s', '%(location)s', '%(sector)s', -2.911511, -79.031617, TRUE);"""
         return stmt % {'id': self.id,
                        'name': self.name,
                        'location': self.host.directions,
@@ -34,14 +34,14 @@ class HomeChurch(object):
 
 
 class Person(object):
-    def __init__(self, first_name, last_name):
+    def __init__(self, last_name, first_name):
         self.first_name = first_name
         self.last_name = last_name
 
 
 class Leader(Person):
-    def __init__(self, first_name, last_name, home_phone, work_phone, mobile_phone, mobile_provider, email):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name, home_phone, work_phone, mobile_phone, mobile_provider, email):
+        super().__init__(last_name, first_name)
         self.home_phone = home_phone
         self.work_phone = work_phone
         self.mobile_phone = mobile_phone
@@ -51,10 +51,19 @@ class Leader(Person):
     def __repr__(self):
         return "<Leader {} {} {}>".format(self.first_name, self.last_name, self.email)
 
+    def sql_insert(self, id):
+        stmt = """INSERT INTO public.member (id, last_name, first_name, email, phone_number, gender, is_active)
+                  VALUES (%(id)s, '%(last)s', '%(first)s', '%(email)s', '%(phone)s', 'M', true);"""
+        return stmt % {'id': id,
+                       'first': self.first_name,
+                       'last': self.last_name,
+                       'email': self.email,
+                       'phone': self.mobile_phone or self.home_phone or self.work_phone }
+
 
 class LeaderSpouse(Person):
-    def __init__(self, first_name, last_name, mobile_phone, mobile_provider, email):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name, mobile_phone, mobile_provider, email):
+        super().__init__(last_name, first_name)
         self.mobile_phone = mobile_phone
         self.mobile_provider = mobile_provider
         self.email = email
@@ -64,8 +73,8 @@ class LeaderSpouse(Person):
 
 
 class Assistant(Person):
-    def __init__(self, first_name, last_name, home_phone, mobile_phone, mobile_provider, email):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name, home_phone, mobile_phone, mobile_provider, email):
+        super().__init__(last_name, first_name)
         self.home_phone = home_phone
         self.mobile_phone = mobile_phone
         self.mobile_provider = mobile_provider
@@ -76,8 +85,8 @@ class Assistant(Person):
 
 
 class AssistantSpouse(Person):
-    def __init__(self, first_name, last_name, email):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name, email):
+        super().__init__(last_name, first_name)
         self.email = email
 
     def __repr__(self):
@@ -85,8 +94,8 @@ class AssistantSpouse(Person):
 
 
 class Host(Person):
-    def __init__(self, first_name, last_name, directions, home_phone, mobile_phone, mobile_provider):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name, directions, home_phone, mobile_phone, mobile_provider):
+        super().__init__(last_name, first_name)
         self.directions = directions
         self.home_phone = home_phone
         self.mobile_phone = mobile_phone
@@ -97,8 +106,8 @@ class Host(Person):
 
 
 class HostSpouse(Person):
-    def __init__(self, first_name, last_name):
-        super().__init__(first_name, last_name)
+    def __init__(self, last_name, first_name):
+        super().__init__(last_name, first_name)
 
     def __repr__(self):
         return "<HostSpouse {} {}>".format(self.first_name, self.last_name)
@@ -161,3 +170,4 @@ for ws in wbook:
                                  host, host_spouse)
 
         print(home_church.sql_insert())
+        print(leader.sql_insert(home_church.id))
