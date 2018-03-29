@@ -23,8 +23,9 @@
 
               <!-- 2nd homegroup -->
 
-                            <div class="title-text">First Home Group</div>
+                            <div class="title-text">{{ _('First Home Group') }}</div>
                                 <hr>
+
                             <p class="form-label"> {{ form.name2.label }} {{ form.name2(class_='form-control') }}</p>
                             {% if form.name2.errors %}
                                 <div class="alert alert-warning">
@@ -83,8 +84,9 @@
                 </div></div>
         <div class="row">
                 <div class="main-center">
-     <div class="title-text"> Second Home Group</div>
+     <div class="title-text"> {{ _('Second Home Group') }}</div>
                 <hr>
+
                 <!-- first homegroup -->
       <div class="form-group">
                             {{ form.csrf_token }}
@@ -157,4 +159,5 @@
 
     </div></div>
 </section>
+
 {% endblock %}
