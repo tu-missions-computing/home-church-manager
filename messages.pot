@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-29 09:24-0500\n"
+"POT-Creation-Date: 2018-03-29 09:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -604,6 +604,54 @@ msgstr ""
 msgid "No Information"
 msgstr ""
 
+#: templates/base.html:42
+msgid "Jan"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Feb"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Mar"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Apr"
+msgstr ""
+
+#: templates/base.html:42 templates/homegroup_analytics.html:18
+msgid "May"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Jun"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Jul"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Aug"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Sep"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Oct"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Nov"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Dec"
+msgstr ""
+
 #: templates/base.html:151
 msgid "Welcome,"
 msgstr ""
@@ -819,10 +867,6 @@ msgstr ""
 msgid "April"
 msgstr ""
 
-#: templates/homegroup_analytics.html:18
-msgid "May"
-msgstr ""
-
 #: templates/homegroup_analytics.html:19
 msgid "June"
 msgstr ""
@@ -908,7 +952,7 @@ msgstr ""
 msgid "Leader"
 msgstr ""
 
-#: templates/homegroup_split.html:26
+#: templates/homegroup_split.html:25
 msgid "First Home Group"
 msgstr ""
 

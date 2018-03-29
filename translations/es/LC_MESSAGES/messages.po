@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-29 09:24-0500\n"
+"POT-Creation-Date: 2018-03-29 09:35-0500\n"
 "PO-Revision-Date: 2018-03-26 14:33-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -605,6 +605,54 @@ msgstr "Acción"
 msgid "No Information"
 msgstr "Sin Información"
 
+#: templates/base.html:42
+msgid "Jan"
+msgstr "Enero"
+
+#: templates/base.html:42
+msgid "Feb"
+msgstr "Feb"
+
+#: templates/base.html:42
+msgid "Mar"
+msgstr "Marzo"
+
+#: templates/base.html:42
+msgid "Apr"
+msgstr "Abr"
+
+#: templates/base.html:42 templates/homegroup_analytics.html:18
+msgid "May"
+msgstr "Mayo"
+
+#: templates/base.html:42
+msgid "Jun"
+msgstr "Jun"
+
+#: templates/base.html:42
+msgid "Jul"
+msgstr "Jul"
+
+#: templates/base.html:42
+msgid "Aug"
+msgstr "Agosto"
+
+#: templates/base.html:42
+msgid "Sep"
+msgstr "Set"
+
+#: templates/base.html:42
+msgid "Oct"
+msgstr "Oct"
+
+#: templates/base.html:42
+msgid "Nov"
+msgstr "Nov"
+
+#: templates/base.html:42
+msgid "Dec"
+msgstr "Dic"
+
 #: templates/base.html:151
 msgid "Welcome,"
 msgstr "Bienvenido,"
@@ -820,10 +868,6 @@ msgstr "Marzo"
 msgid "April"
 msgstr "Abril"
 
-#: templates/homegroup_analytics.html:18
-msgid "May"
-msgstr "Mayo"
-
 #: templates/homegroup_analytics.html:19
 msgid "June"
 msgstr "Junio"
@@ -909,7 +953,7 @@ msgstr "Contactar a Todos"
 msgid "Leader"
 msgstr "Líder"
 
-#: templates/homegroup_split.html:26
+#: templates/homegroup_split.html:25
 msgid "First Home Group"
 msgstr "Primer Iglesia de Hogar"
 
@@ -919,7 +963,7 @@ msgstr "Segundo Iglesia de Hogar"
 
 #: templates/homegroup_split_members.html:10
 msgid "Split Members"
-msgstr "Multiplicar Members"
+msgstr "Multiplicar Miembros"
 
 #: templates/homegroup_split_members.html:66
 msgid "Finish"
