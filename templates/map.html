@@ -32,6 +32,7 @@
         var locations = [];
         var tmp_locations = [];
         {% for homegroup in homegroups  %}
+            {% if homegroup.latitude %}
             tmp_locations = [];
             tmp_locations.push({{homegroup.latitude}});
             tmp_locations.push({{homegroup.longitude}});
@@ -46,6 +47,7 @@
             tmp_locations.push(`{{ homegroup.phone_number }}`)
             tmp_locations.push(`{{ homegroup.email }}`)
             locations.push(tmp_locations);
+            {%  endif %}
         {% endfor %}
 
         var map = new google.maps.Map(document.getElementById('map'), {
