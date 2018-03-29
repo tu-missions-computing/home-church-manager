@@ -151,6 +151,21 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 	max-width: 100%;
 
 }
+
+.analytics-container{
+    margin: 0 auto;
+    padding: 10px 40px;
+	background:white;
+	    color: #000000;
+    text-shadow: none;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+    margin-top:3.5%;
+	max-width: 100%;
+
+
+}
 	.main-center{
  	margin: 0 auto;
     padding: 10px 40px;
