@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-29 08:29-0500\n"
+"POT-Creation-Date: 2018-03-29 09:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -543,12 +543,12 @@ msgstr ""
 
 #: templates/all_members.html:132 templates/all_members.html:143
 #: templates/homegroup_list.html:113 templates/homegroup_members.html:100
-#: templates/roles.html:88 templates/roles.html:97
+#: templates/roles.html:92 templates/roles.html:101
 msgid "Confirm"
 msgstr ""
 
 #: templates/all_members.html:146 templates/homegroup_members.html:104
-#: templates/roles.html:101
+#: templates/roles.html:105
 msgid "Close"
 msgstr ""
 
@@ -676,32 +676,32 @@ msgid "Create New Home Group"
 msgstr ""
 
 #: templates/create_homegroup.html:20 templates/edit_homegroup.html:19
-#: templates/homegroup_split.html:30 templates/homegroup_split.html:92
+#: templates/homegroup_split.html:32 templates/homegroup_split.html:96
 msgid "Enter a Name"
 msgstr ""
 
 #: templates/create_homegroup.html:29 templates/edit_homegroup.html:28
-#: templates/homegroup_split.html:38 templates/homegroup_split.html:101
+#: templates/homegroup_split.html:40 templates/homegroup_split.html:105
 msgid "Add a Description"
 msgstr ""
 
 #: templates/create_homegroup.html:38 templates/edit_homegroup.html:37
-#: templates/homegroup_split.html:47 templates/homegroup_split.html:110
+#: templates/homegroup_split.html:49 templates/homegroup_split.html:114
 msgid "Add a Location"
 msgstr ""
 
 #: templates/create_homegroup.html:46 templates/edit_homegroup.html:44
-#: templates/homegroup_split.html:55 templates/homegroup_split.html:119
+#: templates/homegroup_split.html:57 templates/homegroup_split.html:123
 msgid "Find Location"
 msgstr ""
 
 #: templates/create_homegroup.html:64 templates/edit_homegroup.html:61
-#: templates/homegroup_split.html:68 templates/homegroup_split.html:132
+#: templates/homegroup_split.html:70 templates/homegroup_split.html:136
 msgid "Add a Latitude"
 msgstr ""
 
 #: templates/create_homegroup.html:73 templates/edit_homegroup.html:70
-#: templates/homegroup_split.html:77 templates/homegroup_split.html:141
+#: templates/homegroup_split.html:79 templates/homegroup_split.html:145
 msgid "Add a Longitude"
 msgstr ""
 
@@ -803,10 +803,6 @@ msgstr ""
 msgid "Analytics for"
 msgstr ""
 
-#: templates/homegroup_analytics.html:9
-msgid "{{ year }}"
-msgstr ""
-
 #: templates/homegroup_analytics.html:14
 msgid "January"
 msgstr ""
@@ -895,6 +891,10 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
+#: templates/homegroup_list.html:73
+msgid "Split"
+msgstr ""
+
 #: templates/homegroup_members.html:4 templates/homegroup_split_members.html:4
 msgid "Home Group Members"
 msgstr ""
@@ -906,6 +906,22 @@ msgstr ""
 #: templates/homegroup_members.html:60
 #: templates/homegroup_split_members.html:34
 msgid "Leader"
+msgstr ""
+
+#: templates/homegroup_split.html:26
+msgid "First Home Group"
+msgstr ""
+
+#: templates/homegroup_split.html:87
+msgid "Second Home Group"
+msgstr ""
+
+#: templates/homegroup_split_members.html:10
+msgid "Split Members"
+msgstr ""
+
+#: templates/homegroup_split_members.html:66
+msgid "Finish"
 msgstr ""
 
 #: templates/index.html:50
@@ -984,27 +1000,27 @@ msgstr ""
 msgid "Account Type"
 msgstr ""
 
-#: templates/roles.html:37
+#: templates/roles.html:38
 msgid "Admin"
 msgstr ""
 
-#: templates/roles.html:41 templates/roles.html:49
+#: templates/roles.html:42 templates/roles.html:50
 msgid "Deactivate Role"
 msgstr ""
 
-#: templates/roles.html:45
+#: templates/roles.html:46
 msgid "Home Group Leader"
 msgstr ""
 
-#: templates/roles.html:55 templates/roles.html:65
+#: templates/roles.html:57 templates/roles.html:68
 msgid "Assign new role"
 msgstr ""
 
-#: templates/roles.html:62
+#: templates/roles.html:64
 msgid "Inactive User"
 msgstr ""
 
-#: templates/roles.html:71
+#: templates/roles.html:74
 msgid "Create Account"
 msgstr ""
 

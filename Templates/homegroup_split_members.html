@@ -7,7 +7,7 @@
 
         <div class="larger-container">
             <div class="container">
-                <h1 class="title-text animated stretchLeft"><strong>{{ homegroup_to_be_split.name }}</strong> Split Members</h1>
+                <h1 class="title-text animated stretchLeft"><strong>{{ homegroup_to_be_split.name }}</strong> {{ _('Split Members') }}</h1>
                 <hr>
                 <br>
                 <div class="row">
@@ -63,7 +63,7 @@
                 </table>
                   <div class="form-group ">
                             <p>
-                            <a class="btn btn-primary btn-lg btn-block" href="{{url_for('deactivate_homegroup', homegroup_id = homegroup_to_be_split.id) }}"> Finish</a>
+                            <a class="btn btn-primary btn-lg btn-block" href="{{url_for('deactivate_homegroup', homegroup_id = homegroup_to_be_split.id) }}"> {{ _('Finish') }}</a>
                             </p>
                         </div>
             </div>
