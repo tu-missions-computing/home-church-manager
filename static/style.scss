@@ -2,6 +2,11 @@
 
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
+							.analytics-container-container{
+
+				width: 100%;
+		}
+
 	.attendance{
 		width:95%;
 	}
@@ -75,11 +80,14 @@
 
         //SMALL DEVICES
         @include media-breakpoint-up(sm) {
+						.analytics-container-container{
+
+				width: 100%;
+		}
 		.attendance{
 			width:95%;
 		}
-			width: 90%;
-		}
+
 			footer{
 			font-size: 8pt;
 		}
@@ -141,10 +149,16 @@
 			padding-right:0 !important;
 
 		}
-		}
+}
 
         // MID SIZED DEVICES
         @include media-breakpoint-up(md) {
+						.analytics-container-container{
+				padding-left:2.5%;
+				padding-right:2.5%;
+				width: 95%;
+		}
+
 	.attendance{
 		width:50%;
 	}
@@ -230,6 +244,11 @@
 			.mapsearch{
 			width:50%;
 			}
+			.analytics-container-container{
+				padding-left:2.5%;
+				padding-right:2.5%;
+				width: 95%;
+		}
 			.larger-container{
 				padding-left:2.5%;
 				padding-right:2.5%;
@@ -268,6 +287,11 @@
 		}
         // EXTRA LARGE DEVICES
         @include media-breakpoint-up(xl) {
+						.analytics-container-container{
+				padding-left:2.5%;
+				padding-right:2.5%;
+				width: 95%;
+		}
 	.attendance{
 		width:35%;
 	}

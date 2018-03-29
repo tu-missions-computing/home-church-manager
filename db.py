@@ -638,7 +638,7 @@ def deactivate_homegroup(homegroup_id):
     UPDATE homegroup SET is_active = '0'
     WHERE id = %s
     '''
-    g.db.execute(query, ( homegroup_id))
+    g.db.execute(query, ( homegroup_id, ))
     g.connection.commit()
     return g.db.rowcount
 
