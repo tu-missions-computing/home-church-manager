@@ -102,7 +102,6 @@ a{
 /*For Index Page*/
 .mapsearch{
     margin:auto;
-    //width:50%;
 }
 
 .navbar{
@@ -275,15 +274,13 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 /*Buttons*/
 .btn-primary{
-    background-color: #eaeaea !important;
-    border-color:#eaeaea  !important;
-    color:black !important;
+    background-color: #3f4358 !important;
+    border-color:#3f4358  !important;
 }
 
 .btn-primary:hover{
-    background-color: #eaeaea  !important;
+    background-color: #3f4358  !important;
     border-color:  white !important;
-    color:black !important
 
 }
 
