@@ -3,6 +3,7 @@ import unittest
 import os
 
 from flask import g, url_for
+from werkzeug.datastructures import Headers
 
 import db
 
@@ -14,7 +15,6 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 class FlaskTestCase(unittest.TestCase):
     def setUp(self):
         app.testing = True
-        app.config['TESTING'] = True
 
         app.csrf_enable = False
         app.config['CSRF_ENABLED'] = False
@@ -23,6 +23,10 @@ class FlaskTestCase(unittest.TestCase):
         app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 
         self.client = app.test_client(use_cookies=True)
+
+        # headers = Headers()
+        # headers.add('Accept-Language', 'en')
+        # self.app_context = app.test_request_context(headers=headers)
         self.app_context = app.test_request_context()
         self.app_context.push()
 
@@ -62,97 +66,77 @@ class AdminTestCase(FlaskTestCase):
         self.login('admin@example.com', 'password')
 
     def tearDown(self):
-        super().tearDown()
         self.logout()
+        super().tearDown()
 
     def test_all_members_page(self):
         """Verify the all members page."""
-        resp = self.client.get(url_for('all_members'))
-        self.assertIn(b'Name', resp.data, "Did not find the phrase: First Name")
+        resp = self.get(url_for('all_members'))
+        self.assertIn(b'Name', resp.data)
         self.assertIn(b'Contact All Members', resp.data)
 
     def test_admin_dashboard(self):
-        """Verify the all homegroups page."""
-        resp = self.client.get(url_for('admin_home'))
-        self.assertIn(b'Attendance Count', resp.data, "Did not find the phrase: Attendance Count")
+        """Verify the admin dashboard."""
+        resp = self.get(url_for('admin_home'))
+        self.assertIn(b'ATTENDING HOME GROUPS', resp.data)
 
     def test_all_homegroups_page(self):
         """Verify the all homegroups page."""
-        resp = self.client.get(url_for('get_homegroups'))
+        resp = self.get(url_for('get_homegroups'))
         self.assertIn(b'All Home Groups', resp.data, "Did not find the phrase: All Home Groups")
 
     def test_profile_settings_page(self):
         """ Verify the profile settings page"""
-        email = 'admin@example.com'
-        db.open_db_connection('MyDatabase.sqlite')
-        member = db.find_member_info(email)
-        resp = self.client.get(url_for('edit_member', member_id=member['id']))
+        resp = self.get(url_for('edit_member', member_id=1))
         self.assertIn(b'Edit My Info', resp.data, "Did not find the phrase: Edit My Info")
 
     def test_edit_password_page(self):
-        email = 'admin@example.com'
-        db.open_db_connection('MyDatabase.sqlite')
-        user = db.find_user(email)
-        resp = self.client.get(url_for('update_user', user_id=user['id']))
+        resp = self.get(url_for('update_user', user_id=1))
         self.assertIn(b'Update Password', resp.data, "Did not find the phrase: Update Password")
-        self.assertIn(b'admin@example.com', resp.data, "Did not find the phrase: admin@example.com")
 
+    @unittest.skip('Need better way to localize FAQ page')
     def test_faq_page(self):
-        resp = self.client.get(url_for('faq'))
-        self.assertIn(b'Frequently Asked Questions', resp.data,
-                        "Did not find the phrase: Frequently Asked Questions")
-        self.assertIn(b'How do I view all members of all homegroups?', resp.data,
-                        "Did not find the phrase: How do I view all members of all homegroups?")
+        resp = self.get(url_for('faq'))
+        self.assertIn(b'Frequently Asked Questions', resp.data)
+        self.assertIn(b'How do I view', resp.data)
 
     def test_contact_page(self):
-        resp = self.client.get(url_for('contact'))
-        self.assertIn(b'Contact Our Support Team', resp.data,
-                        "Did not find the phrase: Contact Our Support Team")
+        resp = self.get(url_for('contact'))
+        self.assertIn(b'Contact Our Team', resp.data)
 
 
 class HGLeaderTestCase(FlaskTestCase):
     """Test the basic behavior of page routing and display for HG Leader pages"""
 
-    def login(self, email, password):
-        return self.client.post('/login', data=dict(
-            email=email,
-            password=password
-        ), follow_redirects=True)
-
-    def logout(self):
-        return self.client.get('/logout', follow_redirects=True)
-
     def test_dashboard(self):
         """Verify the dashboard page."""
         self.logout()
         self.login('john@example.com', 'password')
-        resp = self.client.get(url_for('dashboard'), follow_redirects=True)
-        self.assertIn(b'Taylor Women Engaged in Engineering and Technology', resp.data,
-                        "Did not find the phrase: Taylor Women Engaged in Engineering and Technology")
+        resp = self.get(url_for('dashboard'))
+        self.assertIn(b'Grupo Universitario', resp.data)
 
     def test_member_page(self):
         """Verify the member page."""
         self.login('john@example.com', 'password')
-        resp = self.client.get(url_for('get_homegroup_members', homegroup_id=1), follow_redirects=True)
-        self.assertIn(b'Homegroup Members', resp.data, "Did not find the phrase: Homegroup Members")
+        resp = self.get(url_for('get_homegroup_members', homegroup_id=3))
+        self.assertIn(b'Grupo Universitario', resp.data)
 
     def test_attendance_page(self):
         """Verify the member page."""
         self.login('john@example.com', 'password')
-        resp = self.client.get(url_for('attendance', homegroup_id=1), follow_redirects=True)
+        resp = self.get(url_for('attendance', homegroup_id=1))
         self.assertIn(b'Attendance Report', resp.data, "Did not find the phrase: Attendance Report")
 
     def test_edit_hg_page(self):
         """Verify the edit homegroup page."""
         self.login('john@example.com', 'password')
-        resp = self.client.get(url_for('edit_homegroup', homegroup_id=1), follow_redirects=True)
+        resp = self.get(url_for('edit_homegroup', homegroup_id=1))
         self.assertIn(b'Edit Home Group', resp.data, "Did not find the phrase: Edit Home Group")
 
 
 class DatabaseTestCase(FlaskTestCase):
     """Test database access and update functions."""
 
-    # This method is invoked once before all the tests in this test case.
     @classmethod
     def setUpClass(cls):
         """So that we don't overwrite application data, create a temporary database file."""
@@ -176,7 +160,7 @@ class DatabaseTestCase(FlaskTestCase):
     def setUp(self):
         """Open the database connection and create all the tables."""
         super(DatabaseTestCase, self).setUp()
-        db.open_db_connection(self.file_name)
+        db.open_db_connection()
         self.execute_script('db/create_db.sql')
 
     def tearDown(self):
