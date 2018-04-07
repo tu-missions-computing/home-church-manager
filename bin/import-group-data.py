@@ -3,7 +3,10 @@
 import re
 from openpyxl import load_workbook
 from sys import argv
+from datetime import datetime
 
+def today():
+    return datetime.today().strftime('%Y-%m-%d')
 
 class HomeChurch(object):
     def __init__(self, id, covering, sector, name,
@@ -25,12 +28,13 @@ class HomeChurch(object):
         return "<HomeChurch {} {}>".format(self.id, self.name)
 
     def sql_insert(self):
-        stmt = """INSERT INTO public.homegroup(id, name, location, description, latitude, longitude, is_active)
-                  VALUES(%(id)s, '%(name)s', '%(location)s', '%(sector)s', -2.911511, -79.031617, TRUE);"""
+        stmt = """INSERT INTO public.homegroup(id, name, location, description, latitude, longitude, creation_date, is_active)
+                  VALUES(%(id)s, '%(name)s', '%(location)s', '%(sector)s', -2.911511, -79.031617, '%(creation)s', TRUE);"""
         return stmt % {'id': self.id,
                        'name': self.name,
                        'location': self.host.directions,
-                       'sector': self.sector}
+                       'sector': self.sector,
+                       'creation': today}
 
 
 class Person(object):
@@ -52,13 +56,14 @@ class Leader(Person):
         return "<Leader {} {} {}>".format(self.first_name, self.last_name, self.email)
 
     def sql_insert(self, id):
-        stmt = """INSERT INTO public.member (id, last_name, first_name, email, phone_number, gender, is_active)
-                  VALUES (%(id)s, '%(last)s', '%(first)s', '%(email)s', '%(phone)s', 'M', true);"""
+        stmt = """INSERT INTO public.member (id, last_name, first_name, email, phone_number, gender, birthday, join_date, is_active)
+                  VALUES (%(id)s, '%(last)s', '%(first)s', '%(email)s', '%(phone)s', 'M', '1998-12-25', '%(join)s', true);"""
         return stmt % {'id': id,
                        'first': self.first_name,
                        'last': self.last_name,
                        'email': self.email,
-                       'phone': self.mobile_phone or self.home_phone or self.work_phone }
+                       'phone': self.mobile_phone or self.home_phone or self.work_phone,
+                       'join': today() }
 
 
 class LeaderSpouse(Person):
@@ -146,7 +151,7 @@ wbook = load_workbook(filename=argv[1], data_only=True, guess_types=True)
 for ws in wbook:
     if is_empty_sheet(ws):
         continue
-    print("Processing", ws.title)
+    # print("Processing", ws.title)
     for row_idx in range(3, ws.max_row + 1):
         [leader_email, leader_spouse_email] = parse_emails(val(ws, row_idx, 14))
         leader = Leader(*val_range(ws, row_idx, 4, 9), leader_email)
