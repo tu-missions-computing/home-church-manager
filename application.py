@@ -43,40 +43,20 @@ def get_locale():
 
 @app.before_request
 def before():
-    db.open_db_connection()
+    if not app.testing:
+        db.open_db_connection()
 
 
 @app.teardown_request
 def after(exception):
-    db.close_db_connection()
+    if not app.testing:
+        db.close_db_connection()
 
+# INDEX + MAP + Dashboard ##############################################
 
-# Initialize test users -- we can no longer do this in the db because of the password hashing
-def init_test_user():
-    if db.find_user('john@example.com') is None:
-        print (db.find_user('john@example.com'))
-        password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(1, pw_hash, 1)
-    if db.find_user('admin@example.com') is None:
-        password = 'password'
-        pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        db.create_user(2, pw_hash, 2)
-
-########################## INDEX + MAP + Dashboard##############################################
-
-# this takes the user to the index page which is a map of all the homegroups
 @app.route('/')
 def index():
-    # return redirect(url_for("homegroup", homegroup_id=session['homegroup_id']))
-    # msg = Message(
-    #     'Hello',
-    #     sender='verbovelocity@gmail.com',
-    #     recipients=
-    #     ['verbovelocity@gmail.com'])
-    # msg.body = "This is the email body"
-    # mail.send(msg)
-    init_test_user()            # FIXME: Should this be in the production code?
+    """Index page: map of all home groups"""
     return render_template('index.html')
 
 
@@ -102,7 +82,6 @@ def dashboard():
 @app.route('/map')
 def map():
     homegroups = db.get_all_homegroup_info()
-    print(homegroups)
     return render_template('map.html', homegroups=homegroups)
 
 
@@ -156,8 +135,8 @@ def contact():
 
 ########################## USER + LOGIN + Profile/Settings ##############################################
 
-# this allows/disallows users from accessing pages based on their roles
 def requires_roles(*roles):
+    """Allow/disallow users from accessing pages based on their roles"""
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
@@ -168,9 +147,7 @@ def requires_roles(*roles):
                 flash(lazy_gettext('User does not have sufficient privileges'), category="danger")
                 return redirect(url_for('index'))
             return f(*args, **kwargs)
-
         return wrapped
-
     return wrapper
 
 
@@ -207,7 +184,7 @@ def create_user(member_id):
         if (db.has_active_role(member_id)):
             flash(lazy_gettext("User already has account"), category="danger")
             return redirect(url_for('get_roles'))
-        db.create_user(member_id, pw_hash, user_form.role.data)
+        db.create_member_role(member_id, pw_hash, user_form.role.data)
         user = db.find_user(email)
         email_html = render_template('user_account_email.html', email=email, password=password, user_id=user['id'])
         msg = Message(
@@ -283,7 +260,7 @@ def edit_role(member_id, role_id):
     if (str(member_id) == str(current_user)):
         flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
-    is_active = db.role_is_active(member_id, role_id)
+    is_active = db.is_role_active(member_id, role_id)
     active = '1'
     if is_active:
         active = '0'
@@ -320,7 +297,7 @@ def update_user(user_id):
             if new_password == confirm_password:
                 password = new_password
                 pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-                db.update_user(user_id, pw_hash, member['role_id'])
+                db.update_password(user_id, pw_hash, member['role_id'])
                 flash(lazy_gettext('Password updated'), category="success")
                 return redirect(url_for('index'))
             else:
@@ -379,8 +356,6 @@ def authenticate(email, password):
     valid_users = db.get_all_users()
 
     for user in valid_users:
-        print(user)
-        # print(user['email'])
         if email == user['email'] and bcrypt.check_password_hash(user['password'], password):
             return email
     return None
@@ -447,7 +422,7 @@ def user_profile(user_id):
 @requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
     countMembers = 0
-    homegroup = db.find_homegroup(homegroup_id)
+    homegroup = db.find_homegroup_by_id(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     countMembers = db.number_of_members_in_homegroup(homegroup_id)
     mydate = datetime.datetime.now()
@@ -551,9 +526,9 @@ def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
 def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
     members = db.get_homegroup_members(homegroup_id)
     currentHomegroup = homegroup_id
-    homegroup_to_be_split = db.find_homegroup(homegroup_id)
-    homegroup1 = db.find_homegroup(homegroup_id1)
-    homegroup2 = db.find_homegroup(homegroup_id2)
+    homegroup_to_be_split = db.find_homegroup_by_id(homegroup_id)
+    homegroup1 = db.find_homegroup_by_id(homegroup_id1)
+    homegroup2 = db.find_homegroup_by_id(homegroup_id2)
     return render_template('homegroup_split_members.html', homegroup_to_be_split = homegroup_to_be_split, homegroup1 = homegroup1, homegroup2 = homegroup2, currentHomegroup = currentHomegroup, old_members = members, homegroup_id1 =homegroup_id1, homegroup_id2 = homegroup_id2)
 
 ## this returns further analytics for homegroups ###
@@ -640,7 +615,7 @@ def system_notify_member(member_id, num_misses):
 @login_required
 def homegroup_data(homegroup_id):
     attendance = db.get_homegroup_attendance_records(homegroup_id)
-    hgname = db.find_homegroup(homegroup_id)['name']
+    hgname = db.find_homegroup_by_id(homegroup_id)['name']
     wb = Workbook()
     dest_filename = hgname + '-' + gettext('attendance') + '.xlsx'
     ws1 = wb.active
@@ -700,7 +675,6 @@ def edit_attendance(homegroup_id, meeting_id):
     date = db.find_date(meeting_id)['date']
     time = db.find_date(meeting_id)['time']
     edit_or_new = 'new'
-    print (members_in_attendance)
     for member in members_in_attendance:
         if (member['attendance'] == 1):
             edit_or_new = 'edit'
@@ -708,24 +682,17 @@ def edit_attendance(homegroup_id, meeting_id):
         for member in members_in_attendance:
             input_name =  'member_' + str(member['member_id'] )
             if input_name in request.form:
-                #print(member['first_name'] + " in attendance")
                 updateAttendance(homegroup_id, member['member_id'], meeting_id, '1')
             else:
                 updateAttendance(homegroup_id, member['member_id'], meeting_id, '0')
                 if(edit_or_new == 'new'):
-                    #print(member['first_name'] + " not in attendance")
                     attendancedates = db.system_attendance_alert(homegroup_id, member['id'], 3)
                     notify = True
                     for date in attendancedates:
-                        #print('meeting ' + str(date['meeting_id']))
-                        #print('attendance: ' + str(date['attendance']))
-
                         if date['attendance'] == 1:
                             notify = False
                     if len(attendancedates) <3:
                         notify = False
-                    #if notify == True:
-                        #system_notify_member(member['id'], 3)
 
         return redirect(url_for('get_attendance_dates', homegroup_id = homegroup_id))
 
@@ -747,7 +714,7 @@ def get_attendance_dates(homegroup_id):
 @login_required
 @requires_roles('admin')
 def view_attendance(homegroup_id):
-    homegroup = db.find_homegroup(homegroup_id)
+    homegroup = db.find_homegroup_by_id(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     return render_template('view_attendance.html', currentHomegroup=homegroup,
                            attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
@@ -768,7 +735,7 @@ def view_attendance_report(homegroup_id, meeting_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def edit_homegroup(homegroup_id):
-    row = db.find_homegroup(homegroup_id)
+    row = db.find_homegroup_by_id(homegroup_id)
     hg_form = CreateHomeGroupForm(name=row['name'],
                                   description=row['description'],
                                   location=row['location'],
@@ -831,11 +798,9 @@ def add_member_to_homegroup(homegroup_id, member_id):
     inactive_homegroup_members = db.get_homegroup_inactive_members(homegroup_id)
     new = 'Y'
     for members in inactive_homegroup_members:
-        print(members['member_id'])
         if int (members['member_id']) == int(member_id):
             new = 'N'
             db.reactive_homegroup_member(homegroup_id, member_id)
-    print(new)
     if new == 'Y':
         memberhomegroup = db.member_already_in_homegroup(member_id)
         if (memberhomegroup):
@@ -902,8 +867,7 @@ def create_new_member_for_homegroup(homegroup_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_homegroup_members(homegroup_id):
-    current_homegroup = db.find_homegroup(homegroup_id)
-    print (homegroup_id)
+    current_homegroup = db.find_homegroup_by_id(homegroup_id)
 
     homegroup_members = db.get_homegroup_members(homegroup_id)
     list = []
@@ -1027,9 +991,6 @@ class CreateHomeGroupSplitForm(FlaskForm):
 @requires_roles('admin')
 def admin_home():
     attendance_count = db.get_attendance_counts()
-    print(attendance_count)
-    print(attendance_count[0]["month"])
-    print("lazy_gettext("+ attendance_count[0]["month"] +")")
     for i in range(0, len(attendance_count)):
         attendance_count[i]["month"]=lazy_gettext(attendance_count[i]["month"])
     homegroup_member_data = db.get_top_n_homegroup_member_counts('5')
@@ -1041,7 +1002,6 @@ def admin_home():
     attendance_rate = str(int(db.attendance_rate_for_current_month(month))) + '%'
     homegroup_leaders = db.number_of_homegroup_leaders()
     homegroups = db.number_of_homegroups()
-    print (attendance_rate)
     mydate = datetime.datetime.now()
     month_string = mydate.strftime("%B").upper()
     return render_template('admin_home.html',currentMonth = month_string, attendance_rate = attendance_rate, active_homegroups = active_homegroups, members = members, homegroup_leaders = homegroup_leaders, homegroups = homegroups, gender = gender, hgdata = homegroup_member_data, attendance_count=attendance_count,  homegroup_data = homegroup_data)
@@ -1086,7 +1046,7 @@ def deactivate_homegroup(homegroup_id):
     rowcount = db.deactivate_homegroup(homegroup_id)
 
     # if the member is not active
-    if not db.find_homegroup(homegroup_id)['is_active']:
+    if not db.find_homegroup_by_id(homegroup_id)['is_active']:
         flash(lazy_gettext("Homegroup Deactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
@@ -1098,7 +1058,7 @@ def deactivate_homegroup(homegroup_id):
 def reactivate_homegroup(homegroup_id):
     rowcount = db.reactivate_homegroup(homegroup_id)
     # if the member is not active
-    if db.find_homegroup(homegroup_id)['is_active']:
+    if db.find_homegroup_by_id(homegroup_id)['is_active']:
         flash(lazy_gettext("Homegroup Reactivated"), category="success")
     return redirect(url_for('get_homegroups'))
 
@@ -1157,7 +1117,6 @@ def create_member():
         else:
             rowcount = db.create_member(first_name, last_name, email, phone_number, gender, birthday, baptism_status,
                                         marital_status_id, how_did_you_find_out_id, is_a_parent, join_date)
-            print(rowcount)
             if rowcount == 1:
                 flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
                 return redirect(url_for('all_members'))
@@ -1171,9 +1130,7 @@ def create_member():
 @login_required
 @requires_roles('admin')
 def deactivate_member(member_id):
-
     rowcount = db.deactivate_member(member_id)
-    print(db.find_member(member_id)['is_active'])
     # if the member is not active
     if db.find_member(member_id)['is_active'] == '0':
         flash(lazy_gettext("Member Deactivated"), category="success")
