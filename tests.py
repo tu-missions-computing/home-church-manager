@@ -7,6 +7,36 @@ import db
 
 
 class FlaskTestCase(unittest.TestCase):
+    def setUp(self):
+        app.testing = True
+        app.csrf_enable = False
+
+        app.config['CSRF_ENABLED'] = False
+        app.config['WTF_CSRF_ENABLED'] = False
+        app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
+        app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+        
+        self.client = app.test_client(use_cookies=True)
+        self.app_context = app.test_request_context()
+        self.app_context.push()
+
+    def tearDown(self):
+        self.app_context.pop()
+
+    def post(self, url, data):
+        return self.client.post(url, data=data, follow_redirects=True)
+
+    def get(self, url):
+        return self.client.get(url, follow_redirects=True)
+
+    def login(self, email, password):
+        return self.post(url_for('login'), {'email': email, 'password': password})
+
+    def logout(self):
+        return self.get(url_for('logout'))
+
+
+class DatabaseTestCase(FlaskTestCase):
     @staticmethod
     def bounce_db_connection():
         """Bounce the database connection; ensures data are persistent."""
@@ -21,37 +51,16 @@ class FlaskTestCase(unittest.TestCase):
         g.connection.commit()
 
     def setUp(self):
-        app.testing = True
-        app.csrf_enable = False
-
-        app.config['CSRF_ENABLED'] = False
-        app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
-        app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-        
-        self.client = app.test_client(use_cookies=True)
-        self.app_context = app.test_request_context()
-        self.app_context.push()
-
+        super().setUp()
         db.open_db_connection()
         self.execute_sql('sql/clear-db.sql')
         self.execute_sql('sql/init-db.sql')
 
     def tearDown(self):
+        self.execute_sql('sql/clear-db.sql')
+        self.execute_sql('sql/init-db.sql')
         db.close_db_connection()
-        self.app_context.pop()
-
-    def post(self, url, data):
-        return self.client.post(url, data=data, follow_redirects=True)
-
-    def get(self, url):
-        return self.client.get(url, follow_redirects=True)
-
-    def login(self, email, password):
-        return self.post(url_for('login'), {'email': email, 'password': password})
-
-    def logout(self):
-        return self.get(url_for('logout'))
+        super().tearDown()
 
 
 class LoginTestCase(FlaskTestCase):
@@ -118,7 +127,7 @@ class AdminTestCase(FlaskTestCase):
         self.assertIn(b'Contact Our Team', resp.data)
 
 
-class HomeGroupLeaderTestCase(FlaskTestCase):
+class HomeGroupLeaderTestCase(DatabaseTestCase):
     """Test the basic behavior of page routing and display for HG Leader pages"""
 
     def setUp(self):
@@ -153,7 +162,7 @@ class HomeGroupLeaderTestCase(FlaskTestCase):
         self.assertIn(b'Home Group A', resp.data)
 
 
-class MemberTestCase(FlaskTestCase):
+class MemberTestCase(DatabaseTestCase):
     @staticmethod
     def create_test_member():
         marital = db.get_marital_status_by_name('Other')
