@@ -161,11 +161,11 @@ class DatabaseTestCase(FlaskTestCase):
         """Open the database connection and create all the tables."""
         super(DatabaseTestCase, self).setUp()
         db.open_db_connection()
-        self.execute_script('db/create_db.sql')
+        self.execute_script('sql/create-db.sql')
 
     def tearDown(self):
         """Clear all tables in the database and close the connection."""
-        self.execute_script('db/clear_db.sql')
+        self.execute_script('sql/clear-db.sql')
         db.close_db_connection()
         super(DatabaseTestCase, self).tearDown()
 

@@ -1,11 +1,12 @@
 -- DANGEROUS: this file deletes all the data in the database. Used for testing!
 
-
-DELETE FROM attendance;
-DELETE FROM homegroup;
+DELETE FROM member_role;
 DELETE FROM homegroup_leader;
 DELETE FROM homegroup_member;
-DELETE FROM meeting;
+DELETE FROM attendance;
 DELETE FROM member;
+DELETE FROM marital_status;
+DELETE FROM how_did_you_find_out;
 DELETE FROM role;
-DELETE FROM user;
+DELETE FROM homegroup;
+DELETE FROM meeting;
