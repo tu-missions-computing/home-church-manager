@@ -270,18 +270,16 @@ def get_all_inactive_members():
 
 
 # edits member info
-def edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status,
-                how_did_you_find_out, is_a_parent, join_date):
-    member_id = int(member_id)
-
+def edit_member(member_info):
     query = '''
-    UPDATE member SET first_name = %s, last_name = %s, email = %s, phone_number = %s, gender = %s, birthday = %s, baptism_status = %s, marital_status_id = %s, how_did_you_find_out_id = %s, is_a_parent = %s,  join_date = %s
-    WHERE id = %s
+    UPDATE member SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, 
+      phone_number = %(phone_number)s, gender = %(gender)s, birthday = %(birthday)s, 
+      baptism_status = %(baptism_status)s, 
+      marital_status_id = %(marital_status_id)s, how_did_you_find_out_id = %(how_did_you_find_out_id)s, 
+      is_a_parent = %(is_a_parent)s, join_date = %(join_date)s, is_active = %(is_active)s
+    WHERE id = %(id)s
     '''
-    g.cursor.execute(query, (
-        first_name, last_name, email, phone_number, gender, birthday, baptism_status, marital_status,
-        how_did_you_find_out,
-        is_a_parent, join_date, member_id))
+    g.cursor.execute(query, member_info)
     g.connection.commit()
     return g.cursor.rowcount
 
