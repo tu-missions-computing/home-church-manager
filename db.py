@@ -124,10 +124,9 @@ def update_role(id, role_id, is_active):
     return g.cursor.rowcount
 
 
-# retrieves all the marital status
-def get_marital_status():
-    query = ''' SELECT * FROM marital_status '''
-    g.cursor.execute(query)
+def get_all_marital_statuses():
+    # Get all the marital status values.
+    g.cursor.execute('SELECT * FROM marital_status')
     return g.cursor.fetchall()
 
 
@@ -137,7 +136,7 @@ def get_marital_status_by_name(name):
 
 
 # retrieves all the methods of finding out about the homegroups/church
-def get_how_did_you_find_out():
+def get_all_how_did_you_find_out_values():
     g.cursor.execute('SELECT * FROM how_did_you_find_out ')
     return g.cursor.fetchall()
 
@@ -192,7 +191,7 @@ def find_member_info(email):
 
 
 def find_member(member_id):
-    """Find member ID."""
+    """Find member by ID."""
     g.cursor.execute('SELECT * FROM member WHERE id = %(id)s', {'id': member_id})
     return g.cursor.fetchone()
 
