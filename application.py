@@ -15,11 +15,11 @@ import flask_excel as excel
 from openpyxl import Workbook
 from openpyxl.compat import range
 
-from flask_babel import Babel, gettext, lazy_gettext
-_ = gettext
-
 import db
 from mail_settings import config_email
+
+from flask_babel import Babel, gettext, lazy_gettext
+_ = gettext
 
 app = Flask(__name__)
 config_email(app)
@@ -54,6 +54,7 @@ def after(exception):
 
 # INDEX + MAP + Dashboard ##############################################
 
+
 @app.route('/')
 def index():
     """Index page: map of all home groups"""
@@ -65,9 +66,9 @@ def download_file(filename):
     return send_from_directory(os.getcwd(), filename, as_attachment=True)
 
 
-# Display the dashboard depending on user role
 @app.route('/dashboard')
 def dashboard():
+    """Display the dashboard depending on user role."""
     email = current_user.email
     role = current_user.role
     if role == 'homegroup_leader':
@@ -78,9 +79,9 @@ def dashboard():
     return redirect(url_for('index'))
 
 
-# Display the map of all the homegroups
 @app.route('/map')
 def map():
+    """Display the map of all the homegroups."""
     homegroups = db.get_all_homegroup_info()
     return render_template('map.html', homegroups=homegroups)
 
@@ -133,7 +134,9 @@ def contact():
         return redirect(url_for('index'))
     return render_template('contact.html', form=contact_form)
 
-########################## USER + LOGIN + Profile/Settings ##############################################
+
+# USER + LOGIN + Profile/Settings ##############################################
+
 
 def requires_roles(*roles):
     """Allow/disallow users from accessing pages based on their roles"""
@@ -157,16 +160,17 @@ class UserForm(FlaskForm):
     homegroups = SelectField(lazy_gettext('Choose Homegroup'), choices=[], coerce=int)
     submit = SubmitField(lazy_gettext('Create User'))
 
+
 class RoleForm(FlaskForm):
     role = SelectField(lazy_gettext('Change Role'), choices=[], coerce=int)
     homegroups = SelectField(lazy_gettext('Choose Homegroup'), choices=[], coerce=int)
     submit = SubmitField(lazy_gettext('New Role'))
 
 
-# Creates a new user and hashes their password in the database
 @app.route('/user/create/<member_id>', methods=['GET', 'POST'])
 def create_user(member_id):
-    allRoles = db.find_roles()
+    """Creates a new user and hashes their password in the database."""
+    allRoles = db.get_all_roles()
     email_list = []
     member = db.find_member(member_id)
     email = member['email']
@@ -202,18 +206,18 @@ def create_user(member_id):
     return render_template('create_user.html', form=user_form, email = email)
 
 
-# Show role page
 @app.route('/roles')
 @login_required
 @requires_roles('admin')
 def get_roles():
+    """Show role page."""
     member_roles = db.get_all_member_roles()
     return render_template('roles.html', member_roles = member_roles)
 
 
 def make_role_list():
     roleList = []
-    allRoles = db.find_roles()
+    allRoles = db.get_all_roles()
     for role in allRoles:
         # FIXME: Massive translation hack; need to get localized version from DB
         label = 'Líder de Iglesia de Hogar'
@@ -223,9 +227,9 @@ def make_role_list():
     return roleList
 
 
-# Creates a new role for the user that already exists
 @app.route('/roles/new_role/<member_id>', methods=['GET', 'POST'])
 def assign_new_role(member_id):
+    """Create a new role for the user that already exists."""
     current_user = db.find_user(session['username'])['member_id']
     if (str(member_id) == str(current_user)):
         flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
@@ -257,7 +261,7 @@ def assign_new_role(member_id):
 @requires_roles('admin')
 def edit_role(member_id, role_id):
     current_user = db.find_user(session['username'])['member_id']
-    if (str(member_id) == str(current_user)):
+    if str(member_id) == str(current_user):
         flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
     is_active = db.is_role_active(member_id, role_id)
@@ -265,7 +269,7 @@ def edit_role(member_id, role_id):
     if is_active:
         active = '0'
     db.update_role(member_id, role_id, active)
-    return redirect(url_for('get_roles' ))
+    return redirect(url_for('get_roles'))
 
 
 @app.route('/hgleader/<member_id>/<homegroup_id>')
@@ -277,15 +281,16 @@ def deactivate_hgleader(member_id, homegroup_id):
 
 
 class UpdateUserForm(FlaskForm):
+    """Update password form"""
     old_password = PasswordField(lazy_gettext('Current Password'), validators=[DataRequired()])
     new_password = PasswordField(lazy_gettext('New Password'), validators=[DataRequired()])
     confirm_password = PasswordField(lazy_gettext('Confirm Password'), validators=[DataRequired()])
     submit = SubmitField(lazy_gettext('Update Password'))
 
 
-#this updates user passwords
 @app.route('/user/edit/<user_id>', methods=['GET', 'POST'])
 def update_user(user_id):
+    """Update password."""
     member = db.find_user_info(user_id)
     email = member['email']
     user_form = UpdateUserForm(email=member['email'])
@@ -311,12 +316,10 @@ def update_user(user_id):
 
 class User(object):
     """Class for the currently logged-in user (if there is one). Only stores the user's email."""
-
     def __init__(self, email):
         self.email = email
         user = db.find_user(self.email)
         if user is not None:
-
             self.role = user['role']
             self.name = db.find_member_info(self.email)['first_name']
             self.user_id = user['id']
@@ -324,7 +327,7 @@ class User(object):
         else:
             self.role = 'no role'
             self.name = 'no name'
-        if (self.role == 'homegroup_leader'):
+        if self.role == 'homegroup_leader':
             self.homegroup_id = db.find_user_homegroup(self.email)
 
         self.is_authenticated = True
@@ -367,11 +370,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField(lazy_gettext('Log In'))
 
 
-# logs the user in, creates a new session, and creates a current user which is of the class "User"
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # temporary
-    #init_test_user()
+    """Log the user in, create a new session, and create a current user of class 'User'"""
     login_form = LoginForm()
 
     if login_form.validate_on_submit() and login_form.validate():
@@ -388,7 +389,6 @@ def login():
             current_user = User(login_form.email.data)
             login_user(current_user)
             session['username'] = current_user.email
-            #flash('Logged in successfully as {}'.format(login_form.email.data), category="success")
             return redirect(url_for('dashboard'))
         else:
             # Authentication failed.
@@ -398,13 +398,13 @@ def login():
     return render_template('login.html', form=login_form)
 
 
-# logs the user out and removes the session
 @app.route('/logout')
 def logout():
+    """Log the user out and removes the session."""
     logout_user()
     user_name = session.pop('username', None)
-    #flash('Logged out', category="info")
     return redirect(url_for('index'))
+
 
 @app.route('/user/profile/<user_id>')
 @login_required
@@ -414,7 +414,8 @@ def user_profile(user_id):
     return redirect (url_for('edit_member', member_id = member['id']))
 
 
-########################## HOME GROUP  (Home Group Leader)##############################################
+# HOME GROUP  (Home Group Leader)##############################################
+
 
 # this is the homegroup main page / dashboard
 @app.route('/homegroup/<homegroup_id>')
@@ -455,7 +456,7 @@ def homegroup(homegroup_id):
                     if date['date'] == item['date'] and item['attendance']:
                         list.append(item['attendance'])
                         hasDate = True
-                if hasDate == False:
+                if not hasDate:
                     list.append(False)
                 list_length = len(list)
             if (list_length < 4):
@@ -469,7 +470,6 @@ def homegroup(homegroup_id):
             for i in range(0, 4):
                 list.append(False)
             member_attendance.append(list)
-
 
     return render_template('homegroup.html', numMeetings = number_meetings, attendance_rate = hgAttendanceRate ,currentMonth = month_string, countMembers = countMembers, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance = member_attendance, dates = dates)
@@ -505,7 +505,6 @@ def homegroup_split(homegroup_id):
     return render_template('homegroup_split.html', form = new_homegroup)
 
 
-
 # this is the homegroup main page / dashboard
 @app.route('/split_member/<member_id>/<homegroup_id>/<homegroup_id1>/<homegroup_id2>/<group>',methods=['GET', 'POST'])
 @login_required
@@ -519,11 +518,12 @@ def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
     return redirect(url_for('homegroup_split_members', homegroup_id=homegroup_id, homegroup_id1=homegroup_id1,
                             homegroup_id2=homegroup_id2))
 
-# adds members to split group
+
 @app.route('/homegroup_split_members/<homegroup_id>/<homegroup_id1>/<homegroup_id2>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
 def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
+    """Add members to split home group."""
     members = db.get_homegroup_members(homegroup_id)
     currentHomegroup = homegroup_id
     homegroup_to_be_split = db.find_homegroup_by_id(homegroup_id)
@@ -531,11 +531,12 @@ def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
     homegroup2 = db.find_homegroup_by_id(homegroup_id2)
     return render_template('homegroup_split_members.html', homegroup_to_be_split = homegroup_to_be_split, homegroup1 = homegroup1, homegroup2 = homegroup2, currentHomegroup = currentHomegroup, old_members = members, homegroup_id1 =homegroup_id1, homegroup_id2 = homegroup_id2)
 
-## this returns further analytics for homegroups ###
+
 @app.route('/homegroup_analytics')
 @login_required
 @requires_roles('admin')
 def homegroup_analytics():
+    """Return further analytics for homegroups."""
     year = datetime.datetime.now().strftime("%Y")
     analytics = db.homegroup_analytics(year)
     minors = db.number_of_minors(year)
@@ -565,6 +566,7 @@ def homegroup_analytics():
 
     return render_template('homegroup_analytics.html', totalMembersList = totalMembersList, attendingMembersList = attendingMembersList, year = year,newMembersList = newMembersList, minorsList = minorsList, analytics = analyticsList)
 
+
 class AttendanceForm(FlaskForm):
     # member_id = StringField('member Id', validators=[Length(min=1, max=40)])
     # meeting_id = StringField('Meeting Id', validators=[Length(min=1, max=40)])
@@ -591,7 +593,8 @@ def attendance(homegroup_id):
     return render_template('attendance.html', currentHomegroup=homegroup_id, form=attendance_form, members=members,
                            showmembers=show_members)
 
-#sends email if user and missed a certain number of meetings
+
+# Sends email if user and missed a certain number of meetings
 def system_notify_member(member_id, num_misses):
     homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
     leader = db.find_homegroup_leader(homegroup_id)
@@ -608,7 +611,6 @@ def system_notify_member(member_id, num_misses):
         recipients=email_list,
         html=email_html)
     mail.send(msg)
-
 
 
 @app.route('/homegroup/data/<homegroup_id>', methods=['GET', 'POST'])
@@ -633,7 +635,6 @@ def homegroup_data(homegroup_id):
     return redirect(url_for('download_file', filename = dest_filename))
 
 
-
 @app.route('/homegroup/data/all', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
@@ -656,6 +657,8 @@ def all_homegroup_data():
     wb.save(filename=dest_filename)
     return redirect(url_for('download_file', filename = dest_filename))
 
+
+
 # adds (or updates) a new entry of attendance into the db
 def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
@@ -664,6 +667,7 @@ def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
 
 class EditAttendanceForm(FlaskForm):
     submit = SubmitField(lazy_gettext('Save'))
+
 
 # This allows you to edit homegroup attendance
 @app.route('/homegroup/attendance/edit/<homegroup_id>/<meeting_id>',  methods=['GET', 'POST'])
@@ -700,16 +704,15 @@ def edit_attendance(homegroup_id, meeting_id):
                            members=members_in_attendance, date=date, time=time, form = att_form)
 
 
-# returns all the attendance dates -- this is for the attendance reports page
+# Return all the attendance dates -- this is for the attendance reports page
 @app.route('/homegroup/attendance/dates/<homegroup_id>', methods=['GET'])
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def get_attendance_dates(homegroup_id):
-
     return render_template('attendance_reports.html', currentHomegroup=homegroup_id,
                            records=db.get_attendance_dates(homegroup_id))
 
-#view attendance history for a particular
+# View attendance history for a particular
 @app.route('/homegroup/attendance/view/<homegroup_id>', methods=['GET'])
 @login_required
 @requires_roles('admin')
@@ -718,6 +721,7 @@ def view_attendance(homegroup_id):
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
     return render_template('view_attendance.html', currentHomegroup=homegroup,
                            attendance_count=attendance_count, myHomegroup=homegroup_id, records=db.get_attendance_dates(homegroup_id))
+
 
 @app.route('/homegroup/attendance/view/report/<homegroup_id>/<meeting_id>',  methods=['GET'])
 @login_required
@@ -730,7 +734,8 @@ def view_attendance_report(homegroup_id, meeting_id):
     return render_template('view_attendance_report.html', currentHomegroup=homegroup_id, meeting_id=meeting_id,
                            members=members_in_attendance, date=date, time=time, attendance_count=attendance_count)
 
-# edit a particular homegroup
+
+# Edit a particular homegroup
 @app.route('/homegroup/edit/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('homegroup_leader', 'admin')
@@ -761,16 +766,18 @@ def edit_homegroup(homegroup_id):
 @app.route('/homegroup/select_location')
 def select_location():
     return render_template('select_location.html')
+
+
 # this is the iframe that is in the creating/editing homegroup -- allows you to type in address and finds location
 @app.route('/homegroup/select_location2')
 def select_location2():
     return render_template('select_location2.html')
 
 
-########################## MEMBER (Home Group Leader) ##############################################
+# MEMBER (Home Group Leader) ##############################################
+
 
 class CreateMemberForm(FlaskForm):
-
     first_name = StringField(lazy_gettext('First Name'), [Length(min=2, max=30, message=lazy_gettext("First name is a required field"))])
     last_name = StringField(lazy_gettext('Last Name'), [Length(min=2, max=30, message=lazy_gettext("Last name is a required field"))])
     email = StringField(lazy_gettext('Email'), [Email(lazy_gettext("Please enter valid email"))])
@@ -782,6 +789,7 @@ class CreateMemberForm(FlaskForm):
     marital_status = SelectField(lazy_gettext('Marital Status'), choices=[], coerce=int)
     submit = SubmitField(lazy_gettext('Save Member'))
 
+
 @app.route('/homegroup/member/new/<homegroup_id>')
 @login_required
 @requires_roles('homegroup_leader', 'admin')
@@ -790,7 +798,7 @@ def member_search(homegroup_id):
     return render_template ('member_search.html', all_members = members, homegroup_id = homegroup_id)
 
 
-#adds a member to a particular homegroup
+# Add a member to a particular homegroup
 @app.route('/homegroup/member/add/<homegroup_id>/<member_id>')
 @login_required
 @requires_roles('homegroup_leader', 'admin')
@@ -817,7 +825,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
     return redirect (url_for('get_homegroup_members', homegroup_id = homegroup_id))
 
 
-# creates a new member for a particular homegroup
+# Create a new member for a particular homegroup
 @app.route('/homegroup/create_member/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('homegroup_leader', 'admin')
@@ -858,7 +866,6 @@ def create_new_member_for_homegroup(homegroup_id):
                 flash(lazy_gettext("Member {} Created").format(member.first_name.data, member.last_name.data), category="success")
                 return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
-
     return render_template('create_member.html', form=member, homegroup_id=homegroup_id)
 
 
@@ -893,7 +900,6 @@ def edit_member(member_id):
 
     row = db.find_member(member_id)
 
-
     member_form = CreateMemberForm(first_name=row['first_name'],
                                    last_name=row['last_name'],
                                    email=row['email'],
@@ -917,9 +923,7 @@ def edit_member(member_id):
         methodList.append((method["id"], method["how_did_you_find_out_name"]))
     member_form.how_did_you_find_out.choices = methodList
 
-
-
-    ## to do add validators back!!! and member_form.validate()
+    ## TODO: add validators back!!! and member_form.validate()
     if request.method == "POST" :
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
@@ -932,7 +936,6 @@ def edit_member(member_id):
         how_did_you_find_out = member_form.how_did_you_find_out.data
         is_a_parent = member_form.is_a_parent.data
         join_date = request.form['JoinDate']
-
 
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, how_did_you_find_out, is_a_parent,  join_date)
@@ -958,9 +961,10 @@ def remove_member(homegroup_id, member_id):
     return redirect(url_for('get_homegroup_members', homegroup_id=homegroup_id))
 
 
-########################## ADMIN FUNCTIONS ##############################################
+# ADMIN FUNCTIONS ##############################################
 
-#### Admin - Home Group ####
+
+# Admin - Home Group ####
 class CreateHomeGroupForm(FlaskForm):
     name = StringField(lazy_gettext('Name'), [Length(min=2, max=50 , message=lazy_gettext("Name is a required field"))])
     description = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
@@ -968,7 +972,6 @@ class CreateHomeGroupForm(FlaskForm):
     latitude = StringField(lazy_gettext('Latitude'))
     longitude = StringField(lazy_gettext('Longitude'))
     submit = SubmitField(lazy_gettext('Save Home Group'))
-
 
 
 class CreateHomeGroupSplitForm(FlaskForm):
@@ -1029,7 +1032,7 @@ def create_homegroup():
     return render_template('create_homegroup.html', form=new_homegroup)
 
 
-# shows all homegroups
+# Show all homegroups
 @app.route('/homegroup/all')
 @login_required
 @requires_roles('admin')
@@ -1038,7 +1041,7 @@ def get_homegroups():
                            inactiveHomegroups=db.get_all_inactive_homegroups(), showInactive=False)
 
 
-# deactivates a homegroup
+# Deactivate a homegroup
 @app.route('/homegroup/delete/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
@@ -1051,7 +1054,7 @@ def deactivate_homegroup(homegroup_id):
     return redirect(url_for('get_homegroups'))
 
 
-#this reactivates a homegroup
+# Reactivate a homegroup
 @app.route('/homegroup/reactivate/<homegroup_id>', methods=['GET', 'POST'])
 @login_required
 @requires_roles('admin')
@@ -1063,7 +1066,8 @@ def reactivate_homegroup(homegroup_id):
     return redirect(url_for('get_homegroups'))
 
 
-#### Admin - Member ###########
+# Admin - Member ###########
+
 
 # shows all members
 @app.route('/member/all')
@@ -1121,7 +1125,6 @@ def create_member():
                 flash(lazy_gettext("Member {} Created").format(member.first_name.data), category="success")
                 return redirect(url_for('all_members'))
 
-
     return render_template('create_member.html', form=member)
 
 
@@ -1170,7 +1173,6 @@ def all_admin():
                            admin=db.get_all_admin(),
                            inactiveAdmin=db.get_all_inactive_admin(),
                            showInactive=False)
-
 
 
 # Make this the last line in the file!

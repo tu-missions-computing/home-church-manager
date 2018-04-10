@@ -1,4 +1,5 @@
 import unittest
+from random import choice
 
 from flask import g, url_for
 
@@ -62,8 +63,20 @@ class DatabaseTestCase(FlaskTestCase):
         db.close_db_connection()
         super().tearDown()
 
+    @staticmethod
+    def create_test_member():
+        marital = db.get_marital_status_by_name('Other')
+        how = db.get_how_did_you_find_out_by_name('Other')
+        return db.create_member({
+            'first_name': 'New', 'last_name': 'Member', 'email': 'newmember@example.com', 'phone_number': '555-1212',
+            'gender': 'F', 'birthday': '2001-12-25',
+            'baptism_status': True,
+            'marital_status_id': marital['id'], 'how_did_you_find_out_id': how['id'],
+            'is_a_parent': True, 'join_date': '2018-03-24'
+        })
 
-class LoginTestCase(FlaskTestCase):
+
+class LoginTestCase(DatabaseTestCase):
     def test_successful_login(self):
         response = self.login('admin@example.com', 'password')
         assert b'Log Out' in response.data
@@ -75,7 +88,7 @@ class LoginTestCase(FlaskTestCase):
         assert b'Invalid email address or password' in response.data
 
 
-class AdminTestCase(FlaskTestCase):
+class AdminTestCase(DatabaseTestCase):
     """Test the basic behavior of page routing and display for admin pages"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -116,11 +129,9 @@ class AdminTestCase(FlaskTestCase):
         resp = self.get(url_for('update_user', user_id=self.admin_member['id']))
         self.assertIn(b'Update Password', resp.data, "Did not find the phrase: Update Password")
 
-    @unittest.skip('Need better way to localize FAQ page')
     def test_faq_page(self):
         resp = self.get(url_for('faq'))
-        self.assertIn(b'Frequently Asked Questions', resp.data)
-        self.assertIn(b'How do I view', resp.data)
+        self.assertIn(b'Haga clic en la', resp.data)
 
     def test_contact_page(self):
         resp = self.get(url_for('contact'))
@@ -146,12 +157,12 @@ class HomeGroupLeaderTestCase(DatabaseTestCase):
         self.assertIn(b'Home Group A Dashboard', resp.data)
 
     def test_member_page(self):
-        """Verify the member page."""
+        """Verify the member page"""
         resp = self.get(url_for('get_homegroup_members', homegroup_id=self.homegroup['id']))
         self.assertIn(b'Home Group A Members', resp.data)
 
     def test_attendance_page(self):
-        """Verify the attendance page."""
+        """Verify the attendance page"""
         resp = self.get(url_for('attendance', homegroup_id=self.homegroup['id']))
         self.assertIn(b'Attendance Report', resp.data)
 
@@ -163,19 +174,6 @@ class HomeGroupLeaderTestCase(DatabaseTestCase):
 
 
 class MemberTestCase(DatabaseTestCase):
-    @staticmethod
-    def create_test_member():
-        marital = db.get_marital_status_by_name('Other')
-        how = db.get_how_did_you_find_out_by_name('Other')
-
-        return db.create_member({
-            'first_name': 'New', 'last_name': 'Member', 'email': 'newmember@example.com', 'phone_number': '555-1212',
-            'gender': 'F', 'birthday': '2001-12-25',
-            'baptism_status': True,
-            'marital_status_id': marital['id'], 'how_did_you_find_out_id': how['id'],
-            'is_a_parent': True, 'join_date': '2018-03-24'
-        })
-
     def test_add_member(self):
         """Make sure we can add a new member."""
         member_status = self.create_test_member()
@@ -225,66 +223,83 @@ class MemberTestCase(DatabaseTestCase):
         self.assertEqual(edited_member['join_date'], '2017-03-24')
         self.assertEqual(edited_member['is_active'], True)
 
-class UserTestCase(FlaskTestCase):
+
+class UserTestCase(DatabaseTestCase):
+    def setUp(self):
+        super().setUp()
+
+        member_status = self.create_test_member()
+        self.member_id = member_status['id']
+
+        all_roles = db.get_all_roles()
+        self.role_id = choice(all_roles)['id']
+
     def test_add_user(self):
-        """Make sure we can add a new user"""
-        row_count = db.create_member_role("testing@test.com", "password", 1)
+        """Make sure we can add a new user: assign the user a role"""
+        row_count = db.create_member_role(self.member_id, "password", self.role_id)
         self.assertEqual(row_count, 1)
-        user_id = db.recent_user()['id']
-        test_hg = db.find_user_info(user_id)
-        self.assertIsNotNone(test_hg)
-        self.assertEqual(test_hg['email'], 'testing@test.com')
-        self.assertEqual(test_hg['password'], 'password')
-        self.assertEqual(test_hg['role_id'], 1)
 
-    # def test_edit_user(self):
-    #     """Make sure we can edit a homegroup"""
-    #     row_count = db.create_member_role("testing@test.com", "password", 1)
-    #     user_id = db.recent_user()['id']
-    #     row_count = db.update_password("testingggggg@test.com", "passwordssss", 1)
-    #     test_hg = db.find_user_info(user_id)
-    #     self.assertIsNotNone(test_hg)
-    #     print("emaillll", test_hg['email'])
-    #     self.assertEqual(test_hg['email'], 'testingggggg@test.com')
-    #     self.assertEqual(test_hg['password'], 'passwordssss')
-    #     self.assertEqual(test_hg['role_id'], 1)
+        test_role = db.find_member_role(self.member_id)
+        self.assertIsNotNone(test_role)
+        self.assertEqual(test_role['member_id'], self.member_id)
+        self.assertEqual(test_role['password'], 'password')
+        self.assertEqual(test_role['role_id'], self.role_id)
 
-    def test_find_roles(self):
-        """Make sure we can find roles"""
-        g.db.execute("INSERT INTO role(role) VALUES('admin')")
-        roles = db.find_roles()
-        self.assertEqual(roles[0][1], "admin")
+    def test_edit_user(self):
+        """Make sure we can change a password"""
+        row_count = db.create_member_role(self.member_id, "PASSword", self.role_id)
+        self.assertEqual(row_count, 1)
 
-    # def test_find_user(self):
-    #     """Make sure we can find user"""
-    #     row_count = db.create_member("Seth", "Gerald", "Seth@example.com", "922", "Male", "Christmas", 0, 0, "2/3/09")
-    #     member_id = db.find()['id']
+        row_count = db.update_password(self.member_id, "password", self.role_id)
+
+        test_role = db.find_member_role(self.member_id)
+        self.assertIsNotNone(test_role)
+        self.assertEqual(test_role['member_id'], self.member_id)
+        self.assertEqual(test_role['password'], 'password')
+        self.assertEqual(test_role['role_id'], self.role_id)
 
 
-class HomeGroupTestCase(FlaskTestCase):
+class HomeGroupTestCase(DatabaseTestCase):
+    @staticmethod
+    def create_homegroup():
+        return db.create_homegroup('Test Home Group', 'Test Location', 'Test Description', -3, -78)
+
     def test_add_homegroup(self):
         """Make sure we can add a new homegroup"""
-        row_count = db.create_homegroup('Test HomeGroup', 'Test Location', 'Test Description', None, None)
-        self.assertEqual(row_count, 1)
-        homegroup_id = db.recent_homegroup()['id']
+        hg_status = self.create_homegroup()
+        self.assertEqual(hg_status['rowcount'], 1)
+        homegroup_id = hg_status['id']
+
         test_hg = db.find_homegroup_by_id(homegroup_id)
         self.assertIsNotNone(test_hg)
 
-        self.assertEqual(test_hg['Name'], 'Test HomeGroup')
-        self.assertEqual(test_hg['Location'], 'Test Location')
-        self.assertEqual(test_hg['Description'], 'Test Description')
+        self.assertEqual(test_hg['name'], 'Test Home Group')
+        self.assertEqual(test_hg['location'], 'Test Location')
+        self.assertEqual(test_hg['description'], 'Test Description')
+        self.assertEqual(test_hg['latitude'], -3)
+        self.assertEqual(test_hg['longitude'], -78)
 
     def test_edit_homegroup(self):
-        """Make sure we can edit a homegroup"""
-        row_count = db.create_homegroup('Fake', 'Fake Location', 'Fake Description', None, None)
-        homegroup_id = db.recent_homegroup()['id']
-        row_count = db.edit_homegroup(homegroup_id, 'Test HomeGroup', 'Test Location', 'Test Description', None, None)
+        """Check that we can edit a home group."""
+        hg_status = self.create_homegroup()
+        self.assertEqual(hg_status['rowcount'], 1)
+        homegroup_id = hg_status['id']
+
         test_hg = db.find_homegroup_by_id(homegroup_id)
         self.assertIsNotNone(test_hg)
 
-        self.assertEqual(test_hg['Name'], 'Test HomeGroup')
-        self.assertEqual(test_hg['Location'], 'Test Location')
-        self.assertEqual(test_hg['Description'], 'Test Description')
+        row_count = db.edit_homegroup(homegroup_id, 'Updated Group', 'New Location',
+                                      test_hg['description'], test_hg['latitude'], -79)
+
+        test_hg = db.find_homegroup_by_id(homegroup_id)
+        self.assertIsNotNone(test_hg)
+        self.assertEqual(test_hg['name'], 'Updated Group')
+        self.assertEqual(test_hg['location'], 'New Location')
+        self.assertEqual(test_hg['description'], 'Test Description')
+        self.assertEqual(test_hg['latitude'], -3)
+        self.assertEqual(test_hg['longitude'], -79)
+
+
 
 # Do the right thing if this file is run standalone.
 if __name__ == '__main__':

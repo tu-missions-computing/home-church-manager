@@ -18,6 +18,7 @@ def close_db_connection():
     g.cursor.close()
     g.connection.close()
 
+
 # Member ########################################
 
 def calculate_age(born):
@@ -27,11 +28,12 @@ def calculate_age(born):
 
 
 def create_member_role(member_id, password, role_id):
+    """Assign a member to the given role"""
     query = '''
     INSERT INTO member_role(member_id, password, role_id, is_active)
-    VALUES(%s, %s, %s, %s);
+    VALUES(%(member_id)s, %(password)s, %(role_id)s, TRUE);
     '''
-    g.cursor.execute(query, (member_id, password, role_id, True))
+    g.cursor.execute(query, {'member_id': member_id, 'password': password, 'role_id': role_id})
     g.connection.commit()
     return g.cursor.rowcount
 
@@ -46,24 +48,31 @@ def update_password(member_id, password, role_id):
     return g.cursor.rowcount
 
 
-def find_roles():
-    query = '''
-    SELECT * FROM role
-    '''
-    g.cursor.execute(query)
+def get_all_roles():
+    g.cursor.execute('SELECT * FROM role')
     return g.cursor.fetchall()
+
+
+def find_member_role(member_id):
+    """Get the role for this member, if any (may return None)"""
+    query = """
+    SELECT * 
+    FROM member_role 
+    WHERE member_role.member_id = %(member_id)s"""
+    g.cursor.execute(query, {'member_id': member_id})
+    return g.cursor.fetchone()
 
 
 # finds all the members and their roles
 def get_all_member_roles():
     query = '''
-    select first_name, last_name, member.id, homegroup_id, role_id, role, member_role.is_active as "roleActive", homegroup_leader.is_active as "hgLeaderActive", name as "hgName" from member 
-    left outer join member_role on member.id = member_role.member_id 
-    left outer join homegroup_leader on member.id = homegroup_leader.member_id
-    left outer join role on member_role.role_id = role.id 
-    left outer join homegroup on homegroup_leader.homegroup_id = homegroup.id
-    where member.is_active = TRUE
-    order by last_name, first_name
+    SELECT first_name, last_name, member.id, homegroup_id, role_id, role, member_role.is_active AS "roleActive", homegroup_leader.is_active AS "hgLeaderActive", name AS "hgName" FROM member 
+    LEFT OUTER JOIN member_role ON member.id = member_role.member_id 
+    LEFT OUTER JOIN homegroup_leader ON member.id = homegroup_leader.member_id
+    LEFT OUTER JOIN role ON member_role.role_id = role.id 
+    LEFT OUTER JOIN homegroup ON homegroup_leader.homegroup_id = homegroup.id
+    WHERE member.is_active = TRUE
+    ORDER BY last_name, first_name
     '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -87,20 +96,20 @@ WHERE member.email = %(email)s AND member_role.is_active = TRUE
 
 
 def find_user_info(id):
-    g.cursor.execute('SELECT * from member join member_role on member_role.member_id = member.id WHERE member.id =%s',
+    g.cursor.execute('SELECT * FROM member JOIN member_role ON member_role.member_id = member.id WHERE member.id =%s',
                      (id,))
     return g.cursor.fetchone()
 
 
 # finds if the user is active
 def is_role_active(id, role_id):
-    g.cursor.execute('select is_active from member_role where member_id = %s and role_id = %s', (id, role_id))
+    g.cursor.execute('SELECT is_active FROM member_role WHERE member_id = %s AND role_id = %s', (id, role_id))
     return g.cursor.fetchone()
 
 
 # finds if the user has an active role
 def has_active_role(id):
-    g.cursor.execute('''select is_active from member_role where member_id = %s and is_active = TRUE ''', (id,))
+    g.cursor.execute('''SELECT is_active FROM member_role WHERE member_id = %s AND is_active = TRUE ''', (id,))
     return g.cursor.fetchone()
 
 
@@ -108,7 +117,7 @@ def has_active_role(id):
 def update_role(id, role_id, is_active):
     query = '''
         UPDATE member_role SET is_active = %s
-        where member_id = %s and role_id = %s
+        WHERE member_id = %s AND role_id = %s
         '''
     g.cursor.execute(query, (is_active, id, role_id))
     g.connection.commit()
@@ -117,7 +126,7 @@ def update_role(id, role_id, is_active):
 
 # retrieves all the marital status
 def get_marital_status():
-    query = ''' select * from marital_status '''
+    query = ''' SELECT * FROM marital_status '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
 
@@ -141,7 +150,7 @@ def get_how_did_you_find_out_by_name(name):
 # updates the user role from admin role view based on selection
 def assign_new_role(id, role_id):
     query = '''
-    update member_role set is_active = TRUE, role_id = %s where member_id = %s
+    UPDATE member_role SET is_active = TRUE, role_id = %s WHERE member_id = %s
     '''
     g.cursor.execute(query, (role_id, id))
     g.connection.commit()
@@ -150,7 +159,7 @@ def assign_new_role(id, role_id):
 
 # finds the most recent member entered into the db
 def recent_user():
-    g.cursor.execute('select id from member order by id desc LIMIT 1')
+    g.cursor.execute('SELECT id FROM member ORDER BY id DESC LIMIT 1')
     return g.cursor.fetchone()
 
 
@@ -158,8 +167,8 @@ def recent_user():
 def get_all_users():
     query = '''
         SELECT * FROM member_role
-      JOIN role on member_role.role_id = role.id
-      JOIN member on member.id = member_role.member_id
+      JOIN role ON member_role.role_id = role.id
+      JOIN member ON member.id = member_role.member_id
         '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -168,71 +177,60 @@ def get_all_users():
 # finds a members associated homegroup (specifically for homegroup leaders)
 def find_user_homegroup(email):
     g.cursor.execute(
-        'SELECT * from homegroup_leader JOIN member on homegroup_leader.member_id = member.id WHERE email = %s',
+        'SELECT * FROM homegroup_leader JOIN member ON homegroup_leader.member_id = member.id WHERE email = %s',
         (email,))
     return g.cursor.fetchone()['homegroup_id']
 
 
-# finds the most recent member entered into the db
-def recent_user():
-    g.cursor.execute('select id from member order by id desc LIMIT 1')
-    return g.cursor.fetchone()
+# MEMBER ########################################
 
 
-#################################### MEMBER ########################################
-
-# returns a count of all members in the db
-def get_member_count():
-    query = '''
-        SELECT count(id)
-        FROM member
-        '''
-    return g.cursor.execute(query).fetchall()
-
-
-# finds member info by passing in an email
 def find_member_info(email):
-    g.cursor.execute('SELECT * from member WHERE email =%s', (email,))
+    """Find member by email."""
+    g.cursor.execute('SELECT * FROM member WHERE email = %(email)s', {'email': email})
     return g.cursor.fetchone()
 
 
-# finds member info by passing in a member id
 def find_member(member_id):
-    g.cursor.execute('SELECT * FROM member WHERE id = %s', (member_id,))
+    """Find member ID."""
+    g.cursor.execute('SELECT * FROM member WHERE id = %(id)s', {'id': member_id})
     return g.cursor.fetchone()
 
 
-# finds all members in the db
 def get_all_members():
+    """Get all active members."""
     query = '''
     SELECT * FROM member
     WHERE is_active=TRUE
-    ORDER BY last_name asc
+    ORDER BY last_name ASC
     '''
     g.cursor.execute(query)
     return add_age_to_member_rows(g.cursor.fetchall())
 
 
 def add_age_to_member_rows(rows):
-    resultSet = []
+    result_set = []
     for row in rows:
         member = {}
         for field in row.keys():
             member[field] = row[field]
         member["age"] = int((date.today() - datetime.strptime(member["birthday"], '%Y-%m-%d').date()).days / 365.25)
-        resultSet.append(member)
-    return resultSet
+        result_set.append(member)
+    return result_set
 
 
-# finds all members NOT in a particular homegroup
 def get_all_members_not_in_homegroup(homegroup_id):
-    query = '''
-    select * from member where member.is_active = TRUE and member.id not in (
-    select member_id from homegroup_member
-    where homegroup_id = %s and
-    homegroup_member.is_active = TRUE
+    """Find all members NOT in a particular homegroup."""
+    query = """
+    SELECT *
+    FROM member
+    WHERE member.is_active = TRUE AND member.id NOT IN (
+      SELECT member_id
+      FROM homegroup_member
+      WHERE homegroup_id = %s AND
+            homegroup_member.is_active = TRUE
     )
-    '''
+    """
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchall()
 
@@ -242,8 +240,8 @@ def get_homegroup_inactive_members(homegroup_id):
     g.cursor.execute('''SELECT * FROM member
             JOIN homegroup_member ON member.id = homegroup_member.member_id
             JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-            WHERE homegroup_member.is_active != TRUE and  homegroup.id = %s
-            order by last_name, first_name''', (homegroup_id,))
+            WHERE homegroup_member.is_active != TRUE AND  homegroup.id = %s
+            ORDER BY last_name, first_name''', (homegroup_id,))
     return g.cursor.fetchall()
 
 
@@ -251,7 +249,7 @@ def get_homegroup_inactive_members(homegroup_id):
 def reactive_homegroup_member(homegroup_id, member_id):
     query = '''
     UPDATE homegroup_member SET is_active = TRUE
-    where homegroup_id = %s and member_id = %s
+    WHERE homegroup_id = %s AND member_id = %s
     '''
     g.cursor.execute(query, (homegroup_id, member_id))
     g.connection.commit()
@@ -263,7 +261,7 @@ def get_all_inactive_members():
     query = '''
     SELECT * FROM member
     WHERE is_active=FALSE
-    order by last_name, first_name
+    ORDER BY last_name, first_name
     '''
     g.cursor.execute(query)
     return add_age_to_member_rows(g.cursor.fetchall())
@@ -295,30 +293,29 @@ def create_member(member_info):
     '''
     g.cursor.execute(query, member_info)
     g.connection.commit()
-    return { 'id': g.cursor.fetchone()['id'], 'rowcount': g.cursor.rowcount }
+    return {'id': g.cursor.fetchone()['id'], 'rowcount': g.cursor.rowcount}
 
 
 # adds leader to a homegroup
 def add_leader_to_homegroup(member_id, homegroup_id):
-    g.cursor.execute('select * from homegroup_leader where member_id =%s ', (member_id,))
-    if (g.cursor.fetchone()):
-        query = '''update homegroup_leader set is_active = TRUE, homegroup_id = %s where member_id = %s'''
+    g.cursor.execute('SELECT * FROM homegroup_leader WHERE member_id =%s ', (member_id,))
+    if g.cursor.fetchone():
+        query = '''UPDATE homegroup_leader SET is_active = TRUE, homegroup_id = %s WHERE member_id = %s'''
         g.cursor.execute(query, (homegroup_id, member_id))
     else:
         query = '''
-        INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) values(%s, %s, TRUE)
+        INSERT INTO homegroup_leader(member_id, homegroup_id, is_active) VALUES(%s, %s, TRUE)
         '''
         g.cursor.execute(query, (member_id, homegroup_id))
     g.connection.commit()
     return g.cursor.rowcount
 
 
-# deactivates hg leader
-
 def deactivate_hgleader(member_id, homegroup_id):
+    """Deactivate home group leader."""
     query = '''
-    update  homegroup_leader set is_active = FALSE
-    where member_id = %s and homegroup_id = %s
+    UPDATE  homegroup_leader SET is_active = FALSE
+    WHERE member_id = %s AND homegroup_id = %s
     '''
     g.cursor.execute(query, (member_id, homegroup_id))
     g.connection.commit()
@@ -328,8 +325,8 @@ def deactivate_hgleader(member_id, homegroup_id):
 
 def deactivate_hgleader_role(member_id):
     query = '''
-        update member_role set is_active = False
-        where member_id = %s '''
+        UPDATE member_role SET is_active = FALSE
+        WHERE member_id = %s '''
     g.cursor.execute(query, (member_id,))
     g.connection.commit()
     return g.cursor.rowcount
@@ -340,7 +337,7 @@ def add_member_to_homegroup(homegroup_id, member_id):
     now = datetime.now()
     date = now.strftime("%m-%d-%Y")
     query = '''
-    INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) values(%s, %s, %s, TRUE)
+    INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) VALUES(%s, %s, %s, TRUE)
     '''
     g.cursor.execute(query, (homegroup_id, member_id, date))
     g.connection.commit()
@@ -383,21 +380,21 @@ def reactivate_member(member_id):
 # finds all members in a particular homegroup
 def get_homegroup_members(homegroup_id):
     query = '''
-        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_member.is_active as "activeMember",  homegroup_leader.is_active as "hgLeader" FROM member
+        SELECT homegroup_member.member_id, first_name, last_name, email, name, homegroup_member.is_active AS "activeMember",  homegroup_leader.is_active AS "hgLeader" FROM member
         JOIN homegroup_member ON member.id = homegroup_member.member_id
         JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
-        left outer join homegroup_leader on homegroup_leader.member_id = member.id and homegroup_leader.homegroup_id = homegroup.id
-        WHERE homegroup_member.is_active = TRUE and  homegroup.id = %s and member.is_active = TRUE
-        order by last_name, first_name
+        LEFT OUTER JOIN homegroup_leader ON homegroup_leader.member_id = member.id AND homegroup_leader.homegroup_id = homegroup.id
+        WHERE homegroup_member.is_active = TRUE AND  homegroup.id = %s AND member.is_active = TRUE
+        ORDER BY last_name, first_name
     '''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchall()
 
 
 def number_of_meetings_held(homegroup_id):
-    query = ''' select count(distinct meeting_id) as "numMeetings"
-   from attendance
-   where homegroup_id = %s
+    query = ''' SELECT count(DISTINCT meeting_id) AS "numMeetings"
+   FROM attendance
+   WHERE homegroup_id = %s
    '''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchone()
@@ -407,8 +404,8 @@ def number_of_meetings_held(homegroup_id):
 def system_attendance_alert(homegroup_id, member_id, number_of_misses):
     query = """
     SELECT  * FROM attendance
-    WHERE homegroup_id = %s and member_id = %s
-    ORDER BY meeting_id desc
+    WHERE homegroup_id = %s AND member_id = %s
+    ORDER BY meeting_id DESC
     LIMIT %s
     """
     g.cursor.execute(query, (homegroup_id, member_id, number_of_misses))
@@ -418,16 +415,16 @@ def system_attendance_alert(homegroup_id, member_id, number_of_misses):
 def get_member_attendance(homegroup_id, member_id):
     query = '''
     SELECT  first_name, last_name, date, attendance FROM attendance
-    join member on attendance.member_id = member.id
-    join meeting on meeting.id = attendance.meeting_id
-    WHERE homegroup_id = %s and member_id = %s
-    and date in (
-        select distinct date from attendance
-            join meeting on meeting.id = attendance.meeting_id
-        where homegroup_id = %s
-        order by date desc limit 3
+    JOIN member ON attendance.member_id = member.id
+    JOIN meeting ON meeting.id = attendance.meeting_id
+    WHERE homegroup_id = %s AND member_id = %s
+    AND date IN (
+        SELECT DISTINCT date FROM attendance
+            JOIN meeting ON meeting.id = attendance.meeting_id
+        WHERE homegroup_id = %s
+        ORDER BY date DESC LIMIT 3
     )
-    order by date desc
+    ORDER BY date DESC
     '''
 
     g.cursor.execute(query, (homegroup_id, member_id, homegroup_id))
@@ -436,25 +433,25 @@ def get_member_attendance(homegroup_id, member_id):
 
 def get_last_3_dates(homegroup_id):
     query = '''
-    select distinct date from attendance
-            join meeting on meeting.id = attendance.meeting_id
-        where homegroup_id = %s
-        order by date desc limit 3'''
+    SELECT DISTINCT date FROM attendance
+            JOIN meeting ON meeting.id = attendance.meeting_id
+        WHERE homegroup_id = %s
+        ORDER BY date DESC LIMIT 3'''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchall()
 
 
-#################################### HOME GROUP ########################################
+# HOME GROUP ########################################
 
 
 # finds a homegroup leader
 def find_homegroup_leader(homegroup_id):
     homegroup_id = int(homegroup_id)
     g.cursor.execute('''
-        SELECT * from homegroup_leader
-        join member on member.id = homegroup_leader.member_id
-        join homegroup on homegroup_leader.homegroup_id = homegroup.id
-        where homegroup_id = %s
+        SELECT * FROM homegroup_leader
+        JOIN member ON member.id = homegroup_leader.member_id
+        JOIN homegroup ON homegroup_leader.homegroup_id = homegroup.id
+        WHERE homegroup_id = %s
         ''', (homegroup_id,))
     return g.cursor.fetchone()
 
@@ -462,8 +459,8 @@ def find_homegroup_leader(homegroup_id):
 # finds a member's homegroup
 def find_member_homegroup(member_id):
     g.cursor.execute('''
-       SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
-       where member_id = %s
+       SELECT * FROM homegroup_member JOIN member ON member.id = homegroup_member.member_id
+       WHERE member_id = %s
        ''', (member_id,))
     return g.cursor.fetchone()
 
@@ -471,9 +468,9 @@ def find_member_homegroup(member_id):
 # find if already has a homegroup
 def member_already_in_homegroup(member_id):
     g.cursor.execute('''
-          SELECT * from homegroup_member join member on member.id = homegroup_member.member_id
+          SELECT * FROM homegroup_member JOIN member ON member.id = homegroup_member.member_id
       
-          where member_id = %s and homegroup_member.is_active = TRUE
+          WHERE member_id = %s AND homegroup_member.is_active = TRUE
           ''', (member_id,))
     return g.cursor.fetchone()
 
@@ -484,9 +481,9 @@ def get_attendance_dates(homegroup_id):
 
     query = '''
         SELECT DISTINCT meeting.date, meeting.time, attendance.meeting_id
-        from meeting JOIN attendance on meeting.id = attendance.meeting_id
+        FROM meeting JOIN attendance ON meeting.id = attendance.meeting_id
         WHERE homegroup_id = %s
-        order by meeting.date desc, meeting.time desc
+        ORDER BY meeting.date DESC, meeting.time DESC
     '''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchall()
@@ -507,8 +504,8 @@ def generate_attendance_report(homegroup_id, meeting_id):
 # returns the attendance of a particular homegroup on a particular day/time
 def get_attendance(homegroup_id, meeting_id):
     meeting_id = int(meeting_id)
-    query = '''SELECT * from attendance join member on attendance.member_id = member.id
-                WHERE homegroup_id = %s and meeting_id = %s '''
+    query = '''SELECT * FROM attendance JOIN member ON attendance.member_id = member.id
+                WHERE homegroup_id = %s AND meeting_id = %s '''
     g.cursor.execute(query, (homegroup_id, meeting_id))
     return g.cursor.fetchall()
 
@@ -517,50 +514,50 @@ def get_attendance(homegroup_id, meeting_id):
 
 def homegroup_analytics(year):
     query = '''
-     select  EXTRACT(MONTH FROM TO_DATE(join_date, 'MM-DD-YYYY')) as "month", count(distinct member_id)
- from homegroup_member
- where EXTRACT(year FROM TO_DATE(join_date, 'MM-DD-YYYY'))  = %s and is_active = TRUE
- group by month
+     SELECT  EXTRACT(MONTH FROM TO_DATE(join_date, 'MM-DD-YYYY')) AS "month", count(DISTINCT member_id)
+ FROM homegroup_member
+ WHERE EXTRACT(YEAR FROM TO_DATE(join_date, 'MM-DD-YYYY'))  = %s AND is_active = TRUE
+ GROUP BY month
     '''
     g.cursor.execute(query, (year,))
     return g.cursor.fetchall()
 
 
 def number_of_minors(year):
-    query = '''select EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) as "month", count(distinct (member_id))
-FROM member JOIN homegroup_member on homegroup_member.member_id = member.id
-WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) < 18 and EXTRACT(year FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s and homegroup_member.is_active = TRUE
-group by month'''
+    query = '''SELECT EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) AS "month", count(DISTINCT (member_id))
+FROM member JOIN homegroup_member ON homegroup_member.member_id = member.id
+WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) < 18 AND EXTRACT(YEAR FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s AND homegroup_member.is_active = TRUE
+GROUP BY month'''
     g.cursor.execute(query, (year,))
     return g.cursor.fetchall()
 
 
 def number_of_new_members(year):
-    query = '''select EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) as "month", count(distinct (member_id))
-    FROM member JOIN homegroup_member on homegroup_member.member_id = member.id
-    WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) >= 18 and EXTRACT(year FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s and homegroup_member.is_active = TRUE
-    group by month'''
+    query = '''SELECT EXTRACT(MONTH FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY')) AS "month", count(DISTINCT (member_id))
+    FROM member JOIN homegroup_member ON homegroup_member.member_id = member.id
+    WHERE date_part('year', age(CURRENT_DATE,to_date(birthday, 'YYYY-MM-DD'))) >= 18 AND EXTRACT(YEAR FROM TO_DATE(homegroup_member.join_date, 'MM-DD-YYYY'))  = %s AND homegroup_member.is_active = TRUE
+    GROUP BY month'''
     g.cursor.execute(query, (year,))
     return g.cursor.fetchall()
 
 
 def members_attending_a_homegroup(year):
-    query = '''select EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) as "month", count (distinct attendance.member_id)
-from attendance
-join meeting on meeting.id = attendance.meeting_id
-where attendance = true and EXTRACT(year FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
-group by month
+    query = '''SELECT EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) AS "month", count (DISTINCT attendance.member_id)
+FROM attendance
+JOIN meeting ON meeting.id = attendance.meeting_id
+WHERE attendance = TRUE AND EXTRACT(YEAR FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
+GROUP BY month
 '''
     g.cursor.execute(query, (year,))
     return g.cursor.fetchall()
 
 
 def total_members(year):
-    query = '''select EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) as "month", count (distinct attendance.member_id)
-from attendance
-join meeting on meeting.id = attendance.meeting_id
-where EXTRACT(year FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
-group by month
+    query = '''SELECT EXTRACT(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) AS "month", count (DISTINCT attendance.member_id)
+FROM attendance
+JOIN meeting ON meeting.id = attendance.meeting_id
+WHERE EXTRACT(YEAR FROM TO_DATE(date, 'YYYY-MM-DD'))  = %s
+GROUP BY month
 '''
     g.cursor.execute(query, (year,))
     return g.cursor.fetchall()
@@ -568,7 +565,7 @@ group by month
 
 # finds date information from a meeting id
 def find_date(meeting_id):
-    g.cursor.execute('SELECT * from meeting WHERE id =%s', (meeting_id,))
+    g.cursor.execute('SELECT * FROM meeting WHERE id =%s', (meeting_id,))
     return g.cursor.fetchone()
 
 
@@ -576,7 +573,7 @@ def find_date(meeting_id):
 def update_attendance(homegroup_id, member_id, meeting_id, attendance):
     query = '''
         UPDATE attendance SET attendance = %s
-        WHERE homegroup_id = %s and member_id = %s and meeting_id = %s
+        WHERE homegroup_id = %s AND member_id = %s AND meeting_id = %s
         '''
     g.cursor.execute(query, (attendance, homegroup_id, member_id, meeting_id))
     g.connection.commit()
@@ -590,20 +587,14 @@ def add_date(date, time):
     '''
     g.cursor.execute(query, (date, time))
     g.connection.commit()
-    query = '''SELECT id from meeting order by id desc limit 1'''
+    query = '''SELECT id FROM meeting ORDER BY id DESC LIMIT 1'''
     g.cursor.execute(query)
-    return g.cursor.fetchone()
-
-
-# returns the most recent homegroup added to the db
-def recent_homegroup():
-    g.cursor.execute('select id from homegroup order by id desc LIMIT 1')
     return g.cursor.fetchone()
 
 
 def find_homegroup_by_id(homegroup_id):
     """Find a homegroup based on ID."""
-    g.cursor.execute('SELECT * from homegroup WHERE id =%s', (homegroup_id,))
+    g.cursor.execute('SELECT * FROM homegroup WHERE id =%s', (homegroup_id,))
     return g.cursor.fetchone()
 
 
@@ -613,21 +604,22 @@ def find_homegroup_by_name(name):
     return g.cursor.fetchone()
 
 
-# creates a new homegroup
 def create_homegroup(name, location, description, latitude, longitude):
+    """Create a new home group"""
     now = datetime.now()
-    date = now.strftime("%m-%d-%Y")
+    today = now.strftime("%m-%d-%Y")
     query = '''
         INSERT INTO homegroup(name, location, description, latitude, longitude,creation_date, is_active)
         VALUES(%s, %s, %s, %s, %s, %s,  TRUE)
+        RETURNING id
         '''
-    g.cursor.execute(query, (name, location, description, latitude, longitude, date,))
+    g.cursor.execute(query, (name, location, description, latitude, longitude, today,))
     g.connection.commit()
-    return g.cursor.rowcount
+    return {'id': g.cursor.fetchone()['id'], 'rowcount': g.cursor.rowcount}
 
 
-# edits homegroup info
 def edit_homegroup(homegroup_id, name, location, description, latitude, longitude):
+    """Edit a home group"""
     query = '''
     UPDATE homegroup SET name = %s, location = %s, description = %s, latitude = %s, longitude = %s
     WHERE id = %s
@@ -651,7 +643,7 @@ def get_all_homegroups():
 # returns all homegroup info - including leader info etc.
 def get_all_homegroup_info():
     query = '''
-        select * from homegroup left outer join homegroup_leader on homegroup.id = homegroup_leader.homegroup_id left outer join member on homegroup_leader.member_id = member.id
+        SELECT * FROM homegroup LEFT OUTER JOIN homegroup_leader ON homegroup.id = homegroup_leader.homegroup_id LEFT OUTER JOIN member ON homegroup_leader.member_id = member.id
     '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -680,10 +672,10 @@ def reactivate_homegroup(homegroup_id):
 
 def number_of_members_in_homegroup(homegroup_id):
     query = '''
-    select count(distinct member_id) as "numMembers" from homegroup_member 
-    join member on member.id = homegroup_member.member_id
-    where homegroup_member.is_active = TRUE and member.is_active = TRUE
-    and homegroup_id = %s'''
+    SELECT count(DISTINCT member_id) AS "numMembers" FROM homegroup_member 
+    JOIN member ON member.id = homegroup_member.member_id
+    WHERE homegroup_member.is_active = TRUE AND member.is_active = TRUE
+    AND homegroup_id = %s'''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchone()
 
@@ -698,19 +690,19 @@ def get_all_inactive_homegroups():
 
 
 def get_homegroup_attendance_records(homegroup_id):
-    query = ''' select date, time,  first_name, last_name, attendance from attendance
-    join member on member.id = attendance.member_id
-    join meeting on meeting.id = attendance.meeting_id 
+    query = ''' SELECT date, time,  first_name, last_name, attendance FROM attendance
+    JOIN member ON member.id = attendance.member_id
+    JOIN meeting ON meeting.id = attendance.meeting_id 
     WHERE homegroup_id = %s'''
     g.cursor.execute(query, (homegroup_id,))
     return g.cursor.fetchall()
 
 
 def get_all_homegroup_attendance_records():
-    query = ''' select name As "Home Group", date, time,  first_name, last_name, attendance from attendance
-        join member on member.id = attendance.member_id
-        join meeting on meeting.id = attendance.meeting_id 
-        join homegroup on attendance.homegroup_id = homegroup.id
+    query = ''' SELECT name AS "Home Group", date, time,  first_name, last_name, attendance FROM attendance
+        JOIN member ON member.id = attendance.member_id
+        JOIN meeting ON meeting.id = attendance.meeting_id 
+        JOIN homegroup ON attendance.homegroup_id = homegroup.id
         '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -744,13 +736,13 @@ def get_all_inactive_admin():
 
 def get_attendance_counts():
     query = '''
-SELECT  to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", COUNT (DISTINCT member.id) AS "countMembers" FROM attendance
+SELECT  to_char(to_timestamp(to_char(extract(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') AS "month", COUNT (DISTINCT member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
-    JOIN homegroup on  homegroup.id = attendance.homegroup_id
+    JOIN homegroup ON  homegroup.id = attendance.homegroup_id
     WHERE attendance = TRUE
     GROUP BY month
-    order by month asc
+    ORDER BY month ASC
     '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -759,13 +751,13 @@ SELECT  to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-D
 def get_top_n_homegroup_member_counts(n):
     n = int(n)
     query = '''
-    select name, count(distinct member_id) as memberCount from homegroup_member
-    join member on member.id = homegroup_member.member_id
-    join homegroup on homegroup_member.homegroup_id = homegroup.id
-    where homegroup_member.is_active = TRUE and member.is_active = TRUE
-    and homegroup.is_active = TRUE
-    group by name
-    order by memberCount desc limit %s
+    SELECT name, count(DISTINCT member_id) AS memberCount FROM homegroup_member
+    JOIN member ON member.id = homegroup_member.member_id
+    JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
+    WHERE homegroup_member.is_active = TRUE AND member.is_active = TRUE
+    AND homegroup.is_active = TRUE
+    GROUP BY name
+    ORDER BY memberCount DESC LIMIT %s
     '''
     g.cursor.execute(query, (n,))
     return g.cursor.fetchall()
@@ -773,11 +765,11 @@ def get_top_n_homegroup_member_counts(n):
 
 def gender_report():
     query = '''
-     select gender, count(distinct member_id) as memberCount from homegroup_member
-    join member on member.id = homegroup_member.member_id
-    join homegroup on homegroup_member.homegroup_id = homegroup.id
-    where homegroup_member.is_active = TRUE and member.is_active = TRUE
-    group by gender
+     SELECT gender, count(DISTINCT member_id) AS memberCount FROM homegroup_member
+    JOIN member ON member.id = homegroup_member.member_id
+    JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
+    WHERE homegroup_member.is_active = TRUE AND member.is_active = TRUE
+    GROUP BY gender
     '''
     g.cursor.execute(query)
     return g.cursor.fetchall()
@@ -785,16 +777,16 @@ def gender_report():
 
 def homegroup_member_attendance(homegroup_id):
     query = '''
-       select first_name, last_name, date, attendance
-   from attendance join meeting on meeting.id = attendance.meeting_id
-   join member on attendance.member_id = member.id
-   where homegroup_id = %s and date in (
-       select distinct date from attendance
-       join meeting on meeting_id = meeting.id
-       where homegroup_id = %s
-       order by date desc limit 3
+       SELECT first_name, last_name, date, attendance
+   FROM attendance JOIN meeting ON meeting.id = attendance.meeting_id
+   JOIN member ON attendance.member_id = member.id
+   WHERE homegroup_id = %s AND date IN (
+       SELECT DISTINCT date FROM attendance
+       JOIN meeting ON meeting_id = meeting.id
+       WHERE homegroup_id = %s
+       ORDER BY date DESC LIMIT 3
    )
-   order by first_name, last_name, date desc
+   ORDER BY first_name, last_name, date DESC
     '''
     g.cursor.execute(query, (homegroup_id, homegroup_id))
     return g.cursor.fetchall()
@@ -802,12 +794,12 @@ def homegroup_member_attendance(homegroup_id):
 
 def get_homegroup_attendance_counts(myhomegroup):
     query = '''
-    SELECT to_char(to_timestamp(to_char(extract(month from TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') as "month", extract(month from TO_DATE(date, 'YYYY-MM-DD')) as "month_num", COUNT( distinct member.id) AS "countMembers" FROM attendance
+    SELECT to_char(to_timestamp(to_char(extract(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')), '999'), 'MM'), 'Mon') AS "month", extract(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) AS "month_num", COUNT( DISTINCT member.id) AS "countMembers" FROM attendance
     JOIN meeting ON attendance.meeting_id = meeting.id
     JOIN member ON attendance.member_id = member.id
     WHERE attendance = TRUE AND homegroup_id = %s
     GROUP BY month, month_num
-    order by month_num asc
+    ORDER BY month_num ASC
 
     '''
     g.cursor.execute(query, (myhomegroup,))
@@ -837,7 +829,7 @@ def get_homegroup_emails(homegroup_id):
 
 # total number of home groups created
 def number_of_homegroups():
-    query = ''' select count(id) as "numberOfHomegroups" from homegroup
+    query = ''' SELECT count(id) AS "numberOfHomegroups" FROM homegroup
         '''
     g.cursor.execute(query)
     return g.cursor.fetchone()
@@ -846,8 +838,8 @@ def number_of_homegroups():
 # total number of active home groups
 def number_of_active_homegroups():
     query = '''
-            select count(id) as "numberOfHomegroups" from homegroup
-            where is_active = TRUE
+            SELECT count(id) AS "numberOfHomegroups" FROM homegroup
+            WHERE is_active = TRUE
             '''
     g.cursor.execute(query)
     return g.cursor.fetchone()
@@ -856,9 +848,9 @@ def number_of_active_homegroups():
 # total number of members attending home groups
 def number_of_members_attending_homegroups():
     query = '''
-            select count(distinct (homegroup_member.member_id)) as "numberOfMembers" from homegroup_member
-            join attendance on homegroup_member.member_id = attendance.member_id
-            where homegroup_member.is_active = TRUE
+            SELECT count(DISTINCT (homegroup_member.member_id)) AS "numberOfMembers" FROM homegroup_member
+            JOIN attendance ON homegroup_member.member_id = attendance.member_id
+            WHERE homegroup_member.is_active = TRUE
             '''
     g.cursor.execute(query)
     return g.cursor.fetchone()
@@ -892,19 +884,19 @@ def get_homegroup_attendance_rate(month, homegroup_id):
 
 
 def people_who_attended(month, homegroup_id):
-    query = '''select count(( member_id ))as "members"
-        from attendance join meeting on meeting.id = attendance.meeting_id
-where attendance = TRUE and extract(month from TO_DATE(date, 'YYYY-MM-DD')) = %s
-and homegroup_id = %s
+    query = '''SELECT count(( member_id ))AS "members"
+        FROM attendance JOIN meeting ON meeting.id = attendance.meeting_id
+WHERE attendance = TRUE AND extract(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) = %s
+AND homegroup_id = %s
                 '''
     g.cursor.execute(query, (month, homegroup_id))
     return g.cursor.fetchone()
 
 
 def total_in_homegroup(month, homegroup_id):
-    query = '''select count( (member_id ))as "totalMembers"
-        from attendance join meeting on meeting.id = attendance.meeting_id
-where extract(month from TO_DATE(date, 'YYYY-MM-DD')) = %s and homegroup_id = %s
+    query = '''SELECT count( (member_id ))AS "totalMembers"
+        FROM attendance JOIN meeting ON meeting.id = attendance.meeting_id
+WHERE extract(MONTH FROM TO_DATE(date, 'YYYY-MM-DD')) = %s AND homegroup_id = %s
                 '''
     g.cursor.execute(query, (month, homegroup_id))
     return g.cursor.fetchone()
@@ -913,8 +905,8 @@ where extract(month from TO_DATE(date, 'YYYY-MM-DD')) = %s and homegroup_id = %s
 # number of home group leaders
 def number_of_homegroup_leaders():
     query = '''
-            select count(distinct(member_id)) as "numberOfHomegroupLeaders" from homegroup_leader
-            where is_active = TRUE
+            SELECT count(DISTINCT(member_id)) AS "numberOfHomegroupLeaders" FROM homegroup_leader
+            WHERE is_active = TRUE
             '''
     g.cursor.execute(query)
     return g.cursor.fetchone()
