@@ -1020,17 +1020,17 @@ class CreateHomeGroupForm(FlaskForm):
 
 
 class CreateHomeGroupSplitForm(FlaskForm):
-    name = StringField(_('Name'), [Length(min=2, max=50, message=_("Name is a required field"))])
-    description = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
-    location = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
-    latitude = StringField(_('Latitude'))
-    longitude = StringField(_('Longitude'))
-    name2 = StringField(_('Name'), [Length(min=2, max=50, message=_("Name is a required field"))])
-    description2 = TextAreaField(_('Description'), [InputRequired(message=_("Please enter a description"))])
-    location2 = StringField(_('Address'), [InputRequired(message=_("Please enter valid Address"))])
-    latitude2 = StringField(_('Latitude'))
-    longitude2 = StringField(_('Longitude'))
-    submit1 = SubmitField(_('Create Home Groups'))
+    name = StringField(lazy_gettext('Name'), [Length(min=2, max=50 , message=lazy_gettext("Name is a required field"))])
+    description = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
+    location = StringField(lazy_gettext('Address'), [InputRequired(message=lazy_gettext("Please enter valid Address"))])
+    latitude = StringField(lazy_gettext('Latitude'))
+    longitude = StringField(lazy_gettext('Longitude'))
+    name2 = StringField(lazy_gettext('Name'), [Length(min=2, max=50, message=lazy_gettext("Name is a required field"))])
+    description2 = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
+    location2 = StringField(lazy_gettext('Address'), [InputRequired(message=lazy_gettext("Please enter valid Address"))])
+    latitude2 = StringField(lazy_gettext('Latitude'))
+    longitude2 = StringField(lazy_gettext('Longitude'))
+    submit1 = SubmitField(lazy_gettext('Create Home Groups'))
 
 
 # Display admin home page

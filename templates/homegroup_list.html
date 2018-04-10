@@ -5,7 +5,7 @@
 
 {% block content %}
 
-        <div class="larger-container">
+        <div class="analytics-container">
             <h1 class="title-text animated stretchLeft">{{ _('All Home Groups') }}</h1>
             <hr>
             <div class="row">
@@ -70,7 +70,7 @@
 
                                 <a href="{{ url_for('homegroup_split', homegroup_id = homegroup.id) }}"
                                    class="btn btn-success btn-sm">
-                                    <span class="fa fa-clone"></span> Split
+                                    <span class="fa fa-clone"></span> {{ _('Split') }}
                                 </a>
 
                             </td>
