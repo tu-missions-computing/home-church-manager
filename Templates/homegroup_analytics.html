@@ -1,81 +1,79 @@
-<section class="cover text-center">
 {% extends "base.html" %}
 
 {% block title %}Home Group Analytics{% endblock %}
 
 {% block content %}
     <div class="analytics-container table-responsive" style="margin-top:1.5%">
-      <table class="table table-striped table-bordered table-hover results">
-          <div class="title-text"> {{ _('Analytics for') }} {{ year }}</div>
-      <hr>
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th scope="col">{{ _('January') }}</th>
-                                    <th scope="col">{{ _('February') }}</th>
-                                    <th scope="col">{{ _('March') }}</th>
-                                    <th scope="col">{{ _('April') }}</th>
-                                    <th scope="col">{{ _('May') }}</th>
-                                    <th scope="col">{{ _('June') }}</th>
-                                    <th scope="col">{{ _('July') }}</th>
-                                    <th scope="col">{{ _('August') }}</th>
-                                    <th scope="col">{{ _('September') }}</th>
-                                    <th scope="col">{{ _('October') }}</th>
-                                    <th scope="col">{{ _('November') }}</th>
-                                    <th scope="col">{{ _('December') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row"> {{ _('Total Members') }}</th>
-                                       {% for data in totalMembersList %}
-                                          <td>{{data}}</td>
-                                       {% endfor %}
-                                    </tr>
-                                <tr>
-                                    <th scope="row"> {{ _('Members Attending a Home Group') }}</th>
-                                       {% for data in attendingMembersList %}
-                                          <td>{{data}}</td>
-                                       {% endfor %}
-                                    </tr>
-       <tr>
-                                    <th scope="row">{{ _(' Total New Members') }}</th>
-                                       {% for data in analytics %}
-                                          <td>{{data}}</td>
-                                       {% endfor %}
-                                    </tr>
-       <tr>
-                                    <th scope="row"><span style="padding-left:10px; font-style:italic;">{{ _('Adult Members') }}</span> </th>
-                                       {% for data in newMembersList %}
-                                          <td>{{data}}</td>
-                                       {% endfor %}
-                                    </tr>
+        <table class="table table-striped table-bordered table-hover results">
+            <div class="title-text"> {{ _('Analytics for') }} {{ year }}</div>
+            <hr>
+            <thead>
+            <tr>
+                <th></th>
+                <th scope="col">{{ _('January') }}</th>
+                <th scope="col">{{ _('February') }}</th>
+                <th scope="col">{{ _('March') }}</th>
+                <th scope="col">{{ _('April') }}</th>
+                <th scope="col">{{ _('May') }}</th>
+                <th scope="col">{{ _('June') }}</th>
+                <th scope="col">{{ _('July') }}</th>
+                <th scope="col">{{ _('August') }}</th>
+                <th scope="col">{{ _('September') }}</th>
+                <th scope="col">{{ _('October') }}</th>
+                <th scope="col">{{ _('November') }}</th>
+                <th scope="col">{{ _('December') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row"> {{ _('Total Members') }}</th>
+                {% for data in totalMembersList %}
+                    <td>{{ data }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row"> {{ _('Members Attending a Home Group') }}</th>
+                {% for data in attendingMembersList %}
+                    <td>{{ data }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">{{ _(' Total New Members') }}</th>
+                {% for data in analytics %}
+                    <td>{{ data }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row"><span style="padding-left:10px; font-style:italic;">{{ _('Adult Members') }}</span></th>
+                {% for data in newMembersList %}
+                    <td>{{ data }}</td>
+                {% endfor %}
+            </tr>
 
 
-                                    <tr>
-                                        <th scope="row"> <span style="padding-left:10px; font-style:italic;">{{ _('Minor Members') }} </span></th>
-                                        {% for minor in minorsList %}
-                                          <td>{{minor}}</td>
-                                       {% endfor %}
-                                    </tr>
-                                     <tr>
-                                    <th scope="row"> {{ _('Transfers') }}</th>
-                                        <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                         <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-
-
-                            </table>
-                        </div>
+            <tr>
+                <th scope="row"><span style="padding-left:10px; font-style:italic;">{{ _('Minor Members') }} </span>
+                </th>
+                {% for minor in minorsList %}
+                    <td>{{ minor }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row"> {{ _('Transfers') }}</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
