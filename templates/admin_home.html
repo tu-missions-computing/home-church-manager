@@ -1,70 +1,68 @@
-<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ _('Home') }}{% endblock %}
 
 {% block content %}
-        <div class="container" style="background-color:white;color:black; margin-top:1.5%">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="title-text animated stretchLeft">{{ _('Admin Dashboard') }}</h1>
-                </div>
-
+    <div class="container" style="background-color:white;color:black; margin-top:1.5%">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="title-text animated stretchLeft">{{ _('Admin Dashboard') }}</h1>
             </div>
-            <div class="row">
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="dashboard-stats">
-                        <h1 class="number-text-blue">{{ homegroups.numberOfHomegroups }} </h1>
-                        <span class="heading-text">{{ _('HOME GROUPS') }}</span>
-                        <br> <span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
-                    </div>
-                    <div class="dashboard-stats">
-                        <h1 class="number-text-red">{{ active_homegroups.numberOfHomegroups }} </h1>
-                        <span class="heading-text">{{ _('ACTIVE GROUPS') }}</span>
-                        <br><span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
-                    </div>
-                    <div class="dashboard-stats">
-                        <h1 class="number-text-blue">{{ members.numberOfMembers }} </h1>
-                        <span class="heading-text">{{ _('ARCO MEMBERS') }}</span>
-                        <br> <span class="secondary-text">{{ _('ATTENDING HOME GROUPS') }}</span>
-                    </div>
-                    <div class="dashboard-stats">
-                        <h1 class="number-text-red">{{ attendance_rate }} </h1>
-                        <span class="heading-text">{{ _('ATTENDANCE RATE') }}</span>
-                        <br><span class="secondary-text">{{ _('IN THE MONTH OF') }} {{ currentMonth }}</span>
-                    </div>
-                    <div class="dashboard-stats">
-                        <h1 class="number-text-blue">{{ homegroup_leaders.numberOfHomegroupLeaders }} </h1>
-                        <span class="heading-text">{{ _('GROUP LEADERS') }}</span>
-                        <br> <span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
-                    </div>
-                    <a href="{{ url_for('all_homegroup_data') }}" class="btn btn-primary btn-lg btn-block"
-                       style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i
-                            class="fa fa-download" aria-hidden="true"></i>
-                        {{ _('Download Attendance Data') }}
-                    </a>
+
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="dashboard-stats">
+                    <h1 class="number-text-blue">{{ homegroups.numberOfHomegroups }} </h1>
+                    <span class="heading-text">{{ _('HOME GROUPS') }}</span>
+                    <br> <span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
                 </div>
-                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:.75%">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                            <div id="top-five" class="graph-styling" style="float:left;margin-right:0;"></div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                            <div id="line-chart" class="graph-styling" style="float:right%;margin-right:0;"></div>
-                        </div>
+                <div class="dashboard-stats">
+                    <h1 class="number-text-red">{{ active_homegroups.numberOfHomegroups }} </h1>
+                    <span class="heading-text">{{ _('ACTIVE GROUPS') }}</span>
+                    <br><span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
+                </div>
+                <div class="dashboard-stats">
+                    <h1 class="number-text-blue">{{ members.numberOfMembers }} </h1>
+                    <span class="heading-text">{{ _('ARCO MEMBERS') }}</span>
+                    <br> <span class="secondary-text">{{ _('ATTENDING HOME GROUPS') }}</span>
+                </div>
+                <div class="dashboard-stats">
+                    <h1 class="number-text-red">{{ attendance_rate }} </h1>
+                    <span class="heading-text">{{ _('ATTENDANCE RATE') }}</span>
+                    <br><span class="secondary-text">{{ _('IN THE MONTH OF') }} {{ currentMonth }}</span>
+                </div>
+                <div class="dashboard-stats">
+                    <h1 class="number-text-blue">{{ homegroup_leaders.numberOfHomegroupLeaders }} </h1>
+                    <span class="heading-text">{{ _('GROUP LEADERS') }}</span>
+                    <br> <span class="secondary-text">{{ _('TOTAL NUMBER') }}</span>
+                </div>
+                <a href="{{ url_for('all_homegroup_data') }}" class="btn btn-primary btn-lg btn-block"
+                   style="margin-left:auto;margin-right:auto; margin-top:15%; margin-bottom:15%;"> <i
+                        class="fa fa-download" aria-hidden="true"></i>
+                    {{ _('Download Attendance Data') }}
+                </a>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12" style="margin-top:.75%">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                        <div id="top-five" class="graph-styling" style="float:left;margin-right:0;"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                            <div id="gender" class="graph-styling" style="float:left;"></div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
-                            <div id="homegroupPie" class="graph-styling" style="margin-right:0;margin-left:0"></div>
-                        </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                        <div id="line-chart" class="graph-styling" style="margin-right:0;margin-left:0"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                        <div id="gender" class="graph-styling" style="float:left;"></div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:#f7f7f7;">
+                        <div id="homegroupPie" class="graph-styling" style="margin-right:0;margin-left:0"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     {# Hidden data tables for Highcharts components #}
     <table id="datatable" class="graph-styling" hidden>

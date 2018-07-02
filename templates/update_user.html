@@ -1,41 +1,40 @@
 <section class="cover text-center">
-{% extends 'base.html' %}
+    {% extends 'base.html' %}
 
-{% block title %}{{ _('Update Password') }}{% endblock %}
+    {% block title %}{{ _('Update Password') }}{% endblock %}
 
-{% block content %}
-            <div class="main-center" style="margin-top:3.5%">
-                <p class="title-text animated stretchleft">{{ _('Update Password') }}</p>
-                <hr>
-                <h5 style="padding-bottom:4%">{{ _('Email') }}: {{ email }}</h5>
-                <form method="POST" role="form" data-toggle="validator">
-                    {{ form.csrf_token }}
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.old_password.label }}
-                            {{ form.old_password(class='form-control') }}
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.new_password.label }}
-                            {{ form.new_password(class="form-control") }}
-                        </p>
-                    </div>
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.confirm_password.label }}
-                            {{ form.confirm_password(class="form-control") }}
-                        </p>
-                    </div>
-                    <div class="form-group ">
-                        <p class="form-label">
-                            {{ form.submit(class_='btn btn-primary btn-lg btn-block',
+    {% block content %}
+        <div class="main-center" style="margin-top:3.5%">
+            <p class="title-text animated stretchleft">{{ _('Update Password') }}</p>
+            <hr>
+            <h5 style="padding-bottom:4%">{{ _('Email') }}: {{ email }}</h5>
+            <form method="POST" role="form" data-toggle="validator">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <p class="form-label">
+                        {{ form.old_password.label }}
+                        {{ form.old_password(class='form-control') }}
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p class="form-label">
+                        {{ form.new_password.label }}
+                        {{ form.new_password(class="form-control") }}
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p class="form-label">
+                        {{ form.confirm_password.label }}
+                        {{ form.confirm_password(class="form-control") }}
+                    </p>
+                </div>
+                <div class="form-group ">
+                    <p class="form-label">
+                        {{ form.submit(class_='btn btn-primary btn-lg btn-block',
                                        style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}
-                        </p>
-                    </div>
-                </form>
-            </div>
+                    </p>
+                </div>
+            </form>
         </div>
-    </section>
-{% endblock %}
+        </section>
+    {% endblock %}

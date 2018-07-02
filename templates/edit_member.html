@@ -1,128 +1,125 @@
-<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ heading_text }}{% endblock %}
 
 {% block content %}
-            <div class="main-center">
-                <h2 class="title-text animated stretchLeft"> {{ heading_text }}</h2>
-                <hr>
-                <form method="POST" role="form" data-toggle="validator">
-                    <div class="form-group">
-                        {{ form.csrf_token }}
-                        <p class="form-label"> {{ form.first_name.label }} {{ form.first_name(class_='form-control') }}</p>
-                        {% if form.first_name.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Invalid First Name') }}
-                            </div>
-                        {% endif %}
+    <div class="main-center">
+        <h2 class="title-text animated stretchLeft"> {{ heading_text }}</h2>
+        <hr>
+        <form method="POST" role="form" data-toggle="validator">
+            <div class="form-group">
+                {{ form.csrf_token }}
+                <p class="form-label"> {{ form.first_name.label }} {{ form.first_name(class_='form-control') }}</p>
+                {% if form.first_name.errors %}
+                    <div class="alert alert-warning">
+                        {{ _('Invalid First Name') }}
                     </div>
-                    <div class="form-group">
-                        <p class="form-label"> {{ form.last_name.label }} {{ form.last_name(class_='form-control') }}</p>
-                        {% if form.last_name.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Invalid Last Name') }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.email.label(for="inputEmail", class_="control-label") }}
-                            {{ form.email(class_='form-control', type="email", id="inputEmail",
-                                  placeholder=_("Email"), dataerror=_("Invalid email address")) }}
-                        </p>
-                        {% if form.email.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Invalid Email Address') }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.phone_number.label }}
-                            {{ form.phone_number(class_='form-control', placeholder=_("ex: 224-656-8205")) }}
-                        </p>
-                        {% if form.phone_number.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Invalid Phone Number') }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <p class="form-label">
-                                {{ form.gender.label }}
-                                {{ form.gender(class_='form-control large-form-control') }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <p class="form-label">
-                                {# FIXME: Should this come from the form label? Should it be plural? #}
-                                <label>{{ _('Birthdays') }}</label>
-                                <br>
-                                <input type="date"
-                                       class="large-form-control"
-                                       style="color: black"
-                                       name="Birthday" value="{{ bDay }}"
-                                       required/></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <p class="form-label">
-                                {{ form.baptism_status.label }}
-                                {{ form.baptism_status(class_='form-control large-form-control') }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.marital_status.label }}
-                                    {{ form.marital_status(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.how_did_you_find_out.label }}
-                                    {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.is_a_parent.label }}
-                                    {{ form.is_a_parent(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                    <div class="row">
-                        <div class="col">
-                            <p class="form-label">
-                                <label>{{ _('Join Date') }}</label>
-                                <br>
-                                <input type="date"
-                                       class="large-form-control"
-                                       style="color: black"
-                                       name="JoinDate"
-                                       value="{{ joinDay }}" required/>
-                            </p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-group ">
-                        <p class="form-label">
-                            {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}
-                        </p>
-                    </div>
-                </form>
+                {% endif %}
             </div>
-        </div>
-    </section>
+            <div class="form-group">
+                <p class="form-label"> {{ form.last_name.label }} {{ form.last_name(class_='form-control') }}</p>
+                {% if form.last_name.errors %}
+                    <div class="alert alert-warning">
+                        {{ _('Invalid Last Name') }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <p class="form-label">
+                    {{ form.email.label(for="inputEmail", class_="control-label") }}
+                    {{ form.email(class_='form-control', type="email", id="inputEmail",
+                                  placeholder=_("Email"), dataerror=_("Invalid email address")) }}
+                </p>
+                {% if form.email.errors %}
+                    <div class="alert alert-warning">
+                        {{ _('Invalid Email Address') }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <p class="form-label">
+                    {{ form.phone_number.label }}
+                    {{ form.phone_number(class_='form-control', placeholder=_("ex: 224-656-8205")) }}
+                </p>
+                {% if form.phone_number.errors %}
+                    <div class="alert alert-warning">
+                        {{ _('Invalid Phone Number') }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {{ form.gender.label }}
+                        {{ form.gender(class_='form-control large-form-control') }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {# FIXME: Should this come from the form label? Should it be plural? #}
+                        <label>{{ _('Birthdays') }}</label>
+                        <br>
+                        <input type="date"
+                               class="large-form-control"
+                               style="color: black"
+                               name="Birthday" value="{{ bDay }}"
+                               required/></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {{ form.baptism_status.label }}
+                        {{ form.baptism_status(class_='form-control large-form-control') }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {{ form.marital_status.label }}
+                        {{ form.marital_status(class_='large-form-control form-control') }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {{ form.how_did_you_find_out.label }}
+                        {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        {{ form.is_a_parent.label }}
+                        {{ form.is_a_parent(class_='large-form-control form-control') }}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="form-label">
+                        <label>{{ _('Join Date') }}</label>
+                        <br>
+                        <input type="date"
+                               class="large-form-control"
+                               style="color: black"
+                               name="JoinDate"
+                               value="{{ joinDay }}" required/>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="form-group ">
+                <p class="form-label">
+                    {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%; font-family: 'Questrial', sans-serif;") }}
+                </p>
+            </div>
+        </form>
+    </div>
 {% endblock %}
