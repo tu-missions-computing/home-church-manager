@@ -4,33 +4,25 @@ $(document).ready(function () {
     $(".search").keyup(searchGuts);
     $(".searchToggle").click(searchGuts);
     $(".searchDropdown").change(searchGuts);
-    //console.log(emailList);
 
+    $('#confirmModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var url = button.data('url'); // Extract info from data-* attributes
+        var firstname = button.data('firstname');
+        var lastname = button.data('lastname');
+        var modal = $(this);
+        modal.find('.modal-body').text('¿Estás seguro de que lo desea eliminar ' + firstname + ' ' + lastname + '?');
+        modal.find('#modal-confirm').attr("href", url)
+    });
 
-$('#confirmModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var url = button.data('url'); // Extract info from data-* attributes
-    var firstname = button.data('firstname');
-    var lastname = button.data('lastname');
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-body').text('¿Estás seguro de que lo desea eliminar ' + firstname + ' ' + lastname + '?');
-    modal.find('#modal-confirm').attr("href", url)
-});
-$('#homegroupModal').on('show.bs.modal', function (event) {
-
-    var button = $(event.relatedTarget); // Button that triggered the modal
-
-    var url = button.data('url'); // Extract info from data-* attributes
-    var homegroup = button.data('homegroup');
-
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-body').text('¿Estás seguro de que lo desea eliminar ' + homegroup + '?');
-    modal.find('#modal-confirm').attr("href", url)
-});
+    $('#homegroupModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var url = button.data('url'); // Extract info from data-* attributes
+        var homegroup = button.data('homegroup');
+        var modal = $(this);
+        modal.find('.modal-body').text('¿Estás seguro de que lo desea eliminar ' + homegroup + '?');
+        modal.find('#modal-confirm').attr("href", url)
+    });
 });
 
 function searchGuts() {
@@ -105,7 +97,7 @@ function searchGuts() {
         if ($('.maritalCheckbox').prop("checked")) {
 
             rtn = ($('#marital').val() == $(elt).find(".maritalData").text())
-             console.log(rtn);
+            console.log(rtn);
         }
         else {
             rtn = true
@@ -148,7 +140,3 @@ function searchGuts() {
         }
     }
 }
-
-
-
-

@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
 
-    <!-- Required meta tags -->
+    {# Required meta tags #}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {# Customized Bootstrap #}
+    <link rel="stylesheet" href="/static/style.css">
+
     <title>{% block title %}My Title{% endblock %}</title>
+
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {# jQuery first, then Popper.js, then Bootstrap JS #}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
             integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="/static/javascript.js"></script>
@@ -24,13 +36,15 @@
             });
         }, 4000);
     </script>
+
     <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
     {#  Stylesheet #}
     <link rel="stylesheet" href="/static/background.css">
-    {# Bootstrap SASS Media Breakpoints#}
-    <link rel="stylesheet" href="/static/style.css">
+
     {# Animations #}
     <link rel="stylesheet" href="/static/animations.css">
+
     <script src="https://use.fontawesome.com/b637320c8c.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
@@ -39,8 +53,13 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
     <script>
-        {#        this is here to help with month translation in HighCharts#}
-        monthArray = [{{ _('Jan') }}, {{ _('Feb') }}, {{ _('Mar') }}, {{ _('Apr') }}, {{ _('May') }}, {{ _('Jun') }}, {{ _('Jul') }}, {{ _('Aug') }}, {{ _('Sep') }}, {{ _('Oct') }}, {{ _('Nov') }}, {{ _('Dec') }},];
+        {# Help with month translation in HighCharts #}
+        monthArray = [
+            "{{ _('Jan') }}", "{{ _('Feb') }}", "{{ _('Mar') }}",
+            "{{ _('Apr') }}", "{{ _('May') }}", "{{ _('Jun') }}",
+            "{{ _('Jul') }}", "{{ _('Aug') }}", "{{ _('Sep') }}",
+            "{{ _('Oct') }}", "{{ _('Nov') }}", "{{ _('Dec') }}"
+        ];
         Highcharts.setOptions({
             colors: ['#f19125', '#eaeaea', '#3f4358'],
             lang: {
@@ -57,7 +76,7 @@
     {% block more_style %}{% endblock %}
     <!-- CSS Styling-->
     <style>
-        body, wrapper {
+        body, main {
             min-height: 100vh;
         }
 
@@ -86,27 +105,10 @@
         footer {
             margin-top: 2%;
             padding-top: 1%;
+            color: #FFFFFF;
             background-color: #303030;
             bottom: 0;
             width: 100%;
-        }
-
-        @keyframes icon-hover-before {
-            0% {
-                transform: rotate(45deg) scale(1, 1);
-            }
-            100% {
-                transform: rotate(45deg) scale(1.2, 1.2);
-            }
-        }
-
-        @keyframes icon-hover-after {
-            0% {
-                transform: rotate(-45deg) scale(1, 1);
-            }
-            50% {
-                transform: rotate(-45deg) scale(1.2, 1.2);
-            }
         }
     </style>
 </head>
@@ -114,149 +116,150 @@
 <body>
 <div class="se-pre-con"></div>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for  category, message in get_flashed_messages(with_categories=true) %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <strong>{{ message }}</strong>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-<section class="cover text-center">
-
-    <wrapper class="d-flex flex-column">
-
-        <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
-            <div class="d-flex flex-row justify-content-between">
-                <div class="p-3">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+<header>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for  category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
+                    <strong>{{ message }}</strong>
                 </div>
-                <div class="p-3">
-                    <a class="navbar-brand" href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png"
-                                                                               width="150px"></a>
-                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <nav class="navbar navbar-toggleable-sm navbar-trans navbar-inverse" style="background: #f19125;">
+        <div class="d-flex flex-row justify-content-between">
+            <div class="p-3">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
+            <div class="p-3">
+                <a class="navbar-brand" href="{{ url_for('index') }}"><img src="/static/logo-arco2_b.png"
+                                                                           width="150px"></a>
+            </div>
+        </div>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    {% if current_user.name %}
-                        <li class="active dropdown nav-item">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"> {{ _('Dashboard') }}</a>
-                                <a class="dropdown-item"
-                                   href="{{ url_for('user_profile', user_id = current_user.member_id) }}">
-                                    {{ _('Profile Settings') }}</a>
-                                <a class="dropdown-item"
-                                   href="{{ url_for('update_user', user_id = current_user.member_id) }}">
-                                    {{ _('Update Password') }}</a>
-                            </ul>
-                        </li>
-                    {% endif %}
-
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ url_for('get_homegroup_members', homegroup_id = current_user.homegroup_id) }}">
-                                {{ _('Members') }}
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if current_user.role == 'admin' %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_homegroups') }}">
-                            {{ _('Home Groups') }}</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('all_members') }}">
-                            {{ _('Members') }}</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('get_roles') }}">
-                            {{ _('System Roles') }}</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('homegroup_analytics') }}">
-                            {{ _('Analytics') }}</a>
-                        </li>
-                    {% endif %}
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ url_for('attendance', homegroup_id = current_user.homegroup_id) }}">
-                                {{ _('Attendance') }}</a>
-                        </li>
-                    {% endif %}
-
-                    {% if current_user.role == 'homegroup_leader' %}
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ url_for('edit_homegroup', homegroup_id = current_user.homegroup_id) }}">
-                                {{ _('Edit Home Group') }}</a></li>
-                    {% endif %}
-
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}">{{ _('FAQ') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">{{ _('Contact') }}</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.name %}
+                    <li class="active dropdown nav-item">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                            {{ _('Welcome,') }} {{ current_user.name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ url_for('dashboard') }}"> {{ _('Dashboard') }}</a>
+                            <a class="dropdown-item"
+                               href="{{ url_for('user_profile', user_id=current_user.member_id) }}">
+                                {{ _('Profile Settings') }}</a>
+                            <a class="dropdown-item"
+                               href="{{ url_for('update_user', user_id=current_user.member_id) }}">
+                                {{ _('Update Password') }}</a>
+                        </ul>
                     </li>
-                    {% if current_user.name %}
-                        <li class="nav-item" style="padding-top:5px;padding-left:5px;">
-                            <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
-                                <b><i class="fa fa-user"></i>&nbsp;{{ _('Log Out') }}</b>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item" style="padding-top:5px; padding-left:5px;">
-                            <a class="nav-link btn btn-outline-white btn-outline" href="/login">
-                                <b><i class="fa fa-user"></i>&nbsp;{{ _('Log In') }}</b>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+                {% endif %}
 
-        {% block content %}
-            <main class="container-fluid py-3">
-            </main>
-        {% endblock %}
+                {% if current_user.role == 'homegroup_leader' %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ url_for('get_homegroup_members', homegroup_id=current_user.homegroup_id) }}">
+                            {{ _('Members') }}
+                        </a>
+                    </li>
+                {% endif %}
 
-        <!-- /#page-content-wrapper -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-4" style="padding:0;">
-                        <div style="padding-top:6%;">&copy; {{ _('Copyright 2018, Arco Church') }}</div>
-                    </div>
-                    <div class="col-4" style="padding:0;">
+                {% if current_user.role == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_homegroups') }}">{{ _('Home Groups') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('all_members') }}">{{ _('Members') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_roles') }}">{{ _('System Roles') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('homegroup_analytics') }}">{{ _('Analytics') }}</a>
+                    </li>
+                {% endif %}
 
-                        <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;"><b>Arco Iglesia
-                            Cristiana</b> <br> Av.10 de Agosto y Av. Loja <br>
+                {% if current_user.role == 'homegroup_leader' %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ url_for('attendance', homegroup_id=current_user.homegroup_id) }}">
+                            {{ _('Attendance') }}</a>
+                    </li>
+                {% endif %}
 
-                            Cuenca, Ecuador
-                        </div>
-                    </div>
-                    <div class="col-4" style="padding:0; background-size: contain;">
-                        <img src="/static/arco-final2.png" alt="Arco Ministries Logo" class="logo"/>
+                {% if current_user.role == 'homegroup_leader' %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{{ url_for('edit_homegroup', homegroup_id=current_user.homegroup_id) }}">
+                            {{ _('Edit Home Group') }}</a></li>
+                {% endif %}
 
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('faq') }}">{{ _('FAQ') }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">{{ _('Contact') }}</a>
+                </li>
+
+                {% if current_user.name %}
+                    <li class="nav-item" style="padding-top:5px;padding-left:5px;">
+                        <a class="nav-link btn btn-outline-white btn-outline" href="/logout">
+                            <b><i class="fa fa-user"></i>&nbsp;{{ _('Log Out') }}</b>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item" style="padding-top:5px; padding-left:5px;">
+                        <a class="nav-link btn btn-outline-white btn-outline" href="/login">
+                            <b><i class="fa fa-user"></i>&nbsp;{{ _('Log In') }}</b>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main class="cover text-center d-flex flex-column">
+    {% block content %}
+        <h1>Content Here</h1>
+    {% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-4" style="padding:0;">
+                <div style="padding-top:6%;">
+                    &copy; {{ _('Copyright 2018, Arco Church') }}
                 </div>
-                <div class="row ">
-                    <div class="col"></div>
-                    <div class="col"></div>
+            </div>
+            <div class="col-4" style="padding:0;">
+                <div style="padding-top:3%; padding-bottom:3%; font-weight:normal;">
+                    <b>Arco Iglesia Cristiana</b><br/>
+                    Av.10 de Agosto y Av. Loja<br/>
+                    Cuenca, Ecuador
                 </div>
             </div>
-        </footer>
-    </wrapper>
-</section>
+            <div class="col-4" style="padding:0; background-size: contain;">
+                <img src="/static/arco-final2.png" alt="Arco Logo" class="logo"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{# Our JS #}
+<script src="/static/main.js"></script>
+
 </body>
-
-<script type="text/javascript" src="/static/main.js"></script>
-
 </html>

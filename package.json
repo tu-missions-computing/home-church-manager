@@ -1,0 +1,12 @@
+{
+  "name": "home-church-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/tu-missions-computing/home-church-manager.git",
+  "author": "Tom Nurkkala <tnurkkala@cse.taylor.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "sass": "^1.8.0"
+  }
+}
