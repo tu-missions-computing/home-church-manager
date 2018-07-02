@@ -1,5 +1,9 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
+/*
+ * Home church manager styling.
+ */
+
 // EXTRA SMALL DEVICES
 @include media-breakpoint-up(xs) {
   .analytics-container-container {

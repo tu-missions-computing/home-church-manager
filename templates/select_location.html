@@ -67,8 +67,8 @@
                     map: resultsMap,
                     position: results[0].geometry.location
                 });
-                parent.document.getElementById('latitude').value = (results[0].geometry.location.lat() );
-                parent.document.getElementById('longitude').value = (results[0].geometry.location.lng() );
+                parent.document.getElementById('latitude').value = (results[0].geometry.location.lat());
+                parent.document.getElementById('longitude').value = (results[0].geometry.location.lng());
 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);

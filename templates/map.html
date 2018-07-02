@@ -35,21 +35,21 @@
 
             {% if homegroup.latitude %}
 
-            tmp_locations = [];
-            tmp_locations.push({{homegroup.latitude}});
-            tmp_locations.push({{homegroup.longitude}});
+                tmp_locations = [];
+                tmp_locations.push({{homegroup.latitude}});
+                tmp_locations.push({{homegroup.longitude}});
 
-            description = `{{homegroup.description}}`;
-            description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            tmp_locations.push(`{{homegroup.name}}`);
-            tmp_locations.push(description);
-            tmp_locations.push(`{{homegroup.location}}`);
-            tmp_locations.push(`{{ homegroup.first_name }}`)
-            tmp_locations.push(`{{ homegroup.last_name }}`)
-            tmp_locations.push(`{{ homegroup.phone_number }}`)
-            tmp_locations.push(`{{ homegroup.email }}`)
-            locations.push(tmp_locations);
-        {% endif %}
+                description = `{{homegroup.description}}`;
+                description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+                tmp_locations.push(`{{homegroup.name}}`);
+                tmp_locations.push(description);
+                tmp_locations.push(`{{homegroup.location}}`);
+                tmp_locations.push(`{{ homegroup.first_name }}`)
+                tmp_locations.push(`{{ homegroup.last_name }}`)
+                tmp_locations.push(`{{ homegroup.phone_number }}`)
+                tmp_locations.push(`{{ homegroup.email }}`)
+                locations.push(tmp_locations);
+            {% endif %}
 
         {% endfor %}
 
@@ -100,6 +100,7 @@
             });
         }
     }
+
     function geocodeAddress(geocoder, resultsMap) {
         var address = parent.document.getElementById('zip').value;
         geocoder.geocode({'address': address}, function (results, status) {

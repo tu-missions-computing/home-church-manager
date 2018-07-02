@@ -1,26 +1,24 @@
-<section class="cover text-center">
 {% extends "base.html" %}
 
 {% block title %}{{ _('System Roles') }}{% endblock %}
 
 {% block content %}
-
-        <div class="larger-container">
-                <h2 class="title-text animated stretchLeft">{{ _('System Roles') }}</h2>
-                <hr>
-                <div class="row">
-                    <div class="col form-group ">
-                        <div class="input-group searchbar mx-auto" >
-                            <input type="text" class="search form-control" placeholder="{{ _('Search') }}">
-                            <span class="input-group-addon">
+    <div class="larger-container">
+        <h2 class="title-text animated stretchLeft">{{ _('System Roles') }}</h2>
+        <hr>
+        <div class="row">
+            <div class="col form-group ">
+                <div class="input-group searchbar mx-auto">
+                    <input type="text" class="search form-control" placeholder="{{ _('Search') }}">
+                    <span class="input-group-addon">
                                 <i class="fa fa-search"></i>
                             </span>
-                        </div>
-
                 </div>
 
-                <span class="counter pull-right"></span>
-                <div class="table-responsive">
+            </div>
+
+            <span class="counter pull-right"></span>
+            <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover results">
                     <thead>
                     <tr>
@@ -39,22 +37,22 @@
                                     <td>
                                         <a href="{{ url_for('edit_role', member_id = member.id, role_id = member.role_id) }}"
                                            class="btn btn-danger btn-sm">
-                                             {{ _('Deactivate Role') }} </a>
+                                            {{ _('Deactivate Role') }} </a>
                                     </td>
                                 {% else %}
                                     {% if member.role == 'homegroup_leader' and member.homegroup_id  and member.hgLeaderActive %}
-                                        <td> {{ _('Home Group Leader') }}<br> ({{ member.hgName }}) </td>
+                                        <td> {{ _('Home Group Leader') }}<br> ({{ member.hgName }})</td>
                                         <td>
                                             <a href="{{ url_for('deactivate_hgleader', member_id = member.id, homegroup_id = member.homegroup_id) }}"
                                                class="btn btn-danger btn-sm">
                                                 {{ _('Deactivate Role') }} </a>
                                         </td>
                                     {% else %}
-                                        <td>Inactive User </td>
-                                       <td>
-                                        <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                        <td>Inactive User</td>
+                                        <td>
+                                            <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
                                                class="btn btn-info btn-sm">
-                                             {{ _('Assign new role') }}</a></td>
+                                                {{ _('Assign new role') }}</a></td>
                                     {% endif %}
                                 {% endif %}
 
@@ -63,50 +61,49 @@
                                 {% if member.role_id %}
                                     <td>{{ _('Inactive User') }} </td>
                                     <td>
-                                   <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
+                                        <a href="{{ url_for('assign_new_role', member_id = member.id) }}"
                                            class="btn btn-info btn-sm">
-                                     {{ _('Assign new role') }}</a></td>
+                                            {{ _('Assign new role') }}</a></td>
                                 {% else %}
-                                    <td> &mdash; </td>
+                                    <td> &mdash;</td>
                                     <td>
-                                    <a href="{{ url_for('create_user', member_id = member.id) }}"
+                                        <a href="{{ url_for('create_user', member_id = member.id) }}"
                                            class="btn btn-warning btn-sm">
-                                        {{ _('Create Account') }}</a></td>
+                                            {{ _('Create Account') }}</a></td>
                                 {% endif %}
                             {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-                </div>
             </div>
         </div>
+    </div>
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
-             aria-labelledby="confirmModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="confirmModalLabel">{{ _('Confirm') }}</h4>
-                    </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
+         aria-labelledby="confirmModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="confirmModalLabel">{{ _('Confirm') }}</h4>
+                </div>
 
-                    <div class="modal-body">
-                        Text here will be overridden :D
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#0" id="modal-confirm">
-                            <button type="button" class="btn btn-primary">
-                                {{ _('Confirm') }}
-                            </button>
-                        </a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            {{ _('Close') }}
+                <div class="modal-body">
+                    Text here will be overridden :D
+                </div>
+                <div class="modal-footer">
+                    <a href="#0" id="modal-confirm">
+                        <button type="button" class="btn btn-primary">
+                            {{ _('Confirm') }}
                         </button>
-                    </div>
+                    </a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        {{ _('Close') }}
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -1,58 +1,56 @@
-<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ _('Contact') }}{% endblock %}
 
 {% block content %}
-        <div class="container">
-            <div class="main-center">
-                <h2 class="title-text animated stretchLeft">{{ _('Contact Our Team') }}</h2>
-                <hr>
-                <form method="POST" role="form" data-toggle="validator">
+    <div class="container">
+        <div class="main-center">
+            <h2 class="title-text animated stretchLeft">{{ _('Contact Our Team') }}</h2>
+            <hr>
+            <form method="POST" role="form" data-toggle="validator">
 
-                    <div class="form-group">
-                        {{ form.csrf_token }}
-                        <p class="form-label">
-                            {{ form.name.label }}
-                            {{ form.name(class_='form-control', placeholder=_("Name")) }}</p>
-                        {% if form.name.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Please enter first and last name') }}
-                            </div>
-                        {% endif %}
-                    </div>
+                <div class="form-group">
+                    {{ form.csrf_token }}
+                    <p class="form-label">
+                        {{ form.name.label }}
+                        {{ form.name(class_='form-control', placeholder=_("Name")) }}</p>
+                    {% if form.name.errors %}
+                        <div class="alert alert-warning">
+                            {{ _('Please enter first and last name') }}
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.email.label(for="inputEmail", class_="control-label") }}
-                            {{ form.email(class_='form-control', type="email", id="inputEmail",
+                <div class="form-group">
+                    <p class="form-label">
+                        {{ form.email.label(for="inputEmail", class_="control-label") }}
+                        {{ form.email(class_='form-control', type="email", id="inputEmail",
                                placeholder=_("Email"), dataerror=_("Email address is invalid")) }}
-                        </p>
-                        {% if form.email.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Invalid Email Address') }}
-                            </div>
-                        {% endif %}
-                    </div>
+                    </p>
+                    {% if form.email.errors %}
+                        <div class="alert alert-warning">
+                            {{ _('Invalid Email Address') }}
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class="form-group">
-                        <p class="form-label">
-                            {{ form.message.label }}
-                            {{ form.message(class_='form-control', placeholder=_("Message")) }}</p>
-                        {% if form.message.errors %}
-                            <div class="alert alert-warning">
-                                {{ _('Please enter message') }}
-                            </div>
-                        {% endif %}
-                    </div>
+                <div class="form-group">
+                    <p class="form-label">
+                        {{ form.message.label }}
+                        {{ form.message(class_='form-control', placeholder=_("Message")) }}</p>
+                    {% if form.message.errors %}
+                        <div class="alert alert-warning">
+                            {{ _('Please enter message') }}
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class="form-group ">
-                        <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block',
+                <div class="form-group ">
+                    <p> {{ form.submit(class_='btn btn-primary btn-lg btn-block',
                                     style="display: block; width: 100%;") }}
-                        </p>
-                    </div>
-                </form>
-            </div>
+                    </p>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
 {% endblock %}

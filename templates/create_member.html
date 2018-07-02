@@ -1,149 +1,145 @@
-<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ _('Create New Member') }}{% endblock %}
 
 {% block content %}
-        <div class="container">
-            <div class="row main">
-                <div class="main-center">
-                    <h2 class="title-text animated stretchLeft">
-                        {{ _('Create New Member') }}
-                    </h2>
-                    <hr>
-                    <form method="POST">
-                        <div class="form-group">
-                            {{ form.csrf_token }}
-                            <p class="form-label">
-                                {{ form.first_name.label }}
-                                {{ form.first_name(class_='form-control', placeholder=_("First Name")) }}
-                            </p>
+    <div class="container">
+        <div class="row main">
+            <div class="main-center">
+                <h2 class="title-text animated stretchLeft">
+                    {{ _('Create New Member') }}
+                </h2>
+                <hr>
+                <form method="POST">
+                    <div class="form-group">
+                        {{ form.csrf_token }}
+                        <p class="form-label">
+                            {{ form.first_name.label }}
+                            {{ form.first_name(class_='form-control', placeholder=_("First Name")) }}
+                        </p>
 
-                            {% if form.first_name.errors %}
-                                <div class="alert alert-warning">
-                                    {{ _('Invalid First Name') }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <p class="form-label">
-                                {{ form.last_name.label }}
-                                {{ form.last_name(class_='form-control' , placeholder=_("Last Name")) }}
-                            </p>
-                            {% if form.last_name.errors %}
-                                <div class="alert alert-warning">
-                                    {{ _('Invalid Last Name') }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <p class="form-label">
-                                {{ form.email.label(for="inputEmail", class_="control-label") }}
-                                {{ form.email(class_='form-control', type="email", id="inputEmail",
+                        {% if form.first_name.errors %}
+                            <div class="alert alert-warning">
+                                {{ _('Invalid First Name') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <p class="form-label">
+                            {{ form.last_name.label }}
+                            {{ form.last_name(class_='form-control' , placeholder=_("Last Name")) }}
+                        </p>
+                        {% if form.last_name.errors %}
+                            <div class="alert alert-warning">
+                                {{ _('Invalid Last Name') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <p class="form-label">
+                            {{ form.email.label(for="inputEmail", class_="control-label") }}
+                            {{ form.email(class_='form-control', type="email", id="inputEmail",
                                       placeholder=_("ex: email@gmail.com"),
                                       dataerror=_("Invalid email address")) }}
-                            </p>
-                            {% if form.email.errors %}
-                                <div class="alert alert-warning">
-                                    {{ _('Invalid Email Address') }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
+                        </p>
+                        {% if form.email.errors %}
+                            <div class="alert alert-warning">
+                                {{ _('Invalid Email Address') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <p class="form-label">
+                            {{ form.phone_number.label }}
+                            {{ form.phone_number(class_='form-control', placeholder=_("ex: 224-656-8205")) }}
+                        </p>
+                        {% if form.phone_number.errors %}
+                            <div class="alert alert-warning">
+                                {{ _('Invalid Phone Number') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <p class="form-label">
-                                {{ form.phone_number.label }}
-                                {{ form.phone_number(class_='form-control', placeholder=_("ex: 224-656-8205")) }}
+                                {{ form.gender.label }}
+                                {{ form.gender(class_='large-form-control form-control') }}
                             </p>
-                            {% if form.phone_number.errors %}
-                                <div class="alert alert-warning">
-                                    {{ _('Invalid Phone Number') }}
-                                </div>
-                            {% endif %}
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.gender.label }}
-                                    {{ form.gender(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {# FIXME: Should this refer to the form object? #}
-                                    <label>{{ _('Birthday') }}</label>
-                                    <input type="date"
-                                           class="large-form-control"
-                                           style="color: black"
-                                           name="Birthday" required/></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.baptism_status.label }}
-                                    {{ form.baptism_status(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.marital_status.label }}
-                                    {{ form.marital_status(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.how_did_you_find_out.label }}
-                                    {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {{ form.is_a_parent.label }}
-                                    {{ form.is_a_parent(class_='large-form-control form-control') }}
-                                </p>
-                            </div>
-                        </div>
-
-
-
-                        <div class="row">
-                            <div class="col">
-                                <p class="form-label">
-                                    {# FIXME: Refer to form object? #}
-                                    <label>{{ _('Join Date') }}</label>
-                                    <input type="date" id="datePicker"
-                                           value="" style="color: black"
-                                           class="large-form-control"
-                                           name="JoinDate" required/></p>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-group ">
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <p class="form-label">
-                                {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%;") }}
+                                {# FIXME: Should this refer to the form object? #}
+                                <label>{{ _('Birthday') }}</label>
+                                <input type="date"
+                                       class="large-form-control"
+                                       style="color: black"
+                                       name="Birthday" required/></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="form-label">
+                                {{ form.baptism_status.label }}
+                                {{ form.baptism_status(class_='large-form-control form-control') }}
                             </p>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="form-label">
+                                {{ form.marital_status.label }}
+                                {{ form.marital_status(class_='large-form-control form-control') }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="form-label">
+                                {{ form.how_did_you_find_out.label }}
+                                {{ form.how_did_you_find_out(class_='large-form-control form-control') }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="form-label">
+                                {{ form.is_a_parent.label }}
+                                {{ form.is_a_parent(class_='large-form-control form-control') }}
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="form-label">
+                                {# FIXME: Refer to form object? #}
+                                <label>{{ _('Join Date') }}</label>
+                                <input type="date" id="datePicker"
+                                       value="" style="color: black"
+                                       class="large-form-control"
+                                       name="JoinDate" required/></p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group ">
+                        <p class="form-label">
+                            {{ form.submit(class_='btn btn-primary btn-lg btn-block', style="display: block; width: 100%;") }}
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
-        <script>
-            Date.prototype.toDateInputValue = (function () {
-                var local = new Date(this);
-                local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-                return local.toJSON().slice(0, 10);
-            });
-            document.getElementById('datePicker').value = new Date().toDateInputValue();
-        </script>
-
-    </section>
+    <script>
+        Date.prototype.toDateInputValue = (function () {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0, 10);
+        });
+        document.getElementById('datePicker').value = new Date().toDateInputValue();
+    </script>
 {% endblock %}

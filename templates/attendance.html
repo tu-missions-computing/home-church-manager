@@ -1,22 +1,22 @@
-<section class="cover text-center">
 {% extends 'base.html' %}
 
 {% block title %}{{ _('Attendance Report') }}{% endblock %}
+
 {% block content %}
-            <div class="attendance">
-                <h1 class="title-text animated stretchLeft">{{ _('Attendance Report') }}</h1>
-                <hr>
-                <div class="row">
-                    <div class="col form-group">
-                        <a href="{{ url_for('get_attendance_dates', homegroup_id = currentHomegroup) }}">
-                            <button class="btn btn-primary">{{ _('View Attendance History') }}</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col form-group">
-                        <form method="POST">
-                            <div class="container">
+    <div class="attendance">
+        <h1 class="title-text animated stretchLeft">{{ _('Attendance Report') }}</h1>
+        <hr>
+        <div class="row">
+            <div class="col form-group">
+                <a href="{{ url_for('get_attendance_dates', homegroup_id = currentHomegroup) }}">
+                    <button class="btn btn-primary">{{ _('View Attendance History') }}</button>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group">
+                <form method="POST">
+                    <div class="container">
                             <span class="row">
                                 <span class="col-6">
                                     <h4><span class="label label-default" style="float:left">{{ _('Date') }}</span></h4>
@@ -26,9 +26,9 @@
                                 </span>
                             </span>
 
-{# FIXME: Markup here looks like it may be unbalanced #}
+                        {# FIXME: Markup here looks like it may be unbalanced #}
 
-                                <span class="row">
+                        <span class="row">
                                   <span class="col-6">
                                     <input type="date" id="datePicker" name="AttendanceDate" class="date inputbox-style"
                                            required/>
@@ -38,16 +38,15 @@
                                             name="AttendanceTime" required/><br>
                                 </span>
                             </span>
-                                <span class="col form-group">
-                        <input type="submit" class="btn btn-info" value="{{ _('Take Attendance')}}" style="margin-top:10%">
+                        <span class="col form-group">
+                        <input type="submit" class="btn btn-info" value="{{ _('Take Attendance') }}"
+                               style="margin-top:10%">
                     </span>
-                            </div>
-                        </form>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 
     <script>
         Date.prototype.toDateInputValue = (function () {
@@ -65,6 +64,5 @@
 
         document.getElementById('datePicker').value = new Date().toDateInputValue();
         document.getElementById('timePicker').value = new Date().toTimeInputValue();
-
     </script>
 {% endblock %}
