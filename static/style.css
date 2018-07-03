@@ -8965,7 +8965,10 @@ footer {
     width: 85% !important;
   }
 }
-/* Made by Jimmy Gillam */
+/*
+ * Jimmy Gillam
+ * https://www.cssscript.com/animated-checkbox-with-css3-powered-animation
+ */
 /* Checkmark style starts */
 @-moz-keyframes dothabottomcheck {
   0% {
@@ -9061,9 +9064,9 @@ input[type=checkbox] {
   transform-origin: left top;
   border-radius: 5px;
   content: " ";
-  -webkit-transition: opacity ease 0.5;
-  -moz-transition: opacity ease 0.5;
-  transition: opacity ease 0.5;
+  -webkit-transition: opacity ease 0.5s;
+  -moz-transition: opacity ease 0.5s;
+  transition: opacity ease 0.5s;
 }
 .check-box::before {
   top: 18px;

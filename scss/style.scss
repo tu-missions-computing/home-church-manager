@@ -374,7 +374,10 @@
   }
 }
 
-/* Made by Jimmy Gillam */
+/*
+ * Jimmy Gillam
+ * https://www.cssscript.com/animated-checkbox-with-css3-powered-animation
+ */
 $checked-color: #87B87C;
 $unchecked-color: #595959;
 $checkbox-height: 25px;
@@ -484,9 +487,9 @@ input[type=checkbox] {
     transform-origin: left top;
     border-radius: 5px;
     content: ' ';
-    -webkit-transition: opacity ease .5;
-    -moz-transition: opacity ease .5;
-    transition: opacity ease .5;
+    -webkit-transition: opacity ease 0.5s;
+    -moz-transition: opacity ease 0.5s;
+    transition: opacity ease 0.5s;
   }
 
   &::before {
