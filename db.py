@@ -333,13 +333,22 @@ def deactivate_hgleader_role(member_id):
 
 # adds a member to a homegroup
 def add_member_to_homegroup(homegroup_id, member_id):
-    now = datetime.now()
-    date = now.strftime("%m-%d-%Y")
+    # The member may already be associated with the homegroup - just marked inactive.
     query = '''
-    INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) VALUES(%s, %s, %s, TRUE)
-    '''
-    g.cursor.execute(query, (homegroup_id, member_id, date))
+        UPDATE homegroup_member SET is_active = TRUE
+        WHERE homegroup_id = %s AND member_id = %s
+        '''
+    g.cursor.execute(query, (homegroup_id, member_id))
     g.connection.commit()
+    if g.cursor.rowcount == 0:
+        # The member is not already associated with the homegroup - insert a new association record
+        now = datetime.now()
+        date = now.strftime("%m-%d-%Y")
+        query = '''
+        INSERT INTO homegroup_member (homegroup_id, member_id, join_date, is_active) VALUES(%s, %s, %s, TRUE)
+        '''
+        g.cursor.execute(query, (homegroup_id, member_id, date))
+        g.connection.commit()
     return g.cursor.rowcount
 
 
@@ -647,6 +656,19 @@ def get_all_homegroup_info():
     g.cursor.execute(query)
     return g.cursor.fetchall()
 
+
+# returns members from the original group and the two groups into which the original group is being split
+def get_split_homegroup_info(homegroup_id, homegroup1_id, homegroup2_id):
+    query = '''
+        SELECT homegroup_member.member_id, first_name, last_name, email, name,  homegroup_leader.is_active AS "hgLeader", homegroup.id as "group" FROM member
+        JOIN homegroup_member ON member.id = homegroup_member.member_id
+        JOIN homegroup ON homegroup_member.homegroup_id = homegroup.id
+        LEFT OUTER JOIN homegroup_leader ON homegroup_leader.member_id = member.id AND homegroup_leader.homegroup_id = homegroup.id
+        WHERE homegroup_member.is_active = TRUE AND  homegroup.id in (%s,%s,%s) AND member.is_active = true and homegroup_member.is_active = true
+        ORDER BY last_name, first_name
+        '''
+    g.cursor.execute(query, (homegroup_id, homegroup1_id, homegroup2_id))
+    return g.cursor.fetchall()
 
 # deactivates a homegroup
 def deactivate_homegroup(homegroup_id):

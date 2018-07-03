@@ -497,16 +497,16 @@ def homegroup_split(homegroup_id):
         latitude = new_homegroup.latitude.data
         longitude = new_homegroup.longitude.data
 
-        rowcount = db.create_homegroup(name, location, description, latitude, longitude)
-        homegroup1 = db.recent_homegroup()['id']
+        group1 = db.create_homegroup(name, location, description, latitude, longitude)
+        homegroup1 = group1['id']
         name2 = new_homegroup.name2.data
         location2 = new_homegroup.location2.data
         description2 = new_homegroup.description2.data
         latitude2 = new_homegroup.latitude2.data
         longitude2 = new_homegroup.longitude2.data
-        rowcount = db.create_homegroup(name2, location2, description2, latitude2, longitude2)
-        homegroup2 = db.recent_homegroup()['id']
-        if rowcount == 1:
+        group2 = db.create_homegroup(name2, location2, description2, latitude2, longitude2)
+        homegroup2 = group2['id']
+        if group1['rowcount'] == 1 and group2['rowcount'] == 1:
             return redirect(url_for('homegroup_split_members', homegroup_id=homegroup_id, homegroup_id1=homegroup1,
                                     homegroup_id2=homegroup2))
 
@@ -520,8 +520,10 @@ def homegroup_split(homegroup_id):
 def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
     db.remove_member(homegroup_id, member_id)
     if (group == 'one'):
+        db.remove_member(homegroup_id2, member_id)
         db.add_member_to_homegroup(homegroup_id1, member_id)
     if (group == 'two'):
+        db.remove_member(homegroup_id1, member_id)
         db.add_member_to_homegroup(homegroup_id2, member_id)
     return redirect(url_for('homegroup_split_members', homegroup_id=homegroup_id, homegroup_id1=homegroup_id1,
                             homegroup_id2=homegroup_id2))
@@ -532,14 +534,26 @@ def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
 @requires_roles('admin')
 def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
     """Add members to split home group."""
-    members = db.get_homegroup_members(homegroup_id)
+    members = db.get_split_homegroup_info(homegroup_id, homegroup_id1, homegroup_id2)
     currentHomegroup = homegroup_id
     homegroup_to_be_split = db.find_homegroup_by_id(homegroup_id)
     homegroup1 = db.find_homegroup_by_id(homegroup_id1)
     homegroup2 = db.find_homegroup_by_id(homegroup_id2)
+    homegroup_to_be_split_count = 0
+    homegroup1_count = 0
+    homegroup2_count = 0
+    for member in members:
+        if member['group'] == homegroup1['id']:
+            homegroup1_count += 1
+        elif member['group'] == homegroup2['id']:
+            homegroup2_count += 1
+        else:
+            homegroup_to_be_split_count += 1
+
     return render_template('homegroup_split_members.html', homegroup_to_be_split=homegroup_to_be_split,
                            homegroup1=homegroup1, homegroup2=homegroup2, currentHomegroup=currentHomegroup,
-                           old_members=members, homegroup_id1=homegroup_id1, homegroup_id2=homegroup_id2)
+                           old_members=members, homegroup1_count=homegroup1_count, homegroup2_count=homegroup2_count,
+                           homegroup_to_be_split_count=homegroup_to_be_split_count)
 
 
 @app.route('/homegroup_analytics')
