@@ -9,14 +9,14 @@
         <hr>
         <div class="row">
             <div class="form-group col-6 float-left ">
-                <div class="hidden-sm-down">
+                <div class="d-none d-sm-block">
                     <a href="{{ url_for('create_member') }}"
                        class="btn btn-success largebuttonwidth float-left ">
                         <span class="fa fa-plus"></span>
                         {{ _('Add Member') }}
                     </a>
                 </div>
-                <div class="hidden-md-up">
+                <div class="d-sm-none">
                     <a href="{{ url_for('create_member') }}" class="btn btn-success float-left">
                         <span class="fa fa-plus"></span>
                         {{ _('Add') }}
@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-6 ">
-                <div class="hidden-sm-down">
+                <div class="d-none d-sm-block">
                     <a style="padding-left:6px" href="mailto:{{ emails }}"
                        class="btn btn-secondary largebuttonwidth float-left ">
                         <span class="fa fa-envelope"></span>
@@ -43,7 +43,7 @@
                     </a>
                 </div>
 
-                <div class="hidden-md-up">
+                <div class="d-sm-none">
                     <a style="padding-left:6px" href="mailto:{{ emails }}"
                        class="btn btn-secondary float-left ">
                         <span class="fa fa-envelope"></span>
