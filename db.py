@@ -468,7 +468,7 @@ def find_homegroup_leader(homegroup_id):
 def find_member_homegroup(member_id):
     g.cursor.execute('''
        SELECT * FROM homegroup_member JOIN member ON member.id = homegroup_member.member_id
-       WHERE member_id = %s
+       WHERE member_id = %s and homegroup_member.is_active = TRUE
        ''', (member_id,))
     return g.cursor.fetchone()
 

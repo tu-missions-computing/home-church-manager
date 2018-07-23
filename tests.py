@@ -64,11 +64,11 @@ class DatabaseTestCase(FlaskTestCase):
         super().tearDown()
 
     @staticmethod
-    def create_test_member():
+    def create_test_member(suffix=''):
         marital = db.get_marital_status_by_name('Other')
         how = db.get_how_did_you_find_out_by_name('Other')
         return db.create_member({
-            'first_name': 'New', 'last_name': 'Member', 'email': 'newmember@example.com', 'phone_number': '555-1212',
+            'first_name': 'New', 'last_name': 'Member', 'email': 'newmember' + suffix + '@example.com', 'phone_number': '555-1212',
             'gender': 'F', 'birthday': '2001-12-25',
             'baptism_status': True,
             'marital_status_id': marital['id'], 'how_did_you_find_out_id': how['id'],
@@ -260,6 +260,11 @@ class UserTestCase(DatabaseTestCase):
 
 
 class HomeGroupTestCase(DatabaseTestCase):
+    def setUp(self):
+        super().setUp()
+        self.login('admin@example.com', 'password')
+        self.admin_member = db.find_user('admin@example.com')
+
     @staticmethod
     def create_homegroup():
         return db.create_homegroup('Test Home Group', 'Test Location', 'Test Description', -3, -78)
@@ -299,7 +304,53 @@ class HomeGroupTestCase(DatabaseTestCase):
         self.assertEqual(test_hg['latitude'], -3)
         self.assertEqual(test_hg['longitude'], -79)
 
+    def test_split_homegroup(self):
+        hg_status = self.create_homegroup()
+        self.assertEqual(hg_status['rowcount'], 1)
+        to_split_id = hg_status['id']
 
+        members = []
+        for idx in range(0,10):
+            member_status = self.create_test_member(suffix=str(idx))
+            member_id = member_status['id']
+            members.append(member_id)
+            db.add_member_to_homegroup(to_split_id, member_id)
+
+        hg_status = self.create_homegroup()
+        split1_id = hg_status['id']
+
+        hg_status = self.create_homegroup()
+        split2_id = hg_status['id']
+
+        cnt=0
+        for member in members:
+            if cnt % 2 == 0:
+                group = 'one'
+            else:
+                group = 'two'
+            cnt += 1
+            #/split_member/<member_id>/<homegroup_id>/<homegroup_id1>/<homegroup_id2>/<group>
+            resp = self.post(url_for('split_member',
+                                     member_id=member,
+                                     homegroup_id=to_split_id,
+                                     homegroup_id1=split1_id,
+                                     homegroup_id2=split2_id,
+                                     group=group),
+                             {})
+
+        new_members = db.get_homegroup_members(to_split_id)
+        self.assertEqual(len(new_members), 0)
+        new_members1 = db.get_homegroup_members(split1_id)
+        self.assertEqual(len(new_members1), 5)
+        new_members2 = db.get_homegroup_members(split1_id)
+        self.assertEqual(len(new_members2), 5)
+
+        for idx in range(0,10):
+            home_group = db.find_member_homegroup(members[idx])
+            if idx %2 == 0:
+                self.assertEqual(home_group['homegroup_id'], split1_id)
+            else:
+                self.assertEqual(home_group['homegroup_id'], split2_id)
 
 # Do the right thing if this file is run standalone.
 if __name__ == '__main__':
