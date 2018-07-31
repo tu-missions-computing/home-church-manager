@@ -93,11 +93,9 @@
                 {#                    </p>#}
             {% endif %}
         {% endif %}
-        <hr>
-        <h4 style="text-align:center">{{ _('Other questions?') }}
-            <a href="{{ url_for('contact') }}" target="_top">
-                {{ _('Contact Our Team') }}
-            </a>
-        </h4>
+        <h3 class="header-text">{{ _('Other questions?') }}</h3>
+        <p class="answer">
+            <a class="link-color" href="{{ url_for('contact') }}" target="_top">{{ _('Contact Our Team') }}</a>
+        </p>
     </div>
 {% endblock %}

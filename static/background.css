@@ -18,10 +18,6 @@ body, html {
 !important
 }
 
-a {
-    color: white;
-}
-
 .alert {
     text-align: center;
     position: absolute;
@@ -112,6 +108,7 @@ a {
     height: auto;
     border-radius: 0;
     color: #fff;
+    padding-bottom: 1rem;
 }
 
 /*For Index Page*/
