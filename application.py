@@ -1,24 +1,23 @@
+# coding=utf-8
+
+import datetime
+import os
 from functools import wraps
 
-import os
-import datetime
-
-from flask import Flask, session, render_template, request, flash, redirect, url_for, jsonify, send_from_directory
+import flask_excel as excel
+from flask import Flask, session, render_template, request, flash, redirect, url_for, send_from_directory
+from flask_babel import Babel, gettext, lazy_gettext
+from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_mail import Mail, Message
 from flask_wtf import FlaskForm
+from openpyxl import Workbook
+from openpyxl.compat import range
 from wtforms import RadioField, TextAreaField, StringField, SubmitField, SelectField, PasswordField
 from wtforms.validators import Email, Length, DataRequired, InputRequired
 
-from flask_bcrypt import Bcrypt
-from flask_mail import Mail, Message
-import flask_excel as excel
-from openpyxl import Workbook
-from openpyxl.compat import range
-
 import db
 from mail_settings import config_email
-
-from flask_babel import Babel, gettext, lazy_gettext
 
 _ = gettext
 
@@ -28,8 +27,7 @@ app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 mail = Mail(app)
 
 bcrypt = Bcrypt(app)
-login_mgr = LoginManager()
-login_mgr = LoginManager(app)  # FIXME: Do we need both of these constructors?
+login_mgr = LoginManager(app)
 
 excel.init_excel(app)
 
@@ -48,6 +46,7 @@ def before():
         db.open_db_connection()
 
 
+# noinspection PyUnusedLocal
 @app.teardown_request
 def after(exception):
     if not app.testing:
@@ -82,7 +81,7 @@ def dashboard():
 
 
 @app.route('/map')
-def map():
+def homegroup_map():
     """Display the map of all the homegroups."""
     homegroups = db.get_all_homegroup_info()
     return render_template('map.html', homegroups=homegroups)
@@ -175,7 +174,6 @@ class RoleForm(FlaskForm):
 @app.route('/user/create/<member_id>', methods=['GET', 'POST'])
 def create_user(member_id):
     """Creates a new user and hashes their password in the database."""
-    allRoles = db.get_all_roles()
     email_list = []
     member = db.find_member(member_id)
     email = member['email']
@@ -190,7 +188,7 @@ def create_user(member_id):
         email_list.append(email)
         password = user_form.password.data
         pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        if (db.has_active_role(member_id)):
+        if db.has_active_role(member_id):
             flash(lazy_gettext("User already has account"), category="danger")
             return redirect(url_for('get_roles'))
         db.create_member_role(member_id, pw_hash, user_form.role.data)
@@ -203,8 +201,8 @@ def create_user(member_id):
             html=email_html)
         mail.send(msg)
         if user_form.role.data == 1:
-            homegroupId = user_form.homegroups.data
-            db.add_leader_to_homegroup(member_id, homegroupId)
+            home_group_id = user_form.homegroups.data
+            db.add_leader_to_homegroup(member_id, home_group_id)
 
         flash(lazy_gettext('User Created'), category="success")
         return redirect(url_for('get_roles'))
@@ -221,25 +219,24 @@ def get_roles():
 
 
 def make_role_list():
-    roleList = []
-    allRoles = db.get_all_roles()
-    for role in allRoles:
+    role_list = []
+    all_roles = db.get_all_roles()
+    for role in all_roles:
         # FIXME: Massive translation hack; need to get localized version from DB
         label = 'Líder de Iglesia de Hogar'
         if role["role"] == 'admin':
             label = 'Administrador'
-        roleList.append((role["id"], label))
-    return roleList
+        role_list.append((role["id"], label))
+    return role_list
 
 
 @app.route('/roles/new_role/<member_id>', methods=['GET', 'POST'])
 def assign_new_role(member_id):
     """Create a new role for the user that already exists."""
     current_user = db.find_user(session['username'])['member_id']
-    if (str(member_id) == str(current_user)):
+    if str(member_id) == str(current_user):
         flash(lazy_gettext("You cannot edit your own role - please contact a system administrator"), category="warning")
         return redirect(url_for('get_roles'))
-    email_list = []
     member = db.find_member(member_id)
     email = member['email']
     user_form = RoleForm()
@@ -254,8 +251,8 @@ def assign_new_role(member_id):
 
         db.assign_new_role(member_id, user_form.role.data)
         if user_form.role.data == 1:
-            homegroupId = user_form.homegroups.data
-            db.add_leader_to_homegroup(member_id, homegroupId)
+            homegroup_id = user_form.homegroups.data
+            db.add_leader_to_homegroup(member_id, homegroup_id)
 
         flash(lazy_gettext('Role Created'), category="success")
         return redirect(url_for('get_roles'))
@@ -355,9 +352,9 @@ class User(object):
 
 
 @login_mgr.user_loader
-def load_user(id):
+def load_user(user_id):
     """Return the currently logged-in user when given the user's unique ID"""
-    return User(id)
+    return User(user_id)
 
 
 # checks to see if the password entered matches the hash password
@@ -409,7 +406,6 @@ def login():
 def logout():
     """Log the user out and removes the session."""
     logout_user()
-    user_name = session.pop('username', None)
     return redirect(url_for('index'))
 
 
@@ -424,27 +420,25 @@ def user_profile(user_id):
 # HOME GROUP  (Home Group Leader)##############################################
 
 
-# this is the homegroup main page / dashboard
 @app.route('/homegroup/<homegroup_id>')
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def homegroup(homegroup_id):
-    countMembers = 0
     homegroup = db.find_homegroup_by_id(homegroup_id)
     attendance_count = db.get_homegroup_attendance_counts(homegroup_id)
-    countMembers = db.number_of_members_in_homegroup(homegroup_id)
-    mydate = datetime.datetime.now()
-    month_string = mydate.strftime("%B").upper()
+    count_members = db.number_of_members_in_homegroup(homegroup_id)
+    my_date = datetime.datetime.now()
+    month_string = my_date.strftime("%B").upper()
     now = datetime.datetime.now()
     month = now.month
-    hgAttendanceRate = str(int(db.get_homegroup_attendance_rate(month, homegroup_id))) + '%'
+    hg_attendance_rate = str(int(db.get_homegroup_attendance_rate(month, homegroup_id))) + '%'
     number_meetings = db.number_of_meetings_held(homegroup_id)
     if not attendance_count:
-        if (current_user.role == "admin"):
+        if current_user.role == "admin":
             flash(lazy_gettext("No attendance data for this Home Group"), category="warning")
-            return redirect(url_for('get_homegroups', countMembers=countMembers, homegroup_id=homegroup_id))
+            return redirect(url_for('get_homegroups', countMembers=count_members, homegroup_id=homegroup_id))
         else:
-            return render_template('homegroup.html', countMembers=countMembers, currentHomegroup=homegroup,
+            return render_template('homegroup.html', countMembers=count_members, currentHomegroup=homegroup,
                                    numMeetings=number_meetings,
                                    attendance_count=attendance_count, member_attendance=[], dates=[])
     # member_attendance = db.homegroup_member_attendance(homegroup_id)
@@ -453,33 +447,32 @@ def homegroup(homegroup_id):
     dates = db.get_last_3_dates(homegroup_id)
     for member in members:
         attendance = db.get_member_attendance(homegroup_id, member['member_id'])
-        list = []
+        names = []
         if attendance:
             name = attendance[0]['first_name'] + ' ' + attendance[0]['last_name']
-            list.append(name)
+            names.append(name)
             for date in dates:
-                hasDate = False
+                has_date = False
                 for item in attendance:
                     if date['date'] == item['date'] and item['attendance']:
-                        list.append(item['attendance'])
-                        hasDate = True
-                if not hasDate:
-                    list.append(False)
-                list_length = len(list)
-            if (list_length < 4):
-                for i in range(0, (4 - list_length)):
-                    list.append(False)
-            member_attendance.append(list)
+                        names.append(item['attendance'])
+                        has_date = True
+                if not has_date:
+                    names.append(False)
+                list_length = len(names)
+            if list_length < 4:
+                for _ in range(0, (4 - list_length)):
+                    names.append(False)
+            member_attendance.append(names)
 
         else:
+            names.append(member['first_name'] + " " + member['last_name'])
+            for _ in range(0, 4):
+                names.append(False)
+            member_attendance.append(names)
 
-            list.append(member['first_name'] + " " + member['last_name'])
-            for i in range(0, 4):
-                list.append(False)
-            member_attendance.append(list)
-
-    return render_template('homegroup.html', numMeetings=number_meetings, attendance_rate=hgAttendanceRate,
-                           currentMonth=month_string, countMembers=countMembers, currentHomegroup=homegroup,
+    return render_template('homegroup.html', numMeetings=number_meetings, attendance_rate=hg_attendance_rate,
+                           currentMonth=month_string, countMembers=count_members, currentHomegroup=homegroup,
                            attendance_count=attendance_count, member_attendance=member_attendance, dates=dates)
 
 
@@ -519,10 +512,10 @@ def homegroup_split(homegroup_id):
 @requires_roles('admin')
 def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
     db.remove_member(homegroup_id, member_id)
-    if (group == 'one'):
+    if group == 'one':
         db.remove_member(homegroup_id2, member_id)
         db.add_member_to_homegroup(homegroup_id1, member_id)
-    if (group == 'two'):
+    if group == 'two':
         db.remove_member(homegroup_id1, member_id)
         db.add_member_to_homegroup(homegroup_id2, member_id)
     return redirect(url_for('homegroup_split_members', homegroup_id=homegroup_id, homegroup_id1=homegroup_id1,
@@ -535,7 +528,7 @@ def split_member(member_id, homegroup_id, homegroup_id1, homegroup_id2, group):
 def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
     """Add members to split home group."""
     members = db.get_split_homegroup_info(homegroup_id, homegroup_id1, homegroup_id2)
-    currentHomegroup = homegroup_id
+    current_homegroup = homegroup_id
     homegroup_to_be_split = db.find_homegroup_by_id(homegroup_id)
     homegroup1 = db.find_homegroup_by_id(homegroup_id1)
     homegroup2 = db.find_homegroup_by_id(homegroup_id2)
@@ -551,7 +544,7 @@ def homegroup_split_members(homegroup_id, homegroup_id1, homegroup_id2):
             homegroup_to_be_split_count += 1
 
     return render_template('homegroup_split_members.html', homegroup_to_be_split=homegroup_to_be_split,
-                           homegroup1=homegroup1, homegroup2=homegroup2, currentHomegroup=currentHomegroup,
+                           homegroup1=homegroup1, homegroup2=homegroup2, currentHomegroup=current_homegroup,
                            old_members=members, homegroup1_count=homegroup1_count, homegroup2_count=homegroup2_count,
                            homegroup_to_be_split_count=homegroup_to_be_split_count)
 
@@ -567,30 +560,30 @@ def homegroup_analytics():
     new_members = db.number_of_new_members(year)
     attending_members = db.members_attending_a_homegroup(year)
     total_members = db.total_members(year)
-    analyticsList = ['', '', '', '', '', '', '', '', '', '', '', '']
-    minorsList = ['', '', '', '', '', '', '', '', '', '', '', '']
-    newMembersList = ['', '', '', '', '', '', '', '', '', '', '', '']
-    attendingMembersList = ['', '', '', '', '', '', '', '', '', '', '', '']
-    totalMembersList = ['', '', '', '', '', '', '', '', '', '', '', '']
+    analytics_list = ['', '', '', '', '', '', '', '', '', '', '', '']
+    minors_list = ['', '', '', '', '', '', '', '', '', '', '', '']
+    new_members_list = ['', '', '', '', '', '', '', '', '', '', '', '']
+    attending_members_list = ['', '', '', '', '', '', '', '', '', '', '', '']
+    total_members_list = ['', '', '', '', '', '', '', '', '', '', '', '']
     for row in analytics:
         index = int(row['month']) - 1
-        analyticsList[index] = int(row['count'])
+        analytics_list[index] = int(row['count'])
     for row in minors:
         index = int(row['month']) - 1
-        minorsList[index] = int(row['count'])
+        minors_list[index] = int(row['count'])
     for row in new_members:
         index = int(row['month']) - 1
-        newMembersList[index] = int(row['count'])
+        new_members_list[index] = int(row['count'])
     for row in attending_members:
         index = int(row['month']) - 1
-        attendingMembersList[index] = int(row['count'])
+        attending_members_list[index] = int(row['count'])
     for row in total_members:
         index = int(row['month']) - 1
-        totalMembersList[index] = int(row['count'])
+        total_members_list[index] = int(row['count'])
 
-    return render_template('homegroup_analytics.html', totalMembersList=totalMembersList,
-                           attendingMembersList=attendingMembersList, year=year, newMembersList=newMembersList,
-                           minorsList=minorsList, analytics=analyticsList)
+    return render_template('homegroup_analytics.html', totalMembersList=total_members_list,
+                           attendingMembersList=attending_members_list, year=year, newMembersList=new_members_list,
+                           minorsList=minors_list, analytics=analytics_list)
 
 
 class AttendanceForm(FlaskForm):
@@ -605,11 +598,10 @@ class AttendanceForm(FlaskForm):
 @login_required
 @requires_roles('homegroup_leader')
 def attendance(homegroup_id):
-    error = ""
     attendance_form = AttendanceForm()
     members = db.get_homegroup_members(homegroup_id)
     show_members = 'N'
-    if (request.method == "POST"):
+    if request.method == "POST":
         date = request.form['AttendanceDate']
         time = request.form['AttendanceTime']
         meeting_id = db.add_date(date, time)['id']
@@ -625,8 +617,7 @@ def system_notify_member(member_id, num_misses):
     homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
     leader = db.find_homegroup_leader(homegroup_id)
     email = db.find_member(member_id)['email']
-    email_list = []
-    email_list.append(email)
+    email_list = [email]
     leader_email = leader['email']
     leader_phone = leader['phone_number']
     leader_name = leader['first_name'] + ' ' + leader['last_name']
@@ -644,9 +635,9 @@ def system_notify_member(member_id, num_misses):
 @login_required
 def homegroup_data(homegroup_id):
     attendance = db.get_homegroup_attendance_records(homegroup_id)
-    hgname = db.find_homegroup_by_id(homegroup_id)['name']
+    hg_name = db.find_homegroup_by_id(homegroup_id)['name']
     wb = Workbook()
-    dest_filename = hgname + '-' + gettext('attendance') + '.xlsx'
+    dest_filename = hg_name + '-' + gettext('attendance') + '.xlsx'
     ws1 = wb.active
     ws1.title = gettext("Attendance")
     row_num = 2
@@ -667,9 +658,9 @@ def homegroup_data(homegroup_id):
 @requires_roles('admin')
 def all_homegroup_data():
     attendance = db.get_all_homegroup_attendance_records()
-    hgname = "all-homegroup"
+    hg_name = "all-homegroup"
     wb = Workbook()
-    dest_filename = hgname + '-' + gettext('attendance') + '.xlsx'
+    dest_filename = hg_name + '-' + gettext('attendance') + '.xlsx'
     ws1 = wb.active
     ws1.title = gettext("Attendance")
     row_num = 2
@@ -686,7 +677,7 @@ def all_homegroup_data():
 
 
 # adds (or updates) a new entry of attendance into the db
-def updateAttendance(homegroup_id, member_id, meeting_id, attendance):
+def update_attendance(homegroup_id, member_id, meeting_id, attendance):
     db.update_attendance(homegroup_id, member_id, meeting_id, attendance)
     return redirect(url_for('edit_attendance', homegroup_id=homegroup_id, meeting_id=meeting_id))
 
@@ -706,23 +697,22 @@ def edit_attendance(homegroup_id, meeting_id):
     time = db.find_date(meeting_id)['time']
     edit_or_new = 'new'
     for member in members_in_attendance:
-        if (member['attendance'] == 1):
+        if member['attendance'] == 1:
             edit_or_new = 'edit'
     if att_form.validate_on_submit():
         for member in members_in_attendance:
             input_name = 'member_' + str(member['member_id'])
             if input_name in request.form:
-                updateAttendance(homegroup_id, member['member_id'], meeting_id, '1')
+                update_attendance(homegroup_id, member['member_id'], meeting_id, '1')
             else:
-                updateAttendance(homegroup_id, member['member_id'], meeting_id, '0')
-                if (edit_or_new == 'new'):
-                    attendancedates = db.system_attendance_alert(homegroup_id, member['id'], 3)
-                    notify = True
-                    for date in attendancedates:
+                update_attendance(homegroup_id, member['member_id'], meeting_id, '0')
+                if edit_or_new == 'new':
+                    attendance_dates = db.system_attendance_alert(homegroup_id, member['id'], 3)
+                    for date in attendance_dates:
                         if date['attendance'] == 1:
-                            notify = False
-                    if len(attendancedates) < 3:
-                        notify = False
+                            pass
+                    if len(attendance_dates) < 3:
+                        pass
 
         return redirect(url_for('get_attendance_dates', homegroup_id=homegroup_id))
 
@@ -781,9 +771,9 @@ def edit_homegroup(homegroup_id):
         latitude = hg_form.latitude.data
         longitude = hg_form.longitude.data
         rowcount = db.edit_homegroup(homegroup_id, name, location, description, latitude, longitude)
-        if (rowcount == 1):
+        if rowcount == 1:
             flash(lazy_gettext("Home Group updated"), category="success")
-            if (current_user.role == 'admin'):
+            if current_user.role == 'admin':
                 return redirect(url_for('get_homegroups'))
             return redirect(url_for('homegroup', homegroup_id=homegroup_id))
 
@@ -825,9 +815,9 @@ def add_member_to_homegroup(homegroup_id, member_id):
             new = 'N'
             db.reactive_homegroup_member(homegroup_id, member_id)
     if new == 'Y':
-        memberhomegroup = db.member_already_in_homegroup(member_id)
-        if (memberhomegroup):
-            leader = db.find_homegroup_leader(memberhomegroup['homegroup_id'])
+        member_home_group = db.member_already_in_homegroup(member_id)
+        if member_home_group:
+            leader = db.find_homegroup_leader(member_home_group['homegroup_id'])
 
             flash("Member is in another Home Group, contact {} to remove member".format(
                 leader['first_name'] + " " + leader['last_name'] + " " + leader['phone_number']), "danger")
@@ -934,11 +924,11 @@ def get_homegroup_members(homegroup_id):
     current_homegroup = db.find_homegroup_by_id(homegroup_id)
 
     homegroup_members = db.get_homegroup_members(homegroup_id)
-    list = []
+    email_addresses = []
     for member in homegroup_members:
-        list.append(member["email"])
+        email_addresses.append(member["email"])
     list2 = ""
-    for item in list:
+    for item in email_addresses:
         list2 = list2 + ", " + item
     return render_template('homegroup_members.html', homegroup=db.get_homegroup_members(homegroup_id),
                            currentHomegroup=current_homegroup, homegroupEmails=db.get_homegroup_emails(homegroup_id),
@@ -950,7 +940,7 @@ def get_homegroup_members(homegroup_id):
 @login_required
 @requires_roles('homegroup_leader', 'admin')
 def edit_member(member_id):
-    if (int(current_user.member_id) == int(member_id)):
+    if int(current_user.member_id) == int(member_id):
         heading_text = lazy_gettext('Edit My Info')
     else:
         heading_text = lazy_gettext('Edit Member')
@@ -971,16 +961,16 @@ def edit_member(member_id):
 
     marital_status = db.get_all_marital_statuses()
     how_did_you_find_out = db.get_all_how_did_you_find_out_values()
-    statusList = []
-    methodList = []
+    status_list = []
+    method_list = []
     for status in marital_status:
-        statusList.append((status["id"], status["marital_status_name"]))
-    member_form.marital_status.choices = statusList
+        status_list.append((status["id"], status["marital_status_name"]))
+    member_form.marital_status.choices = status_list
     for method in how_did_you_find_out:
-        methodList.append((method["id"], method["how_did_you_find_out_name"]))
-    member_form.how_did_you_find_out.choices = methodList
+        method_list.append((method["id"], method["how_did_you_find_out_name"]))
+    member_form.how_did_you_find_out.choices = method_list
 
-    ## TODO: add validators back!!! and member_form.validate()
+    # TODO: add validators back!!! and member_form.validate()
     if request.method == "POST":
         first_name = member_form.first_name.data
         last_name = member_form.last_name.data
@@ -996,9 +986,9 @@ def edit_member(member_id):
 
         rowcount = db.edit_member(member_id, first_name, last_name, email, phone_number, gender, birthday,
                                   baptism_status, marital_status, how_did_you_find_out, is_a_parent, join_date)
-        if (rowcount == 1):
+        if rowcount == 1:
             flash(lazy_gettext("Member {} Updated").format(member_form.first_name.data), category="success")
-            if (current_user.role == 'admin'):
+            if current_user.role == 'admin':
                 return redirect(url_for('all_members'))
             else:
                 homegroup_id = db.find_member_homegroup(member_id)['homegroup_id']
@@ -1034,14 +1024,18 @@ class CreateHomeGroupForm(FlaskForm):
 
 
 class CreateHomeGroupSplitForm(FlaskForm):
-    name = StringField(lazy_gettext('Name'), [Length(min=2, max=50 , message=lazy_gettext("Name is a required field"))])
-    description = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
+    name = StringField(lazy_gettext('Name'), [Length(min=2, max=50, message=lazy_gettext("Name is a required field"))])
+    description = TextAreaField(lazy_gettext('Description'),
+                                [InputRequired(message=lazy_gettext("Please enter a description"))])
     location = StringField(lazy_gettext('Address'), [InputRequired(message=lazy_gettext("Please enter valid Address"))])
     latitude = StringField(lazy_gettext('Latitude'))
     longitude = StringField(lazy_gettext('Longitude'))
-    name2 = StringField(lazy_gettext('Name'), [Length(min=2, max=50, message=lazy_gettext("Name is a required field"))])
-    description2 = TextAreaField(lazy_gettext('Description'), [InputRequired(message=lazy_gettext("Please enter a description"))])
-    location2 = StringField(lazy_gettext('Address'), [InputRequired(message=lazy_gettext("Please enter valid Address"))])
+    name2 = StringField(lazy_gettext('Name'),
+                        [Length(min=2, max=50, message=lazy_gettext("Name is a required field"))])
+    description2 = TextAreaField(lazy_gettext('Description'),
+                                 [InputRequired(message=lazy_gettext("Please enter a description"))])
+    location2 = StringField(lazy_gettext('Address'),
+                            [InputRequired(message=lazy_gettext("Please enter valid Address"))])
     latitude2 = StringField(lazy_gettext('Latitude'))
     longitude2 = StringField(lazy_gettext('Longitude'))
     submit1 = SubmitField(lazy_gettext('Create Home Groups'))
@@ -1064,8 +1058,8 @@ def admin_home():
     attendance_rate = str(int(db.attendance_rate_for_current_month(month))) + '%'
     homegroup_leaders = db.number_of_homegroup_leaders()
     homegroups = db.number_of_homegroups()
-    mydate = datetime.datetime.now()
-    month_string = mydate.strftime("%B").upper()
+    my_date = datetime.datetime.now()
+    month_string = my_date.strftime("%B").upper()
     return render_template('admin_home.html', currentMonth=month_string, attendance_rate=attendance_rate,
                            active_homegroups=active_homegroups, members=members, homegroup_leaders=homegroup_leaders,
                            homegroups=homegroups, gender=gender, hgdata=homegroup_member_data,
@@ -1108,8 +1102,6 @@ def get_homegroups():
 @login_required
 @requires_roles('admin')
 def deactivate_homegroup(homegroup_id):
-    rowcount = db.deactivate_homegroup(homegroup_id)
-
     # if the member is not active
     if not db.find_homegroup_by_id(homegroup_id)['is_active']:
         flash(lazy_gettext("Homegroup Deactivated"), category="success")
@@ -1121,7 +1113,6 @@ def deactivate_homegroup(homegroup_id):
 @login_required
 @requires_roles('admin')
 def reactivate_homegroup(homegroup_id):
-    rowcount = db.reactivate_homegroup(homegroup_id)
     # if the member is not active
     if db.find_homegroup_by_id(homegroup_id)['is_active']:
         flash(lazy_gettext("Homegroup Reactivated"), category="success")
@@ -1137,11 +1128,11 @@ def reactivate_homegroup(homegroup_id):
 @requires_roles('admin')
 def all_members():
     emails = db.get_all_members_emails()
-    list = []
+    email_addresses = []
     for email in emails:
-        list.append(email["email"])
+        email_addresses.append(email["email"])
     list2 = ""
-    for item in list:
+    for item in email_addresses:
         list2 = list2 + ", " + item
     return render_template('all_members.html', members=db.get_all_members(), emails=list2,
                            inactiveMembers=db.get_all_inactive_members(), showInactive=False)
@@ -1152,7 +1143,6 @@ def all_members():
 @login_required
 @requires_roles('admin')
 def deactivate_member(member_id):
-    rowcount = db.deactivate_member(member_id)
     # if the member is not active
     if db.find_member(member_id)['is_active'] == '0':
         flash(lazy_gettext("Member Deactivated"), category="success")
@@ -1164,7 +1154,6 @@ def deactivate_member(member_id):
 @login_required
 @requires_roles('admin')
 def reactivate_member(member_id):
-    rowcount = db.reactivate_member(member_id)
     if db.find_member(member_id)['is_active'] == '1':
         flash(lazy_gettext("Member Reactivated"), category="success")
     return redirect(url_for('all_members'))
@@ -1181,7 +1170,7 @@ def advanced_search():
                            showInactive=False)
 
 
-#### Admin - Admin ###########
+# Admin - Administration ###########
 
 # shows all members
 @app.route('/admin/all')
@@ -1192,8 +1181,3 @@ def all_admin():
                            admin=db.get_all_admin(),
                            inactiveAdmin=db.get_all_inactive_admin(),
                            showInactive=False)
-
-
-# Make this the last line in the file!
-if __name__ == '__main__':
-    app.run(debug=True)
