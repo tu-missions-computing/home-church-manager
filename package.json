@@ -5,6 +5,9 @@
   "repository": "https://github.com/tu-missions-computing/home-church-manager.git",
   "author": "Tom Nurkkala <tnurkkala@cse.taylor.edu>",
   "license": "MIT",
+  "scripts": {
+    "sass": "sass --load-path=. scss/style.scss static/style.css"
+  },
   "dependencies": {
     "bootstrap": "^4.1.1",
     "sass": "^1.8.0"
