@@ -74,6 +74,10 @@
                                     {{ _('Remove') }}
                                 </button>
                             {% endif %}
+                            <a href="mailto:{{ member.email }}" class="btn btn-primary btn-sm">
+                                <span class="fa fa-envelope"></span>
+                                {{ _('Email') }}
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
