@@ -31,7 +31,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 adb = SQLAlchemy(app)
 
-from models import *
+from homegroup_models import *
 
 #import db
 

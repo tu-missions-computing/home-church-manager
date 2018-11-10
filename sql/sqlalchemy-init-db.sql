@@ -23,7 +23,7 @@ DECLARE
   find_out_id       INTEGER;
   marital_status_id INTEGER;
   role_id           INTEGER;
-  new_member_id     INTEGER;
+  new_person_id     INTEGER;
 BEGIN
   -- Find the ID of how you found out "other".
   SELECT id
@@ -43,8 +43,8 @@ BEGIN
   FROM role
   WHERE role = role_name;
 
-  -- Create a dummy member with the email address passed in.
-  INSERT INTO member (email, first_name, last_name, phone_number, gender,
+  -- Create a dummy person with the email address passed in.
+  INSERT INTO person (email, first_name, last_name, phone_number, gender,
                       birthday, baptism_status, marital_status_id,
                       how_did_you_find_out_id, is_a_parent, join_date, password)
   VALUES (user_email,
@@ -54,15 +54,15 @@ BEGIN
     FALSE, current_date,
     '$2b$12$13vsC8uSUk2EhzNZRQNJju65HdsPmihPbwcuSDDiZ6oxFaI.cr0nG')
   RETURNING id
-    INTO new_member_id;
+    INTO new_person_id;
 
-  -- Make the dummy member an administrator with the password "password".
-  INSERT INTO homegroup_member_role (member_id, role_id, creation_date)
-  VALUES (new_member_id,
+  -- Make the dummy person an administrator with the password "password".
+  INSERT INTO homegroup_person_role (person_id, role_id, creation_date)
+  VALUES (new_person_id,
           role_id,
           current_date);
 
-  RETURN new_member_id;
+  RETURN new_person_id;
 END;
 $$
 LANGUAGE plpgsql;
