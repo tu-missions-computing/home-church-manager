@@ -10,14 +10,16 @@ from flask_babel import Babel, gettext, lazy_gettext
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_mail import Mail, Message
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from openpyxl import Workbook
 from openpyxl.compat import range
 from wtforms import RadioField, TextAreaField, StringField, SubmitField, SelectField, PasswordField
 from wtforms.validators import Email, Length, DataRequired, InputRequired
 
-import db
+
 from mail_settings import config_email
+from psql_settings import sqlalchemy_database_uri
 
 _ = gettext
 
@@ -25,6 +27,13 @@ app = Flask(__name__)
 config_email(app)
 app.config['SECRET_KEY'] = 'Super Secret Unguessable Key'
 mail = Mail(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = sqlalchemy_database_uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+adb = SQLAlchemy(app)
+
+from models import *
+
+#import db
 
 bcrypt = Bcrypt(app)
 login_mgr = LoginManager(app)
@@ -49,8 +58,9 @@ def before():
 # noinspection PyUnusedLocal
 @app.teardown_request
 def after(exception):
-    if not app.testing:
-        db.close_db_connection()
+ #   if not app.testing:
+  #      db.close_db_connection()
+  pass
 
 
 # INDEX + MAP + Dashboard ##############################################
